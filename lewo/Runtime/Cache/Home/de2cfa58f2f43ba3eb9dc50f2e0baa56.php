@@ -72,10 +72,11 @@
                 </div>
             </div>
             <div class="col-xs-2">
-                <a href="<?php echo U('Home/Steward/allhouses');?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">所有房源</a>
-                <?php if($type != 'empty'): ?><a href="<?php echo U('Home/Steward/allhouses',array('select'=>'empty'));?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">空置房源</a>
+                <?php if(!isset($type)): ?><a href="<?php echo U('Home/Steward/allhouses');?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">所有房源</a>
                 <?php else: ?>
-                    <a href="<?php echo U('Home/Steward/allhouses',array('select'=>'is_let_out'));?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">已租房源</a><?php endif; ?>
+                    <?php if($type != 'empty'): ?><a href="<?php echo U('Home/Steward/allhouses',array('select'=>'empty'));?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">空置房源</a>
+                    <?php else: ?>
+                        <a href="<?php echo U('Home/Steward/allhouses',array('select'=>'is_let_out'));?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">已租房源</a><?php endif; endif; ?>
             </div>
         </div>
     </div>

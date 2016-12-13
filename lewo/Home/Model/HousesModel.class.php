@@ -175,7 +175,8 @@ class HousesModel extends Model{
 	 * [显示房屋+房间/床位]
 	 * [针对管家id进行显示]
 	 **/
-	public function getHouseAndRoom($where){
+	public function getHouseAndRoom($where, $type = ''){
+		$type = empty($type) ? 'all' : $type;
 		$MRoom = M("room");
 		$MArea = M("area");
 		$houses = $this->field("id,area_id,steward_id,house_code,type,building,floor,door_no")->where($where)->order("area_id desc, building desc,floor desc,door_no desc")->select();
@@ -188,10 +189,28 @@ class HousesModel extends Model{
 			} else {
 				$houses[$key]['is_checkin'] = false;
 			}
+			$filters = array("house_code"=>$val['house_code'],"is_show"=>1);
+			switch ($type) {
+				case 'empty':
+				$filters['lewo_room.status'] = 0;
+				break;
+				case 'is_let_out':
+				$filters['lewo_room.status'] = array('not in',array(0));
+				case 'all':
+				default:
+				break;
+			}
 			$houses[$key]['count'] = $count;
 			$houses[$key]['yz_count'] = $yz_count;
 			$houses[$key]['area_name'] = $MArea->where(array("id"=>$val['area_id']))->getField("area_name");
-			$houses[$key]['room_list'] = $MRoom->field("lewo_room.id,lewo_room.account_id,lewo_room.room_code,lewo_room.room_nickname,lewo_room.room_sort,lewo_room.room_type,lewo_room.bed_code,lewo_room.rent,lewo_room.status,lewo_room.is_show,lewo_account.realname,lewo_account.sex")->join("lewo_account ON lewo_room.account_id=lewo_account.id","left")->where(array("house_code"=>$val['house_code'],"is_show"=>1))->order("room_sort asc")->select();
+			$houses[$key]['room_list'] = $MRoom->field("lewo_room.id,lewo_room.account_id,lewo_room.room_code,lewo_room.room_nickname,lewo_room.room_sort,lewo_room.room_type,lewo_room.bed_code,lewo_room.rent,lewo_room.status,lewo_room.is_show,lewo_account.realname,lewo_account.sex")->join("lewo_account ON lewo_room.account_id=lewo_account.id","left")->where($filters)->order("room_sort asc")->select();
+		}
+		foreach ($houses as $key => $value) {
+			$count_room = count($value['room_list']);
+			if ($count_room == 0) {
+				unset($houses[$key]);
+				continue;
+			}
 		}
 		
 		return $houses;

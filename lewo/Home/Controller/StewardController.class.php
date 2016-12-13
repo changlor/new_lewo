@@ -370,6 +370,7 @@ class StewardController extends Controller {
      * [入住--房屋列表]
      **/
     public function allhouses(){
+        $type = I("select");
         $_SESSION['stewrad_houses_back_url'] = U('Home/Steward/allhouses'); 
         $where = array();
         $search = I("search");
@@ -389,8 +390,9 @@ class StewardController extends Controller {
             $where['_string'] = "house_code LIKE '%".$search."%' OR area_name LIKE '%".$search."%'";
         }
         $this->assign("search",$search);
+        $this->assign("type", $type);
         $DHouses = D("houses");
-        $this->assign("houses",$DHouses->getHouseAndRoom($where));
+        $this->assign("houses",$DHouses->getHouseAndRoom($where, $type));
         $this->display('houses');
         $this->display("Steward/common/footer");
     }

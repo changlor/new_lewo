@@ -72,9 +72,11 @@
                 </div>
             </div>
             <div class="col-xs-2">
-                <a href="<?php echo U('Home/Steward/allhouses');?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">所有房源</a>
-                <?php $select_param = $type == 'empty' ? array('select'=>'is_let_out') : array('select'=>'empty'); ?>
-                <a href="<?php echo U('Home/Steward/allhouses',$select_param);?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;"><?php echo $type == 'empty' ? '已租房源' : '空置房源'; ?></a>
+                <?php if(!isset($type)): ?><a href="<?php echo U('Home/Steward/allhouses');?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">所有房源</a>
+                <?php else: ?>
+                    <?php if($type != 'empty'): ?><a href="<?php echo U('Home/Steward/allhouses',array('select'=>'empty'));?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">空置房源</a>
+                    <?php else: ?>
+                        <a href="<?php echo U('Home/Steward/allhouses',array('select'=>'is_let_out'));?>" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">已租房源</a><?php endif; endif; ?>
             </div>
         </div>
     </div>

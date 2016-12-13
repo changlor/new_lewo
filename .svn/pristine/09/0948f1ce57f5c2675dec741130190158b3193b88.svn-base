@@ -1,0 +1,108 @@
+<?php
+namespace Home\Model;
+use Think\Model;
+/**
+* [合同数据层]
+*/
+class ContractModel extends Model{
+	/**
+	 * [插入一条新的合同]
+	 **/
+	public function add($post){
+		$MAccount = M("account");
+		$MContract = M("contract");
+		$account_info = $MAccount->where(array("mobile"=>$post['mobile']))->find();
+
+		if ( !$account_info ) {
+			//插入帐号
+			$data['realname'] = $post['realName'];
+			$data['password'] = md5("123456");//默认密码
+			$data['mobile'] = $post['mobile'];
+			$data['contact2'] = $post['contact2'];
+			$data['card_no'] = $post['idNo'];
+			$data['email'] = $post['email'];
+			$data['register_time'] = date("Y-m-d H:i:s",time());
+
+			$id = $MAccount->add($data);
+		} else {
+			$id = $account_info['id'];
+		}
+		$result['result'] = true;
+		//判断account_id 是否已经存在了一个未支付的合同账单
+		$notpay = $MContract->where(array("account_id"=>$id,"pay_status"=>0,"is_delete"=>0))->select();
+		if ( count($notpay) > 0 ) {
+			$result['result'] = false;
+			$result['error_msg'] = "已存在未支付合同";
+			return $result;
+		}
+
+		$cData['order_no'] = getOrderNo();
+		$cData['account_id'] = $id;
+		$cData['room_id'] = $post['room_id'];
+		$cData['deposit'] = $post['deposit'];
+		$cData['book_deposit']= $post['bookDeposit'];
+		$rentType = explode("_",$post['rentType']);
+		$depositCount = $rentType['0'];//押几
+		$payCount = $rentType['1'];//付几
+		$cData['period'] = $payCount;
+		$cData['pay_status'] = 0;
+		/*$cData['pay_date'] = date("Y-m-d H:i:s",time());*/
+		$cData['create_time'] = date("Y-m-d H:i:s",time());
+		$cData['steward_id'] = $_SESSION['steward_id'];
+		$cData['rent_type'] = $post['rentType'];
+		$cData['contract_status'] = C('ht_zc');
+		$cData['start_time'] = $post['startDate'];
+		$cData['end_time'] = $post['endDate'];
+		$start_year = date("Y",strtotime($cData['start_time']));
+		$start_month = date("m",strtotime($cData['start_time']));
+		$cData['rent_date'] = correct_date(date("Y",strtotime($start_year."-".$start_month."+".$cData['period']." month")),date("m",strtotime($start_year."-".$start_month."+".$cData['period']." month")),date("d",strtotime($cData['end_time']))); //房租到期日
+		$cData['rent'] = $post['rent'];
+		$cData['fee'] = $post['fee'];
+		$cData['contact2'] = $post['contact2'];
+		$cData['person_count'] = $post['personCount'];
+
+		$hz_info['hzRealname'] = $post['hzRealname'];
+		$hz_info['hzMobile'] = $post['hzMobile'];
+		$hz_info['hzCardNo'] = $post['hzCardNo'];
+
+		$cData['cotenant'] = serialize($hz_info);
+		/*$cData['zS'] = $post['zS'];
+		$cData['zD'] = $post['zD'];
+		$cData['zQ'] = $post['zQ'];*/
+		$cData['roomD'] = $post['roomD'];
+		$cData['total_fee'] = $post['total'];//总金额
+
+		//是否使用余额抵扣
+		if ( !empty($post['is_deduct']) ) {
+			$balance = $MAccount->where(array("id"=>$id))->getField("balance");//余额
+			$cData['balance'] = $balance;
+					
+			if ( $post['paytotal'] > $balance ) {
+				$post['paytotal'] = $post['paytotal'] - $balance;
+				$change_balance = 0; 
+			} else {
+				$post['paytotal'] = 0;
+				$change_balance = $balance - $post['paytotal'];//如果余额大于应支付金额，应支付0，修改帐号的余额
+			}
+			$MAccount->where(array("id"=>$id))->save(array("balance"=>$change_balance));
+		}
+
+		$cData['pay_total'] = $post['paytotal'];//应支付金额
+		$result['id'] = $MContract->add($cData); //返回插入后的id
+		$result['account_id'] = $id;
+		return $result;
+	}
+
+	/**
+	* [根据用户id获取最新合同]
+	**/
+	public function getNewContractById($account_id){
+		$where['account_id'] = $account_id;
+		$where['contract_status'] = 1;//正常签约
+		$order = "id desc";
+		$result = $this->where($where)->order($order)->find();
+		return $result;
+	}
+}
+
+?>

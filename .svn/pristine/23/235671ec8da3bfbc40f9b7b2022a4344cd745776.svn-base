@@ -1,0 +1,65 @@
+<!--main-container-part-->
+<div id="content">
+<!--breadcrumbs-->
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="index.html" title="返回首页" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a>工作台</a> <a class="current">待办列表</a></div>
+  </div>
+<!--End-breadcrumbs-->
+  <div class="container-fluid">
+    <div class="widget-box">
+      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+        <h5>待办列表</h5>
+      </div>
+      <div class="widget-content nopadding">
+        <form action="#">
+          <table class="table">
+            <tbody>
+              <tr>
+                <!-- <td>
+                <select name="" style="width:100px;">
+                  <option selected="selected">请选择</option>
+                  <option value="">退房</option>
+                  <option value="">转租</option>
+                  <option value="">换房</option>
+                  <option value="">退房例行打款</option>
+                 </select>
+                              </td> -->
+              <td>
+                <a href="#" class="btn btn-danger">退房({$TFcount})</a>
+                <a href="#" class="btn btn-info">转租({$ZFcount})</a>
+                <a href="#" class="btn btn-success">换房({$HFcount})</a>
+                <a href="{:U('Admin/Task/money_back_finish')}" class="btn btn-warning">退房例行打款({$LXDKcount})</a>
+              </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+        <table class="table table-bordered data-table">
+          <thead>
+            <tr>
+              <th>类型</th>
+              <th>房屋</th>
+              <th>房间</th>
+              <th>床位</th>
+              <th>租客</th>
+              <th>创建时间</th>
+            </tr>
+          </thead>
+          <tbody>
+          <volist name="schedule_list" id="vo">
+            <tr>
+              <td>{$vo.schedule_type_name}</td>
+              <td>{$vo.room_info.house_code}</td>
+              <td>{$vo.room_info.room_code}</td>
+              <td>{$vo.room_info.bed_code}</td>
+              <td>{$vo.realname}</td>
+              <td>{$vo.create_time}</td>
+            </tr>
+          </volist>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!--main-container-part-->

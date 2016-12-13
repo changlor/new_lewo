@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href=".">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<title>我管理的房源</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width"><meta name="format-detection" content="email=no,address=no,telephone=no">
+    <link href="__PUBLIC__/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/bootstrap-theme.min.css" type="text/css">
+    <link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/css/bill.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__PUBLIC__/js/iscroll.js"></script>
+    <script src="__PUBLIC__/js/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/common.js" type="text/javascript"></script> 
+    <script type="text/javascript">
+    var myScroll;
+
+    function loaded () {
+    	myScroll = new IScroll('#wrapper', { mouseWheel: true ,click:true});
+    }
+
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false)
+
+    </script>
+    <style>
+    #wrapper {
+    	position:absolute;
+    	top:44px;
+    	bottom:0px;
+    	left:0;
+    	width:100%;
+    	overflow:hidden;
+    	background-color:#f4f4f4;
+    	}
+    .img-responsive {
+    	display: inline-block;
+    	height: auto;
+    	max-width: 100%;
+    	}
+    body{
+    	line-height:normal;
+    	}
+    ol, ul{
+    	margin-bottom:0;
+    	}
+    </style>
+
+</head>
+
+<body onload="loaded()">
+<div id="fwxx" >
+	<div class="container-fluid header">
+    	<div class="row-fluid">
+        	<div class="col-xs-2 header-icon1"><a href="javascript:window.history.back(-1)"><div class="retun-db-box"><img src="__PUBLIC__/images/icon-db-retun.png" class="icon-db-retun"></div></a></div>
+        <div class="col-xs-8">
+            <div class="ssearch">
+              <form action="">
+                <input class="iSearch" type="search" name="" value="" placeholder="请输入">
+                <input class="isubmit" type="submit" value="搜索">
+              </form>
+            </div>
+
+        </div>
+        <div class="col-xs-2">
+        <a href="{:U('Home/Steward/allcheckbill')}" class="btn btn-success" style="margin-top: 10px;">所有房源</a>
+        </div>
+        </div>
+    </div>
+    <div id="wrapper" >
+        <div>
+			<div class="container-fluid" id="XS">
+                <div class="row-fluid">
+                    <div class="col-xs-12">
+                    	<div class="row-fluid">
+                            <div class="col-xs-12"><div class="innre-bill-ls-dsh"></div></div>
+                        </div>
+                        <div class="row-fluid">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>房屋编号</th>
+                                        <th>小区</th>
+<!--                                         <th>总水</th>
+<th>总电</th>
+<th>总气</th> -->
+                                        <th>状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <volist name="houses" id="vo">
+                                        <tbody>
+                                            <tr onclick="window.location='{:U('Home/Steward/show_ammeter',array('house_id'=>$vo['id']))}'">
+                                                <td>{$vo.house_code}</td>
+                                                <td>{$vo.area_name}</td>
+                                                <td>
+                                                  <if condition="$vo['is_typein'] eq true">
+                                                    <a class="btn btn-success">{$month}月已录</a>
+                                                    <else/>
+                                                    <a class="btn btn-danger">{$month}月未录</a>
+                                                  </if>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </volist>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--滑动过度区域-->
+                        <div class="row-fluid">
+                            <div class="col-xs-12"><div style="height:90px;"></div></div>
+                        </div>
+                        <!--滑动过度区域-->
+                    </div>
+                </div>
+			</div>          
+        </div>  
+    </div>

@@ -1,0 +1,63 @@
+<!--sidebar-menu-->
+<div id="sidebar">
+  <a href="{:U('Admin/Index/index')}" class="visible-phone"><i class="icon icon-home"></i>首页</a>
+  <ul>
+    <li class="<if condition="CONTROLLER_NAME eq 'Index'">active</if>">
+      <a href="{:U('Admin/Index/index')}">
+        <i class="icon icon-home"></i>
+        <span>首页</span>
+      </a> 
+    </li>
+    <li class="submenu <if condition="CONTROLLER_NAME eq 'Task'">active</if>">
+      <a>
+        <i class="icon icon-inbox"></i>
+        <span>工作台</span>
+      </a>
+        <ul>
+          <li><a href="{:U('Admin/Task/index')}">待办</a></li>
+          <li><a href="{:U('Admin/Task/finish_task')}">已办</a></li>
+        </ul>
+    </li>
+    <li class="submenu <if condition="CONTROLLER_NAME eq 'Pay'">active</if>">
+      <a>
+        <i class="icon icon-th"></i>
+        <span>支付列表</span>
+      </a>
+      <ul>
+        <li><a href="{:U('Admin/Pay/daily_bill')}" target="_blank">日常账单</a></li>
+        <li><a href="{:U('Admin/Pay/contract_bill')}" target="_blank">合同账单</a></li>
+      </ul>
+    </li>
+    <li class="submenu <if condition="CONTROLLER_NAME eq 'Houses'">active</if>">
+      <a>
+        <i class="icon icon-fullscreen"></i>
+        <span>房源管理</span>
+      </a>
+      <ul>
+        <li><a href="{:U('Admin/Houses/area')}">小区列表</a></li>
+        <li><a href="{:U('Admin/Houses/index')}">房源列表</a></li>
+      </ul>
+    </li>
+    <li class="submenu <if condition="CONTROLLER_NAME eq 'Steward'">active</if>">
+      <a>
+        <i class="icon icon-user"></i>
+        <span>帐号管理</span>
+      </a>
+      <ul>
+        <li><a href="{:U('Admin/Steward/account')}">后台帐号</a></li>
+        <li><a href="{:U('Admin/Tenant/account')}">租客帐号</a></li>
+      </ul>
+    </li>
+    <li class="submenu <if condition="CONTROLLER_NAME eq 'Dding'">active</if>">
+      <a>
+        <i class="icon icon-user"></i>
+        <span>丁盯门锁管理</span>
+      </a>
+      <ul>
+        <li><a href="{:U('Admin/Dding/room_manage')}">房间管理</a></li>
+        <li><a href="{:U('Admin/Dding/log')}">操作日志</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<!--sidebar-menu-->

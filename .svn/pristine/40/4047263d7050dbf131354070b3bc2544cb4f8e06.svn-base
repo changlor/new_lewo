@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<title>本期账单</title>
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width"><meta name="format-detection" content="email=no,address=no,telephone=no">
+<link href="__PUBLIC__/css/normalize.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+<link href="__PUBLIC__/css/bootstrap-theme.min.css" type="text/css">
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/css/bill.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/iscroll.js"></script>
+<script type="text/javascript">
+var myScroll;
+
+function loaded () {
+	myScroll = new IScroll('#wrapper', { mouseWheel: true, click: true });
+	         
+	/*if('1' == '1'){
+		document.getElementById("jf").style.display="none";
+	}
+	if('1' == '0'){
+		document.getElementById("pz").value="返回";
+		document.getElementById("pz").setAttribute("onclick", "toIndex();");
+	}
+	if('0.0' == '0.0'){
+		document.getElementById("fz").style.display="none";
+	}*/
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false)
+function toIndex(){
+	location.href="toAccountIndex.do";
+}
+
+
+</script>
+<style>
+#wrapper {
+	position:absolute;
+	top:44px;
+	bottom:0px;
+	left:0;
+	width:100%;
+	overflow:hidden;
+	background-color:#f4f4f4;
+	}
+.img-responsive {
+	display: inline-block;
+	height: auto;
+	max-width: 100%;
+}
+</style>
+
+</head>
+
+<body onload="loaded()">
+<!--遮盖层头-->
+<!--<div id="loading" style="width:auto; height:1080px; background-color:rgba(51,51,51,0.4); z-index:100; position:relative;">
+	<img src="view/images/loading1.gif" class="load-h-w" />
+</div>-->
+<!--遮盖层尾-->
+<div id="fwxx">
+	<div class="container-fluid header">
+    	<div class="row-fluid">
+        	<div class="col-xs-3 header-icon1"><a href="{:U('Home/Tenant/feelist')}"><div class="retun-db-box"><img src="__PUBLIC__/images/icon-db-retun.png" class="icon-db-retun"></div></a></div>
+         <div class="col-xs-3"></div><div class="col-xs-3"></div>  <!--  <div class="col-xs-3 header-icon2-1"><a href="#"><div class="header-icon2-1icon"><img src="view/images/icon-tenant-but-wdj.png" class="icon-db-but-z" /></div><span class="header-icon1-1text">本期账单</span></a></div>
+            <div class="col-xs-3 header-icon2-2"><a href="#"><div class="header-icon2-2icon"><img src="view/images/icon-tenant-but-ydj.png" class="icon-db-but-y" /></div><span class="header-icon2-2text">往前账单</span></a></div> -->
+            <div class="col-xs-3 header-icon3"><a href="{:U('Home/Tenant/feelist')}"><div class="menu-db-box"><img src="__PUBLIC__/images/icon-db-menu.png" class="icon-db-menu"></div></a></div>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div>
+			<div class="container-fluid" id="XS">
+                <div class="row-fluid">
+                    <div class="col-xs-12">
+                        <div class="row-fluid">
+                            <div class="col-xs-12 banner-box-bjs">
+                                <div class="row-fluid">
+                                    <div class="col-xs-12 banner-box-bjt"><img src="__PUBLIC__/images/icon-tenant-top.png" class="icon-tenant-top">
+                                        <div class="row-fluid">
+                                            <div class="col-xs-12"><span class="banner-title-1">{$area_name}&nbsp;{$bill_info.house_code}</span></div>
+                                        </div>
+                                        <div class="row-fluid">
+                                            <div class="col-xs-6 banner-title-2"><p class="banner-title-2-1">本期费用</p><p class="banner-title-2-2">{$bill_info.pay_time}</p></div>
+                                            <div class="col-xs-6 banner-title-3"><p class="banner-title-3-1">￥{$bill_info.total_fee}</p></div>
+                                        </div>
+                                        <div class="row-fluid">
+                                            <div class="col-xs-6 banner-title-4"><p class="banner-title-4-1">最晚支付</p><p class="banner-title-4-2">最晚时间 
+												{$bill_info.should_pay_date}</p></div>
+                                            <div class="col-xs-6 banner-title-5">
+                                                <if condition="$bill_info['pay_status'] eq 1">
+                                                    <p class="banner-title-5-1">已完成</p>
+                                                    <else/>
+                                                    <p class="banner-title-5-1">未完成</p>
+                                                </if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-xs-12"><div class="innre-bill-image-ia"></div></div>
+                        </div>
+                        <!--点击弹出开-->
+                        <div class="row-fluid">
+                            <div class="col-xs-12 innre-bill-box">
+                                <a data-toggle="collapse" data-parent="#accordion" href="http://mp.loveto.co/#collapseFour-ene" aria-expanded="false" class="collapsed">
+                                <div class="panel-heading innre-bill-image-i">
+                                    <ul>
+                                    <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
+                                    <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
+                                    <li class="innre-bill-text3">￥{$bill_info.energy_fee}+￥{$bill_info.room_energy_fee}</li>
+                                    <li class="innre-bill-text1">公摊电费+个人电费</li><br>
+                                    <li class="innre-bill-text2">{$bill_info.input_year}年{$bill_info.input_month}月</li>
+                                    </ul>
+                                </div>
+                                </a>
+                                <div id="collapseFour-ene" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="panel-body">本月房屋电表起度:{$charge_info.end_energy}  止度:{$charge_info.start_energy} 本月公共区域总电费为: {$total_energy_fee}元<br>
+                                    本月房间用电量:{$bill_info.room_energy_add}度&nbsp;&nbsp;您的房间电费为: {$bill_info.room_energy_fee}元
+                                             <br> 
+                                            您的公摊电费为:{$total_energy_fee}÷{$bill_info.total_person_day}×{$bill_info.person_day}={$bill_info.energy_fee}元<br>                                          
+                                    </div>
+                                </div>
+                                <div class="innre-bill-image-i-box"></div>
+                            </div>
+                        </div>
+                        <!--点击弹出关-->
+                        <!--点击弹出开-->
+                        <div class="row-fluid">
+                            <div class="col-xs-12 innre-bill-box">
+                                <a data-toggle="collapse" data-parent="#accordion" href="http://mp.loveto.co/#collapseFour-water" aria-expanded="false" class="collapsed">
+                                <div class="panel-heading innre-bill-image-i">
+                                    <ul>
+                                    <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
+                                    <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
+                                    <li class="innre-bill-text3">￥{$bill_info.water_fee}</li>
+                                    <li class="innre-bill-text1">水费</li><br>
+                                    <li class="innre-bill-text2">{$bill_info.input_year}年{$bill_info.input_month}月</li>
+                                    </ul>
+                                </div>
+                                </a>
+                                <div id="collapseFour-water" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="panel-body">总水起度:{$charge_info.end_water}  总水止度:{$charge_info.start_water}  总水费:{$total_water_fee}元&nbsp;&nbsp;&nbsp;&nbsp;房内所有人本月居住天数总和:{$bill_info.total_person_day}&nbsp;&nbsp;&nbsp;&nbsp;你本月居住天数:{$bill_info.person_day}<br>
+                                    		您的水费为: {$total_water_fee}÷{$bill_info.total_person_day}×{$bill_info.person_day}={$bill_info.water_fee}元
+                                    </div>
+                                </div>
+                                <div class="innre-bill-image-i-box"></div>
+                            </div>
+                        </div>
+                        <!--点击弹出关-->
+                        <!--点击弹出开-->
+                        <div class="row-fluid">
+                            <div class="col-xs-12 innre-bill-box">
+                                <a data-toggle="collapse" data-parent="#accordion" href="http://mp.loveto.co/#collapseFour-gas" aria-expanded="false" class="collapsed">
+                                <div class="panel-heading innre-bill-image-i">
+                                    <ul>
+                                    <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
+                                    <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
+                                    <li class="innre-bill-text3">￥{$bill_info.gas_fee}+￥{$bill_info.rubbish_fee}</li>
+                                    <li class="innre-bill-text1">气费+燃气垃圾费</li><br>
+                                    <li class="innre-bill-text2">{$bill_info.input_year}年{$bill_info.input_month}月</li>
+                                    </ul>
+                                </div>
+                                </a>
+                                <div id="collapseFour-gas" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="panel-body">总气起度:{$charge_info.end_gas}  总气止度:{$charge_info.start_gas}   总气费:{$total_gas_fee}元&nbsp;&nbsp;&nbsp;&nbsp;房内所有人本月居住天数总和:{$bill_info.total_person_day}&nbsp;&nbsp;&nbsp;&nbsp;你本月居住天数:{$bill_info.person_day}&nbsp;&nbsp;&nbsp;&nbsp;燃气垃圾处理费:{$bill_info.rubbish_fee}<br>
+                                    		您的气费为: {$total_gas_fee}÷{$bill_info.total_person_day}×{$bill_info.person_day}={$bill_info.gas_fee}元
+                                    </div>
+                                </div>
+                                <div class="innre-bill-image-i-box"></div>
+                            </div>
+                        </div>
+                        <!--点击弹出关-->
+                        
+                       
+                        <!--点击弹出开-->
+                        <div class="row-fluid">
+                            <div class="col-xs-12 innre-bill-box">
+                                <a data-toggle="collapse" data-parent="#accordion"  aria-expanded="true">
+                                <div class="panel-heading innre-bill-image-i">
+                                    <ul>
+                                    <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
+                                    <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
+                                    <li class="innre-bill-text3">￥{$bill_info.wgfee_unit}</li>
+                                    <li class="innre-bill-text1">物业费</li><br>
+                                    <li class="innre-bill-text2">{$bill_info.input_year}年{$bill_info.input_month}月</li>
+                                    </ul>
+                                </div>
+                                </a>
+                                <div id="collapseFour-wg" class="panel-collapse collapse in" aria-expanded="true">
+                                    <div class="panel-body">总物业费:{$WYfee}元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                    		物业费为: {$WYfee}/房间数/房间人数={$bill_info.wgfee_unit}元
+                                    </div>
+                                </div>
+                                <div class="innre-bill-image-i-box"></div>
+                            </div>
+                        </div>
+                        <!--点击弹出关-->
+                        <!--点击弹出开--><div id="fz">
+                        <div class="row-fluid">
+                            <div class="col-xs-12 innre-bill-box">
+                                <a data-toggle="collapse" data-parent="#accordion" href="http://mp.loveto.co/#collapseFour-fz">
+                                <div class="panel-heading innre-bill-image-i">
+                                    <ul>
+                                    <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
+                                    <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
+                                    <li class="innre-bill-text3">￥{$bill_info.rent_fee}</li>
+                                    <li class="innre-bill-text1">房租</li><br>
+                                    <li class="innre-bill-text2">{$bill_info.rent_des}</li>
+                                    </ul>
+                                </div>
+                                </a>
+                                <div id="collapseFour-fz" class="panel-collapse collapse">
+                                    <div class="panel-body">{$bill_info.rent_des}
+                                    </div>
+                                </div>
+                                <div class="innre-bill-image-i-box"></div>
+                            </div>
+                        </div>
+                        <!--点击弹出关-->
+                        <!--点击弹出开-->
+                        <div class="row-fluid">
+                            <div class="col-xs-12 innre-bill-box">
+                                <a data-toggle="collapse" data-parent="#accordion" href="http://mp.loveto.co/#collapseFour-sv">
+                                <div class="panel-heading innre-bill-image-i">
+                                    <ul>
+                                    <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
+                                    <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
+                                    <li class="innre-bill-text3">￥{$bill_info.service_fee}</li>
+                                    <li class="innre-bill-text1">服务费</li><br>
+                                    <li class="innre-bill-text2">{$bill_info.rent_des}服务费</li>
+                                    </ul>
+                                </div>
+                                </a>
+                                <div id="collapseFour-sv" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                    	{$bill_info.rent_des}服务费
+                                    </div>
+                                </div>
+                                <div class="innre-bill-image-i-box"></div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-xs-12 innre-bill-box">
+                                <a data-toggle="collapse" data-parent="#accordion" href="http://mp.loveto.co/#collapseFour-wx">
+                                <div class="panel-heading innre-bill-image-i">
+                                    <ul>
+                                    <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
+                                    <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
+                                    <li class="innre-bill-text3">￥{$bill_info.wx_fee}</li>
+                                    <li class="innre-bill-text1">维修费</li><br>
+                                    <li class="innre-bill-text2">{$bill_info.input_year}年{$bill_info.input_month}月</li>
+                                    </ul>
+                                </div>
+                                </a>
+                                <div id="collapseFour-wx" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                    	{$bill_info.wx_des}
+                                    </div>
+                                </div>
+                                <div class="innre-bill-image-i-box"></div>
+                            </div>
+                        </div>
+                        </div>
+                        <!--点击弹出关-->
+                        <!--滑动过度区域-->
+                        <div class="row-fluid">
+                            <div class="col-xs-12"><div style="height:90px;"></div></div>
+                        </div>
+                        <!--滑动过度区域-->
+                    </div>
+                </div>
+			</div>          
+        </div>  
+    </div>
+    <div class="container-fluid button">
+        <div class="row-fluid button-ds">
+            <div class="col-xs-12 padding-left-right-24">
+                
+            </div>
+        </div>
+    </div>
+    <if condition="$bill_info['pay_status'] neq 1">
+    <div class="container-fluid button">
+        <div class="row-fluid button-ds">
+            <div class="col-xs-12 padding-left-right-10" >
+                    <a style="background-color: #68BB9B; display: block; color:#fff; padding: 5px;" href="{:U('Home/Alipay/pay',array('WIDout_trade_no'=>$bill_info['order_no'],'WIDsubject'=>$bill_info['bill_info'],'WIDtotal_fee'=>$bill_info['total_fee']))}">立即支付</a>
+            </div>
+        </div>
+    </div>
+    </if>
+    <!--  
+	<div class="container-fluid button">
+    	<div class="row-fluid button-ds">
+	       	<div class="col-xs-6 padding-left-right-10" >
+	       		<div class="button-ckzi1" >
+	         		<input name="#" type="button" value="查看凭证" id="pz" class="button-htzh-dx" />
+	       		</div>
+        	</div>
+      		<div class="col-xs-6 padding-left-right-10" >
+        		<div class="button-ckzi2">
+            		<input name="#" type="button" value="立即缴费" id="jf" class="button-htzh-dx" />
+        		</div>
+			</div>
+		</div>-->
+</div>
+<script type="text/javascript">
+   $(function () { $('#collapseFour').collapse({
+      toggle: false
+   })});
+   $(function () { $('#collapseTwo').collapse('show')});
+   $(function () { $('#collapseThree').collapse('toggle')});
+   $(function () { $('#collapseOne').collapse('hide')});
+   
+</script>  
+
+
+</body></html>

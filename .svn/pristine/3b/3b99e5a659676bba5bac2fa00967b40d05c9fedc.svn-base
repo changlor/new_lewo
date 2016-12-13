@@ -1,0 +1,253 @@
+@charset "utf-8";
+*{margin:0; padding:0; }
+li{list-style:none; }
+h1,h2,h3,h4,h5,h6{font-weight:normal; }
+a{text-decoration:none; color:#555555; }
+p{margin:0;}
+img{border:none; }
+body{font-family:"微软雅黑"; color:#555555; }
+input{border:none; background-color: transparent; outline: none; }
+/**
+ * 租客账单
+ */
+.banner-box-bjs{height:170px; width: 100%; overflow: hidden; background-color:#68bb9b; }
+.banner-box-bjt{padding-top:34px; text-align:center; }
+.icon-tenant-top{width:290px; height:auto; }
+.banner-title-1{font-size:13px; color:#fff; position:relative; bottom:142px; }
+.banner-title-2{text-align:right; position:relative; bottom:120px; right:25px; line-height:20px; }
+.banner-title-2-1{font-size:13px; color:#222222; position:relative; right:16px; }
+.banner-title-2-2{font-size:10px; color:#858282; text-align: left; position: absolute; right: -18px; }
+.banner-title-3{text-align:left; position:relative; bottom:121px; left:25px; }
+.banner-title-3-1{font-size:17px; color:#e96464; line-height:40px; }
+.banner-title-4{text-align:right; position:relative; bottom:104px; right:25px; line-height:20px; }
+.banner-title-4-1{font-size:13px; color:#858282; position:relative; right:16px; }
+.banner-title-4-2{font-size:10px; color:#858282; text-align: left; position: absolute; right: -18px; }
+.banner-title-5{text-align:left; position:relative; bottom:104px; left:28px; }
+.banner-title-5-1{font-size:14px; color:#e96464; line-height:40px; }
+.innre-bill-box{}
+.innre-bill-image-ia{height:10px; }
+.innre-bill-image-i{height:44px; background-color: #fff; }
+.innre-bill-image-i-box{height:10px; border-top: 1px solid #ececec; }
+.icon-tenant-logo{width:44px; height:auto; margin-left:6px; float:left; }
+.icon-tenant-bot{width:44px; height:auto; margin-right:4px; float:right; }
+.innre-bill-text1{font-size:14px; color:#222222; line-height:24px; margin-top:1px; margin-bottom:0; float:left; position: absolute; left: 52px; }
+.innre-bill-text2{font-size:11px; color:#858282; line-height:20px; float:left; position:relative; left:2px; }
+.innre-bill-text3{font-size:14px; color:#444444; line-height:44px; float:right; }
+.panel-body{font-size: 12px; color: #858282; padding-left: 24px; padding-right: 24px; background-color: #eaeaea; }
+.panel-heading{padding: 0; border-bottom: 1px solid transparent; }
+.padding-left-right-24{padding-left:24px; padding-right:24px; }
+.button-ckzi-col12{font-size:14px; color:#fff; line-height:34px; text-align:center; height:34px; background-color:#68bb9b; border-radius:4px;outline: none; }
+/**
+ * 退租明细
+ */
+.banner-box-bjt ul{width: 290px; height: 116px; text-align: left; margin: 0 auto; font-size: 12px; font-size: 12px;color: #222;  line-height: 23px; position: relative; bottom: 122px;}
+.banner-tzmi-left-text{padding-left: 15px;}
+.banner-tzmi-center-text{text-align: center;}
+.banner-tzmi-left-text span{  float: right; padding-right: 15px;}
+.bot-text-font-ztzje{height:100px;font-size: 14px;color: #d86f6f;text-align: center;padding-top: 10px;}
+/**
+ * 遮盖层
+ */
+.zhez-sftj-box{width:auto; height:100%; background-color:rgba(51,51,51,0.7); position:fixed; top:0;right:0;bottom:0;left:0; z-index:100;}
+.text-sftj-box{height: 160px;width: auto;background: url(../images/icon-sftj-io.png) 20px 26px no-repeat;background-size: 45px 45px; background-color: #f4f4f4;position: absolute;top: 36%;right: 0;bottom: 0;left: 0;z-index: 999;margin: 0 31px;}
+.text-sftj-box span{font-size: 15px;color: #68bb9b;line-height: 100px;padding-left: 75px;}
+.sftj-but-box{font-size: 14px;padding-left: 20px;padding-right: 20px;position: relative;bottom: 7px;}
+.sftj-but-box-s{color: #68bb9b;float: left; padding: 8px 58px;border: 1px solid #68bb9b;border-radius: 5px;}
+.sftj-but-box-f{color: #fff;float: right; padding: 8px 57px;background-color: #68bb9b;border: 2px solid #68bb9b;border-radius: 5px;}
+.sftj-but-box-s:hover{color: #68bb9b; }
+.sftj-but-box-f:hover{color: #fff;}
+/**
+ * 租客历史账单
+ */
+.header-icon1-1text-a{font-size:14px; color:#fff; position:relative; bottom:26px; right:7px; }
+.header-icon2-2text-a{font-size:14px; color:#68bb9b; position:relative; bottom:26px; left:7px; }
+.innre-bill-ls-dsh{height:3px; }
+.img-icon_ywcd-box{}
+.icon_ywcd-float{width:128px; height:auto; float:right; border-radius:10px; }
+.innre-bill-ls-box{padding-right:10px; padding-left:10px; margin-top:12px; }
+.bill-ls-box-backcolor{background-color:#fff; border-radius:8px; }
+.but-bot-ckxq{font-size:12px; color:#68bb9b; padding:4px 6px; border-radius:3px; border:1px solid #68bb9b; background-color:#fff; position:absolute; bottom:12px; right:83px; }
+.but-bot-ckxq2{font-size:12px; color:#68bb9b; padding:4px 6px; border-radius:3px; border:1px solid #68bb9b; background-color:#fff; position:absolute; bottom:12px; right:18px; }
+.innre-bill-ls-bot{font-size:12px; color:#68bb9b; padding:6px 0; margin:0 0 0 1em; border-bottom:1px solid #f4f4f4; }
+.innre-bill-ls-box-bot{height:2px; }
+.bill-ls-box-backcolor ul li{font-size:11px; color:#444444; padding:0 0 0 1.5em; margin:6px 0 8px 1em; background-image:url(../images/icon_wdfjo9px.png); background-repeat:no-repeat; background-position:left .25em; }
+.innre-bill-ls-text-zt{color:#999999; }
+/**
+ * 我的管家
+ */
+.wdgj-top-box{width:100%; height:80px; background-color:#fff; border-bottom:1px solid #f4f4f4; overflow:hidden; }
+.wdgj-top-icon-box{width:70px; height:80px; float:left; }
+.wdgj-top-icon-tx{width:34px; height:auto; border-radius:50%; margin:23px 16px 23px 20px; }
+.wdgj-top-text-box{padding-top:16px; overflow:hidden; }
+.text-wdgj-xm-ys{font-size:15px; line-height:24px; color:#222222; }
+.text-wdgj-gxsm-ys{height:24px; font-size:14px; line-height:24px; color:#bdbdbd; overflow:hidden; }
+.text-wdgj-rs{font-size:14px; color:#222222; line-height:42px; text-align:center; background-color:#fff; }
+.wdgjtx-inner-box{width:100%; height:80px; overflow:hidden; }
+.wdgjtx-inner-icon-box{width:auto; height:80px; float:left; }
+.wdgjtx-inner-icon-tx{width:50px; height:auto; border-radius:50%; margin:21px 20px 11px 20px; }
+.wdgjtx-inner-text-box{padding-top:20px; }
+.wdgjtx-inner-xm-ys	{font-size:13px; line-height:24px; color:#222222; }
+.icon-wdgj-sjhm-ys{width:18px; height:auto; margin:0 8px 0 0; }
+.text-wdgj-bord-top-box{height:36px; padding-left:20px; overflow:hidden; }
+.text-wdgj-bord-top{font-size:12px; color:#bdbdbd; line-height:36px; text-align:right; border-top:1px solid #dad8d8; padding-right:30px; }
+.wdgj-back-color-ys{background-color:#fff; }
+.but-bot-wdgj-lxt{font-size:12px; color:#7f7e7e; padding:1px 10px; border-radius:3px; border:1px solid #c2c1bf; background-color:#fff; position:absolute; bottom:16px; right:30px; }
+.top-height-10{height:10px; }
+/**
+ * 底部按钮
+ */
+.button{width:100%; height:50px; }
+.button-ds{width:100%; height:50px; background-color:#f4f4f4; border-top:0 solid #ececec; text-align:center; margin:0 auto; position:fixed; bottom:0px; padding-top:10px; }
+.button-ckzi1{margin-left:16px; font-size:14px; color:#68bb9b; line-height:30px; height:32px; background-color:#fff; border:2px solid #68bb9b; border-radius:4px; }
+.button-ckzi2{margin-right:16px; font-size:14px; color:#fff; line-height:30px; height:32px; background-color:#68bb9b; border:2px solid #68bb9b; border-radius:4px; }
+.button-htzh-dx{width:100%;}
+.padding-left-right-10{padding-right:10px; padding-left:10px; }
+/**
+ * 支付方式
+ */
+.title-inner-zfxx{width: 100%; height: 80px; background-color: #fff; }
+.icon-zfrtx-box{}
+.icon-zfrtx-box-dx40{width: 40px; height: auto; margin: 20px 26px 20px 30px; border-radius: 50%; float: left; }
+.icon-zfrtx-box-text{font-size: 18px; color: #222222; line-height: 18px; margin: 20px 0; float: left; }
+.icon-zfrtx-text-s12{font-size: 12px; line-height: 26px; margin-left: 3px; }
+.inner-zffs-mar-top15{margin-top: 15px; }
+.title-inner-zffs{width: 100%; height: 62px; background-color: #fff; margin-top: 1px; }
+.icon-zffs-box-dx22{width: 22px; height: auto; margin: 20px 26px 20px 30px; border-radius: 50%; float: left; }
+.icon-zffs-box-text{font-size: 15px; color: #222222; line-height: 15px; margin: 16px 0; float: left; }
+.icon-zffs-text-s12{color: #9b9b9b; font-size: 12px; line-height: 20px; }
+.icon-zfdtt-box{width: 100%; height: 4px; background-image: url(../images/icon_zfdtt.png); background-size: 14px 4px; background-repeat: repeat-x; background-position: bottom; background-position: 6px; }
+.button-qrzf-col12{width: 100%; font-size:15px; color:#fff; line-height:40px; text-align:center; height:40px; background-color:#68bb9b; border-radius:4px; border:1px; }
+.but-wxbx-tj-maring35{margin-top: 35px; }
+.box-wxbx-padding-zy10{margin: 0 10px; }
+/**
+ * 支付成功-失败
+ */
+.zf-icon-png-box{width: 140px; height: 94px; margin: 0 auto; padding-top: 25px; }
+.zf-icon-png{width: 45px; height: auto; }
+.zfzt-text-font{font-size: 18px; color: #68bb9b; position: relative; top: 4px; left: 14px; }
+.zfxq-text-box{width: 100%; height: auto; background-color: #fff; padding-top: 20px; padding-bottom: 10px; }
+.zfxq-text-box-font{width: 100%; font-size:14px; color:#222222; line-height:30px; text-align:left; margin-left:20px; }
+/**
+ * 维修报修
+ */
+.box-wxbx-padding-zy23{padding: 0 23px;}
+.box-wxbx-padding-zy28{padding: 0 28px;}
+.but-wxbx-tj-maring28{margin-top:28px; }
+.box-wxbx-ys{margin-top: 15px; padding-bottom: 15px; background-color: #fff; border-radius: 8px; border:1px solid #dcdcde; overflow: hidden; }
+.title-inner-wxbx{font-size:13px; color:#68bb9b; padding-top:15px; padding-left:28px; }
+.but-wxbx-an-img{font-size: 12px; color: #828483; line-height: 28px; min-width: 72px; min-height: 28px; cursor: pointer; background-image: url(../images/icon-wxbx@2x.png); background-size: 72px 28px; background-repeat: no-repeat; background-position: center; }
+.but-wxbx-an-img-g{font-size: 12px; color: #68bb9b; line-height: 28px; /* min-width: 72px; */ min-height: 28px; margin-top: 10px; cursor: pointer; background-image: url(../images/icon-wxbx-g@2x.png); background-size: 72px 28px; background-repeat: no-repeat; background-position: center; }
+.but-text-wxbx-left-ys{position:absolute; left: 12px }
+.but-text-wxbx-right-ys{position:absolute; right: 12px }
+.but-wxbx-img-left-ys{background-position: left; left:28px; }
+.but-wxbx-img-right-ys{background-position: right; right:28px; }
+.form-control{min-height:138px; margin-top:15px; margin-bottom:35px; padding: 0; border:1px solid #828483; border-radius: 0; }
+/* .btn.active{background-image: none; outline: 0; -webkit-box-shadow: none; box-shadow: none; }
+.btn{width: 100%; padding: 0; border: 0 solid transparent; }
+.btn:hover{color: #828483; }
+.btn.active{color: #68bb9b; }
+.btn.active, .btn:active{background-image: none; outline: 0; -webkit-box-shadow: none; box-shadow: none; } */
+/**
+ * 换房
+ */
+.text-sqxx-left-span-box,.text-sqxx-span-box,.text-sqxx-right-span-box{font-size: 12px; color: #505050;line-height: 28px; min-height: 28px;margin-top: 10px;margin-bottom: 6px;}
+.text-sqxx-left-span-box{text-align: left;position: relative; left:28px;}
+.text-sqxx-span-box{text-align: center;}
+.text-sqxx-right-span-box{text-align: right;position: relative; right:28px;}
+.text-sqxx-left-span-box span,.text-sqxx-span-box span,.text-sqxx-right-span-box span{padding: 5px 12px; border: 1px solid #505050;}
+/**
+ * 退租
+ */
+.but-text-ts5z-left-ys{left: 6px;}
+.text-sq-ulli-ys{font-size: 12px;color: #505050;padding-top: 2px}
+.text-sq-ulli-ys li{line-height: 22px;}
+.text-sq-ulli-ys li p{float: right;}
+.box-text-ulli-ys{margin-top: 15px; padding-bottom: 12px; background-color: #fff; border-radius: 8px; border:1px solid #dcdcde; overflow: hidden; }
+.text-sq-ulli-float-left{float: left;}
+.text-sq-ulli-float-right{float: right;}
+.input-sq-tzsj-box{display: initial;height: 20px;line-height: 20px;border:1px solid #ddd;background-color: #f4f4f4;}
+/**
+ * 维修
+ */
+.text-wxms-box{min-height:100px; margin-top:10px; padding: 0; border-radius: 0;}
+.text-wxms-box-control{min-height:100px; width: 100%; padding: 0; border:1px solid #828483; border-radius: 0;}
+.text-sq-wxms-box{min-height:100px; margin-top:10px; padding: 0; border:1px solid #828483; border-radius: 0;}
+.text-sq-wxms-box p{font-size: 12px; color: #505050;line-height: 18px; padding: 10px 5px;}
+/**
+ *  通知信息
+ */
+.navbutton-top-5-box{widows: 100%;height: 46px;overflow: hidden;}
+.navbutton-top-5{width: 20%;height: 46px;font-size: 15px;color: #222;line-height: 46px;padding-left: 10px;padding-right: 10px;text-align: center;float:left;background-color: #fff;}
+.but-click-color{height: 46px;line-height: 46px;color: #f87878;border-bottom: 1px solid #f87878;}
+.text-xxtz-box{width: 100%;height: 60px;margin-top: 10px;padding-top: 8px;background: #fff;}
+.img-tz-icon-box,.img-dk-icon-box,.img-wx-icon-box,.img-hf-icon-box{width:46px;height: 46px;margin: 0 11px 0 16px;background: url(../images/img-tzxx-icon.png) no-repeat;background-size:46px auto;overflow: hidden;float: left;}
+.img-tz-icon-box{background-position: 0 0;}
+.img-dk-icon-box{background-position: 0 -49px;}
+.img-wx-icon-box{background-position: 0 -98px;}
+.img-hf-icon-box{background-position: 0 -147px;}
+.text-tzxx-title-ys{height: 20px;font-size: 14px;color: #222;line-height: 20px;overflow: hidden;}
+.text-tzxx-right-float{height: 20px;font-size: 12px; color: #a7a4a4;line-height: 20px;float: right; padding-right: 23px;}
+.text-tzxx-color-ys{height: 23px;font-size: 12px; color: #a7a4a4;line-height: 23px;overflow: hidden;}
+.text-tzxx-color-ys span{padding-left: 1em;}
+/**
+ * 填写退租信息
+ */
+.text-sdq-div-ys{font-size: 12px;color: #505050;position: relative; bottom: 3px;}
+.text-sdq-div-ys div{padding-top: 15px}
+.text-sdq-div-ys input{max-width: 50px;height: 20px;border: 1px solid #ddd;}
+.text-left-input-ys,.text-right-input-ys,.text-center-input-ys{font-size: 12px;color: #505050;}
+.text-center-input-ys{text-align: center;}
+.text-right-input-ys{text-align: right;}
+.text-left-input-ys{text-align: left;}
+.text-fjdbfont-posibox{position: relative;top:31px;}
+.padding-bottom-5px{padding-bottom: 5px;}
+.text-yfxx-box{min-height:80px; margin-top:10px; padding: 0; border-radius: 0;}
+.text-yfxx-box-control{min-height:80px; width: 100%; padding: 0; border:1px solid #ddd; border-radius: 0;}
+.iput-checkbox-box{width: 20px;height: 20px;background-color: #f4f4f4;border: 1px solid #ddd;position: relative;top: 5px;}
+.text-checkbox-input-box{padding-top: 12px;font-size: 12px;color: #505050;}
+.text-checkbox-input-box label{font-size: 12px;line-height: 26px;display: inline-block; max-width: 100%; margin-bottom: 0; font-weight: initial;}
+.text-hkzh-input-box{padding-top: 10px;}
+.text-hkzh-input-box input{min-width: 100%;height: 20px;background-color: #f4f4f4;border: 1px solid #ddd;padding-left: 65px;position: absolute;bottom: 0;}
+.text-hkzh-font-ys{width: 65px;font-size: 12px;height: 20px;line-height: 20px;position: relative;z-index: 9; background-color: #fff; border-right: 1px solid #ddd;}
+.text-hkzh-input-ys{max-width: 100%;} 
+.but-pon-fixed-bot{position: fixed;bottom: 6px;z-index: 99;}
+.pon-fixed-bot-box{padding-left: 23px; padding-right: 23px;}
+.text-fjdb-posibox input{max-width: 32px;height: 20px;border: 1px solid #ddd;}
+.text-fjdb-posibox div, .text-fjdb-font-ys{padding-top: 14px}
+/**
+ * 退租费用
+ */
+.box-wxbx-padding-left28 div ul li{font-size: 12px;color: #515151;}
+.box-wxbx-padding-left28{padding-left: 28px;}
+.title-inner-htxx-box{font-size:13px; color:#68bb9b; padding-top:12px; padding-left:28px; padding-bottom: 8px;}
+.text-font-tzxx-overbox{height: 22px;width: auto;overflow: hidden;}
+.text-font-tzxx-overbox span{float: right;}
+.border-top-bot-box{border-top: 1px solid #f4f4f4;border-bottom: 1px solid #f4f4f4;}
+.text-font-htxx-overbox{height: 30px;width: auto;line-height: 30px;overflow: hidden;border-top: 1px solid #f4f4f4;}
+.text-font-htxx-overbox span{color: #adadad;float: right;padding-right: 38px;}
+.text-font-htxx-xmfy-box{height: 30px;width: auto;line-height: 30px;overflow: hidden;}
+.text-font-htxx-xmfy-box input{max-width: 30%;height: 20px;line-height: 20px;border: 1px solid #ddd;background-color: #f4f4f4;margin-left: 10px;}
+.text-font-htxx-xmfy-box span{padding-left: 20px;}
+.text-font-htxx-xmfy-box span input{max-width: 18%;}
+.img-tzfy-icon3-box{display: inline-block;width: 21px;height: 21px;overflow: hidden;background: url(../images/img-tzfy-icon2@.png) 0 -44px no-repeat;background-size: 21px auto;float: right;position: relative;top: 4px;right: 10px;}
+.img-tjfy-icon4-box{display: inline-block;width: 21px;height: 21px;overflow: hidden;background: url(../images/img-tzfy-icon2@.png) 0 -66px no-repeat;background-size: 21px auto;float: right;position: relative;top: 4px;right: 10px;}
+.text-font-htxx-xmfy-box img{width: 21px;height: auto;}
+/**
+ * 折叠冲突样式
+ */
+.ui-accordion .ui-accordion-header{margin-top: 0;padding: 0;}
+.ui-accordion .ui-accordion-header .ui-accordion-header-icon{width: 21px;height: 21px;position: absolute;top: 50%;left: initial;right: 8px;; margin-top: -11px;}
+.ui-icon{width: 25px;height: 25px;}
+.ui-state-default .ui-icon{background-image: url(../images/img-tzfy-icon2@.png);}
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon{background-image: url(../images/img-tzfy-icon2@.png);}
+.ui-icon-triangle-1-e{background-position: -3px 2px;background-size: 21px auto; }
+.ui-icon-triangle-1-s{background-position: -3px -21px;background-size: 21px auto; }
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{border: none; background: #fff;font-weight: normal;}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{border: none; background: #fff;font-weight: normal;}
+.ui-accordion .ui-accordion-content{padding: 0;}
+.ui-widget-content{border: none;background: #fff;}
+.text-font-htxx-tzje-ys{font-size: 14px;color: #d86f6f;line-height: 20px;text-align: center;padding:7px 28px 0 0 ;}
+/**
+ * 申请续租
+ */
+.select-xzsj{width: 142px;padding-left: 4px;border: 1px solid #ddd;background-color: #f4f4f4;}

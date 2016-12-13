@@ -1,0 +1,85 @@
+<!--main-container-part-->
+<div id="content">
+<!--breadcrumbs-->
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="index.html" title="返回首页" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a>房源管理</a> <a class="current">房源列表</a></div>
+  </div>
+<!--End-breadcrumbs-->
+  <div class="container-fluid">
+      <div class="widget-box">
+      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+        <h5>房源列表</h5>
+        <a href="{:U('Admin/Houses/area')}" class="label label-info pull-left">返回</a>
+        <a href="{:U('Admin/Houses/add_house')}" class="label label-success"><i class="icon-plus"></i>添加房源</a>
+        <a href="#" class="label label-info"><i class="icon-calendar"></i>下载水电气汇总</a>
+      </div>
+      <div class="widget-content nopadding">
+        <table class="table table-bordered data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>房屋编号</th>
+                <th>所在小区</th>
+                <th>出租类型</th>
+                <th>栋-层-房号</th>
+                <th>管家</th>
+                <th>管家电话</th>
+                <th>租住</th>
+                <th>该月水电气状态</th>
+<!--                 <th>该月账单状态(已发/总数)</th> -->
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <volist name="housesList" id="vo">
+              <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.house_code}</td>
+                <td>{$vo.area_name}</td>
+                <td>
+                  <switch name="vo.type">
+                    <case value="1">间</case>
+                    <case value="2">床</case>
+                  </switch>
+                </td>
+                <td>{$vo.building}-{$vo.floor}-{$vo.door_no}</td>
+                <td>{$vo.steward_nickname}</td>
+                <td>{$vo.steward_mobile}</td>
+                <td>
+                  <if condition="$vo['is_checkin'] eq true">
+                    <span class="label label-success">有租</span>
+                    <else/>
+                    <span class="label label-important">未租</span>
+                  </if>
+                </td>
+                <td>
+                  <if condition="$vo['is_typein'] eq true">
+                    <span class="label label-success">已录入</span>
+                    <else/>
+                    <span class="label label-important">未录入</span>
+                  </if>
+                </td>
+ <!--                <td>
+   <if condition="$vo['sended_count'] eq $vo['total_count'] AND $vo['total_count'] neq 0">
+     <span class="label label-success">{$vo.sended_count}/{$vo.total_count}</span>
+   <else/>
+     <span id="bill_status{$vo.id}" class="label label-important">{$vo.sended_count}/{$vo.total_count}</span>
+   </if>
+ </td> -->
+                <td>
+                  <a href="{:U('Admin/Houses/detail_house',array('house_code'=>$vo['house_code'],'area_id'=>$area_id))}" class="btn btn-info btn-mini">查看房屋</a>
+                  <a href="{:U('Admin/Houses/bill_list',array('house_id'=>$vo['id'],'area_id'=>$area_id))}" class="btn btn-info btn-mini">查看账单</a>
+                  <a href="{:U('Admin/Houses/update_house',array('house_code'=>$vo['house_code']))}" class="btn btn-warning btn-mini" target="_blank">修改</a>
+<!--                   <a href="{:U('Admin/Houses/create_bill',array('house_id'=>$vo['id']))}" class="btn btn-warning btn-mini">生成账单</a>
+<a href="#" class="btn btn-danger btn-mini">发送账单</a> -->
+                  <a href="#" class="btn btn-danger btn-danger btn-mini" onclick="if(!confirm('是否删除')) return false;">删除</a>
+                </td>
+              </tr>
+              </volist>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!--main-container-part-->

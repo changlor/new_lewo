@@ -1,0 +1,348 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class IndexController extends Controller {
+    public function __construct(){
+        parent::__construct();
+        if ( empty($_SESSION['username']) && ACTION_NAME != 'register') {
+            $this->login();
+            die();
+        }
+    }
+
+    /**
+     * [后台首页]
+     **/
+    public function index(){
+        $today = date("Y-m-d",time());//今天
+        $yesterday = date("Y-m-d",strtotime($today." -1 day"));
+
+        //待办数量
+        $DSchedule = D("schedule");
+        $schedule_list = $DSchedule->getScheduleList();
+        $TFcount = $DSchedule->getScheduleCount(C("schedule_type_tf"),0,C("admin_type_cw"));
+        $ZFcount = $DSchedule->getScheduleCount(C("schedule_type_zf"),0,C("admin_type_cw"));
+        $HFcount = $DSchedule->getScheduleCount(C("schedule_type_hf"),0,C("admin_type_cw"));
+        $LXDKcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>1,"back_type"=>1))->count();
+        $LXDKYEcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>1,"back_type"=>2))->count();
+        $_SESSION['schedule_count'] = $TFcount+$ZFcount+$HFcount+$LXDKcount+$LXDKYEcount;
+
+        $today_total_money = getTotalMoney($today);//今日总金额：今日新签合同收入的总金额
+        $yesterday_total_money = getTotalMoney($yesterday);//昨天总金额：昨天签合同收入的总金额
+        $today_sign_count = getSignCount($today);//签约个数：今天签约的个数
+        $JD_total_money = getJDMoney($today);//缴定金额：今天缴定金额
+        //空房间
+        $room_count = getRoomCount();//总房间数量
+        $empty_room_count = getEmptyRoomCount();//空房间数量
+        $percent_room = $empty_room_count / $room_count;
+        $percent_room = $percent_room? ceil($percent_room*100) : 0;
+        $this->assign("empty_room_count",$empty_room_count);
+        $this->assign("percent_room",$percent_room);
+        //空床位
+        $bed_count = getBedCount();//总房间数量
+        $empty_bed_count = getEmptyBedCount();//空房间数量
+        $percent_bed = $empty_bed_count / $bed_count;
+        $percent_bed = $percent_bed? ceil($percent_bed*100) : 0;
+        $this->assign("empty_bed_count",$empty_bed_count);
+        $this->assign("percent_bed",$percent_bed);
+        $this->assign("today_total_money",$today_total_money);
+        $this->assign("yesterday_total_money",$yesterday_total_money);
+        $this->assign("today_sign_count",$today_sign_count);
+        $this->assign("JD_total_money",$JD_total_money);
+        $this->assign("username",$_SESSION['username']);
+    	$this->display("Common/header");
+    	$this->display("Common/nav");
+    	$this->display("index");
+    	$this->display("Common/footer");
+
+    }
+
+    /**
+    * [重新计算待办未完成数目]
+    **/
+    public function refesh_schedule_count(){
+        //待办数量
+        $DSchedule = D("schedule");
+        $schedule_list = $DSchedule->getScheduleList();
+        $TFcount = $DSchedule->getScheduleCount(C("schedule_type_tf"),0,C("admin_type_cw"));
+        $ZFcount = $DSchedule->getScheduleCount(C("schedule_type_zf"),0,C("admin_type_cw"));
+        $HFcount = $DSchedule->getScheduleCount(C("schedule_type_hf"),0,C("admin_type_cw"));
+        $LXDKcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>1,"back_type"=>1))->count();
+        $LXDKYEcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>1,"back_type"=>2))->count();
+        $_SESSION['schedule_count'] = $TFcount+$ZFcount+$HFcount+$LXDKcount+$LXDKYEcount;
+        die(json_encode(array("schedule_count"=>$_SESSION['schedule_count'])));
+    }
+    /*
+     * [登录]
+     */
+    public function login(){
+    	if ( !empty( $_POST ) ) {
+    		$Muser = M('admin_user');
+    		$where['username'] = $_POST['username'];
+    		$where['password'] = md5($_POST['password']);
+    		$result = $Muser->where($where)->find();
+    		if ( !is_null($result) ) {
+                $_SESSION['username'] = $_POST['username'];
+    			$this->success("登录成功",U("Admin/Index/index"),1);
+    		} else {
+    			$this->error("登录失败");
+    		}
+    	} else {
+    		$this->display("login");
+    	}
+    }
+    /*
+     * [注册]
+     */
+    public function register(){
+    	if ( !empty( $_POST ) ) {
+    		if ( $_POST['password'] !== $_POST['repassword'] ){
+    			die("两次密码不相同");
+    		}
+    		$Muser = M('admin_user');
+    		$data['username'] = $_POST['username'];
+    		$data['password'] = md5($_POST['password']);
+    		$data['ip'] = get_client_ip();
+            $result = $Muser->where(array('username'=>$data['username']))->find();
+            if ( empty($result) ) {
+                $Muser->add($data);
+                $this->success("注册成功",U("Admin/Index/login"));
+            } else {
+                $this->error("注册失败，帐号已存在");
+            }
+    	} else {
+    		$this->display("register");
+    	}
+    }
+    /*
+     * [退出登录]
+     */
+    public function login_out(){
+        session_destroy();
+    	$this->success("退出成功",U("Admin/Index/login"));
+    }
+
+    /**
+    * [检测帐号是否存在两次]
+    **/
+    public function check_is_two_account(){
+        $MAccount = M("account");
+        $arr_mobile = $MAccount->field("id,mobile")->select();
+        $info = array();
+        foreach ( $arr_mobile AS $k=>$v ) {
+            /*$info[$k]['mobile'] = $v['mobile'];
+            $info[$k]['id'] = $v['id'];
+            $info[$k]['count'] = count($MAccount->where(array("mobile"=>$v['mobile']))->select());*/
+            $count = count($MAccount->where(array("mobile"=>$v['mobile']))->select());
+            if ( $count > 1 ) {
+                $info[$k]['mobile'] = $v['mobile'];
+                $info[$k]['id'] = $v['id'];
+                $info[$k]['count'] = $count;
+            }
+        }
+        dump($info);
+    }
+
+    /**
+    * [修改缴费周期]
+    **/
+    public function update_zhouqi(){
+        $MContract = M("contract");
+        $arr = $MContract->field("id,rent_type")->select();
+        foreach($arr AS $key=>$val){
+            $arr_type = explode("_",$val['rent_type']);
+            $MContract->where(array("id"=>$val['id']))->save(array("period"=>$arr_type['1']));
+        }
+    }
+
+    /*public function update_room_account(){
+        $arr[]=array(18883276883,CQ00015E);
+        
+        $MAccount = M("account");
+        $MRoom = M("room");
+        foreach ($arr AS $key=>$val) {
+           $account_id = $MAccount->where(array("mobile"=>$val['0']))->getField("id");
+           $account_id = !empty($account_id)? $account_id : 0;
+           $room_info = $MRoom->where(array("room_code"=>$val['1']))->save(array("account_id"=>$account_id));
+
+        }
+    }
+
+    public function update_house_steward(){
+        $arr[] = array(18166342735,CQ00001);
+        
+        $MAdmin = M("admin_user");
+        $MHouse = M("houses");
+        foreach ( $arr AS $key=>$val ) {
+            $steward_id = $MAdmin->where(array("username"=>$val['0']))->getField("id");
+            $MHouse->where(array("house_code"=>$val['1']))->save(array("steward_id"=>$steward_id));
+        }
+    }
+
+    public function add_ammeter_house(){
+$arr[] = array('CQ00007','223','8765','1031','2016-08-30 13:40:27','8','2016','1273','-449','44','1');
+
+
+        $MHouse = M("houses");
+        $MAHouse = M("ammeter_house");
+        foreach ($arr AS $key=>$val) {
+            $data = array();
+            $house_id = 0;
+            $house_id = $MHouse->where(array("house_code"=>$val['0']))->getField("id");
+
+            $data['house_id'] = $house_id;
+            $data['total_water'] = $val['1'];
+            $data['total_energy'] = $val['2'];
+            $data['total_gas'] = $val['3'];
+            $data['input_date'] = $val['4'];
+            $data['input_month'] = $val['5'];
+            $data['input_year'] = $val['6'];
+            $data['energy_add'] = $val['7'];
+            $data['water_add'] = $val['8'];
+            $data['gas_add'] = $val['9'];
+            $data['status'] = 1;
+;
+            $MAHouse->add($data);
+        }
+    }
+
+    public function add_ammeter_room(){
+$arr[] = array('1637','2016-08-30 13:40:27','8','2016','1637','CQ00007F','CQ00007');
+        $MRoom = M("room");
+        $MHouse = M("houses");
+        $MAeemeterRoom = M("ammeter_room");
+        foreach ($arr AS $key=>$val) {
+            $room_id = $MRoom->where(array("room_code"=>$val['5']))->getField("id");
+            $room_id = !empty($room_id)?$room_id:0;
+            $house_id = $MHouse->where(array("house_code"=>$val['6']))->getField("id");
+            $house_id = !empty($house_id)?$house_id:0;
+            $data['room_energy'] = $val['0'];
+            $data['input_date'] = $val['1'];
+            $data['input_month'] = $val['2'];
+            $data['input_year'] = $val['3'];
+            $data['room_energy_add'] = $val['4'];
+            $data['room_id'] = $room_id;
+            $data['house_id'] = $house_id;
+            $data['status'] = 1;
+            $MAeemeterRoom->add($data);
+        }
+    }
+*/
+
+    public function add_contract(){
+        
+        $arr[] = array('18223670437','ZYJ00013A','900','2016-09-03','2016-12-02','2_3','1','900','90','1','2','2016-09-04 00:00:00','2016-09-03 12:36:52','3870','3870','890','1303','8954','326');
+        
+        $MAccount = M("account");
+        $MRoom = M("room");
+        $MContract = M("contract");
+        foreach ( $arr AS $key=>$val ) {
+            $is_has_account = $MAccount->where(array("mobile"=>$val['0']))->select();
+            if ( count($is_has_account) > 0 ) {
+                $account_id = $MAccount->where(array("mobile"=>$val['0']))->getField("id");    
+            } else {
+                //没有 插入一条
+                $add['mobile'] = $val['0'];
+                $add['password'] = md5("123456");
+                $add['realname'] = "请修改";
+                $account_id = $MAccount->add($add);
+            }
+            
+            $room_id = $MRoom->where(array("room_code"=>$val['1']))->getField("id");
+            //mobile,room_code,deposit,start_time,end_time,rent_type,contract_status,rent,fee,pay_status,person_count,pay_date,create_time,total_fee,pay_total,zS,zD,zQ,roomD
+            $result = $MContract->where(array("account_id"=>$account_id,"contract_status"=>1))->select();
+            if ( count($result) > 0 ) {
+                die($val['0']."已签约");
+            }
+            //把房屋改成入住
+            $MRoom->where(array("id"=>$room_id))->save(array("account_id"=>$account_id,"status"=>2));
+
+            $data['account_id'] = !empty($account_id)?$account_id:0;
+            $data['room_id'] = !empty($room_id)?$room_id:0;
+            $data['deposit'] = $val['2'];
+            $data['start_time'] = $val['3'];
+            $data['end_time'] = $val['4'];
+            $data['rent_type'] = $val['5'];
+            $data['contract_status'] = $val['6'];
+            $data['rent'] = $val['7'];
+            $data['fee'] = $val['8'];
+            $data['pay_status'] = $val['9'];
+            $data['person_count'] = $val['10'];
+            $data['pay_date'] = $val['11'];
+            $data['create_time'] = $val['12'];
+            $data['total_fee'] = $val['13'];
+            $data['pay_total'] = $val['14'];
+            $data['zS'] = $val['15'];
+            $data['zD'] = $val['16'];
+            $data['zQ'] = $val['17'];
+            $data['roomD'] = $val['18'];
+            $data['pay_log'] = "老系统导入新系统丢失部分信息";
+            $MContract->add($data);
+        }
+    }
+
+    public function update_account(){
+        $arr[] = array('田永飞','C1575765F6871A8320647D61A129904D','18323426982','500112199407022747','F');
+        
+
+        $MAccount = M("account");
+        foreach ($arr as $key => $value) {
+            $where['mobile'] = $value['2'];
+            $save['realname'] = $value['0'];
+            $save['password'] = $value['1'];
+            $save['card_no'] = $value['3'];
+            $save['sex'] = ($value['4']=='M')? 1:2;
+            $MAccount->where($where)->save($save);
+        }
+    }
+
+    public function add_charge_bill(){
+
+        $MAccount = M("account");
+        $MRoom = M("room");
+        $MChargebill = M("charge_bill");
+        foreach ($arr as $key => $val) {
+            $room_id = $MRoom->where(array("room_code"=>$val['9']))->getField("id");
+            $account_id = $MAccount->where(array("realname"=>$val['11']))->getField("id");
+
+            $data['room_id'] = is_null($room_id)?'':$room_id;
+            $data['house_code'] = $val['10'];
+            $data['account_id'] = is_null($account_id)?'':$account_id;
+            $data['water_fee'] = $val['12'];
+            $data['public_energy_fee']  = $val['14'];
+            $data['energy_fee'] = $val['25'];
+            $data['gas_fee'] = $val['15']; 
+            $data['rubbish_fee'] = $val['16'];
+            $data['input_month'] = $val['4'];
+            $data['input_year'] = $val['5'];
+            $data['person_day'] = $val['18'];
+            $data['total_person_day'] = $val['17'];
+            $data['create_time'] = $val['19'];
+            $data['modify_time'] = $val['20'];
+            $data['pay_status'] = $val['0'];
+            $data['total_energy'] =$val['21'];
+            $data['total_water'] = $val['22'];
+            $data['total_gas'] = $val['23'];
+            $data['wgfee_unit'] = $val['24'];
+            $data['room_energy_fee'] = $val['13'];
+            $data['total_fee'] = $val['27'];
+            $data['rent_fee'] = $val['28'];
+            $data['rent_des'] = $val['29'];
+            $data['service_fee'] = $val['30'];
+            $data['room_energy_add']= $val['31'];
+            $data['is_send'] = $val['32'];
+            $data['wx_fee'] = $val['33'];
+            $data['wx_des'] = $val['34'];
+            $data['late_pay_date'] = $val['7'];
+            $data['should_pay_date'] = $val['6'];
+            $data['type'] = $val['35'];
+            $data['total_person_energy'] = $val['26'];
+            $data['modify_log'] = $val['8'];
+            $data['is_delete'] = ($val['3']==1)?0:1;
+            $data['pay_type'] = $val['2'];
+            $data['pay_time'] = $val['1'];
+            $id = $MChargebill->add($data);
+            file_put_contents("add_charge_log.txt", $id.",",FILE_APPEND);
+        }
+    }
+}

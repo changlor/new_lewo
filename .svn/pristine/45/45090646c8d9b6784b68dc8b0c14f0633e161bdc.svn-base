@@ -1,0 +1,26 @@
+@charset "utf-8";
+a:link, a:visited, a:hover,a:active{text-decoration: none; }
+input,select,button,textarea{text-decoration: none; outline: none;}
+body{outline: none;}
+*{margin:0; padding:0; }
+li{list-style:none; }
+h1,h2,h3,h4,h5,h6{font-weight:normal; }
+a{text-decoration:none; }
+img{border:none; }
+body{font-family:"微软雅黑"; }
+input{border:none; background-color:transparent; }
+#denglu{width:100%; }
+.denglu_inner{width:160px; height:58px; margin:0 auto; margin-top:68px; }
+.logo{width:58px; height:58px; }
+.lewo{font-size:30px; line-height:58px; padding-left:68px; position:relative; bottom:68px; }
+.loveto{font-size:18px; line-height:56px; padding-left:66px; position:relative; bottom:95px; }
+.inner_icon{width:100%; margin-top:28px; }
+.icon_pic{max-width:100%;padding-left: 30px; padding-right: 30px; }
+.icon_pic_box{width:100%; height:52px;border-bottom:1px solid #68bb9b;overflow:hidden;}
+.icon{width:24px; height:24px; margin-top:25px;padding-left:5px;position: relative;z-index: 999;}
+.address{width:100%; font-size:14px; height:40px; font-family:"微软雅黑"; color:#555;padding-left:35px;position:relative; bottom:30px;outline: none;}
+.button{margin-top: 30px; padding-left: 30px; padding-right: 30px; }
+.but_color{width:100%;  font-size:18px; line-height:44px; text-align:center; color:#fff; font-family:"微软雅黑"; background-color:#68bb9b; border-radius:9px; }
+.pic_wjmm{width:100%; font-size:14px; height:80px; text-align:center; padding-top:23px; font-family:"微软雅黑"; }
+.pic_wjmm a{color:#333; }
+.input:-webkit-autofill{background-color: transparent;}

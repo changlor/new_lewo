@@ -1,0 +1,717 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class PayController extends Controller {
+    public function __construct(){
+        parent::__construct();
+        if ( empty($_SESSION['username']) && ACTION_NAME != 'register') {
+            header("Location:".U("Admin/Index/login"));
+            die();
+        }
+    }
+    public function all_bill(){
+        //搜索条件
+        $DRoom = D("room");
+        $DHouses = D("houses");
+        $DAccount = D("account");
+        $DArea = D("area");
+        $DContract = D("contract");
+
+        $room_code = I("room_code");
+        if ( !empty($room_code) ) {
+            $where['r.room_code'] = array('LIKE','%'.$room_code.'%');
+            $this->assign("room_code",$room_code);
+        }
+        $realname = I("realname");
+        if ( !empty($realname) ) {
+            $where['a.realname'] = array("LIKE","%".$realname."%");
+            $this->assign("realname",$realname);
+        }
+        $area_id = I("area_id");
+        if ( !empty($area_id) ) {
+            $where['h.area_id'] = $area_id;
+            $this->assign("area_id",$area_id);
+        }
+        $city_id = I("city_id");
+        if ( !empty($city_id) ) {
+            $where['area.city_id'] = $city_id;
+            $this->assign("city_id",$city_id);
+        }
+        $input_month = I("input_month");
+        if ( !empty($input_month) ) {
+            $where['p.input_month'] = $input_month;
+            $this->assign("input_month",$input_month);
+        }
+        $input_year = I("input_year");
+        if ( !empty($input_year) ) {
+            $where['p.input_year'] = $input_year;
+            $this->assign("input_year",$input_year);
+        }
+        $pay_type = I("pay_type");
+        if ( !empty($pay_type)) {
+            $where['p.pay_type'] = $pay_type;
+            $this->assign("pay_type",$pay_type);
+        }
+        $bill_type = I("bill_type");
+        if ( !empty($bill_type)) {
+            $where['p.bill_type'] = $bill_type;
+            $this->assign("bill_type",$bill_type);
+        }
+        $pay_status = I("pay_status");
+        if ( !empty($pay_status) || $pay_status === '0') {
+            $where['p.pay_status'] = $pay_status;
+            $this->assign("pay_status",$pay_status);
+        }
+        $search_time = I("search_time");
+        if ( !empty($search_time) ) {
+            $start_time = I("start_time");
+            $end_time = I("end_time");
+            switch ($search_time) {
+                case 'payDate':
+                    $where['p.pay_time'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'htStartDate':
+                    $where['c.start_time'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'htEndDate':
+                    $where['c.end_time'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'rentDate':
+                    $where['c.rent_date'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+            }
+            $this->assign("search_time",$search_time);
+            $this->assign("start_time",$start_time);
+            $this->assign("end_time",$end_time);
+        }
+        $order = "p.id desc,p.create_time desc";
+        $sort_type = I("get.sort_type");
+        if ( !empty($sort_type) ) {
+            $sort = I("sort")==1? "asc":"desc";
+            switch ($sort_type) {
+                case 'payTime':
+                    $order = "p.pay_time ".$sort;
+                    break;
+                case 'payType':
+                    $order = "p.pay_type ".$sort;
+                    break;
+                case 'startDate':
+                    $order = "c.start_time ".$sort;
+                    break;
+                case 'endDate':
+                    $order = "c.end_time ".$sort;
+                    break;
+                case 'rentDate':
+                    $order = "c.rent_date ".$sort;
+                    break;
+                case 'tbq':
+                    # code...
+                    break;
+                case 'inputMonth':
+                    $order = "p.input_year ".$sort.", p.input_month ".$sort;
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+            $this->assign("sort_type",$sort_type);
+            $this->assign("sort",$sort);
+        }
+        $page_count = I("page_count");
+        if ( !empty($page_count) &&  $page_count > 0 ) {
+            $page_count = I("page_count");
+            $this->assign("page_count",$page_count);
+        }else {
+            $page_count = 10;
+        }
+        $MContract  = M("contract");// 实例化User对象
+        $MChargeBill= M("charge_bill");// 实例化User对象
+        $MPay       = M("pay");// 实例化User对象
+        $DContract  = D("contract");
+        $is_show = I('is_show');
+        if ( $is_show != '' ) {
+            $where['p.is_show'] = $is_show; //显示
+        } else {
+            $where['p.is_show'] = '1'; //显示
+        }
+
+        $count      = $MPay
+                    ->alias('p')
+                    ->field('cb.*,p.*,a.mobile,a.realname,r.room_code,r.bed_code,h.area_id,h.building,h.floor,h.door_no,area.city_id,area.area_name')
+                    ->join('lewo_charge_bill cb ON p.pro_id=cb.pro_id','left')
+                    ->join('lewo_account a ON p.account_id=a.id','left')
+                    ->join('lewo_room r ON p.room_id=r.id','left')
+                    ->join('lewo_houses h ON r.house_code=h.house_code','left')
+                    ->join('lewo_area area ON h.area_id=area.id','left')
+                    ->where($where)
+                    ->where($where)
+                    ->order($order)
+                    ->count();
+
+        $Page       = new \Think\Page($count,$page_count);// 实例化分页类
+
+        $show       = $Page->show();// 分页显示输出
+
+        $list       = $MPay
+                    ->alias('p')
+                    ->field('cb.*,p.*,a.mobile,a.realname,r.room_code,r.bed_code,h.area_id,h.building,h.floor,h.door_no,area.city_id,area.area_name')
+                    ->join('lewo_charge_bill cb ON p.pro_id=cb.pro_id','left')
+                    ->join('lewo_account a ON p.account_id=a.id','left')
+                    ->join('lewo_room r ON p.room_id=r.id','left')
+                    ->join('lewo_houses h ON r.house_code=h.house_code','left')
+                    ->join('lewo_area area ON h.area_id=area.id','left')
+                    ->where($where)
+                    ->order($order)
+                    ->limit($Page->firstRow.','.$Page->listRows)
+                    ->select();
+
+        $DAccount   = D("account");
+        $DRoom      = D("room");
+        $DHouses    = D("houses");
+        $DArea      = D("area");
+        foreach ( $list AS $key=>$val ) {
+            $list[$key]['contract_info'] = $MContract->where(array('account_id'=>$val['account_id'],'room_id'=>$val['room_id']))->limit(1)->find();
+            $rent_type = explode("_", $val['rent_type']);
+            $list[$key]['rent_type_name'] = "押".$rent_type['0']."付".$rent_type['1'];
+            $list[$key]['contract_status_name'] = C("contract_status_arr")[$val['contract_status']];
+            $list[$key]['pay_type_name'] = C("pay_type")[$val['pay_type']];
+            $list[$key]['SDQtotal'] = $val['water_fee'] + $val['gas_fee'] + $val['energy_fee'] + $val['room_energy_fee'];
+            $list[$key]['bill_type_name'] = C('bill_type')[$val['bill_type']];
+
+            switch ($val['type']) {
+                case 2:
+                    $list[$key]['bill_type_name'] .= "退房";
+                    break;
+                case 3:
+                    $list[$key]['bill_type_name'] .= "转房";
+                    break;
+                case 4:
+                    $list[$key]['bill_type_name'] .= "换房";
+                    break;
+            }
+            
+            //最迟缴费倒计时
+            $last_date=strtotime($val['last_date']);
+            $enddate=strtotime(date("Y-m-d",time()));
+            $count_down_days=round(($last_date-$enddate)/86400);
+            $list[$key]['count_down_days'] = $count_down_days;
+        }
+
+        /*$contract_list = $DContract->getContractList();*/
+        /*$this->assign("contract_list",$contract_list);*/
+        $this->assign('contract_list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->assign('count',$count);
+        //小区列表
+        $DArea = D("area");
+        $this->assign('area_list',$DArea->getareaList());
+        $this->assign('pay_type_list',C("pay_type"));
+        $this->assign('city_list',C("city_id"));
+        $this->assign('bill_type_list',C("bill_type"));
+        $this->display("all_bill");
+    }
+    /**
+    * [合同账单]
+    **/
+    /*public function contract_bill(){
+        //搜索条件
+        $DRoom = D("room");
+        $DHouses = D("houses");
+        $DAccount = D("account");
+        $DArea = D("area");
+        $DContract = D("contract");
+
+        if ( !empty(I("room_code")) ) {
+            $id_str = $DRoom->getRoomsIdByCode(I("room_code"));
+            if (!empty($id_str)) {
+                $where['room_id'] = array("IN",$id_str);
+            }
+            $this->assign("room_code",I("room_code"));
+        }
+        if ( !empty(I("get.realname")) ) {
+            $where['realname'] = array("LIKE","%".I("get.realname")."%");
+            $this->assign("realname",I("get.realname"));
+        }
+        if ( !empty(I("area_id")) ) {
+            $house_code_str = $DArea->getHouseCodeListByAreaId(I("area_id"));
+            $house_code_arr = explode(",", $house_code_str);
+            $room_str = "";
+            foreach ($house_code_arr as $key => $val) {
+                $total_arr = $DRoom->field("id,room_code,bed_code")->where(array("house_code"=>$val))->select();
+                foreach( $total_arr AS $k=>$v ){
+                    $room_str .= $v['id'].",";
+                }
+            }
+            $room_str = substr($room_str, 0,-1);
+            if (!empty($room_str)) {
+                $where['room_id'] = array("IN",$room_str);
+            }
+            $this->assign("area_id",I("area_id"));
+        }
+        if ( !empty(I("city_id")) ) {
+            $where['city_id'] = I("city_id");
+            $this->assign("city_id",I("city_id"));
+        }
+        if ( !empty(I("input_month")) ) {
+            $where['input_month'] = I("input_month");
+            $this->assign("input_month",I("input_month"));
+        }
+        if ( !empty(I("input_year")) ) {
+            $where['input_year'] = I("input_year");
+            $this->assign("input_year",I("input_year"));
+        }
+        if ( !empty(I("get.pay_type"))) {
+            $where['pay_type'] = I("get.pay_type");
+            $this->assign("pay_type",I("get.pay_type"));
+        }
+        if ( !empty(I("get.pay_status")) || I("get.pay_status") === '0') {
+            $where['pay_status'] = I("get.pay_status");
+            $this->assign("pay_status",I("get.pay_status"));
+        }
+        if ( !empty(I("search_time")) ) {
+            $start_time = I("start_time");
+            $end_time = I("end_time");
+            switch (I("search_time")) {
+                case 'payDate':
+                    $where['pay_time'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'htStartDate':
+                    $where['start_time'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'htEndDate':
+                    $where['end_time'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'rentDate':
+                    $where['rent_date'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+            }
+            $this->assign("search_time",I("search_time"));
+            $this->assign("start_time",I("start_time"));
+            $this->assign("end_time",I("end_time"));
+        }
+        $order = "id desc,create_time desc";
+        if ( !empty(I("get.sort_type")) ) {
+            $sort = I("sort")==1? "asc":"desc";
+            switch (I("sort_type")) {
+                case 'payTime':
+                    $order = "pay_date ".$sort;
+                    break;
+                case 'payType':
+                    $order = "pay_type ".$sort;
+                    break;
+                case 'startDate':
+                    $order = "start_time ".$sort;
+                    break;
+                case 'endDate':
+                    $order = "end_time ".$sort;
+                    break;
+                case 'rentDate':
+                    $order = "rent_date ".$sort;
+                    break;
+                case 'tbq':
+                    # code...
+                    break;
+                case 'inputMonth':
+                    $order = "input_year ".$sort.", input_month ".$sort;
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+            $this->assign("sort_type",I("get.sort_type"));
+            $this->assign("sort",$sort);
+        }
+        if ( !empty(I("page_count")) &&  I("get.page_count") > 0 ) {
+            $page_count = I("page_count");
+            $this->assign("page_count",I("page_count"));
+        }else {
+            $page_count = 10;
+        }
+        $MContract = M("contract");// 实例化User对象
+        $DContract = D("contract");
+
+        $where['is_delete'] = 0; //没删除
+
+        $count      = $MContract->where($where)->count();// 查询满足要求的总记录数
+
+        $Page       = new \Think\Page($count,$page_count);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+        $show       = $Page->show();// 分页显示输出
+
+        $list       = $MContract->where($where)->order($order)->limit($Page->firstRow.','.$Page->listRows)->select();
+
+        $DAccount = D("account");
+        $DRoom = D("room");
+        $DHouses = D("houses");
+        $DArea = D("area");
+        foreach ( $list AS $key=>$val ) {
+            $list[$key]['realname'] = $DAccount->getFieldById($val['account_id'],"realname");
+            $list[$key]['mobile'] = $DAccount->getFieldById($val['account_id'],"mobile");
+            $room_info = $DRoom->getRoomById($val['room_id']);
+            $list[$key]['room_info'] = $room_info;
+            $list[$key]['year'] = date("Y",strtotime($val['start_time']));
+            $list[$key]['month'] = date("m",strtotime($val['start_time']));
+            $rent_type = explode("_", $val['rent_type']);
+            $list[$key]['rent_type_name'] = "押".$rent_type['0']."付".$rent_type['1'];
+            $list[$key]['contract_status_name'] = C("contract_status_arr")[$val['contract_status']];
+            $list[$key]['pay_type_name'] = C("pay_type")[$val['pay_type']];
+            $list[$key]['house_info'] = $DHouses->getBuilding($room_info['house_code']);
+        }
+
+        //$contract_list = $DContract->getContractList();
+        //$this->assign("contract_list",$contract_list);
+        $this->assign('contract_list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->assign('count',$count);
+        //小区列表
+        $DArea = D("area");
+        $this->assign('area_list',$DArea->getareaList());
+        $this->assign('pay_type_list',C("pay_type"));
+        $this->assign('city_list',C("city_id"));
+        $this->display("contract-bill");
+    }*/
+    /**
+    * [日常账单]
+    **/
+    /*public function daily_bill(){
+        //搜索条件
+        $DRoom = D("room");
+        $DAccount = D("account");
+        $DArea = D("area");
+        $DContract = D("contract");
+
+        if ( !empty(I("get.room_code")) ) {
+            $id_str = $DRoom->getRoomsIdByCode(I("get.room_code"));
+            if (!empty($id_str)) {
+                $where['room_id'] = array("IN",$id_str);
+            }
+            //$where['house_code'] = array("LIKE","%".I("room_code")."%");
+            $this->assign("room_code",I("get.room_code"));
+        }
+        if ( !empty(I("get.realname")) ) {
+            $where['realname'] = array("LIKE","%".I("get.realname")."%");
+            $this->assign("realname",I("get.realname"));
+        }
+        if ( !empty(I("get.area_id")) ) {
+            $house_code_str = $DArea->getHouseCodeListByAreaId(I("get.area_id"));
+            $house_code_arr = explode(",", $house_code_str);
+            $room_str = "";
+            foreach ($house_code_arr as $key => $val) {
+                $total_arr = $DRoom->field("id,room_code,bed_code")->where(array("house_code"=>$val))->select();
+                foreach( $total_arr AS $k=>$v ){
+                    $room_str .= $v['id'].",";
+                }
+            }
+            $room_str = substr($room_str, 0,-1);
+            if (!empty($room_str)) {
+                $where['room_id'] = array("IN",$room_str);
+            }
+            $this->assign("area_id",I("get.area_id"));
+        }
+        if ( !empty(I("city_id")) ) {
+            $where['city_id'] = I("city_id");
+            $this->assign("city_id",I("city_id"));
+        }
+        if ( !empty(I("get.input_month")) ) {
+            $where['input_month'] = I("get.input_month");
+            $this->assign("input_month",I("get.input_month"));
+        }
+        if ( !empty(I("get.input_year")) ) {
+            $where['input_year'] = I("get.input_year");
+            $this->assign("input_year",I("get.input_year"));
+        }
+
+        if ( !empty(I("get.pay_type"))) {
+            $where['pay_type'] = I("get.pay_type");
+            $this->assign("pay_type",I("get.pay_type"));
+        }
+        if ( !empty(I("get.pay_status")) || I("get.pay_status") === '0') {
+            $where['pay_status'] = I("get.pay_status");
+            $this->assign("pay_status",I("get.pay_status"));
+        }
+        if ( !empty(I("get.is_send")) || I("get.is_send") === '0') {
+            $where['is_send'] = I("get.is_send");
+            $this->assign("is_send",I("get.is_send"));
+        }
+        if ( !empty(I("get.search_time")) ) {
+            $start_time = I("get.start_time");
+            $end_time = I("get.end_time");
+            switch (I("search_time")) {
+                case 'payDate':
+                    $where['pay_time'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'htStartDate':
+                    $where['start_time'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'htEndDate':
+                    $where['end_time'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'latePay':
+                    $where['late_pay_date'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+                case 'shouldPay':
+                    $where['should_pay_date'] = array("BETWEEN",array($start_time,$end_time));
+                    break;
+            }
+            $this->assign("search_time",I("get.search_time"));
+            $this->assign("start_time",I("get.start_time"));
+            $this->assign("end_time",I("end_time"));
+        }
+        $order = "id desc,create_time desc";
+        if ( !empty(I("get.sort_type")) ) {
+            $sort = I("sort")==1? "asc":"desc";
+            switch (I("sort_type")) {
+                case 'payTime':
+                    $order = "pay_time ".$sort;
+                    break;
+                case 'payType':
+                    $order = "pay_type ".$sort;
+                    break;
+                case 'startDate':
+                    $order = "start_time ".$sort;
+                    break;
+                case 'endDate':
+                    $order = "end_time ".$sort;
+                    break;
+                case 'latePay':
+                    $order = "late_pay_date ".$sort;
+                    break;
+                case 'shouldPay':
+                    $order = "should_pay_date ".$sort;
+                    break;
+                case 'inputMonth':
+                    $order = "input_year ".$sort.", input_month ".$sort;
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+            $this->assign("sort_type",I("get.sort_type"));
+            $this->assign("sort",$sort);
+        }
+        if ( !empty(I("get.page_count"))  &&  I("get.page_count") > 0) {
+            $page_count = I("get.page_count");
+            $this->assign("page_count",I("get.page_count"));
+        }else {
+            $page_count = 10;
+        }
+        $where['is_delete'] = 0;
+    	$MChargeBill = M("charge_bill");// 实例化User对象
+
+    	//$charge_bill_list = $DChargeBill->showDailyBillList();
+
+        $count      = $MChargeBill->where($where)->count();// 查询满足要求的总记录数
+
+        $Page       = new \Think\Page($count,$page_count);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+        $show       = $Page->show();// 分页显示输出
+
+        $list       = $MChargeBill->where($where)->order($order)->limit($Page->firstRow.','.$Page->listRows)->select();
+
+        
+        foreach ($list AS $key=>$val) {
+            $list[$key]['room_code'] = $DRoom->getRoomCodeById($val['room_id']);
+            $list[$key]['bed_code'] = $DRoom->getBedCodeById($val['room_id']);
+            
+            $list[$key]['mobile'] = $DAccount->getFieldById($val['account_id'],"mobile");
+            $list[$key]['SDQtotal'] = $val['water_fee'] + $val['gas_fee'] + $val['energy_fee'] + $val['room_energy_fee'];
+            $list[$key]['area_name'] = $DArea->getAreaInfoByCode($val['house_code']);
+            $list[$key]['ht_start_date'] = $DContract->getContractStartDate($val['account_id'],$val['room_id']);
+            $list[$key]['ht_end_date'] = $DContract->getContractEndDate($val['account_id'],$val['room_id']);
+            $list[$key]['rent_date'] = $DContract->getContractRentDate($val['account_id'],$val['room_id']);
+            $list[$key]['period'] = $DContract->getPeriod($val['account_id'],$val['room_id']);
+            $list[$key]['deposit'] = $DContract->getDeposit($val['account_id'],$val['room_id']);
+            $list[$key]['pay_type_name'] = C("pay_type")[$val['pay_type']];
+            //最迟缴费倒计时
+            $startdate=strtotime($val['should_pay_date']);
+            $enddate=strtotime(date("Y-m-d",time()));
+            $count_down_days=round(($startdate-$enddate)/86400);
+            $list[$key]['count_down_days'] = $count_down_days;
+            switch ($val['type']) {
+                case 1:
+                    $list[$key]['type_name'] = "日常";
+                    break;
+                case 2:
+                    $list[$key]['type_name'] = "退房";
+                    break;
+                case 3:
+                    $list[$key]['type_name'] = "转房";
+                    break;
+                case 4:
+                    $list[$key]['type_name'] = "换房";
+                    break;
+            }
+        }
+
+        $this->assign('charge_bill_list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->assign('count',$count);
+
+        //小区列表
+        $DArea = D("area");
+        $this->assign('area_list',$DArea->getareaList());
+        $this->assign('pay_type_list',C("pay_type"));
+        $this->assign('city_list',C("city_id"));
+    	$this->display("daily-bill");
+    }*/
+
+    /**
+    * [修改账单支付状态]
+    **/
+    public function edit_pay(){
+    	if ( !empty($_POST) ) {
+            $MContract = M("contract");
+            $MPay = M('pay');
+    		$pro_id = I('pro_id');
+    		
+            $bill_type = $MPay->where(array("pro_id"=>$pro_id))->getField('bill_type');
+
+            switch ($bill_type) {
+                case 2:
+                case 7:
+                    $account_id     = $MContract->where(array("pro_id"=>$pro_id))->getField("account_id");
+                    $room_id        = $MContract->where(array("pro_id"=>$pro_id))->getField("room_id");
+                    $DRoom = D("room");
+                    $DRoom->setRoomStatus($room_id,2);
+                    $DRoom->setRoomPerson($room_id,$account_id);
+                    break;
+                
+                case 3:
+                case 8:
+                    //修改合同信息
+                    $charge_info = M("charge_bill")->where(array("pro_id"=>$pro_id))->find();
+                    $account_id = $charge_info['account_id'];
+                    $room_id = $charge_info['room_id'];
+
+                    $rent_date = $charge_info['rent_date_to']; //房租到期日
+                    $MContract->where(array("room_id"=>$room_id,"account_id"=>$account_id))->save(array("rent_date"=>$rent_date));
+                    break;
+            } 
+
+            $data['pay_type'] = I("pay_type");
+            $data['pay_time'] = I("pay_time");
+            $data['pay_money'] = I("pay_money");
+            $data['modify_log'] = I("modify_log");
+            $data['pay_status'] = I('pay_status');
+            $result = M("pay")->where(array("pro_id"=>$pro_id))->save($data);
+
+    		if ( !empty($result) ) {
+    			$this->success("修改成功",U("Admin/Pay/all_bill"));
+    		} else {
+    			$this->error("修改失败",U("Admin/Pay/all_bill"));
+    		}
+    		
+    	} else {
+    		$pro_id = I("pro_id");
+            $DChargeBill = D("charge_bill");
+            $pay_info = $DChargeBill->getPayInfo($pro_id);
+            $this->assign("pay_info",$pay_info);
+            $this->assign("time",date("Y-m-d H:i:s",time()));
+    		$this->assign("pro_id",$pro_id);
+    		$this->assign("pay_type",C("pay_type"));
+    		$this->display("edit-pay");
+    	}	
+    }
+    
+    public function delete_pay(){
+        $MPay = M('pay');
+        $pro_id = I('pro_id');
+        $result = $MPay->where(array('pro_id'=>$pro_id))->save(array('is_show'=>0));
+        if ( $result ) {
+            $this->success('账单删除成功!');
+        } else {
+            $this->error('账单删除失败!');
+        }
+    }
+
+    public function back_pay(){
+        $MPay = M('pay');
+        $pro_id = I('pro_id');
+        $result = $MPay->where(array('pro_id'=>$pro_id))->save(array('is_show'=>1));
+        if ( $result ) {
+            $this->success('账单恢复成功!');
+        } else {
+            $this->error('账单恢复失败!');
+        }
+    }
+
+    /**
+    * [修改合同账单]
+    **/
+    public function edit_contract_pay(){
+        if ( !empty($_POST) ) {
+            $pro_id         = I('pro_id');
+            $MContract      = M("contract");
+            $account_id     = $MContract->where(array("pro_id"=>$pro_id))->getField("account_id");
+            $room_id        = $MContract->where(array("pro_id"=>$pro_id))->getField("room_id");
+
+            $data['pay_type']   = I("pay_type");
+            $data['pay_date']   = I("pay_time");
+            $data['pay_log']    = I("pay_log");
+            $pdata['pay_status'] = 1;
+            $result = $MContract->where(array("id"=>$id))->save($data);
+            $result2 = M('pay')->where()->save(array());
+            if ( $result ) {
+                $DRoom = D("room");
+                $DRoom->setRoomStatus($room_id,2);
+                $DRoom->setRoomPerson($room_id,$account_id);
+                $this->success("修改成功",U("Admin/Pay/contract_bill"));
+            } else {
+                $this->error("修改失败",U("Admin/Pay/contract_bill"));
+            }
+        } else {
+            $pro_id = I("pro_id");
+            $DContract = D("contract");
+            $pay_info = $DContract->getPayInfo($pro_id);
+            dump($pay_info);exit;
+            $this->assign("pay_info",$pay_info);
+            $this->assign("id",$id);
+            $this->assign("pay_type",C("pay_type"));
+            $this->display("edit-contract-pay");
+        }
+    } 
+
+    public function delete_contract(){
+        $id = I("id");
+        $result = M("contract")->where(array("id"=>$id))->save(array("is_delete"=>1));
+        if ( $result ) {
+            $this->success("删除成功!",U("Admin/Pay/contract_bill"));
+        } else {
+            $this->error("删除失败!",U("Admin/Pay/contract_bill"));
+        }
+    }
+
+    
+    public function delete_bill(){
+        $id = I("id");
+        $result = M("charge_bill")->where(array("id"=>$id))->save(array("is_delete"=>1));
+        if ( $result ) {
+            $this->success("删除成功!",U("Admin/Pay/daily_bill"));
+        } else {
+            $this->error("删除失败!",U("Admin/Pay/daily_bill"));
+        }
+    }
+
+    public function check_pay_log(){
+        $id = I("id");
+        $DChargeBill = D("charge_bill");
+        $pay_info = $DChargeBill->getPayInfo($id);
+        $this->assign("pay_info",$pay_info);
+        $this->assign("id",$id);
+        $this->assign("pay_type",C("pay_type"));
+        $this->display("check_pay_log");
+    }
+
+    public function update_send_bill(){
+        $id = I("id");
+        $result = M("charge_bill")->where(array("id"=>$id))->save(array("is_send"=>1));
+        if ( !empty($result) ) {
+            die(json_encode(array("info"=>"修改成功")));
+        } else {
+            die(json_encode(array("info"=>"修改失败")));
+        }
+        
+    }
+}

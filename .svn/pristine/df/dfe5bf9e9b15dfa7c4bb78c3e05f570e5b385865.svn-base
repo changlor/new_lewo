@@ -1,0 +1,204 @@
+<?php
+namespace Admin\Model;
+use Think\Model;
+/**
+* [房源数据层]
+*/
+class HousesModel extends Model{
+	/**
+	 * [获取房源列表]
+	 **/
+	public function getHousesList($where){
+		$year = date("Y",time());
+		$month = date("m",time());
+		$MSteward = M('admin_user');
+		$MRoom = M("room");
+		$MArea = M("area");
+		$MChargeHouse = M("charge_house");
+		$houses = $this->field("id,area_id,house_code,type,steward_id,create_time,create_time,floor,door_no,building,region_id")->where($where)->select();
+		$MAmmeterhouse = M("ammeter_house");
+		foreach($houses AS $key=>$val){
+			$yz_count = $MRoom->where(array('house_code'=>$val['house_code'],'status'=>C('room_yz')))->count();//已租数量
+			$houses[$key]['area_name'] = $MArea->where(array('id'=>$val['area_id']))->getField("area_name");
+			if ($yz_count>0) {
+				$houses[$key]['is_checkin'] = true;
+			} else {
+				$houses[$key]['is_checkin'] = false;
+			}
+			$is_send = $MChargeHouse->where(array("house_id"=>$val['id'],"input_year"=>$year,"input_month"=>$month,"is_send"=>1))->find();
+			if ( !empty($is_send) ){
+				$houses[$key]['is_send'] = true;
+			} else {
+				$houses[$key]['is_send'] = false;
+			}
+			$is_typein = $MAmmeterhouse->where(array("house_id"=>$val['id'],"input_year"=>$year,"input_month"=>$month,"status"=>1))->find();
+			if ( !empty($is_typein) ){
+				$houses[$key]['is_typein'] = true;
+			} else {
+				$houses[$key]['is_typein'] = false;
+			}
+			$steward_info = array();
+			$steward_info = $MSteward->where(array('id'=>$val['steward_id']))->find();
+			$houses[$key]['steward_nickname'] = $steward_info['nickname'];
+			$houses[$key]['steward_mobile'] = $steward_info['mobile'];
+		}
+		return $houses;
+	}
+
+	/**
+	 * [获取房屋信息]
+	 **/
+	public function getHouse($house_code){
+		return $this->where(array('house_code'=>$house_code))->find();
+	}
+	/**
+	 * [获取房屋信息]
+	 **/
+	public function getHouseById($house_id){
+		return $this->where(array('id'=>$house_id))->find();
+	}
+
+	/**
+	 * [获取全部房间/床位信息]
+	 **/
+	public function getAllRoom(){
+		$MRoom = M('room');
+		return $MRoom->select();
+	}
+
+	/**
+	 * [获取房源中的房间/床位]
+	 **/
+	public function getRoomList($house_code){
+		$MRoom = M("room");
+		$roomList = $MRoom->where(array('house_code'=>$house_code))->select();
+
+		foreach($roomList AS $key=>$val){
+			$DAccount = D("account");
+			$account_info = $DAccount->getInfoById($val['account_id']);
+			$roomList[$key]['realname'] = $account_info['realname'];
+			$roomList[$key]['mobile'] = $account_info['mobile'];
+			if (!empty($val['bed_code'])) {
+				$roomList[$key]['rent_out_type'] = 'bed';
+				$roomList[$key]['rent_out_type_name'] = '床';
+			} else {
+				$roomList[$key]['rent_out_type'] = 'room';
+				$roomList[$key]['rent_out_type_name'] = '间';
+			}
+		}
+		return $roomList;
+	}
+
+	/**
+	 * [获取房间/床位信息]
+	 **/
+	public function getRoom($id){
+		$MRoom = M("room");
+		return $MRoom->where(array('id'=>$id))->find();
+	}
+	/**
+	 * [删除房间/床位]
+	 **/
+	public function deleteRoom($id){
+		$MRoom = M("room");
+		return $MRoom->where(array('id'=>$id))->delete();
+	}
+	/**
+	 * [获取房屋编码]
+	 **/
+	public function getHouseCodeById($hosue_id){
+		return $this->where(array('id'=>$hosue_id))->getField("house_code");
+	}
+	/**
+	 * [获取房屋ID]
+	 **/
+	public function getHouseIdByCode($hosue_code){
+		return $this->where(array('hosue_code'=>$hosue_code))->getField("id");
+	}
+	/**
+	* [查该该房屋租了多少人][房屋总人数]
+	**/
+	public function getPersonCountByCode($house_code){
+		return M("room")->where(array("status"=>2,"house_code"=>$house_code))->count();
+	}
+	/**
+	* [查看该房屋有多少间房间]
+	**/
+	public function getRoomCountByCode($house_code){
+		$room_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>1))->count();
+
+		return $room_count;
+	}
+	/**
+	* [查看该房屋有多少间床位]
+	**/
+	public function getBedCountByCode($house_code){
+		$bed_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>2))->count();
+
+		return $bed_count;
+	}
+	/**
+	* [查该该房间租了多少人]
+	**/
+	public function getRoomPersonCountByCode($room_code){
+		return M("room")->where(array("status"=>2,"room_code"=>$room_code))->count();
+	}
+	/**
+	* [获取该房间某年某月的总人日]
+	**/
+	public function getPersonDayCount($house_code,$year,$month){
+		$DContract = D("contract");
+		$contract_list = $DContract->getContractListByDateForDailyBill($house_code,$year,$month);
+		$sum_person_day = 0;
+		foreach ($contract_list AS $key=>$val) {
+			$ht_start_date = $val['start_time']; //合同开始日
+			$ht_actual_end_time = $val['actual_end_time'];//实际退房日
+			//人日 需要计算租客申请的日数
+	        $ht_person = $DContract->getPersonCount($val['account_id'],$val['room_id']);//合同人数
+	        //判断租客是否当月入住
+	        $result = $DContract->isDateCheckInByDate($val['account_id'],$val['room_id'],$year,$month);
+
+	        if ( $result ) {
+	            //是这个月入住则，人日获取的是，租期开始到月末的日数
+	            $start_time =  $ht_start_date;//合同开始时间
+	            $firstday = date('Y-m-01', strtotime($year."-".$month)); //该月第一天
+	            $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day")); //该月最后一天
+	            $person_day = round((strtotime($lastday)-strtotime($start_time))/86400)+1;
+	            $person_day*=$ht_person;
+	        } else {
+	            //退房了 判断是否这个月退的
+	            $ht_actual_end_year = date("Y",strtotime($ht_actual_end_time));
+	            $ht_actual_end_month = date("m",strtotime($ht_actual_end_time));
+	            if ( $ht_actual_end_time != 0 && $year == $ht_actual_end_year && $month == $ht_actual_end_month) {
+	                //这个月就是退房的月数 那么这个月的人日就是到这一天
+	                $person_day = date("d",strtotime($ht_actual_end_time));
+	            } else {
+	                //不是这个月入住也不是这个月退房的，则获取这个月的日数
+	                $person_day = date("t",strtotime($year."-".$month));
+	            }   
+	        }
+	        $person_day*=$ht_person;
+	        $sum_person_day += $person_day;
+		}	
+		return $sum_person_day;
+	}
+	/**
+	* [针对退房-获取该房间的总人日]
+	**/
+	public function TFgetPersonDayCount($house_code,$date){
+		$room_list = M("room")->where(array("house_code"=>$house_code))->select(); //房间/床位列表
+		$sum_person_day = 0;
+		$DContract = D("contract");
+		foreach ($room_list AS $key=>$val) {
+			$ht_person = $DContract->getPersonCount($val['account_id'],$val['id']);//合同人数
+
+			$total_person_day = date("d",strtotime($date));//因为获取的是当月X号到1号的日数，所以直接获取日就行了
+            $total_person_day *= $ht_person;
+
+            $sum_person_day += $total_person_day;
+		}
+		return $sum_person_day;
+	}
+}
+
+?>

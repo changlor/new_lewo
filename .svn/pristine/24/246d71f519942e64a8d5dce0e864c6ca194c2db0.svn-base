@@ -1,0 +1,92 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class PayController extends Controller {
+    public function __construct(){
+        parent::__construct();
+        if ( empty($_SESSION['username']) && ACTION_NAME != 'register') {
+            header("Location:".U("Admin/Index/login"));
+            die();
+        }
+    }
+    /**
+    * [日常账单]
+    **/
+    public function daily_bill(){
+    	$DChargeBill = D("charge_bill");
+    	$charge_bill_list = $DChargeBill->showDailyBillList();
+    	$this->assign("charge_bill_list",$charge_bill_list);
+    	$this->display("daily-bill");
+    }
+
+    /**
+    * [修改账单支付状态]
+    **/
+    public function edit_pay(){
+    	if ( !empty($_POST) ) {
+    		$id = I('id');
+    		$data['pay_type'] = I("pay_type");
+    		$data['pay_time'] = I("pay_time");
+    		$data['pay_money'] = I("pay_money");
+    		$data['pay_log'] = I("pay_log");
+    		$data['pay_status'] = 1;
+    		$result = M("charge_bill")->where(array("id"=>$id))->save($data);
+    		if ( !empty($result) ) {
+    			$this->success("修改成功",U("Admin/Pay/daily_bill"));
+    		} else {
+    			$this->error("修改失败",U("Admin/Pay/daily_bill"));
+    		}
+    		
+    	} else {
+    		$id = I("id");
+            $DChargeBill = D("charge_bill");
+            $pay_info = $DChargeBill->getPayInfo($id);
+            $this->assign("pay_info",$pay_info);
+    		$this->assign("id",$id);
+    		$this->assign("pay_type",C("pay_type"));
+    		$this->display("edit-pay");
+    	}	
+    }
+    /**
+    * [合同账单]
+    **/
+    public function contract_bill(){
+        $DContract = D("contract");
+        $contract_list = $DContract->getContractList();
+        $this->assign("contract_list",$contract_list);
+        $this->display("contract-bill");
+    }
+    /**
+    * [修改合同账单]
+    **/
+    public function edit_contract_pay(){
+        if ( !empty($_POST) ) {
+            $id = I('id');
+            $MContract = M("contract");
+            $account_id = $MContract->where(array("id"=>$id))->getField("account_id");
+            $room_id = $MContract->where(array("id"=>$id))->getField("room_id");
+            $data['pay_type'] = I("pay_type");
+            $data['pay_date'] = I("pay_time");
+            $data['pay_log'] = I("pay_log");
+            $data['pay_status'] = 1;
+            $result = $MContract->where(array("id"=>$id))->save($data);
+
+            if ( $result ) {
+                $DRoom = D("room");
+                $DRoom->setRoomStatus($room_id,2);
+                $DRoom->setRoomPerson($room_id,$account_id);
+                $this->success("修改成功",U("Admin/Pay/contract_bill"));
+            } else {
+                $this->error("修改失败",U("Admin/Pay/contract_bill"));
+            }
+        } else {
+            $id = I("id");
+            $DChargeBill = D("charge_bill");
+            $pay_info = $DChargeBill->getPayInfo($id);
+            $this->assign("pay_info",$pay_info);
+            $this->assign("id",$id);
+            $this->assign("pay_type",C("pay_type"));
+            $this->display("edit-contract-pay");
+        }
+    } 
+}

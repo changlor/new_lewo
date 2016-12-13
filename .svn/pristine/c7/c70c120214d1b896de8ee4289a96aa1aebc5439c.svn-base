@@ -1,0 +1,11 @@
+<?php
+namespace Admin\Model;
+use Think\Model;
+/**
+* [支付表]
+*/
+class PayModel extends Model{
+	
+}
+
+?>

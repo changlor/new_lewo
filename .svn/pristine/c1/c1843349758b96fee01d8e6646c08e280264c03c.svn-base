@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>乐窝公寓管理系统</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/bootstrap.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/matrix-style.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/matrix-media.css" />
+<link href="__PUBLIC__/admin/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+</head>
+<body>
+<!--main-container-part-->
+<div>
+  <div class="widget-box">
+   <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+      <h5>{$year}-{$month}账单&nbsp;&nbsp;房屋：{$house_code}</h5>
+      <a href="{:U('Admin/Houses/bill_list',array('house_id'=>$house_id))}" class="label label-info pull-left">返回</a>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>房屋总水</th>
+          <th>房屋总电</th>
+          <th>房屋总气</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{$last_ammeter['total_water']}~{$ammeter['total_water']}&nbsp;<label class="label label-important">+{$add_water}&nbsp;*&nbsp;{$water_unit}&nbsp;=&nbsp;￥{$public_water_fee}</label></td>
+          <td>{$last_ammeter['total_energy']}~{$ammeter['total_energy']}&nbsp;<label class="label label-important">+{$add_energy}&nbsp;*&nbsp;{$energy_unit}&nbsp;=&nbsp;￥{$public_energy_fee}</label></td>
+          <td>{$last_ammeter['total_gas']}~{$ammeter['total_gas']}&nbsp;<label class="label label-important">+{$add_gas}&nbsp;*&nbsp;{$gas_unit}&nbsp;=&nbsp;￥{$public_gas_fee}</label></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>房间编号</th>
+          <th>房间电表</th>
+          <th>床位编号</th>
+          <th>租客</th>
+          <th>人日</th>
+          <th>房租</th>
+          <th>房租描述</th>
+          <th>服务费</th>
+          <th>物业费</th>
+          <th>燃气垃圾费</th>
+          <th>个人电费</th>
+          <th>公摊电费</th>
+          <th>水费</th>
+          <th>气费</th>
+          <th>欠款</th>
+          <th>欠款描述</th>
+          <th>应缴费日</th>
+          <th>最迟缴费</th>
+         <!--  <th>滞纳金</th> -->
+          <th>总金额</th>
+        </tr>
+      </thead>
+      <tbody>
+        <volist name="room_list" id="vo">
+          <if condition="$vo.account_id neq 0">
+            <tr>
+              <td>{$vo.room_code}</td>
+              <td>{$vo.last_ammeter_room.room_energy}~{$vo.ammeter_room.room_energy}</td>
+              <td>{$vo.bed_code}</td>
+              <td>{$vo.realname}</td>
+              <td><input class="span1" type="number" name="" value="{$vo.total_person_day}"></td>
+              <td>{$vo.rent}</td>
+              <td>{$vo.start_fee_des}到{$vo.end_fee_des}房租</td>
+              <td>{$vo.room_fee}</td>
+              <td>{$vo.wg_fee}</td>
+              <td>{$vo.rubbish_fee}</td>
+              <td>{$vo.room_energy_fee}</td>
+              <td>{$vo.energy_fee}</td>
+              <td>{$vo.water_fee}</td>
+              <td>{$vo.gas_fee}</td>
+              <td><input class="span1" type="text" name="" value="" placeholder=""></td>
+              <td><input class="span1" type="text" name="" value="" placeholder=""></td>
+              <td>{$vo.should_pay_date}</td>
+              <td>{$vo.late_pay_date}</td>
+              <!-- <td>￥0</td> -->
+              <td>￥{$vo.total_fee}</td>
+            </tr>
+          </if>
+        </volist>
+        <tr>
+          <td colspan="19" style="text-align: center">
+          <!-- 生成账单时显示 -->
+            <a href="updatebill.html" class="btn btn-danger">修改</a>
+            <a href="#" class="btn btn-success">发送账单</a>
+          <!-- 生成账单时显示 -->
+
+          <!-- 待办时显示 -->
+           <!--  <a href="checkout-pay.html" class="btn btn-success">下一步</a> -->
+          <!-- 待办时显示 -->
+
+          <!-- 确认未支付单 -->
+           <!--  <a href="" class="btn btn-success">完成</a> -->
+          <!-- 确认未支付单 -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!--main-container-part-->
+
+<!--Footer-part-->
+<div class="row-fluid">
+  <div id="footer" class="span12"> 2016 &copy; 广州百城网络科技有限公司 </div>
+</div>
+<!--end-Footer-part-->
+<script src="js/jquery.min.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/jquery.uniform.js"></script> 
+<script src="js/select2.min.js"></script> 
+<script src="js/jquery.ui.custom.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>  
+<script src="js/matrix.js"></script>
+<script src="js/matrix.tables.js"></script>
+</body>
+</html>

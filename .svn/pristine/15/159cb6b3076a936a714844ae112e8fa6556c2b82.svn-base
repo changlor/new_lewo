@@ -1,0 +1,104 @@
+<?php
+namespace Home\Model;
+use Think\Model;
+/**
+* [账单数据层]
+*/
+class ChargeBillModel extends Model{
+	/**
+    * [获取该用户id的账单列表]
+    **/
+    public function getBillByAcId($account_id){
+        $list = $this->where(array("account_id"=>$account_id,"is_delete"=>0,"is_send"=>1))->select();
+        $MHouses = M("houses");
+        $MArea = M("area");
+        foreach ($list AS $key=>$val) {
+            //根据house_code 判断广州或重庆
+            $area_id = $MHouses->where(array("house_code"=>$val['house_code']))->getField("area_id");
+            $city_id = $MArea->where(array("id"=>$area_id))->getField("city_id");
+            $city_name = C("city_id")[$city_id];
+
+            $list[$key]['bill_info'] = $val['input_year']."年".$val['input_month']."月";
+	        switch ($val['type']) {
+				case 1:
+                    $list[$key]['type_name'] = "日常";
+                    $list[$key]['bill_info'] .= "日常";
+                    break;
+                case 2:
+                    $list[$key]['type_name'] = "退租";
+                    $list[$key]['bill_info'] .= "退租";
+                    break;
+                case 3:
+                    $list[$key]['type_name'] = "转租";
+                    $list[$key]['bill_info'] .= "转租";
+                    break;
+                case 4:
+                    $list[$key]['type_name'] = "换租";
+                    $list[$key]['bill_info'] .= "换租";
+                    break;
+			}
+            $list[$key]['bill_info'] .= $city_name."账单";
+            
+		}
+		return $list;
+    }
+    /**
+    * [获取该账单信息]用户账单页面
+    **/ 
+    public function getDetailBillById($id){
+    	$lsit = $this->where(array("id"=>$id))->find();
+    	return $lsit;
+    }
+
+    /**
+    * [获取该租客未支付账单]
+    **/
+    public function getNotPay($account_id){
+    	$list =  $this->where(array("account_id"=>$account_id,"pay_status"=>0,"is_delete"=>0,"is_send"=>1))->select();
+        $MHouses = M("houses");
+        $MArea = M("area");
+    	foreach ($list AS $key=>$val) {
+    		$startdate=time();
+			$enddate=strtotime($val['should_pay_date']);
+			$days=round(($enddate-$startdate)/86400)+1;
+    		$list[$key]['days'] = $days;
+
+            //根据house_code 判断广州或重庆
+            $area_id = $MHouses->where(array("house_code"=>$val['house_code']))->getField("area_id");
+            $city_id = $MArea->where(array("id"=>$area_id))->getField("city_id");
+            $city_name = C("city_id")[$city_id];
+
+            $list[$key]['bill_info'] = $val['input_year']."年".$val['input_month']."月";
+	        switch ($val['type']) {
+				case 1:
+					$list[$key]['type_name'] = "日常";
+                    $list[$key]['bill_info'] .= "日常";
+					break;
+				case 2:
+                    $list[$key]['type_name'] = "退租";
+                    $list[$key]['bill_info'] .= "退租";
+                    break;
+                case 3:
+                    $list[$key]['type_name'] = "转租";
+                    $list[$key]['bill_info'] .= "转租";
+                    break;
+                case 4:
+                    $list[$key]['type_name'] = "换租";
+                    $list[$key]['bill_info'] .= "换租";
+                    break;
+			}
+            $list[$key]['bill_info'] .= $city_name."账单";
+            
+		}
+		return $list;
+    }
+
+    /**
+    * [修改支付][1支付宝][2微信][3余额抵押]
+    **/
+    public function setPayStatus($charge_id,$pay_type){
+    	return $this->where(array("id"=>$charge_id))->save(array("pay_type"=>$pay_type));
+    }
+}
+
+?>

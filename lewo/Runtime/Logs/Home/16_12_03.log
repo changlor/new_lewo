@@ -1,0 +1,77 @@
+[ 2016-12-03T00:36:37+08:00 ] 127.0.0.1 /index.php/Home/Alipay/pay/WIDout_trade_no/201612022022559/WIDsubject/%E5%88%98%E7%BF%A02016%E5%B9%B411%E6%9C%88%E6%97%A5%E5%B8%B8%E6%AC%A0%E6%AC%BE%E9%87%8D%E5%BA%86%E8%B4%A6%E5%8D%95/WIDtotal_fee/123.67.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000049s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002204s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002023s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002261s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002665s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002992s ]
+
+[ 2016-12-03T00:37:59+08:00 ] 127.0.0.1 /index.php/Home/Tenant/feelist.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000052s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002961s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002458s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002650s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0131s ]
+SQL: SHOW COLUMNS FROM `lewo_pay` [ RunTime:0.0114s ]
+NOTIC: [8] Undefined index: not_bill_type G:\wamp2\www\lewo\lewo\Home\Model\PayModel.class.php 第 50 行.
+NOTIC: [8] Undefined index: in_bill_type G:\wamp2\www\lewo\lewo\Home\Model\PayModel.class.php 第 51 行.
+NOTIC: [8] Undefined index: pay_status G:\wamp2\www\lewo\lewo\Home\Model\PayModel.class.php 第 54 行.
+NOTIC: [8] Undefined index: bill_type G:\wamp2\www\lewo\lewo\Home\Model\PayModel.class.php 第 56 行.
+NOTIC: [8] Undefined index: pay_status G:\wamp2\www\lewo\lewo\Home\Model\PayModel.class.php 第 65 行.
+SQL: SELECT a.realname,p.*,r.house_code FROM lewo_pay p left JOIN lewo_account a ON a.id=p.account_id left JOIN lewo_room r ON r.id=p.room_id  WHERE p.pay_type NOT IN ('9') AND p.account_id = '2092' AND p.is_show = 1 AND p.is_send = 1 ORDER BY p.pay_status asc,p.input_year desc,p.input_month desc  [ RunTime:0.0162s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0086s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0069s ]
+SQL: SELECT `area_id` FROM `lewo_houses` WHERE `house_code` = 'CQ00039' LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT `city_id` FROM `lewo_area` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT `area_id` FROM `lewo_houses` WHERE `house_code` = 'CQ00039' LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT `city_id` FROM `lewo_area` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT `area_id` FROM `lewo_houses` WHERE `house_code` = 'CQ00039' LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT `city_id` FROM `lewo_area` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT `area_id` FROM `lewo_houses` WHERE `house_code` = 'CQ00039' LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT `city_id` FROM `lewo_area` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT `area_id` FROM `lewo_houses` WHERE `house_code` = 'CQ00039' LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT `city_id` FROM `lewo_area` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT `area_id` FROM `lewo_houses` WHERE `house_code` = 'CQ00039' LIMIT 1   [ RunTime:0.0017s ]
+SQL: SELECT `city_id` FROM `lewo_area` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT `area_id` FROM `lewo_houses` WHERE `house_code` = 'CQ00039' LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT `city_id` FROM `lewo_area` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0005s ]
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Home\Model\PayModel.class.php 第 84 行.
+SQL: SELECT `area_id` FROM `lewo_houses` WHERE `house_code` = 'CQ00039' LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT `city_id` FROM `lewo_area` WHERE `id` = 25 LIMIT 1   [ RunTime:0.0005s ]
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Home\Model\PayModel.class.php 第 84 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000225s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000413s ]
+NOTIC: [8] Undefined variable: contract_list G:\wamp2\www\lewo\lewo\Runtime\Cache\Home\95f8fa7799ce7c882b122acafdcacc2f.php 第 105 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.032135s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.032325s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001242s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001418s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001550s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001722s ]
+
+[ 2016-12-03T23:44:37+08:00 ] 127.0.0.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000031s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002829s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001952s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002110s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000505s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000731s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.064474s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.064690s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.026226s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.026380s ]
+

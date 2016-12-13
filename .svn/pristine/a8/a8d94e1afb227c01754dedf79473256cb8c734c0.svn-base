@@ -1,0 +1,469 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class ToolController extends Controller {
+    public function __construct(){
+        parent::__construct();
+        if ( empty($_SESSION['username']) && ACTION_NAME != 'register') {
+            $this->login();
+            die();
+        }
+    }
+    public function index(){
+        $this->display("Common/header");
+        $this->display("Common/nav");
+        $this->display("index");
+        $this->display("Common/footer");
+    }
+    /**
+    * [针对之前的日常账单和合同账单没有在lewo_pay表中生成关联数据，此功能将未生成的数据在lewo_pay中添加数据以致能够关联]
+    **/
+    public function create_pay_data(){
+        $MChargebill = M('charge_bill');
+        $MContract = M('contract');
+        $MPay = M('pay');
+        $charge_bill_list = $MChargebill->select();
+        $contract_list = $MContract->select();
+
+        foreach($charge_bill_list AS $key=>$val){
+            $data = array();
+            $data['pro_id'] = $val['order_no'];
+            $data['room_id'] = $val['room_id'];
+            $data['price'] = $val['total_fee'];
+            $data['bill_type'] = 3;
+            $data['pay_type'] = $val['pay_type'];
+            $data['pay_status'] = $val['pay_status'];
+            if ( $data['pay_status'] == 1 ) {
+                $data['pay_money'] = $data['price'];
+            }
+            $data['pay_time'] = !empty($val['pay_time'])?$val['pay_time']:0;
+            $data['create_time'] = $val['create_time'];
+            $data['account_id'] = $val['account_id'];
+            $data['input_month'] = $val['input_month'];
+            $data['input_year'] = $val['input_year'];
+            $data['should_date'] = $val['should_pay_date'];
+            $data['last_date'] = $val['late_pay_date'];
+            $data['is_show'] = 1;
+            $data['modify_log'] = 'create_pay_data所创建的';
+            $MPay->add($data);
+        }
+        foreach($contract_list AS $key=>$val ){
+            $data = array();
+            $data['pro_id'] = $val['order_no'];
+            $data['room_id'] = $val['room_id'];
+            $data['price'] = $val['pay_total'];
+            $data['bill_type'] = 2;
+            $data['pay_status'] = $val['pay_status'];
+            if ( $data['pay_status'] == 1 ) {
+                $data['pay_money'] = $data['price'];
+            }
+            $data['pay_time'] = !empty($val['pay_date'])?$val['pay_date']:0;
+            $data['create_time'] = !empty($val['create_time'])?$val['create_time']:0;
+            $data['account_id'] = $val['account_id'];
+            $data['pay_type'] = $val['pay_type'];
+            $data['input_month'] = date('m',strtotime($val['create_time']));
+            $data['input_year'] = date('Y',strtotime($val['create_time']));
+            $data['should_date'] = $data['create_time'];
+            $data['last_date'] = $data['create_time'];
+            $data['is_show'] = 1;
+            $data['modify_log'] = 'create_pay_data所创建的';
+            $MPay->add($data);
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+
+    /**
+    * [php版本]
+    **/
+    public function php_v(){
+        phpinfo();
+    }
+
+    /**
+    * [将order_no 移植到 pro_id]
+    **/
+    public function update_pro_id(){
+        $MContract = M('contract');
+        $MChargebill = M('charge_bill');
+        $contract_list = $MContract->select();
+        $charge_bill_list = $MChargebill->select();
+        foreach ($contract_list as $key => $val) {
+            if ( $val['order_no'] == '' ) {
+                continue;
+            }
+            $MContract->where(array('id'=>$val['id']))->save(array('pro_id'=>$val['order_no']));
+        }
+        foreach ($charge_bill_list as $key => $val) {
+            if ( $val['order_no'] == '' ) {
+                continue;
+            }
+            $MChargebill->where(array('id'=>$val['id']))->save(array('pro_id'=>$val['order_no']));
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+
+    /**
+    * [检测帐号是否存在两次][并获取出那个没有关联合同的]
+    **/
+    public function check_is_two_account(){
+        $MAccount = M("account");
+        $MContract = M("contract");
+        $arr_mobile = $MAccount->field("id,mobile")->select();
+        $info = array();
+        foreach ( $arr_mobile AS $k=>$v ) {
+            /*$info[$k]['mobile'] = $v['mobile'];
+            $info[$k]['id'] = $v['id'];
+            $info[$k]['count'] = count($MAccount->where(array("mobile"=>$v['mobile']))->select());*/
+            $account_arr = $MAccount->where(array("mobile"=>$v['mobile']))->select();
+            if ( count($account_arr) > 1 ) {
+                $info[$k]['mobile'] = $v['mobile'];
+                $info[$k]['id'] = $v['id'];
+                $info[$k]['count'] = $count;
+                foreach ($account_arr as $key => $value) {
+                    $contract_info = $MContract->where(array("account_id"=>$value['id']))->find();
+                    if ( !is_null($contract_info) ) {
+                        echo $value['id']."有合同<br/>";
+                    } else {
+                        echo $value['id']."没合同,";
+                        $result = $MAccount->where(array("id"=>$value['id']))->delete();
+                        if ( $result ) {
+                            echo "删除成功!<br/>";
+                        } else {
+                            echo "删除失败!<br/>";
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+
+    /**
+    * [修改缴费周期]
+    **/
+    public function update_zhouqi(){
+        $MContract = M("contract");
+        $arr = $MContract->field("id,rent_type")->select();
+        foreach($arr AS $key=>$val){
+            $arr_type = explode("_",$val['rent_type']);
+            $MContract->where(array("id"=>$val['id']))->save(array("period"=>$arr_type['1']));
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+
+    public function update_room_account(){
+        
+        $MAccount = M("account");
+        $MRoom = M("room");
+        foreach ($arr AS $key=>$val) {
+           $account_id = $MAccount->where(array("mobile"=>$val['0']))->getField("id");
+           $account_id = !empty($account_id)? $account_id : 0;
+           $room_info = $MRoom->where(array("room_code"=>$val['1']))->save(array("account_id"=>$account_id));
+
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+
+    public function update_house_steward(){
+        $MAdmin = M("admin_user");
+        $MHouse = M("houses");
+        foreach ( $arr AS $key=>$val ) {
+            $steward_id = $MAdmin->where(array("username"=>$val['0']))->getField("id");
+            $MHouse->where(array("house_code"=>$val['1']))->save(array("steward_id"=>$steward_id));
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+    /**
+    * 添加房屋水电气信息
+    **/
+    public function add_ammeter_house(){
+
+        $MHouse = M("houses");
+        $MAHouse = M("ammeter_house");
+        foreach ($arr AS $key=>$val) {
+            if ( $val['5']==10 && $val['6'] == 2016) {
+                continue;
+            }
+            $data = array();
+            $house_id = 0;
+            $house_id = $MHouse->where(array("house_code"=>$val['0']))->getField("id");
+            if ( is_null($house_id)) {
+                file_put_contents("is_null_house_code.txt", $val['0'].",",FILE_APPEND);
+                continue;
+            }
+            $data['house_id'] = $house_id;
+            $data['total_water'] = $val['1'];
+            $data['total_energy'] = $val['2'];
+            $data['total_gas'] = $val['3'];
+            $data['input_date'] = $val['4'];
+            $data['input_month'] = $val['5'];
+            $data['input_year'] = $val['6'];
+            $data['energy_add'] = $val['7'];
+            $data['water_add'] = $val['8'];
+            $data['gas_add'] = $val['9'];
+            $data['status'] = 1;
+            $MAHouse->add($data);
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+
+    /**
+    * 添加房间电表
+    **/
+    public function add_ammeter_room(){
+        $MRoom = M("room");
+        $MHouse = M("houses");
+        $MAeemeterRoom = M("ammeter_room");
+        foreach ($arr AS $key=>$val) {
+            if ( $val['2']==10 && $val['3'] == 2016) {
+                continue;
+            }
+            $room_id = $MRoom->where(array("room_code"=>$val['5']))->getField("id");
+            if ( is_null($room_id) ) {
+                file_put_contents("room_code_is_null.txt", $val['5'].",",FILE_APPEND);
+                continue;
+            }
+            $house_id = $MHouse->where(array("house_code"=>$val['6']))->getField("id");
+            if ( is_null($house_id) ) {
+                file_put_contents("house_code_is_null.txt", $val['6'].",",FILE_APPEND);
+                continue;
+            }
+            $data['room_energy'] = $val['0'];
+            $data['input_date'] = $val['1'];
+            $data['input_month'] = $val['2'];
+            $data['input_year'] = $val['3'];
+            $data['room_energy_add'] = $val['4'];
+            $data['room_id'] = $room_id;
+            $data['house_id'] = $house_id;
+            $data['status'] = 1;
+            $MAeemeterRoom->add($data);
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+
+    //添加合同
+    public function add_contract(){
+        //0room_code,1mobile,2realname,3start_date,4end_date,5rent_date,6rent_type,7ht_status,8rent,
+        //9fee,10contact_2,11how_pay,12pay_status,13person_count,14pay_date,15creat_date,16total,17paytotal,18z_s,19z_d,20z_q,21room_d,22deposit,23password
+
+        $MAccount = M("account");
+        $MRoom = M("room");
+        $MContract = M("contract");
+        foreach ( $arr AS $key=>$val ) {
+            $is_has_account = $MAccount->where(array("mobile"=>$val['1']))->select();
+            if ( count($is_has_account) > 0 ) {
+                $account_id = $MAccount->where(array("mobile"=>$val['1']))->getField("id");    
+            } else {
+                //没有 插入一条
+                $add['mobile'] = $val['1'];
+                $add['password'] = $val['23'];
+                $add['realname'] = $val['2'];
+                $account_id = $MAccount->add($add);
+            }
+            
+            $room_id = $MRoom->where(array("room_code"=>$val['0']))->getField("id");
+            $result = $MContract->where(array("account_id"=>$account_id,"contract_status"=>1))->select();
+            if ( count($result) > 0 ) {
+
+                continue;
+            }
+            if ( 1 == $val['7'] ) {
+                //把房屋改成入住
+            $MRoom->where(array("id"=>$room_id))->save(array("account_id"=>$account_id,"status"=>2));
+            }
+            
+            $data['account_id'] = !empty($account_id)?$account_id:0;
+            $data['room_id'] = !empty($room_id)?$room_id:0;
+            
+            $data['start_time'] = $val['3'];
+            $data['end_time'] = $val['4'];
+            $data['rent_date'] = $val['5'];
+            $data['rent_type'] = $val['6'];
+            $data['contract_status'] = $val['7'];
+            $data['rent'] = $val['8'];
+            $data['fee'] = $val['9'];
+            $data['contact2'] = $val['10'];
+            $data['pay_status'] = $val['12'];
+            $data['person_count'] = $val['13'];
+            $data['pay_date'] = $val['14'];
+            $data['create_time'] = $val['15'];
+            $data['total_fee'] = $val['16'];
+            $data['pay_total'] = $val['17'];
+            $data['zS'] = $val['18'];
+            $data['zD'] = $val['19'];
+            $data['zQ'] = $val['20'];
+            $data['roomD'] = $val['21'];
+            $data['deposit'] = $val['22'];
+            $data['realname'] = $val['2'];
+
+            //1.现金 2.支付宝 3.微信 4.支付宝转账 5.微信转账 6.银行卡7.退租8.押金抵扣
+            //支付类型 1:支付宝(线上) 2:支付宝(线下) 3：微信(线上) 4:微信(线下) 5:押金抵扣 6:现金 7.银行卡 8.退租
+            switch ($val['11']) {
+                case '1':
+                    $pay_type = 6;
+                    break;
+                case '2':
+                    $pay_type = 1;
+                    break;
+                case '3':
+                    $pay_type = 3;
+                    break;
+                case '4':
+                    $pay_type = 2;
+                    break;
+                case '5':
+                    $pay_type = 4;
+                    break;
+                case '6':
+                    $pay_type = 7;
+                    break;
+                case '7':
+                    $pay_type = 8;
+                    break;
+                case '8':
+                    $pay_type = 5;
+                    break;
+                default:
+                    $pay_type = 0;
+                    break;
+            }
+            $data['pay_type'] = $pay_type;
+
+            $data['is_delete'] = 0;
+            $data['log'] = "老系统数据";
+            $MContract->add($data);
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+
+    //更新用户信息
+    public function update_account(){
+        $arr[] = array('田永飞','C1575765F6871A8320647D61A129904D','18323426982','500112199407022747','F');
+        
+
+        $MAccount = M("account");
+        foreach ($arr as $key => $value) {
+            $where['mobile'] = $value['2'];
+            $save['realname'] = $value['0'];
+            $save['password'] = $value['1'];
+            $save['card_no'] = $value['3'];
+            $save['sex'] = ($value['4']=='M')? 1:2;
+            $MAccount->where($where)->save($save);
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+
+    // 添加日常账单
+    public function add_charge_bill(){
+
+    
+    //0pay_status,1pay_date,2how_pay,3is_show,4cw.input_month,5cw.input_year,6should_time,7last_time,8modify_log,9room_code,10house_code,11realname,12water_fee,13energy_fee,14public_energy_fee,15gas_fee,16rubbish_fee,17total_person_day,18unit_person_day,19cteate_time,20modify_time,21total_energy,22total_water,23total_gas,24wgfee_unit,25public_energy_fee_person,26total_person_energy,27total_fee,28rent_fee,29rent_des,30service_fee,31room_energy_add,32issendtouser,33wx_fee,34wx_des,35type,36rent_date_old,37rent_date_to 
+        $MAccount = M("account");
+        $MRoom = M("room");
+        $MChargebill = M("charge_bill");
+        foreach ($arr as $key => $val) {
+            $room_id = $MRoom->where(array("room_code"=>$val['9']))->getField("id");
+            $account_id = $MRoom->where(array("room_code"=>$val['9']))->getField("account_id");
+            if ( is_null($account_id) ) {
+                $account_id = $MAccount->where(array("realname"=>$val['11'],"enable"=>1))->getField("account_id");
+            }
+            $data['room_id'] = is_null($room_id)?'':$room_id;      
+            $data['account_id'] = $account_id;
+
+            $data['pay_status'] = $val['0'];
+            $data['pay_time'] = $val['1'];
+
+            //1.现金 2.支付宝 3.微信 4.支付宝转账 5.微信转账 6.银行卡7.退租8.押金抵扣
+            //支付类型 1:支付宝(线上) 2:支付宝(线下) 3：微信(线上) 4:微信(线下) 5:押金抵扣 6:现金 7.银行卡 8.退租
+            switch ($val['2']) {
+                case '1':
+                    $pay_type = 6;
+                    break;
+                case '2':
+                    $pay_type = 1;
+                    break;
+                case '3':
+                    $pay_type = 3;
+                    break;
+                case '4':
+                    $pay_type = 2;
+                    break;
+                case '5':
+                    $pay_type = 4;
+                    break;
+                case '6':
+                    $pay_type = 7;
+                    break;
+                case '7':
+                    $pay_type = 8;
+                    break;
+                case '8':
+                    $pay_type = 5;
+                    break;
+                default:
+                    $pay_type = 0;
+                    break;
+            }
+            $data['pay_type'] = $pay_type;
+
+            $data['is_delete'] = ($val['3']==1)?0:1;
+            $data['input_month'] = $val['4'];
+            $data['input_year'] = $val['5'];
+            $data['should_pay_date'] = $val['6'];
+            $data['late_pay_date'] = $val['7'];            
+            $data['modify_log'] = $val['8'];
+            $data['house_code'] = $val['10'];
+            $data['realname'] = $val['11'];
+            $data['water_fee'] = $val['12'];
+            $data['room_energy_fee'] = $val['13'];
+            $data['public_energy_fee']  = $val['14'];
+            $data['gas_fee'] = $val['15']; 
+            $data['rubbish_fee'] = $val['16'];
+            $data['total_person_day'] = $val['17'];
+            $data['person_day'] = $val['18'];
+            $data['create_time'] = $val['19'];
+            $data['modify_time'] = $val['20'];
+            $data['total_energy'] =$val['21'];
+            $data['total_water'] = $val['22'];
+            $data['total_gas'] = $val['23'];
+            $data['wgfee_unit'] = $val['24'];
+            $data['energy_fee'] = $val['25'];
+            $data['total_person_energy'] = $val['26'];
+            $data['total_fee'] = $val['27'];
+            $data['rent_fee'] = $val['28'];
+            $data['rent_des'] = $val['29'];
+            $data['service_fee'] = $val['30'];
+            $data['room_energy_add']= $val['31'];
+            $data['is_send'] = $val['32'];
+            $data['wx_fee'] = $val['33'];
+            $data['wx_des'] = $val['34'];
+            $data['type'] = $val['35'];
+            $data['rent_date_old'] = $val['36'];
+            $data['rent_date_to'] = $val['37'];  
+                
+            $id = $MChargebill->add($data);
+            file_put_contents("add_charge_log.txt", $id.",",FILE_APPEND);
+        }
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+
+    /**
+    * 判断此房间是否有正常合同，没有则为未租
+    **/
+    public function is_in_person_room(){
+        $Mroom = M("room");
+        $room_list = $Mroom->select();
+        $MContract = M("contract");
+        $str = '';
+        foreach ( $room_list AS $key=>$val ) {
+            $contract = $MContract->where(array("room_id"=>$val['id'],"contract_status"=>1))->find();
+            if ( is_null($contract) ){
+               $str .= $val['id'].",";
+               $Mroom->where(array("id"=>$val['id']))->save(array("account_id"=>0,"status"=>0));
+            }
+        }
+        $str = substr($str, 0 , -1);
+        dump($str);
+        $this->success("处理成功!",U('Admin/Tool/index'));
+    }
+}

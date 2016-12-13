@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>管家中心</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">    
+  <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+  <meta http-equiv="description" content="This is my page">
+  <link href="__PUBLIC__/css/normalize.css" rel="stylesheet" type="text/css">
+  <script src="__PUBLIC__/js/jquery-1.9.1.js" type="text/javascript"></script>
+  <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+  <link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/grzx.css" rel="stylesheet" type="text/css">
+
+  <style>
+  #wrapper {
+    position: absolute;
+    top: 44px;
+    bottom: 50px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    background-color:#f8f8f8;
+  }
+  .img-responsive {
+    display: inline-block;
+    height: auto;
+    max-width: 100%;
+  }
+  .col-xs-12 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .col-xs-6{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+  .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  </style>
+</head>
+
+<body>
+<div id="fwxx">
+  <div class="container-fluid header"></div>
+    <div id="wrapper">
+      <div>
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="col-xs-12">
+              <div class="row-fluid">
+                <div class="col-xs-12">
+                  <div class="img-icon1-dx">
+                    <div class="row-fluid">
+                      <div class="col-xs-12">
+                        <div class="img-icon1-tx">
+                          <notempty name="steward_info.avatar">
+                          <a href="">
+                            <img src="{$steward_info.avatar}" style="margin-top:20px;width:66px;height:66px;border:2px solid #fff;" class="img-circle">
+                          </a>
+                          <else/>
+                          <a href="">
+                            <img src="__PUBLIC__/images/user.jpg" style="margin-top:20px;width:66px;height:66px;border:2px solid #fff;" class="img-circle">
+                          </a>
+                          </notempty>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row-fluid">
+                      <div class="col-xs-12">
+                        <div class="banner-wz">
+                        <span class="banner-wz-tz1">{$Think.session.steward_nickname}</span>
+                        <br/>
+                        <a href="{:U('Home/Steward/login_out')}" class="banner-wz-tz2" style="color:#fff">退出</span>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row-fluid">
+              <div class="col-xs-12">
+                <div class="border-bot-xt1"></div>
+              </div>
+            </div>
+            
+            <div class="row-fluid">
+              <div class="col-xs-12 icon-top-h20">
+                <div class="row-fluid">
+                    <div class="col-xs-4 bg_lb">
+                      <span>￥{$today_total_money}</span><br/><span>[&nbsp;今日总金额&nbsp;]</span>
+                    </div>
+                    <div class="col-xs-4 bg_lg">
+                      <span>￥{$yesterday_total_money}</span><br/><span>[&nbsp;昨日总金额&nbsp;]</span>
+                    </div>
+                    <div class="col-xs-4 bg_ly">
+                      <span>{$today_sign_count}</span><br/><span>[&nbsp;签约数量&nbsp;]</span>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="col-xs-4 bg_lg">
+                      <span>{$empty_room_count}({$percent_room}%)</span><br/><span>[&nbsp;空房间&nbsp;]</span>
+                    </div>
+                    <div class="col-xs-4 bg_lo">
+                      <span>{$empty_bed_count}({$percent_bed}%)</span><br/><span>[&nbsp;空床位&nbsp;]</span>
+                    </div>
+                    <div class="col-xs-4 bg_lb">
+                      <span>￥{$JD_total_money}</span><br/><span>[&nbsp;缴定金额&nbsp;]</span>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="col-xs-4 bg_lo">
+                      <a class="color-white" href="{:U('Home/Steward/checkbill')}"><span>&nbsp;</span><br/><span>[&nbsp;集中抄表&nbsp;]</span></a>
+                    </div>
+                    <div class="col-xs-4 bg_lg">
+                      <a class="color-white" href="{:U('Home/Steward/houses')}"><span>&nbsp;</span><br/><span>[&nbsp;入住&nbsp;]</span></a>
+                    </div>
+                    <div class="col-xs-4 bg_ly">
+                      <a class="color-white" href="{:U('Home/Steward/stewardtasks')}"><span>&nbsp;</span><br/><span>[&nbsp;待办&nbsp;]</span></a>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="col-xs-12">
+                    <div class="border-bot-box-h25"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button">
+    <div class="button_ds">
+      <div class="container-fluid">
+        <!-- <div class="row-fluid">
+          <a href="check-bill.html">
+            <div class="col-xs-4"> <img src="images/icon_sy.png" class="img-responsive img-icon3-dx"> <br>
+              <span class="nav-bootom-zt">集中抄表</span>
+            </div>
+          </a>
+           <a href="houses.html">
+            <div class="col-xs-4"> <img src="images/icon_zf.png" class="img-responsive img-icon3-dx"> <br>
+              <span class="nav-bootom-zt">入住</span>
+            </div>
+          </a>
+          <a href="steward-tasks.html">
+            <div class="col-xs-4"> <img src="images/icon_wo.png" class="img-responsive img-icon3-dx"> <br>
+              <span class="nav-bootom-zt" style="color:#68bb9b;">待办</span>
+            </div>
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>

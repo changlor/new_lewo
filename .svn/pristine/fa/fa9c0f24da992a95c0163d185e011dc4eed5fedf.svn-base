@@ -1,0 +1,309 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class TenantController extends Controller {
+	public function __construct(){
+		parent::__construct();
+		if ( empty($_SESSION['user_id']) && ACTION_NAME != 'register' ) {
+			$this->login();
+			die();
+		}
+	}
+    public function index(){
+        $DAccount = D("account");
+        $account_info = $DAccount->getAccountInfoById($_SESSION['user_id']);
+        $DRoom = D("room");
+        $room_info = $DRoom->getRoomInfoByAcId($_SESSION['user_id']);
+        if ( !empty($room_info) ) {
+            $DHouses = D("houses");
+            $house_info = $DHouses->getHouseAndArea($room_info['house_code']);
+        }
+        
+        //获取未支付账单
+        $DChargeBill = D("charge_bill");
+        $notpaylist = $DChargeBill->getNotPay($_SESSION['user_id']);
+        $this->assign("notpaylist",$notpaylist);
+        //获取确认退房账单
+        $back_bill = M("back_bill")->where(array("is_finish"=>0,"is_affirm"=>0,"account_id"=>$_SESSION['user_id']))->find();
+        //获取未支付合同
+        $contract_info = M("contract")->where(array("account_id"=>$account_info['id'],"pay_status"=>0))->find();
+
+        if ( $contract_info ) {
+            $contract_info['bill_info'] = $account_info['realname']."合同账单";
+        }
+        
+        $this->assign("contract_info",$contract_info);
+        $this->assign("back_bill",$back_bill);
+        $this->assign("room_info",$room_info);
+        $this->assign("house_info",$house_info);
+        $this->assign('account_info',$account_info);
+        $this->assign("name",$_SESSION['user']);
+    	$this->display('tenant-index');
+    }
+    /**
+     * [登录]
+     **/
+    public function login(){
+    	if ( !empty($_POST) ) {
+    		$where['mobile'] = I("userName");
+    		$where['password'] = md5(I("userPass"));
+    		$Muser = M("account");
+    		$result = $Muser->where($where)->find();
+    		if ( !is_null($result) ) {
+                $_SESSION['user'] = $_POST['userName'];
+                $_SESSION['user_id'] = $result['id'];
+    			$this->success("登录成功",U("Home/Tenant/index"),1);
+    		} else {
+    			$this->error("登录失败");
+    		}
+    	} else {
+    		$this->display('login');
+    	}
+    }
+
+    /*
+     * [退出登录]
+     */
+    public function login_out(){
+        session_destroy();
+        $this->success("退出成功",U("Home/Index/login"));
+    }
+
+    /*
+     * [注册]
+     */
+    public function register(){
+    	if ( !empty( $_POST ) ) {
+    		if ( $_POST['userPass'] !== $_POST['reuserPass'] ){
+    			die("两次密码不相同");
+    		}
+    		$Muser = M('account');
+    		$data['mobile'] = $_POST['userName'];
+    		$data['password'] = md5($_POST['userPass']);
+    		$data['ip'] = get_client_ip();
+    		$Muser->add($data);
+    		$this->success("注册成功",U("Home/Tenant/login"));
+    	} else {
+    		$this->display("register");
+    	}
+    }
+
+    /**
+     * [我的房间]
+     **/
+    public function myhouse(){
+        $DRoom = D("room");
+        $DAccount = D("account");
+        $DContract = D("contract");
+        $contract_info = $DContract->getNewContractById($_SESSION['user_id']); 
+        $room_info = $DRoom->getRoomInfoByAcId($_SESSION['user_id']);
+        if ( !empty($room_info) ) {
+            $DHouses = D("houses");
+            $house_info = $DHouses->getHouseAndArea($room_info['house_code']);
+        }
+        $account_info = $DAccount->getAccountInfoById($_SESSION['user_id']);
+        //获取退房信息
+        $DSchedule = D("schedule");
+        $TFinfo = $DSchedule->getTFinfo($_SESSION['user_id']);
+        $status = $TFinfo[count($TFinfo)-1]['status'];
+    
+        $this->assign("status",$status);
+        $this->assign("TFinfo",$TFinfo);
+        $this->assign('contract_info',$contract_info);
+        $this->assign('account_info',$account_info);
+        $this->assign('room_info',$room_info);
+        $this->assign("house_info",$house_info);
+    	$this->display('my-house');
+    }
+    /**
+     * [费用查询]
+     **/
+    public function feelist(){
+        $account_id = $_SESSION['user_id'];
+        $DChargeBill = D("charge_bill");
+
+        $bill_list = $DChargeBill->getBillByAcId($account_id);
+        $contract_list = M("contract")->where(array("account_id"=>$account_id))->select();
+        $this->assign("contract_list",$contract_list);
+        $this->assign("bill_list",$bill_list);
+    	$this->display('fee-list');
+    }
+    /**
+    * [费用详细]
+    **/
+    public function detail_fee(){
+        $id = I("id");
+        $DArea = D("area");
+        $MArea = M("area");
+        $DCharge = D("charge_house");
+        $DChargeBill = D("charge_bill");
+        $DHouses = D("houses");
+        $bill_info = $DChargeBill->getDetailBillById($id);
+        $area_id = $DHouses->getAreaIdByCode($bill_info['house_code']);
+        /*dump($bill_info);exit;*/
+        $house_id = $DHouses->getHouseIdByCode($bill_info['house_code']);
+        $charge_info = $DCharge->getChargeHouseById($house_id,$bill_info['input_year'],$bill_info['input_month']);
+
+        $area_name = $DArea->getAreaNameById($area_id);
+        $area_info = $MArea->where(array("id"=>$area_id))->find();//小区水电气单位数据
+
+        $WYfee = $DHouses->getWYfee($bill_info['house_code']);
+        $this->assign("WYfee",$WYfee);
+
+        $total_energy_fee = ($charge_info['start_energy']-$charge_info['end_energy'])*$area_info['energy_unit'];
+        $total_water_fee = ($charge_info['start_water']-$charge_info['end_water'])*$area_info['water_unit'];
+        $total_gas_fee = ($charge_info['start_gas']-$charge_info['end_gas'])*$area_info['gas_unit'];
+        $this->assign("total_energy_fee",$total_energy_fee);
+        $this->assign("total_water_fee",$total_water_fee);
+        $this->assign("total_gas_fee",$total_gas_fee);
+
+        $this->assign("charge_info",$charge_info);
+        $this->assign("area_name",$area_name);
+        $this->assign("bill_info",$bill_info);
+        $this->display("detail-fee");
+    }
+    /**
+     * [我的管家]
+     **/
+    public function mysteward(){
+        $DAccount = D("account");
+        $DContract = D("contract");
+        $DRoom = D("room");
+        $account_info = $DAccount->getAccountInfoById($_SESSION['user_id']);
+        $contract_info = $DContract->getNewContractById($_SESSION['user_id']); 
+        $room_id = $contract_info['room_id'];
+        $steward_info = $DRoom->getRoomSteward($room_id);
+        $this->assign("account_info",$account_info);
+        $this->assign("steward_info",$steward_info);
+    	$this->display('my-steward');
+    }
+    /**
+     * [个人资料]
+     **/
+    public function myinfo(){
+        $DAccount = D("account");
+        $account_info = $DAccount->getAccountInfoById($_SESSION['user_id']);
+
+        $this->assign("account_info",$account_info);
+    	$this->display('my-info');
+    }
+
+    /**
+    * [修改个人资料]
+    **/
+    public function edit_myinfo(){
+        $this->display("edit-myinfo");
+    }
+
+    /**
+    * [用户申请退租]
+    **/ 
+    public function checkout(){
+        //插入一条待办
+        //修改合同状态
+        $schedule_type = I("schedule_type");
+        $MAccount  = D("account");
+        $MSchedule = D("schedule");
+        $mobile = $MAccount->getFieldById($_SESSION['user_id'],"mobile");
+        $realname = $MAccount->getFieldById($_SESSION['user_id'],"realname");
+        if ( !empty($_POST) ) {
+            $data['account_id'] = $_SESSION['user_id'];
+            $data['create_time'] = date("Y-m-d H:i:s",time());
+            $data['mobile'] = $mobile;
+            $data['schedule_type'] = $schedule_type;//根据传递过来的值来判断
+            $data['status'] = 1;
+            $data['room_id'] = I("room_id");
+            $data['is_finish'] = 0;
+            $data['admin_type'] = C("admin_type_gj");
+            $data['msg'] = I("post.msg");
+            $data['pay_type'] = I("post.pay_type");
+            $data['pay_account'] = I("post.pay_account");
+            $data['appoint_time'] = I("post.appoint_time");
+            $data['steward_id'] = I("post.steward_id");
+            $result = $MSchedule->addOneSchedule($data);
+            if ( $result ) {
+                $this->success("提交成功，请耐心等待管家",U('Home/Tenant/myhouse'));
+            } else {
+                $this->error("提交失败");
+            } 
+        } else {
+            $isHas = $MSchedule->where(array("account_id"=>$_SESSION['user_id'],"schedule_type"=>$schedule_type,"is_delete"=>0))->find();
+            if ( !empty($isHas) ) {
+                $this->success("已经提交了申请，请耐心等待管家",U('Home/Tenant/myhouse'));
+            } else {
+                $room_id = I("room_id");
+                $DRoom = D("room");
+                $room_info = $DRoom->getRoom($room_id);
+                $this->assign("room_id",$room_id);
+                $this->assign("schedule_type",$schedule_type);
+                $this->assign("room_info",$room_info);
+                $this->assign("apply_time",date("Y-m-d",time()));
+                $this->assign("mobile",$mobile);
+                $this->assign("realname",$realname);
+                $this->assign("schedule_type_name",C("schedule_type_arr")[$schedule_type]);
+                $this->display("check-out");
+            }
+        }
+    }
+
+    /**
+    * [显示退房确认未支付账单]
+    **/
+    public function show_back_bill(){
+        //获取未支付账单
+        $notpaylist = D("charge_bill")->getNotPay($_SESSION['user_id']);
+        $deposit = M("contract")->where(array("account_id"=>$_SESSION['user_id'],"contract_status"=>1))->getField("deposit");
+
+        $sum_total_fee = 0;
+        foreach ($notpaylist AS $key=>$val) {
+            $sum_total_fee += $val['total_fee'];
+        }
+        $residue_deposit = $deposit-$sum_total_fee;
+        $this->assign("residue_deposit",$residue_deposit);
+        $this->assign("deposit",$deposit);
+        $this->assign("sum_total_fee",$sum_total_fee);
+        $this->assign("notpaylist",$notpaylist);
+        $this->display("show-back-bill");
+    }
+
+    /**
+    * [确认退房账单]
+    **/
+    public function confirm_bill(){
+        $id = I("id");
+        $back_bill = M("back_bill")->where(array("id"=>$id))->find();
+        $room_id = $back_bill['room_id'];
+        $account_id = $back_bill['account_id'];
+        //租客已确认修改back_bill状态
+        M("back_bill")->where(array("id"=>$id))->save(array("is_affirm"=>1));
+        //插入财务修改支付账单待办
+        $DSchedule = D("schedule");
+        //租客确认账单后，插入一条财务查看账单待办
+        $result = $DSchedule->addNewSchdule($back_bill['schedule_id'],C("schedule_type_tf"),5,C("admin_type_cw"));
+        if ( $result ) {
+            //租客确认账单后，退房成功，修改房屋状态
+            M("room")->where(array("id"=>$room_id))->save(array("status"=>0,"account_id"=>0));
+            //修改合同状态
+            $save['actual_end_time'] = date("Y-m-d H:i:s",time());
+            $save['contract_status'] = 4;//正常退租
+            M("contract")->where(array("account_id"=>$account_id,"room_id"=>$room_id))->save($save);
+
+            M('schedule')->where(array("id"=>$back_bill['schedule_id']))->save(array("is_finish"=>1));
+            $this->success("退房成功，请等待财务审查!",U("Home/Tenant/index"));
+        } else {
+            $this->error("确认失败，请联系管家",U("Home/Tenant/index"));
+        }
+    }
+
+    /**
+    * [查看合同信息]
+    **/
+    public function show_contract_bill(){
+        $id = I("id");
+        $contract_info = M("contract")->where(array("id"=>$id))->find();
+        $rent_type = explode("_",$contract_info['rent_type']);
+        $contract_info['rent_type'] = $rent_type;
+        $this->assign("contract_info",$contract_info);
+        $this->display("detail-contract");
+    }
+}

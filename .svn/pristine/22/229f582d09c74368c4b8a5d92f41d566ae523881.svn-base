@@ -1,0 +1,130 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+/**
+ * [租客帐号]
+ **/
+class TenantController extends Controller {
+    public function __construct(){
+        parent::__construct();
+        if ( empty($_SESSION['username']) && ACTION_NAME != 'register') {
+            header("Location:".U("Admin/Index/login"));
+            die();
+        }
+    }
+    /**
+     * [租客列表]
+     **/
+    public function account(){
+        $Mtenant = M('account');
+        $account_arr = $Mtenant->field("id,ip,mobile,login_time,register_time,realname")->select();
+        $this->assign('account',$account_arr);
+    	$this->display("Common/header");
+    	$this->display("Common/nav");
+    	$this->display("tenant-account");
+    	$this->display("Common/footer");
+    }
+    public function update_account(){
+        if ( !empty($_POST) ) {
+            $id = I("id");
+            if ( I("password") != I("repassword") ) {
+                $this->error("两次密码不相同");
+            }
+            $result = M("account")->where(array("id"=>$id))->save(array("password"=>md5(I("password"))));
+            if ( $result ) {
+                $this->success("修改成功",U('Admin/Tenant/account'));
+            } else {
+                $this->error("修改失败");
+            }
+        } else {
+            $id = I("id");
+            $this->assign("id",$id);
+            $this->display("Common/header");
+            $this->display("Common/nav");
+            $this->display('update-account');
+            $this->display("Common/footer");
+        }
+    }
+    /**
+     * [添加租客帐号]
+     **/
+    public function add_account(){
+        if ( !empty($_POST) ) {
+            if ( $_POST['password'] !== $_POST['repassword'] ){
+                die("两次密码不相同");
+            }
+            $Mtenant = M('account');
+            $data['password'] = md5(I('post.password'));
+            $data['mobile'] = I('post.mobile');
+            $data['email'] = I('post.email');
+            $data['sex'] = I('post.sex');
+            $data['card_no'] = I('post.card_no');
+            $data['sex'] = I('post.sex');
+            $data['register_time'] = date('Y-m-d H:i:s');
+            $data['ip'] = get_client_ip();
+            $result = $Mtenant->where(array('mobile'=>$data['mobile']))->find();
+            if ( empty($result) ) {
+                $Mtenant->add($data);
+                $this->success("注册成功",U("Admin/Tenant/account"));
+            } else {
+                $this->error("注册失败，电话已存在");
+            }
+        } else {
+            $this->display("Common/header");
+            $this->display("Common/nav");
+            $this->display('add-account');
+            $this->display("Common/footer");
+        }
+    }
+
+    /**
+    * [合同]
+    **/
+    public function contract_info(){
+        if ( !empty($_POST) ) {
+
+            $where['id'] = I("id");
+            $save['start_time'] = I("start_time");
+            $save['end_time'] = I("end_time");
+            $save['rent_date'] = I("rent_date");
+            $save['actual_end_time'] = I("actual_end_time");
+            $save['rent'] = I("rent");
+            $save['fee'] = I("fee");
+            $save['person_count'] = I("person_count");
+            $save['zS'] = I("zs");
+            $save['zD'] = I("zd");
+            $save['zQ'] = I("zq");
+            $save['roomD'] = I("roomd");
+            $save['total_fee'] = I("total_fee");
+            $save['pay_total'] = I("pay_total");
+            $save['pay_status'] = I("pay_status");
+            $save['pay_type'] = I("pay_type");
+            $save['pay_date'] = I("pay_date");
+            $save['contract_status'] = I("contract_status");
+            $save['log'] = I("log");
+            $result = M("contract")->where($where)->save($save);
+
+            if( $result ){
+                $this->success("修改成功!");
+            } else {
+                $this->error("修改失败!");
+            }
+        } else {
+
+            $account_id = I("account_id");
+            $contract_info = M("contract")->where(array("account_id"=>$account_id))->order("id desc")->find();
+
+            $contract_info['account_info'] = M("account")->where(array("id"=>$account_id))->find();
+            $contract_info['room_info'] = M("room")->where(array("id"=>$contract_info['room_id']))->find();
+            $rent_type = explode("_",$contract_info['rent_type']);
+            $contract_info['rent_type_name'] = "押".$rent_type[0]."付".$rent_type[1];
+            $this->assign("contract_info",$contract_info);
+            $this->assign("account_id",$account_id);
+            $this->assign("pay_type",C("pay_type"));
+            $this->display("Common/header");
+            $this->display("Common/nav");
+            $this->display("contract_info");
+            $this->display("Common/footer");
+        }
+    }
+}

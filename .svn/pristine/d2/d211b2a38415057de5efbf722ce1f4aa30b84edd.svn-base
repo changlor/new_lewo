@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>房源管理统计</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="__PUBLIC__/admin/css/bootstrap.min.css" />
+	<style type="text/css">
+		table td {
+			text-align: center;
+		}
+		.search {
+			position: fixed;
+			top: 0px;
+		}
+	</style>
+</head>
+<body>
+<form action="" class="search">
+	<input type="text" name="search" value="{$search}">
+	<button>搜索</button>
+</form>
+<br/>
+<br/>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>序列</th>
+			<th>房屋编号</th>
+			<th>小区以及房间号</th>
+			<th>房间</th>
+			<th>承租人</th>
+			<th>电话号码</th>
+			<th>租期开始</th>
+			<th>租期结束</th>
+			<th>缴费到期</th>
+			<th>押金</th>
+			<th>房租</th>
+			<th>服务费</th>
+			<th>物管</th>
+		</tr>
+	</thead>
+	<tbody>
+	<volist name="room_list" id="vo">
+		<tr>
+			<td>{$key}</td>
+			<td>{$vo.house_code}</td>
+			<td>{$vo.area_name}({$vo.building}-{$vo.floor}-{$vo.door_no})</td>
+			<td>{$vo.room_sort}</td>
+			<td><a href="{:U('Admin/Tenant/tenant_info',array('account_id'=>$vo['account_id']))}" target="_blank" class="btn btn-info btn-mini">{$vo.realname}</a></td>
+			<td>{$vo.mobile}</td>
+			<td>{$vo.start_time}</td>
+			<td>{$vo.end_time}</td>
+			<td>{$vo.rent_date}</td>
+			<td>{$vo.deposit}</td>
+			<td>{$vo.ht_rent}</td>
+			<td>{$vo.ht_fee}</td>
+		</tr>
+	</volist>
+	</tbody>
+</table>
+</body>
+</html>

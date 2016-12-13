@@ -1,0 +1,1961 @@
+[ 2016-11-21T18:11:12+08:00 ] 127.0.0.1 /index.php/Admin/Pay/all_bill.html?search=&room_code=&account_key=%E6%9D%8E%E5%9D%A4&area_id=&city_id=&input_year=&input_month=&is_send=&pay_status=&search_time=&start_time=&end_time=&pay_type=&sort_type=&sort=1&page_count=
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001292s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001459s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0103s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0098s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0120s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0107s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0087s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0100s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0101s ]
+SQL: SHOW COLUMNS FROM `lewo_pay` [ RunTime:0.0093s ]
+SQL: SELECT COUNT(*) AS tp_count FROM lewo_pay p left JOIN (select id AS ht_id,account_id,room_id,pay_date,create_time,actual_end_time,MAX(start_time) AS start_time,end_time,rent_date,period,deposit,rent AS ht_rent,fee AS ht_fee,wg_fee AS ht_wgfee,contract_status from lewo_contract GROUP BY account_id,room_id) AS c ON p.account_id=c.account_id AND p.room_id=c.room_id  left JOIN lewo_charge_bill cb ON p.pro_id=cb.pro_id left JOIN lewo_account a ON p.account_id=a.id left JOIN lewo_room r ON p.room_id=r.id left JOIN lewo_houses h ON r.house_code=h.house_code left JOIN lewo_area area ON h.area_id=area.id  WHERE ( a.realname LIKE '%李坤%' OR a.mobile LIKE '%李坤%' ) AND p.is_show = '1' LIMIT 1   [ RunTime:0.1624s ]
+SQL: SELECT c.*,cb.*,p.*,a.mobile,a.realname,r.room_code,r.bed_code,h.area_id,h.building,h.floor,h.door_no,area.city_id,area.area_name FROM lewo_pay p left JOIN (select id AS ht_id,account_id,room_id,pay_date,create_time,actual_end_time,MAX(start_time) AS start_time,end_time,rent_date,period,deposit,rent AS ht_rent,fee AS ht_fee,wg_fee AS ht_wgfee,contract_status from lewo_contract GROUP BY account_id,room_id) AS c ON p.account_id=c.account_id AND p.room_id=c.room_id  left JOIN lewo_charge_bill cb ON p.pro_id=cb.pro_id left JOIN lewo_account a ON p.account_id=a.id left JOIN lewo_room r ON p.room_id=r.id left JOIN lewo_houses h ON r.house_code=h.house_code left JOIN lewo_area area ON h.area_id=area.id  WHERE ( a.realname LIKE '%李坤%' OR a.mobile LIKE '%李坤%' ) AND p.is_show = '1' ORDER BY p.id desc,p.create_time desc LIMIT 0,100   [ RunTime:0.1709s ]
+SQL: SELECT * FROM `lewo_area`  [ RunTime:0.0008s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000334s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000537s ]
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 103 行.
+NOTIC: [8] Undefined variable: city_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 110 行.
+NOTIC: [8] Undefined variable: city_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 110 行.
+NOTIC: [8] Undefined variable: input_year G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 117 行.
+NOTIC: [8] Undefined variable: input_year G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 117 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 122 行.
+NOTIC: [8] Undefined variable: is_send G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 130 行.
+NOTIC: [8] Undefined variable: is_send G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 131 行.
+NOTIC: [8] Undefined variable: pay_status G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 138 行.
+NOTIC: [8] Undefined variable: pay_status G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 139 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [2] in_array() expects parameter 2 to be array, null given G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [2] in_array() expects parameter 2 to be array, null given G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [2] in_array() expects parameter 2 to be array, null given G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [2] in_array() expects parameter 2 to be array, null given G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [2] in_array() expects parameter 2 to be array, null given G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [2] in_array() expects parameter 2 to be array, null given G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [2] in_array() expects parameter 2 to be array, null given G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [2] in_array() expects parameter 2 to be array, null given G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [2] in_array() expects parameter 2 to be array, null given G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 146 行.
+NOTIC: [8] Undefined variable: search_time G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 153 行.
+NOTIC: [8] Undefined variable: search_time G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 154 行.
+NOTIC: [8] Undefined variable: search_time G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 155 行.
+NOTIC: [8] Undefined variable: search_time G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 156 行.
+NOTIC: [8] Undefined variable: search_time G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 157 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 176 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 176 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 176 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 176 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 176 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 176 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 176 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 176 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 176 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 183 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 184 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 185 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 186 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 187 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 188 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 189 行.
+NOTIC: [8] Undefined variable: sort G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 192 行.
+NOTIC: [8] Undefined variable: sort G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 193 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.091291s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.091668s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000873s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001109s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001280s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001504s ]
+
+[ 2016-11-21T21:56:20+08:00 ] 127.0.0.1 /index.php/Admin/Tool
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000876s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001183s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001348s ]
+
+[ 2016-11-21T21:56:20+08:00 ] 127.0.0.1 /index.php/Admin/Index/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000619s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000765s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000883s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000115s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000236s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.025290s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.025450s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000717s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000857s ]
+
+[ 2016-11-21T21:56:26+08:00 ] 127.0.0.1 /index.php/Admin/Index/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000736s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000898s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001024s ]
+SQL: SHOW COLUMNS FROM `lewo_admin_user` [ RunTime:0.0094s ]
+SQL: SELECT * FROM `lewo_admin_user` WHERE `username` = 'admin' AND `password` = '6b1c5f2dfc828405850929e845df7963' AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0011s ]
+
+[ 2016-11-21T21:56:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000838s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001393s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001555s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0079s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0092s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0078s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0073s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 1 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 1 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0079s ]
+SQL: SELECT SUM(rent) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-21' LIMIT 1   [ RunTime:0.0023s ]
+SQL: SELECT SUM(fee) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-21' LIMIT 1   [ RunTime:0.0017s ]
+SQL: SELECT SUM(deposit) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-21' LIMIT 1   [ RunTime:0.0016s ]
+SQL: SELECT SUM(rent) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-20' LIMIT 1   [ RunTime:0.0016s ]
+SQL: SELECT SUM(fee) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-20' LIMIT 1   [ RunTime:0.0016s ]
+SQL: SELECT SUM(deposit) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-20' LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_contract` WHERE `start_time` = '2016-11-21' LIMIT 1   [ RunTime:0.0017s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SELECT SUM(money) AS tp_sum FROM `lewo_schedule` WHERE `create_date` = '2016-11-21' AND `schedule_type` = 4 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0054s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `room_type` = 1 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0019s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `status` = 0 AND `room_type` = 1 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `room_type` = 2 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `status` = 0 AND `room_type` = 2 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000102s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000220s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017889s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018024s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000536s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000639s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000086s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.016002s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016843s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001755s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000028s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.018087s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000079s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.039288s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019593s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.019718s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000029s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.038832s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000110s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.049234s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009556s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.039965s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000028s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.048994s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.018822s ]
+INFO: [ app_end ] --END-- [ RunTime:0.018938s ]
+
+[ 2016-11-21T21:57:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001022s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001133s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001374s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0063s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T21:58:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001063s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000923s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001035s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0055s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T21:59:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001004s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001207s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001377s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0058s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0058s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0059s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0053s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+
+[ 2016-11-21T22:00:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000953s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001228s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001381s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:01:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001116s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001226s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001382s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0081s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0097s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0016s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0022s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0011s ]
+
+[ 2016-11-21T22:02:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000052s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001527s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001268s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001426s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0072s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0093s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0021s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0209s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0025s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:03:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000048s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003045s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001244s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001424s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0061s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0056s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0052s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:04:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000965s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001349s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001534s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0058s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0058s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0055s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0024s ]
+
+[ 2016-11-21T22:05:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000043s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001128s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001282s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001462s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0063s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2016-11-21T22:06:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000958s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001297s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001457s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0093s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0133s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0054s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T22:07:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001376s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001347s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001495s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0158s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0152s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0154s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0076s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+
+[ 2016-11-21T22:08:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.017780s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.021606s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.021806s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0081s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0072s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:09:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000040s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001034s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001083s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001230s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0123s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0074s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0102s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0091s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0031s ]
+
+[ 2016-11-21T22:10:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001193s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001339s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0094s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0155s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0038s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0052s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0093s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0069s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0204s ]
+
+[ 2016-11-21T22:11:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000858s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001205s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001358s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0069s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0129s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:12:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000060s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001303s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001814s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002009s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0058s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0061s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0065s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+
+[ 2016-11-21T22:13:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001004s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001458s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001637s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0077s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0056s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0077s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T22:14:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000050s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001054s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001162s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001322s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0056s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0065s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:15:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000042s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001551s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001251s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001413s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0064s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0067s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0044s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0059s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:16:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000969s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001471s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001655s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0093s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0123s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0089s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0016s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0096s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0057s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+
+[ 2016-11-21T22:17:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000915s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001309s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001475s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0090s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0077s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0068s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+
+[ 2016-11-21T22:18:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000925s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001057s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001211s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0069s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0099s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0135s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0013s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0055s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0016s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:19:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000043s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000970s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001424s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001603s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0076s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0094s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:20:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000090s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001116s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001649s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001877s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0077s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0066s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0062s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0057s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:21:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000880s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001300s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001452s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0088s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0099s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0035s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0096s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:22:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000045s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000978s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001519s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001684s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0071s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0057s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T22:23:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000045s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001018s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001332s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001482s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0055s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0038s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0064s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:24:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000874s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001096s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001282s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0082s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0071s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0055s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:25:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001058s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003432s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003568s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0068s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0073s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0062s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:26:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000632s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000739s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000841s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0077s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0065s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0057s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:27:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000040s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000988s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001191s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001354s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0063s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0062s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0073s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0056s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:28:28+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.020118s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.005813s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.007015s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0137s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0099s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0079s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0032s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0075s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0018s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0033s ]
+
+[ 2016-11-21T22:29:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000887s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001070s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001223s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0079s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0069s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0073s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0067s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:30:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000049s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001018s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004538s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004697s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0079s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0086s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0066s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0088s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0086s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0017s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2016-11-21T22:31:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000054s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000961s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000948s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001060s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0055s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0018s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:32:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000836s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001244s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001402s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0068s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0092s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0092s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0015s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0145s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0145s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0031s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0012s ]
+
+[ 2016-11-21T22:33:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000855s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001161s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001310s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0062s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0048s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T22:34:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000044s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001601s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001340s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001558s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0087s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0096s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0073s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:35:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001040s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001172s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001364s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0056s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0053s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:36:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000919s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002024s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002162s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0086s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0065s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:37:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000976s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001300s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001456s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0072s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0063s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:38:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000042s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000945s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.005729s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005883s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0086s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0094s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0131s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0053s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0046s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0014s ]
+
+[ 2016-11-21T22:39:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000893s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001168s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003321s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0076s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0017s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:40:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000042s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001166s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001347s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001493s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0079s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0140s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0065s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0082s ]
+
+[ 2016-11-21T22:41:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000597s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001014s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001152s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0079s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0063s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0065s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:42:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001696s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001332s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001516s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0105s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0078s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0075s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2016-11-21T22:43:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001225s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001265s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001425s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0079s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0058s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0062s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:44:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000062s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001433s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001468s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001951s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0063s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0081s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0023s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:45:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000955s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001070s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001211s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0083s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0069s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0071s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2016-11-21T22:46:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001117s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001201s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001369s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0199s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0074s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0074s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0033s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0086s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0074s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0115s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0024s ]
+
+[ 2016-11-21T22:47:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000048s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001060s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001281s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001457s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0074s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0053s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0016s ]
+
+[ 2016-11-21T22:48:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000898s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001293s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001449s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0064s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0087s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0099s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0065s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0047s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T22:49:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000047s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001076s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001198s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001345s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0063s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0065s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0017s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0048s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:50:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001060s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001039s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001203s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0074s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0076s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0071s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0024s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:51:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000040s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000905s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000803s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000909s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0065s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0061s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0069s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0062s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T22:52:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000947s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001524s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001684s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0154s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0103s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0087s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T22:53:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000600s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000784s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000891s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0069s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0056s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0071s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:54:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000871s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001187s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001362s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0076s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0077s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:55:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000657s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000884s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000990s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0058s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0058s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0065s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T22:56:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.020762s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002100s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003164s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0117s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0077s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0137s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0054s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0049s ]
+
+[ 2016-11-21T22:57:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000898s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001111s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001258s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0075s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0063s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0066s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0067s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+
+[ 2016-11-21T22:58:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001154s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001371s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001527s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0063s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0074s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0077s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0040s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T22:59:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000606s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000736s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000838s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0079s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0069s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+
+[ 2016-11-21T23:00:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000876s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001284s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001445s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0066s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0084s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0091s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T23:01:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000720s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000886s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000994s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0068s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0076s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0019s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0072s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:02:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000645s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000781s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000889s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0056s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0052s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T23:03:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000612s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000825s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000945s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0063s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0057s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0054s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T23:04:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001094s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001680s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001858s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0065s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0067s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0028s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:05:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000029s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000739s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000748s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000852s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0051s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:06:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000045s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000962s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001226s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001397s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0068s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0068s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0061s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0024s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T23:07:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000955s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001143s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001277s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0055s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:08:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000040s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000917s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001148s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001303s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0066s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0065s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0071s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0058s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0029s ]
+
+[ 2016-11-21T23:09:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000591s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000740s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000845s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0047s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T23:10:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000033s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000917s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002251s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002398s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0085s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0084s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0068s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0062s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:11:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000604s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000774s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000882s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T23:12:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000047s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002486s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002174s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002337s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0069s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0072s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0074s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0012s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T23:13:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000701s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000875s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000981s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0048s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T23:14:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000899s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001383s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001530s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0083s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0064s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0072s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0069s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:15:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000618s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000755s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000858s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0055s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T23:16:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000046s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001361s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001441s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001922s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0187s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0072s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0086s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0016s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:17:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000609s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000739s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000840s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0056s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T23:18:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000040s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000865s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001097s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001244s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0069s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0074s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:19:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000661s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000897s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001058s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0055s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-21T23:20:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000031s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000794s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000956s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001106s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0072s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0065s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0059s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0034s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0016s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0070s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T23:21:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000032s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000676s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000851s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000971s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0066s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0066s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0059s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+
+[ 2016-11-21T23:22:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000043s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001090s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001225s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001384s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0086s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0084s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2016-11-21T23:23:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000031s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000672s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000888s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001033s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0064s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0068s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0057s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:24:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000044s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003938s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001568s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001752s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0090s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0081s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0082s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0069s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+
+[ 2016-11-21T23:25:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000043s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000836s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000960s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001081s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0064s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0063s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0058s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:26:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000051s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002814s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001394s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001625s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0088s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0091s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0079s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0060s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:27:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000031s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000693s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000883s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001006s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0064s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0063s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0058s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0016s ]
+
+[ 2016-11-21T23:28:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000051s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001474s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001855s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002039s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0077s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0079s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0083s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0068s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+
+[ 2016-11-21T23:29:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000032s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000670s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001080s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001367s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0068s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0071s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0074s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:30:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000044s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001568s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001251s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001451s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0094s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0085s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0071s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-21T23:31:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000032s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000763s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000971s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001090s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0060s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0065s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0083s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0057s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2016-11-21T23:32:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000893s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001459s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001666s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0184s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0276s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0072s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+

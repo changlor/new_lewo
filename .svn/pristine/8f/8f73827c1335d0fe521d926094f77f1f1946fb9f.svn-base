@@ -1,0 +1,182 @@
+@charset "utf-8";
+/* CSS Document */
+#wrapper {
+	position: absolute;
+	top: 44px;
+	bottom: 50px;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	background-color:#f8f8f8;
+}
+.img-responsive {
+	display: inline-block;
+	height: auto;
+	max-width: 100%;
+}
+.col-xs-12 {
+	padding-left: 0;
+	padding-right: 0;
+}
+.col-xs-6{
+	padding-left: 10px;
+	padding-right: 10px;
+	}
+.container-fluid {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.ztfj-soos-icon-dw {
+height: 44px;
+background-image: url(../images/soos-icon-dw.png);
+background-size: 32px auto;
+background-position: center;
+background-repeat: no-repeat;
+}
+.soos-shaix-boxs {
+max-width: 100%;
+height: auto;
+padding: 10px 10px;
+}
+.soos-shaix-boxs div {
+max-width: 100%;
+height: auto;
+border: 1px solid #ddd;
+border-bottom: none;
+background-color: #fff;
+}
+.boxcolor-top-bot-margin10 {
+background-color: #fff;
+padding-top: 10px;
+margin-bottom: 10px;
+}
+.img-zt-fjzp-box {
+width: 140px;
+height: 94px;
+margin-bottom: 10px;
+margin-left: 10px;
+overflow: hidden;
+float: left;
+}
+.img-zt-fjzp-box img {
+height: 94px;
+width: auto;
+}
+.img-zt-fjzp-textms-box {
+width: auto;
+height: 94px;
+padding-left: 14px;
+padding-top: 2px;
+overflow: hidden;
+text-align: left;
+}
+.img-zt-fjzp-textms-box ul {
+line-height: 20px;
+}
+.textms-box-ys1 {
+font-size: 13px;
+color: #222;
+height: 20px;
+line-height: 20px;
+overflow: hidden;
+}
+.textms-box-ys2 {
+font-size: 12px;
+color: #565555;
+line-height: 22px;
+}
+.textms-box-ys3 {
+font-size: 12px;
+color: #6ecea9;
+line-height: 22px;
+}
+.textms-box-ys4 {
+text-align: left;
+}
+.text-bq-sx {
+font-size: 12px;
+color: #565555;
+line-height: 28px;
+padding: 2px 5px;
+border: 1px solid #429e65;
+margin-right: 7px;
+margin-left: 0;
+}
+.search-wrap {
+	border-top:1px solid #e4e4e4;
+	border-bottom:1px solid #e4e4e4;
+}
+.search-wrap .nav-item{
+	text-align:center;
+	height:40px;
+	line-height: 40px;
+	background:#fff no-repeat 95% center;
+	background-size: 30px 30px;
+}
+.search-wrap .nav-item:last-child{
+	border-right:none;
+}
+
+/*下拉搜索*/
+.search-wrap{
+	position: relative;
+}
+.search-wrap .action {
+	background:url(../images/icon-grxi-jt.png) no-repeat 13% center;
+	background-size: 5px 10px;
+}
+.search-nav-first{
+	
+}
+.search-nav-first .search-nav-second {
+	display: none;
+	width: 100%;
+	background-color: #fff;
+	position: absolute;
+	top: 41px;
+	left: 0px;
+	z-index: 999;
+	-webkit-box-shadow:0 0 4px #e2e2e2;  
+	-moz-box-shadow:0 0 4px #e2e2e2;  
+	box-shadow:0 0 4px #e2e2e2;
+	
+}
+.search-nav-first .search-nav-second li{
+	border-bottom: 1px solid #e4e4e4; 
+}
+
+.search-nav-first .search-nav-third {
+	display: none;
+	width: 100%;
+	background-color: #fff;
+	position: absolute;
+	top: 0px;
+	left:100px;	
+	-webkit-box-shadow:0 0 4px #e2e2e2;  
+	-moz-box-shadow:0 0 4px #e2e2e2;  
+	box-shadow:0 0 4px #e2e2e2;
+}
+.search-nav-first .search-nav-third li{
+	border-bottom: 1px solid #e4e4e4;
+}
+.search-box {
+	margin:5px;
+}
+.search-box:after{
+	content:"";
+	display: table;
+	clear:both;
+}
+.search-box .search-small-box {
+	display: inline-block;
+	*zoom:1;
+	margin-bottom: 5px;
+}
+.search-box .search-small-box b {
+	margin-left: 3px;
+}
+.pack-up {
+	background-color: #bababa;
+	color:#fff;
+}

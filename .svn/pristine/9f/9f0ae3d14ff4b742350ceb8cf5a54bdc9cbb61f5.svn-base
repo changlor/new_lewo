@@ -1,0 +1,216 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>用户中心</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<link href="/Public/css/normalize.css" rel="stylesheet" type="text/css">
+	<link href="/Public/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/Public/css/bootstrap-theme.min.css" type="text/css">
+	<link href="/Public/css/common.css" rel="stylesheet" type="text/css">
+	<link href="/Public/css/grzx.css" rel="stylesheet" type="text/css">
+	<script src="/Public/js/jquery-1.9.1.js" type="text/javascript"></script>
+	<script src="/Public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Public/js/iscroll.js"></script>
+	<script type="text/javascript">
+		var myScroll;
+		function loaded () {
+			myScroll = new IScroll('#wrapper', { mouseWheel: true,keyBindings:true,click:true });
+		}
+		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);		
+	</script>
+	<style>
+	#wrapper {
+		position: absolute;
+		top: 44px;
+		bottom: 50px;
+		left: 0;
+		width: 100%;
+		overflow: hidden;
+		background-color:#f8f8f8;
+	}
+	.img-responsive {
+		display: inline-block;
+		height: auto;
+		max-width: 100%;
+	}
+	.col-xs-12 {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.col-xs-6{
+		padding-left: 10px;
+		padding-right: 10px;
+		}
+	.container-fluid {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	</style>
+</head>
+
+<body onload="loaded();">
+<div id="fwxx">
+	<div class="container-fluid header">
+    	<div class="row-fluid">
+        	<div class="col-xs-4 header-icon1"><a href="javascript:window.history.back(-1)"><div class="retun-db-box"><img src="/Public/images/icon-db-retun.png" class="icon-db-retun"></div></a></div>
+            <div class="col-xs-4 header-icon2"></div>
+            <div class="col-xs-4 header-icon3"><a href=""><div class="menu-db-box"><img src="/Public/images/icon-db-menu.png" class="icon-db-menu"></div></a></div>
+        </div>
+    </div>
+    <div id="wrapper">
+      <div>
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="col-xs-12">
+              <div class="row-fluid">
+                <div class="col-xs-12">
+                  <div class="img-icon1-dx">
+                    <div class="row-fluid">
+                      <div class="col-xs-12">
+                        <div class="img-icon1-tx"><a href=""><img src="/Public/images/user.jpg" style="margin-top:20px;width:66px;height:66px;border-radius:66px;border:2px solid #fff;" class="img-responsive"></a></div>
+                      </div>
+                    </div>
+                    <div class="row-fluid">
+                      <div class="col-xs-12">
+                        <div class="banner-wz"><span class="banner-wz-tz1"><?php echo ($account_info['realname']); ?></span><span class="banner-wz-tz2"> </span> <br>
+                          <?php if(!empty($room_info)): ?><span class="banner-wz-tz3"><?php echo ($house_info["area_name"]); ?>&nbsp;&nbsp;<?php echo ($house_info["building"]); ?>栋&nbsp;&nbsp;<?php echo ($house_info["floor"]); ?>楼&nbsp;&nbsp;<?php echo ($house_info["door_no"]); ?>号</span> 
+                            <?php else: ?>
+                            <span class="banner-wz-tz3">暂未入住</span><?php endif; ?>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row-fluid">
+              <div class="col-xs-12">
+                <div class="border-bot-xt1"></div>
+              </div>
+            </div>
+            <div>
+            <?php if(!empty($back_bill)): ?><div class="row-fluid">
+              <div class="col-xs-12 background-f8f8f8">
+                <div class="row-fluid">
+                  <div class="col-xs-12">
+                    <ul>
+                      <li class="core-ht-box margin-top10">类型:确认退房账单</li>
+                      <li class="core-ht-box">抵扣后押金:<span class="core-ht-cor">￥<?php echo ($back_bill["money"]); ?></span></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="col-xs-6">
+                    <div class="button-ckzi1" onclick="window.location.href='<?php echo U('Home/Tenant/show_back_bill');?>'">查看详情</div>
+                  </div>
+                  <div class="col-xs-6">
+                    <div class="button-ckzi2" onclick=" if(!confirm('是否确认账单?')) { return false; } else{ window.location.href='<?php echo U('Home/Tenant/confirm_bill',array('id'=>$back_bill['id']));?>'}">确认账单</div>
+                  </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="col-xs-12">
+                    <div class="border-bot-xt2"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <?php else: ?>
+
+            <!-- 未支付账单开 -->
+            <?php if(is_array($notpaylist)): $i = 0; $__LIST__ = $notpaylist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="row-fluid">
+              <div class="col-xs-12 background-f8f8f8">
+                <div class="row-fluid">
+                  <div class="col-xs-12">
+                    <ul>
+                      <li class="core-ht-box margin-top10">类型:<?php echo ($vo["type_name"]); ?></li>
+                      <li class="core-ht-box">应缴金额:<span class="core-ht-cor">￥<?php echo ($vo["total_fee"]); ?></span></li>
+                      <li class="core-ht-box">缴费时间:<?php echo ($vo["should_pay_date"]); ?>
+                        <?php if($vo['days'] > 0): ?><span class='core-ht-cor'>还有<?php echo ($vo["days"]); ?>天</span>
+                          <?php else: ?>
+                          <span class='core-ht-cor'>已拖欠<?php echo ($vo["days"]); ?>天</span><?php endif; ?>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="col-xs-6">
+                    <div class="button-ckzi1" onclick="window.location.href='<?php echo U('Home/Tenant/show_back_bill');?>'">查看详情</div>
+                  </div>
+                  <div class="col-xs-6">
+                    <div class="button-ckzi2" onclick="window.location.href='<?php echo U('Home/Alipay/pay',array('WIDout_trade_no'=>$vo['id'],'WIDsubject'=>$vo['bill_info'],'WIDtotal_fee'=>$vo['total_fee']));?>'">支付宝支付</div>
+                  </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="col-xs-12">
+                    <div class="border-bot-xt2"></div>
+                  </div>
+                </div>
+              </div>
+            </div><?php endforeach; endif; else: echo "" ;endif; ?>
+            <!-- 未支付账单关 --><?php endif; ?>
+            
+            <div class="row-fluid">
+              <div class="col-xs-12 icon-top-h20">
+                <div class="row-fluid">
+                    <div class="col-xs-4" onclick="location.href='<?php echo U('Home/Tenant/myhouse');?>'"><img src="/Public/images/gr-wdfj.png" class="img-responsive img-icon2-dx"> <br>
+                    <span class="nav-inner-zt">我的房间</span> </div>
+                    <div class="col-xs-4" onclick="location.href='<?php echo U('Home/Tenant/feelist');?>'"><img src="/Public/images/gr-fycx.png" class="img-responsive img-icon2-dx"> <br>
+                    <span class="nav-inner-zt">费用查询</span> </div>
+                    <div class="col-xs-4" onclick="location.href='<?php echo U('Home/Tenant/mysteward');?>'"><img src="/Public/images/gr-wdgj.png" class="img-responsive img-icon2-dx"> <br>
+                    <span class="nav-inner-zt">我的管家</span> </div>
+                </div>
+                <div class="row-fluid">
+                  <!-- <div class="col-xs-4" onclick=""><img src="images/gr-wxbx.png" class="img-responsive img-icon2-dx"> <br>
+                    <span class="nav-inner-zt">维修报修</span>
+                  </div> -->
+                  <div class="col-xs-4" onclick="location.href='<?php echo U('Home/Tenant/myinfo');?>'"><img src="/Public/images/gr-grzl.png" class="img-responsive img-icon2-dx"> <br>
+                    <span class="nav-inner-zt">个人资料</span>
+                  </div>
+                  <div class="col-xs-4"> <br> </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="col-xs-12">
+                    <div class="border-bot-box-h25"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button">
+    <div class="button_ds">
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <a href="">
+            <div class="col-xs-4"> <img src="/Public/images/icon_sy.png" class="img-responsive img-icon3-dx"> <br>
+              <span class="nav-bootom-zt">首页</span>
+            </div>
+          </a>
+           <a href="<?php echo U('Home/Mapsearch/index');?>">
+            <div class="col-xs-4"> <img src="/Public/images/icon_zf.png" class="img-responsive img-icon3-dx"> <br>
+              <span class="nav-bootom-zt">找房</span>
+            </div>
+          </a>
+          <a href="<?php echo U('Home/Tenant/index');?>">
+            <div class="col-xs-4"> <img src="/Public/images/icon_wo.png" class="img-responsive img-icon3-dx"> <br>
+              <span class="nav-bootom-zt" style="color:#68bb9b;">我</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</body></html>

@@ -1,0 +1,41 @@
+<!--main-container-part-->
+<div id="content">
+<!--breadcrumbs-->
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="index.html" title="返回首页" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a>丁盯门锁管理</a> <a class="current">房间管理</a></div>
+  </div>
+<!--End-breadcrumbs-->
+<div class="container-fluid">
+    <div class="widget-box">
+      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+        <h5>房间管理</h5>
+        <a href="{:U('Admin/dding/add_room')}" class="label label-success"><i class="icon-plus"></i>添加房间</a>
+      </div>
+      <div class="widget-content nopadding">
+        <table class="table table-bordered data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>房间编码</th>
+              <th>uuid</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <volist name="room_list" id="vo">
+            <tr>
+              <td>{$vo.id}</td>
+              <td>{$vo.room_code}</td>
+              <td>{$vo.uuid}</td>
+              <td>
+                <a href="{:U('Admin/dding/update_room',array('id'=>$vo['id']))}" class="btn btn-info btn-mini">修改</a>
+              </td>
+            </tr>
+            </volist>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!--main-container-part-->

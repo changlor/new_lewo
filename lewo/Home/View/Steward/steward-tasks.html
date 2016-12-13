@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>待办</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<link href="__PUBLIC__/css/normalize.css" rel="stylesheet" type="text/css">
+	<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+	<link href="__PUBLIC__/css/bootstrap-theme.min.css" type="text/css">
+	<link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css">
+	<link href="__PUBLIC__/css/map-search.css" rel="stylesheet" type="text/css">
+	<script src="__PUBLIC__/js/jquery-1.9.1.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/iscroll.js"></script>
+	<script type="text/javascript">
+		var myScroll;
+
+		function loaded () {
+			myScroll = new IScroll('#wrapper', { mouseWheel: true,keyBindings:true,click:true });
+		}
+
+		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+			
+	</script>
+</head>
+
+<body onload="loaded()">
+<div id="fwxx">
+	<div class="container-fluid header">
+  	<div class="row-fluid">
+    	<div class="col-xs-2 header-icon1"><a href="javascript:window.history.back(-1)"><div class="retun-db-box"><img src="__PUBLIC__/images/icon-db-retun.png" class="icon-db-retun"></div></a></div>
+        <div class="col-xs-8">
+	        <div class="ssearch">
+	          <form action="">
+	            <input class="iSearch" type="search" name="" value="" placeholder="请输入">
+	            <!-- <input class="isubmit" type="submit" value="搜索"> -->
+	          </form>
+	        </div>
+        </div>
+	    <div class="col-xs-2 ztfj-top-pad2">
+	        <a href="#">
+	           <div class="ztfj-soos-icon-dw"></div> 
+	        </a>
+	    </div>
+    </div>
+  </div>
+
+  <div id="wrapper">
+      <!-- 搜索功能 -->
+      <div>
+        <ul class="search-wrap">
+          <li class="col-xs-3 nav-item">
+            <a href="">全部</a>
+          </li>
+          <li class="col-xs-2 nav-item">
+            <a href="">退房({$tf_count})</a>
+          </li>
+          <li class="col-xs-2 nav-item">
+            <a href="">换房({$hf_count})</a>
+          </li>
+          <li class="col-xs-2 nav-item">
+            <a href="">转租({$zf_count})</a>
+          </li>
+          <li class="col-xs-2 nav-item">
+            <a href="">缴定({$jd_count})</a>
+          </li>
+        </ul>
+      </div>
+      <!-- 搜索功能END -->
+
+      <div style="background-color:#fff;">
+        <div class="row-fluid">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>类型</th>
+                <th>房屋</th>
+                <th>房间</th>
+                <th>床位</th>
+                <th>租客</th>
+              </tr>
+            </thead>
+            <tbody>
+              <volist name="schedule_list" id="vo">
+                <switch name="vo['schedule_type']" >
+                  <case value="1">
+                    <tr onclick="window.location='{:U(\'Home/Steward/check_ammeter\',array(\'schedule_id\'=>$vo[\'id\'],'schedule_type'=>C('schedule_type_tf')))}'">
+                  </case>
+                  <case value="2">
+                    <tr onclick="window.location='{:U(\'Home/Steward/check_ammeter\',array(\'schedule_id\'=>$vo[\'id\'],'schedule_type'=>C('schedule_type_zf')))}'">
+                  </case>
+                  <case value="3">
+                    <tr onclick="window.location='{:U(\'Home/Steward/check_ammeter\',array(\'schedule_id\'=>$vo[\'id\'],'schedule_type'=>C('schedule_type_hf')))}'">
+                  </case>
+                  <case value="4">
+                    <tr onclick="window.location='{:U(\'Home/Steward/order_checkin\',array(\'schedule_id\'=>$vo[\'id\']))}'">
+                  </case>
+                  <default /><tr>
+                </switch>
+                      <td>{$vo.schedule_type_name}</td>
+                      <td>{$vo.house_code}</td>
+                      <td>{$vo.room_code}</td>
+                      <notempty name="vo['bed_code']">
+                        <td>{$vo.bed_code}</td>
+                        <else/>
+                        <td></td>
+                      </notempty>
+                      <td>{$vo.realname}</td>
+                    </tr>
+              </volist>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

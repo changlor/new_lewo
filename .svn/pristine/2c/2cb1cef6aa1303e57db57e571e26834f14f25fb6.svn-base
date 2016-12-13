@@ -1,0 +1,964 @@
+<?php
+namespace Admin\Controller;
+use Think\Controller;
+class HousesController extends Controller {
+    public function __construct(){
+        parent::__construct();
+        if ( empty($_SESSION['username']) && ACTION_NAME != 'register') {
+            header("Location:".U("Admin/Index/login"));
+            die();
+        }
+    }
+
+    public function index(){
+        $where = array();
+        if ( !empty(I("area_id")) ) {
+            $where['area_id'] = I("area_id");
+        }
+        $DHouses = D('Houses');
+        $_SESSION['house_url'] = U('Admin/Houses/index',$where);
+        
+        $this->assign("housesList",$DHouses->getHousesList($where));
+        $this->display("Common/header");
+        $this->display("Common/nav");
+        $this->display("houses");
+        $this->display("Common/footer");
+    }
+
+    /**
+    * [获取小区]
+    **/
+    public function area(){
+        $DArea = D('area');
+        $this->assign("areaList",$DArea->getareaList());
+        $this->display("Common/header");
+        $this->display("Common/nav");
+        $this->display("area");
+        $this->display("Common/footer");
+    }
+
+    /**
+    * [添加小区]
+    **/
+    public function add_area(){
+        if ( !empty($_POST) ) {
+            $data['area_name'] = I("post.area_name");
+            $data['area_description'] = I("post.area_description");
+            $data['energy_unit'] = I("post.energy_unit");
+            $data['water_unit'] = I("post.water_unit");
+            $data['gas_unit'] = I("post.gas_unit");
+            $data['energy_stair'] = I("post.energy_stair");
+            $data['rubbish_fee'] = I("post.rubbish_fee");
+            $result = M("area")->add($data);
+            if ( !empty($result) ) {
+                $this->success("添加成功!",U('Admin/Houses/area'));
+            } else {
+                $this->error("添加失败!",U('Admin/Houses/area'));
+            }
+        } else {
+            $this->display("add-area");
+            $this->display("Common/footer");
+        }
+    }   
+    /**
+    * [修改小区信息]
+    **/
+    public function update_area(){
+        if ( !empty($_POST) ) {
+            $id = I("id");
+            $data['area_name'] = I("post.area_name");
+            $data['area_description'] = I("post.area_description");
+            $data['energy_unit'] = I("post.energy_unit");
+            $data['water_unit'] = I("post.water_unit");
+            $data['gas_unit'] = I("post.gas_unit");
+            $data['energy_stair'] = I("post.energy_stair");
+            $data['rubbish_fee'] = I("post.rubbish_fee");
+            $result = M("area")->where(array("id"=>$id))->save($data);
+            if ( !empty($result) ) {
+                $this->success("修改成功!",U('Admin/Houses/area'));
+            } else {
+                $this->error("修改失败!",U('Admin/Houses/area'));
+            }
+        } else {
+            $id  = I("area_id");
+            $DArea = D("area");
+            $area_info = $DArea->getAreaById($id);
+            $this->assign("area_info",$area_info);
+            $this->display("update-area");
+            $this->display("Common/footer");   
+        }
+    }
+
+    /**
+    * [删除小区]
+    **/
+    public function delete_area(){
+        $id = I("area_id");
+        $result = D('area')->where(array("id"=>$id))->delete();
+        if ($result) {
+            $this->success('删除成功');
+        } else {
+            $this->error("删除失败");
+        }
+    }
+
+    /*
+     * [添加房源]
+     */
+    public function add_house(){
+        if ( !empty($_POST) ) {
+            $Mhouses = M('houses');
+
+            $data['house_code'] = I('post.house_code');
+            $data['type'] = I('post.type');
+            $data['area_id'] = I('post.area_id');
+            $data['building'] = I('post.building');
+            $data['floor'] = I('post.floor');
+            $data['door_no'] = I('post.door_no');
+            $data['region_id'] = I('post.region_id');
+            $data['steward_id'] = I('post.steward_id');
+            $data['fee'] = I('post.fee');
+            $data['house_owner'] = I('post.house_owner');
+            $data['house_mobile'] = I('post.house_mobile');
+            $data['start_date'] = I('post.start_date');
+            $data['end_date'] = I('post.end_date');
+            $data['area_description'] = I('post.area_description');
+            $data['house_description'] = I('post.house_description');
+            $data['subway'] = I('post.subway');
+            $data['address'] = I('post.address');
+            $data['modify_time'] = date("Y-m-d H:i:s", time());
+            $data['create_time'] = date("Y-m-d H:i:s", time());
+
+            $result = $Mhouses->where(array('house_code'=>$data['house_code']))->find();
+            if( empty($result) ){
+                $Mhouses->add($data);
+                if ( $data['type'] == 1 ) {
+                    $this->success("房屋生成成功！",U("Admin/Houses/add_room",array('house_code'=>$data['house_code'],'add_type'=>'room')));//房屋添加成功后到房间添加页面
+                } elseif ( $data['type'] == 2 ) {
+                    $this->success("房屋生成成功！",U("Admin/Houses/add_room",array('house_code'=>$data['house_code'],'add_type'=>'bed')));
+                }
+            } else {
+                $this->error("房屋编码已存在！");
+            }
+        } else {
+
+            $DSteward = D('admin_user');
+            $DRegion = D('Region');
+            $this->assign('steward_list',$DSteward->getStewardAccount());
+            $DArea = D('area');
+            $this->assign("areaList",$DArea->getareaList());
+            $this->assign("region_list",$DRegion->getRegion());
+    	    $this->display("add-house");
+    	    $this->display("Common/footer");
+        }
+    }
+
+    /**
+     * [房屋修改]
+     **/
+    public function update_house(){
+        if ( !empty($_POST) ) {
+            $data['house_code'] = I('post.house_code');
+            $data['type'] = I('post.type');
+            $data['area_id'] = I('post.area_id');
+            $data['building'] = I('post.building');
+            $data['floor'] = I('post.floor');
+            $data['door_no'] = I('post.door_no');
+            $data['region_id'] = I('post.region_id');
+            $data['steward_id'] = I('post.steward_id');
+            $data['fee'] = I('post.fee');
+            $data['init_water'] = I('post.init_water');
+            $data['init_energy'] = I('post.init_energy');
+            $data['init_gas'] = I('post.init_gas');
+            $data['house_owner'] = I('post.house_owner');
+            $data['house_mobile'] = I('post.house_mobile');
+            $data['start_date'] = I('post.start_date');
+            $data['end_date'] = I('post.end_date');
+            $data['area_description'] = I('post.area_description');
+            $data['house_description'] = I('post.house_description');
+            $data['subway'] = I('post.subway');
+            $data['address'] = I('post.address');
+            $data['modify_time'] = date("Y-m-d H:i:s", time());
+
+            $MHouses = M('Houses');
+            $result = $MHouses->where(array('house_code'=>$data['house_code']))->save($data);
+            if ( $result  ) {
+                $this->success("修改成功",U("Admin/Houses/index"));
+            } else {
+                $this->error("修改失败");
+            }
+            
+        } else {
+            $house_code = I('house_code');
+            $DHouses = D('Houses');
+            $DRegion = D('Region');
+            $DSteward = D('admin_user');
+            $this->assign('steward_list',$DSteward->getStewardAccount());
+            $house_info = $DHouses->getHouse($house_code);
+            foreach($house_info AS $key=>$val){
+                $this->assign($key,$val);
+            }
+            $DArea = D('area');
+            $this->assign("areaList",$DArea->getareaList());
+            $this->assign('house_code',$house_code);
+            $this->assign("region_list",$DRegion->getRegion());
+            $this->display("update-house");
+            $this->display("Common/footer");
+        }
+
+    }
+
+    /**
+     * [房间/床位添加]
+     **/
+    public function add_room(){
+        if ( !empty($_POST) ) {
+            $Mroom = M('room');
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize   =     3145728 ;// 设置附件上传大小
+            $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+            $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
+            $upload->savePath  =     ''; // 设置附件上传（子）目录
+            $info   =   $upload->upload();
+            $room_head_images = '';
+            if(count($info) != 0) { 
+                foreach( $info AS $key=>$val ){
+                    if ( $val['key'] == 'room_images_01' ) {
+                        $data['room_images_01'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'room_images_02' ) {
+                        $data['room_images_02'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'room_images_03' ) {
+                        $data['room_images_03'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'room_images_04' ) {
+                        $data['room_images_04'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'room_head_images' ) {
+                        $data['room_head_images'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'house_type_image' ) {
+                        $data['house_type_image'] = $val['savepath'].$val['savename'];
+                    }
+                }
+            }
+            $data['house_code'] = I('post.house_code');
+            if ( !empty(I('post.bed_code')) ) {
+                $data['bed_code'] = I('post.bed_code');
+                $data['room_type'] = 2;
+            } else {
+                 $data['room_type'] = 1;
+            }
+            $data['room_code'] = I('post.room_code');
+            $data['room_sort'] = I('post.room_sort');
+            $data['room_nickname'] = I('post.room_nickname');
+            $data['room_introduce'] = I('post.room_introduce');
+            $data['room_area'] = I('post.room_area');
+            $data['room_sort'] = I('post.room_sort');
+            $data['person_count'] = I('post.person_count');
+            $data['rent'] = I('post.rent');
+            $data['room_fee'] = I('post.room_fee');
+            $data['room_parameter'] = count(I('post.room_parameter'))==0? serialize(I('post.room_parameter')):'';
+            $data['modify_time'] = date("Y-m-d H:i:s", time());
+            $data['create_time'] = date("Y-m-d H:i:s", time());
+
+            $Mroom->add($data);
+            if ( isset($_POST['saveAndAdd']) ) {
+                $this->success("生成成功,并继续添加");
+            } else {
+                $this->success("生成成功",U("Admin/Houses/detail_house",array('house_code'=>$data['house_code'])));
+            }
+           
+        } else {
+            $add_type = I("add_type");
+            $title = ($add_type=='room')? '房间':'床位'; 
+            $house_code = I('house_code');
+
+            $this->assign('add_type',$add_type);
+            $this->assign('title',$title);
+            $this->assign('room_sort_arr',C('room_sort_arr'));
+            $this->assign('person_count_arr',C('person_count_arr'));
+            $this->assign('house_code',$house_code);
+            $this->display("add-room");
+            $this->display("Common/footer");
+        }
+    }
+
+    /**
+     * [房间/床位修改]
+     **/
+    public function update_room(){
+        if ( !empty($_POST) ) {
+            $id = I("post.id");
+            $Mroom = M('room');
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize   =     3145728 ;// 设置附件上传大小
+            $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+            $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
+            $upload->savePath  =     ''; // 设置附件上传（子）目录
+            $info   =   $upload->upload();
+            $room_head_images = '';
+            if(count($info) != 0) { 
+                foreach( $info AS $key=>$val ){
+                    if ( $val['key'] == 'room_images_01' ) {
+                        $data['room_images_01'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'room_images_02' ) {
+                        $data['room_images_02'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'room_images_03' ) {
+                        $data['room_images_03'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'room_images_04' ) {
+                        $data['room_images_04'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'room_head_images' ) {
+                        $data['room_head_images'] = $val['savepath'].$val['savename'];
+                    }
+                    if ( $val['key'] == 'house_type_image' ) {
+                        $data['house_type_image'] = $val['savepath'].$val['savename'];
+                    }
+                }
+            }
+            $data['house_code'] = I('post.house_code');
+            if ( !empty(I('post.bed_code')) ) {
+                $data['bed_code'] = I('post.bed_code');
+                $data['room_type'] = 2;
+            } else {
+                 $data['room_type'] = 1;
+            }
+            $data['room_code'] = I('post.room_code');
+            $data['room_sort'] = I('post.room_sort');
+            $data['room_nickname'] = I('post.room_nickname');
+            $data['room_introduce'] = I('post.room_introduce');
+            $data['room_area'] = I('post.room_area');
+            $data['room_sort'] = I('post.room_sort');
+            $data['person_count'] = I('post.person_count');
+            $data['rent'] = I('post.rent');
+            $data['room_fee'] = I('post.room_fee');
+            $data['room_parameter'] = serialize(I('post.room_parameter'));
+            $data['modify_time'] = date("Y-m-d H:i:s", time());
+            $data['is_show'] = I("is_show");
+            $a = $Mroom->where(array('id'=>$id))->save($data);
+            $this->success("房间修改成功",U("Admin/Houses/detail_house",array('house_code'=>$data['house_code'])));
+            
+        } else {
+            $id = I('id');
+            $house_code = I('house_code');
+            $rent_out_type = I('rent_out_type');
+            $title = $rent_out_type=='bed'? '床位':'房间';
+
+            $DRoomInfo = D('Houses')->getRoom($id);
+            $DRoomInfo['room_parameter'] = unserialize($DRoomInfo['room_parameter']);
+            $DRoomInfo['room_images'] = unserialize($DRoomInfo['room_images']);
+            foreach ( $DRoomInfo AS $key=>$val ) {
+                $this->assign($key,$val);
+            }
+            $this->assign('id',$id);
+            $this->assign('title',$title);
+            $this->assign('rent_out_type',$rent_out_type);
+            $this->assign('room_sort_arr',C('room_sort_arr'));
+            $this->assign('person_count_arr',C('person_count_arr'));
+            $this->assign('update',1);
+            $this->assign('house_code',$house_code);
+            $this->display("update-room");
+            $this->display("Common/footer");
+        }
+    }
+
+    /**
+     * [房屋详细页]
+     **/
+    public function detail_house(){
+        $house_code = I('get.house_code');
+        $roomList = D("Houses")->getRoomList($house_code);
+        $this->assign('room_list',$roomList);
+        $this->assign('house_code',$house_code);
+        $this->display("Common/header");
+        $this->display("Common/nav");
+        $this->display("detail-house");
+        $this->display("Common/footer");
+    }
+
+    /**
+     * [房间/床位删除]
+     **/
+    public function delete_room(){
+        $id = I('id');
+        $DRoom = D('Houses');
+        $result = $DRoom->deleteRoom($id);
+        if ($result) {
+            $this->success('删除成功');
+        } else {
+            $this->error("删除失败");
+        }
+    }
+
+    /**
+    * [查看账单]
+    **/
+    public function check_bill(){
+        $charge_id = I("charge_id");
+        $house_id = I("house_id");
+        $year = I("year"); //当年
+        $month = I("month"); //当月
+        
+        $DHouses = D("houses");
+        $DArea = D("area");
+        $house_code = $DHouses->getHouseCodeById($house_id);
+        $house_info = $DHouses->getHouse($house_code);
+        $area_info = $DArea->getAreaById($house_info['area_id']); //水电气单价
+        $energy_stair_arr = explode(",",$area_info['energy_stair']); //阶梯电费单价
+        foreach ($energy_stair_arr AS $key=>$val) {
+            $energy_stair[] = explode("-",$val);//阶梯算法数组
+        }
+
+        $DChargeBill = D("charge_bill");
+        $bill_list = $DChargeBill->showChargeBillList($house_code,$year,$month);
+
+        $DChargeHouse = D("charge_house");
+        $charge_house_info = $DChargeHouse->getChargeHouseInfo($house_id,$year,$month);
+
+        //输出总水电气的计算
+        //房屋总电费
+        $room_total_energy_fee = 0;
+        foreach ( $bill_list AS $k=>$v ) {
+            $room_total_energy_fee += $v['room_energy_fee'];
+        }
+
+        $add_energy = $charge_house_info['start_energy'] - $charge_house_info['end_energy'];
+        $total_energy_fee = get_energy_fee($add_energy,$energy_stair);
+        $this->assign("total_energy_fee",$total_energy_fee);
+
+        $this->assign("energy_unit",$energy_unit);
+        $this->assign("add_energy",$add_energy);
+        $this->assign("room_total_energy_fee",$room_total_energy_fee);
+        $this->assign("public_energy_fee",$bill_list[0]['public_energy_fee']);
+
+        $add_water = $charge_house_info['start_water'] - $charge_house_info['end_water'];
+        $public_water_fee = $add_water*$area_info['water_unit'];
+        $this->assign("water_unit",$area_info['water_unit']);
+        $this->assign("add_water",$add_water);
+        $this->assign("public_water_fee",$public_water_fee);
+        $add_gas = $charge_house_info['start_gas'] - $charge_house_info['end_gas'];
+        $public_gas_fee = $add_gas*$area_info['gas_unit'];
+        $this->assign("gas_unit",$area_info['gas_unit']);
+        $this->assign("add_gas",$add_gas);
+        $this->assign("public_gas_fee",$public_gas_fee);
+        $this->assign("energy_stair",$area_info['energy_stair']);//阶梯
+
+        $DAcccount = D("account");
+        foreach ( $bill_list AS $key=>$val ) {
+            $room_info = array();
+            $room_info = $DHouses->getRoom($val['room_id']);
+            $realname = '';
+            $realname = $DAcccount->getFieldById($val['account_id'],"realname");
+
+            $bill_list[$key]['room_code'] = $room_info['room_code'];
+            $bill_list[$key]['bed_code'] = $room_info['bed_code'];
+            $bill_list[$key]['realname'] = $realname;
+        }
+        $this->assign("type",$house_info['type']);
+        $this->assign("charge_house_info",$charge_house_info);
+        $this->assign('house_id',$house_id);
+        $this->assign("year",$year);
+        $this->assign("month",$month);
+        $this->assign('bill_list',$bill_list);
+        $this->assign('ammeter',$ammeter);
+        $this->assign('last_ammeter',$last_ammeter);
+        $this->assign('house_code',$house_code);
+        $this->display('check-bill');
+    }
+
+    /**
+    * [发送账单到租客手机]
+    **/
+    public function send_bill(){
+        $house_id = I("house_id");
+        $year = I("year"); //当年
+        $month = I("month"); //当月
+        $arr_id = explode(",",I("arr_id"));
+
+        $DChargeHouse = D("charge_house");
+        $DChargeBill = M("charge_bill");
+        $DAccount = D("account");
+        //创蓝接口
+        Vendor('ChuanglanSms.chuanglanSmsApi');
+        $clapi  = new \ChuanglanSmsApi();
+        $success_id = array();
+
+        foreach ( $arr_id AS $val ) {
+            $charge_info = $DChargeBill->field("account_id,total_fee,should_pay_date")->where(array("id"=>$val))->find();
+            $mobile = $DAccount->getFieldById($charge_info['account_id'],"mobile");
+            $realname = $DAccount->getFieldById($charge_info['account_id'],"realname");
+            $msg = '亲爱的乐窝小主,你的'.$month.'月份帐单已出炉,总金额为'.$charge_info['total_fee'].',请在'.$charge_info['should_pay_date'].'前处理~,快来查看 http://'.$_SERVER['HTTP_HOST'];
+            $result = $clapi->sendSMS($mobile, $msg,'true');
+            $result = $clapi->execResult($result);
+            if($result[1]==0){
+                $DChargeBill->where(array("id"=>$val))->save(array("is_send"=>1));
+                $success[$val] = $realname;
+            }
+
+            $send_time = date("Y-m-d H:i:s",time());
+            M("sms_log")->add(array("mobile"=>$mobile,"message"=>$msg,"send_time"=>$send_time,"result"=>serialize($result)));
+        }
+        die(json_encode($success));
+    }
+
+    /**
+    * [修改账单]
+    **/
+    public function update_bill(){
+        $charge_house_id = I("charge_house_id");
+        $house_id = I("house_id");
+        $year = I("year");
+        $month = I("month");
+        $room_list = I("room_list");
+        $DHouses = D("houses");
+        $DArea = D("area");
+        $DChargeHouse = D("charge_house");
+        $DChargeBill = D("charge_bill");
+	    $lastDate = date("Y-m",strtotime($year."-".$month) - 1);
+        $lastYear = date("Y",strtotime($lastDate));
+        $lastMonth = date("m",strtotime($lastDate));
+
+        $house_code = $DHouses->getHouseCodeById($house_id);
+        $house_info = $DHouses->getHouse($house_code);
+        $area_info = $DArea->getAreaById($house_info['area_id']); //水电气单价
+
+        $energy_unit = $area_info['energy_unit']; //电费单价
+        $water_unit = $area_info['water_unit']; //水费单价
+        $gas_unit = $area_info['gas_unit']; //气费单价
+        $energy_stair_arr = explode(",",$area_info['energy_stair']); //阶梯电费单价
+        $energy_stair = array();
+        foreach ($energy_stair_arr AS $key=>$val) {
+            $energy_stair[] = explode("-",$val);//阶梯算法数组
+        }
+
+        //修改房屋账单信息的水电气度数
+        $SDQdata['end_energy'] = I("end_energy");
+        $SDQdata['start_energy'] = I("start_energy");
+        $SDQdata['end_water'] = I("end_water");
+        $SDQdata['start_water'] = I("start_water");
+        $SDQdata['end_gas'] = I("end_gas");
+        $SDQdata['start_gas'] = I("start_gas");      
+        $uResult = $DChargeHouse->updateSDQ($charge_house_id,$SDQdata);
+
+        //修改当月录入时的水电气
+        $MAmmeterHouse = M("ammeter_house");
+        $ammeter_house_where['house_id'] = $house_id;
+        $ammeter_house_where['input_year'] = $year;
+        $ammeter_house_where['input_month'] = $month;
+        $ammeter_house_now_save['modify_time'] = date("Y-m-d H:i:s",time());
+        $ammeter_house_now_save['total_energy'] = I("start_energy");
+        $ammeter_house_now_save['total_water'] = I("start_water");
+        $ammeter_house_now_save['total_gas'] = I("start_gas");
+        $ammeter_house_now_save['energy_add'] = I("start_energy") - I("end_energy");
+        $ammeter_house_now_save['water_add'] = I("start_water") - I("end_water");
+        $ammeter_house_now_save['gas_add'] = I("start_gas") - I("end_gas");
+
+        $last_ammeter_house_where['house_id'] = $house_id;
+        $last_ammeter_house_where['input_year'] = $lastYear;
+        $last_ammeter_house_where['input_month'] = $lastMonth;
+        $MAmmeterHouse->where($last_ammeter_house_where)->save($ammeter_house_now_save);
+        //修改上个月的水电气 ， 如果上个月没有录入则不修改
+        $last_ammeter_result = $MAmmeterHouse->where($ammeter_house_where)->find();      
+        
+        if ( !is_null($last_ammeter_result) ) {
+            $last_ammeter_house_save['modify_time'] = date("Y-m-d H:i:s",time());
+            $last_ammeter_house_save['total_energy'] = I("end_energy");
+            $last_ammeter_house_save['total_water'] = I("end_water");
+            $last_ammeter_house_save['total_gas'] = I("end_gas");
+            $MAmmeterHouse->where($last_ammeter_house_where)->save($last_ammeter_house_save);
+        }  
+
+        //总电
+        $add_energy = $SDQdata['start_energy'] - $SDQdata['end_energy'];
+        $total_energy_fee = get_energy_fee($add_energy,$energy_stair);
+
+        //循环获取房间电表的电费
+        $room_total_energy_fee = 0;
+        foreach ( $room_list AS $k=>$v ) {
+            $room_add_energy = $v['start_room_energy'] - $v['end_room_energy'];
+            $room_energy_fee = get_energy_fee($room_add_energy,$energy_stair);
+            $room_total_energy_fee += $room_energy_fee;
+        }
+
+        if ( $house_info['type'] == 1 ) { 
+            $public_energy_fee = $total_energy_fee - $room_total_energy_fee;//公共区域电费 = 总电费 - 房间总电费
+        } else {
+            $public_energy_fee = $total_energy_fee; //公共区域电费
+        }
+
+        $add_water  = $SDQdata['start_water'] - $SDQdata['end_water'];
+        $public_water_fee = $add_water * $water_unit; //公共水费
+        $add_gas = $SDQdata['start_gas'] - $SDQdata['end_gas'];
+        $public_gas_fee = $add_gas * $gas_unit; //公共气费
+        
+        //总人日
+        $sum_person_day = 0;
+        foreach($room_list AS $key=>$val){
+            $sum_person_day += $val['person_day'];
+        }
+
+        $MAmmeterRoom = M("ammeter_room");
+        foreach ($room_list AS $key2=>$val2) {
+            $val2['energy_fee'] = ceil((($public_energy_fee / $sum_person_day)*$val2['person_day'])*100)/100;
+            $val2['water_fee'] = ceil((($public_water_fee / $sum_person_day)*$val2['person_day'])*100)/100;
+            $val2['gas_fee'] = ceil((($public_gas_fee / $sum_person_day)*$val2['person_day'])*100)/100;
+            $val2['modify_time'] = date("Y-m-d H:i:s",time());
+
+            $add_roomD = $val2['start_room_energy'] - $val2['end_room_energy'];
+            //阶梯算法 房间电费
+            $val2['room_energy_add'] = $add_roomD;
+            $val2['room_energy_fee'] = get_energy_fee($add_roomD,$energy_stair);
+            $val2['public_energy_fee'] = $public_energy_fee;
+            $val2['total_fee'] = $val2['energy_fee']+$val2['water_fee']+$val2['gas_fee']+$val2['room_energy_fee']+$val2['rent_fee']+$val2['service_fee']+$val2['wgfee_unit']+$val2['rubbish_fee']+$val2['wx_fee'];
+
+            $DChargeBill->updateChargeBill($key2,$val2);
+            $DChargeBill->updateTotalPersonDay($house_code,$sum_person_day);
+
+            //修改电表
+            $ammeter_room_where['room_id'] = $val2['room_id'];
+            $ammeter_room_where['input_year'] = $year;
+            $ammeter_room_where['input_month'] = $month;
+            $ammeter_room_now_save['modify_time'] = date("Y-m-d H:i:s",time());
+            $ammeter_room_now_save['room_energy'] = $val2['start_room_energy'];
+
+            $MAmmeterRoom->where($ammeter_room_where)->save($ammeter_room_now_save);
+            //修改上个月的水电气 ， 如果上个月没有录入则不修改
+            $last_ammeter_room_where['room_id'] = $val2['room_id'];
+            $last_ammeter_room_where['input_year'] = $lastYear;
+            $last_ammeter_room_where['input_month'] = $lastMonth;
+            $last_ammeter_room_result = $MAmmeterRoom->where($last_ammeter_room_where)->find();      
+
+            if ( !is_null($last_ammeter_room_result) ) {
+                $last_ammeter_room_save['modify_time'] = date("Y-m-d H:i:s",time());
+                $last_ammeter_room_save['room_energy'] = $val2['end_room_energy'];
+                $MAmmeterRoom->where($last_ammeter_room_where)->save($last_ammeter_room_save);
+            }  
+        }
+
+        $this->success("修改成功");
+    }
+
+    /**
+    * [生成账单]
+    * 根据房间是否存在account_id来处理
+    **/
+    public function create_bill(){
+        $charge_id = I("charge_id");
+        $house_id = I("house_id");
+        $year = I("year"); //当年
+        $month = I("month"); //当月
+        $lastDate = date("Y-m",strtotime($year."-".$month) - 1);
+        $lastYear = date("Y",strtotime($lastDate));
+        $lastMonth = date("m",strtotime($lastDate));
+
+        //点击生成先判断是否已经生成过了
+        $is_has_create = M("charge_house")->where(array("house_id"=>$house_id,"input_year"=>$year,"input_month"=>$month,"is_create"=>1))->find();
+        if ( !empty($is_has_create) ) {
+            die(json_encode(array("info"=>"已生成")));
+        }
+        $DChargeHouse = D("charge_house");
+        $DHouses = D("houses");
+        $DArea = D("area");
+        
+        $house_code = $DHouses->getHouseCodeById($house_id);
+        $person_count = $DHouses->getPersonCountByCode($house_code); //该房屋总人数
+        $room_count = $DHouses->getRoomCountByCode($house_code); //该房屋的房间数量
+        $bed_count = $DHouses->getBedCountByCode($house_code); //该房屋的床位数量
+        $sum_person_day = $DHouses->getPersonDayCount($house_code,$year,$month); //该房屋总人日 
+
+        $house_info = $DHouses->getHouse($house_code); 
+
+        $area_info = $DArea->getAreaById($house_info['area_id']); //水电气单价
+        $energy_unit = $area_info['energy_unit']; //电费单价 错误逻辑，总电费没有单价，根据阶梯电费算
+        $water_unit = $area_info['water_unit']; //水费单价
+        $gas_unit = $area_info['gas_unit']; //气费单价
+        $energy_stair_arr = explode(",",$area_info['energy_stair']); //阶梯电费单价
+        $rubbish_fee = $area_info['rubbish_fee']; //燃气垃圾费
+
+        foreach ($energy_stair_arr AS $key=>$val) {
+            $energy_stair[] = explode("-",$val);//阶梯算法数组
+        }
+
+        $DAmmeter = D("ammeter_house");
+        $ammeter = $DAmmeter->getAmmeterByIdAndDate($house_id,$year,$month);
+        $last_ammeter = $DAmmeter->getAmmeterByIdAndDate($house_id,$lastYear,$lastMonth);
+
+        if (count($ammeter)==0) die(json_encode(array("info"=>"该月没录入水电气")));
+        if (count($last_ammeter)==0) {
+            //上个月的为空时获取房源初始化水电气
+            $last_ammeter['total_water'] = $house_info['init_water'];
+            $last_ammeter['total_energy'] = $house_info['init_energy'];
+            $last_ammeter['total_gas'] = $house_info['init_gas'];
+        }
+        //保存水电气数据到该房屋账单(charge_house)中
+        $SDQdata['start_energy'] = $ammeter['total_energy'];
+        $SDQdata['end_energy'] = $last_ammeter['total_energy'];
+        $SDQdata['start_water'] = $ammeter['total_water'];
+        $SDQdata['end_water'] = $last_ammeter['total_water'];
+        $SDQdata['start_gas'] = $ammeter['total_gas'];
+        $SDQdata['end_gas'] = $last_ammeter['total_gas'];
+        $SDQupdateResult = $DChargeHouse->updateSDQ($charge_id,$SDQdata);//修改水电气
+
+        //房屋总电费
+        $add_energy = $ammeter['total_energy'] - $last_ammeter['total_energy'];
+        $total_energy_fee = get_energy_fee($add_energy,$energy_stair);
+
+
+        if ( $house_info['type'] == 1 ) {
+            //房间总电费
+            $room_total_energy_fee = $DHouses->get_room_total_energy_fee($house_code,$year,$month,$energy_stair);
+            $public_energy_fee = $total_energy_fee - $room_total_energy_fee;//公共区域电费 = 总电费 - 房间总电费
+        } else {
+            $public_energy_fee = $total_energy_fee; //公共区域电费
+        }
+
+        //房屋总水费
+        $add_water = $ammeter['total_water'] - $last_ammeter['total_water'];
+        $public_water_fee = $add_water * $water_unit;
+
+        //房屋总气费
+        $add_gas = $ammeter['total_gas'] - $last_ammeter['total_gas'];
+        $public_gas_fee = $add_gas * $gas_unit;
+
+        //获取房间电表信息 没有上个月的则获取合同中的初始化电表
+        $DAmmeterRoom = D("ammeter_room");
+        $MContract = M("contract");
+        $DContract = D("contract");
+
+        //$room_list = $DHouses->getRoomList($house_code);//房间列表 获取房间的问题是有问题的，假如该房间有退房等操作，就不能获取退房的租客的水电气信息了改成获取合同列表
+        //获取合同列表
+        $contract_list = $DContract->getContractListByDateForDailyBill($house_code,$year,$month);
+
+        foreach ( $contract_list AS $key=>$val ) {
+            $ht_start_date = $val['start_time']; //合同开始日
+            $ht_start_day = date("d",strtotime($ht_start_date));
+            $ht_end_date = $val['end_time']; //合同结束日
+            $ht_actual_end_time = $val['actual_end_time']; //实际退房日期 判断是否存在已经退房了
+
+            $ht_end_year = date("Y",strtotime($ht_end_date)); //合同结束月
+            $ht_end_month = date("m",strtotime($ht_end_date)); //合同结束月
+            $ht_end_day = date("d",strtotime($ht_end_date));//合同结束日的日
+            $click_day = date("d",time());
+            //判断$val['contract_status'] != 1 时是非正常合同状态 不发送账单
+            //合同状态 1.正常,2.换房,3转租 4.正常退租 5.违约退租
+            //charge_bill type 1.月底水电气2.退租水电气结算 3.换租水电气结算 4.转租水电气结算
+            switch ( $val['contract_status'] ) {
+                case 1:
+                    $contract_list[$key]['type'] = 1;//正常情况
+                    break;
+                case 2:
+                    $contract_list[$key]['type'] = 3;//3.换房
+                    break;
+                case 3:
+                    $contract_list[$key]['type'] = 4;//4.转房
+                    break;
+                case 4:
+                case 5:
+                    $contract_list[$key]['type'] = 2;//2.退房
+                    break;
+            }
+
+            //先判断这房屋是按间的还是按床的 房屋类型 1：合租按间 按间的话才获取房间电表 2：合租按床 
+            switch ($house_info['type']) {
+                case 1:
+                    $ammeter_room = $DAmmeterRoom->getAmmeterRoomByRoomId($val['room_id'],$year,$month);
+                    $last_ammeter_room = $DAmmeterRoom->getAmmeterRoomByRoomId($val['room_id'],$lastYear,$lastMonth);
+                    
+                    if ( count($last_ammeter_room)==0 ) {
+                        //上个月没有水电气信息则获取合同上的初始化电表
+                        $roomD = $MContract->where(array("account_id"=>$val['account_id'],"room_id"=>$val['room_id']))->getField("roomD");
+                        $last_ammeter_room['room_energy'] = !empty($roomD)?$roomD:0;
+                    }
+                    $add_roomD = $ammeter_room['room_energy'] - $last_ammeter_room['room_energy'];
+                    $contract_list[$key]['room_energy_add'] = $add_roomD;
+
+                    //房间电费
+                    $contract_list[$key]['room_energy_fee'] = get_energy_fee($add_roomD,$energy_stair);
+                    $contract_list[$key]['start_room_energy'] = $ammeter_room['room_energy'];
+                    $contract_list[$key]['end_room_energy'] = $last_ammeter_room['room_energy'];
+
+                    $contract_list[$key]['wg_fee'] = $house_info['fee'] / $room_count; //物业费/房间数
+                    $contract_list[$key]['rubbish_fee'] = $rubbish_fee / $room_count;
+                    break;
+                
+                case 2:
+                    $contract_list[$key]['wg_fee'] = $house_info['fee'] / $bed_count; //物业费/床位数
+                    $contract_list[$key]['rubbish_fee'] = $rubbish_fee / $bed_count;
+                    break;
+            }
+
+            //人日 需要计算租客申请的日数
+            $person_day = 0;
+            $ht_person = $DContract->getPersonCount($val['account_id'],$val['room_id']);//合同人数
+            //判断租客是否当月入住
+            $result = $DContract->isDateCheckInByDate($val['account_id'],$val['room_id'],$year,$month);
+
+            if ( $result ) {
+                //是这个月入住则，人日获取的是，租期开始到月末的日数
+                $start_time =  $ht_start_date;//合同开始时间
+                $firstday = date('Y-m-01', strtotime($year."-".$month)); //该月第一天
+                $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day")); //该月最后一天
+                $person_day = round((strtotime($lastday)-strtotime($start_time))/86400)+1;      
+            } else {
+                //退房了 判断是否这个月退的
+                $ht_actual_end_year = date("Y",strtotime($ht_actual_end_time));
+                $ht_actual_end_month = date("m",strtotime($ht_actual_end_time));
+                if ( $ht_actual_end_time != 0 && $year == $ht_actual_end_year && $month == $ht_actual_end_month) {
+                    //这个月就是退房的月数 那么这个月的人日就是到这一天
+                    $person_day = date("d",strtotime($ht_actual_end_time));
+                    $rent_fee_des = "租客退房";
+                    $contract_list[$key]['rent'] = 0;
+                    $contract_list[$key]['room_fee'] = 0;
+                } else {
+                    //不是这个月入住也不是这个月退房的，则获取这个月的日数
+                    $person_day = date("t",strtotime($year."-".$month));
+                }   
+            }
+
+            $person_day*=$ht_person;
+
+            //公共区域总电费 public_energy_fee         
+            $contract_list[$key]['public_energy_fee'] = $public_energy_fee;
+            //总人日total_person_day
+            $contract_list[$key]['sum_person_day'] = $sum_person_day;
+            //总电
+            $contract_list[$key]['total_energy'] = $ammeter['total_energy'];
+            //总水
+            $contract_list[$key]['total_water'] = $ammeter['total_water'];
+            //总气
+            $contract_list[$key]['total_gas'] = $ammeter['total_gas'];
+            //公摊电费
+            $energy_fee = 0;
+            $energy_fee = ($public_energy_fee / $sum_person_day)*$person_day;
+            $contract_list[$key]['energy_fee'] = ceil($energy_fee*100)/100;
+            //公摊水费
+            $water_fee = 0;
+            $water_fee = ($public_water_fee / $sum_person_day)*$person_day;
+            $contract_list[$key]['water_fee'] = ceil($water_fee*100)/100;
+            //公摊气费
+            $gas_fee = 0;
+            $gas_fee = ($public_gas_fee / $sum_person_day)*$person_day;
+            $contract_list[$key]['gas_fee'] = ceil($gas_fee*100)/100;
+
+
+            //房租描述 该年该月.合同开始日~下月.合同结束日     
+            $start_fee_des = $year."-".$month."-".$ht_start_day;
+            $end_fee_des = date("Y-m-d",strtotime($start_fee_des."+1 month -1 day"));
+            $rent_fee_des = $start_fee_des."到".$end_fee_des."房租";
+            //如果这个月是合同结束年月一样，则这个月的房租不用交，除非是1号 因为1号的房租是7月1号到7月31号。
+            if ( $ht_end_year == $year && $ht_end_month == $month && $ht_end_day != 1 ) {
+                $rent_fee_des = "该月为合同结束";
+                $contract_list[$key]['rent'] = 0;
+                $contract_list[$key]['room_fee'] = 0;
+            }
+
+            //最迟缴费日
+            $now_month_days = date("t",strtotime($year."-".$month));
+            $end_fee_des_day = date("d",strtotime($end_fee_des));
+            //如果当月结束日等于该月的日数，证明了这个结束日是最后一天
+            if ( $end_fee_des_day == 31 || $end_fee_des_day <= $click_day ) {
+                $late_pay_day = $click_day+1;
+            } else {
+                $late_pay_day = $end_fee_des_day;
+            }
+            if ( $late_pay_day - C("should_pay_times") <= $click_day ) {
+                $should_pay_day = $click_day+1;
+            } else {
+                $should_pay_day = $late_pay_day - C("should_pay_times");
+            }
+            $late_pay_date = $year."-".$month."-".$late_pay_day;
+            $should_pay_date = $year."-".$month."-".$should_pay_day;
+
+            $contract_list[$key]['late_pay_date'] = $late_pay_date;//最迟缴费时间
+            $contract_list[$key]['should_pay_date'] = $should_pay_date;//应缴费时间
+            $contract_list[$key]['start_fee_des'] = $start_fee_des;//房租描述开始
+            $contract_list[$key]['end_fee_des'] = $end_fee_des;//房租描述结束
+            $contract_list[$key]['rent_fee_des'] = $rent_fee_des;//房租描述
+            $contract_list[$key]['ht_start_date'] = $ht_start_date;//合同租期开始日
+            $contract_list[$key]['ht_end_date'] = $ht_end_date;//合同租期结束
+            $contract_list[$key]['person_day'] = $person_day;//人日
+            $contract_list[$key]['ammeter_room'] = $ammeter_room;//该月水电气信息
+            $contract_list[$key]['last_ammeter_room'] = $last_ammeter_room;//上个月水电气信息
+
+            $contract_list[$key]['total_fee'] = $contract_list[$key]['rent']+$contract_list[$key]['room_energy_fee']+$contract_list[$key]['energy_fee']+$contract_list[$key]['water_fee']+$contract_list[$key]['gas_fee']+$contract_list[$key]['room_fee']+$contract_list[$key]['wg_fee']+$contract_list[$key]['rubbish_fee'];
+            //插入charge_bill中
+            $DChargeBill = D("charge_bill");
+            $result = $DChargeBill->addBill($contract_list[$key],$year,$month);
+        }
+        $DChargeHouse->setIsCreate($charge_id);
+        die(json_encode(array("result"=>$result)));
+    }
+
+    /**
+    * [查看账单]
+    **/
+    public function bill_list(){
+        $house_id = I("house_id");
+        $DHouses = D("houses");
+        $house_code = $DHouses->getHouseCodeById($house_id);
+
+        $DChargeHouse = D("charge_house");
+        $year = date("Y");
+        $month = date("m");
+        $DChargeHouse->createOneCharge($house_id,$year,$month);//判断当月是否存在账单
+        $charge_list = $DChargeHouse->getChargeList($house_id);
+
+      
+
+        $this->assign('charge_list',$charge_list);
+        $this->assign('house_id',$house_id);
+        $this->assign('house_code',$house_code);
+        $this->display("Common/header");
+        $this->display("Common/nav");
+        $this->display("bill-list");
+        $this->display("Common/footer");
+    }
+
+    /**
+    * [查看账单]
+    **/
+    public function check_SDQ(){
+        $DHouses = D("houses");
+        $MAmmeterHouse = M("ammeter_house");
+        $MAmmeterRoom = M("ammeter_room");
+        $house_id = I("house_id");
+        if ( !empty($_POST) ) {
+            $save['status'] = I("status");
+            $save['total_water'] = I("zs");
+            $save['total_energy'] = I("zd");
+            $save['total_gas'] = I("zq");
+            $MAmmeterHouse->where(array("id"=>I("ammeter_house_id")))->save($save);
+            foreach ( I("roomd") AS $key=>$val ) {
+                $MAmmeterRoom->where(array("id"=>$key))->save(array("room_energy"=>$val));
+            }
+            $this->success("修改成功",U("Admin/Houses/bill_list",array("house_id"=>$house_id)));
+        } else {
+            $house_code = $DHouses->getHouseCodeById($house_id);
+            $room_list = $DHouses->getRoomList($house_code);
+            $year = I("year");
+            $month = I("month");
+            $ammeter_house = $MAmmeterHouse->where(array("house_id"=>$house_id,"input_month"=>$month,"year"=>$year))->find();           
+            $ammeter_room = array();
+            foreach ( $room_list AS $key=>$val ) {
+                $ammeter_room[$key] = $MAmmeterRoom->where(array("room_id"=>$val['id'],"input_month"=>$month,"input_year"=>$year))->find();
+                $ammeter_room[$key]['room_code'] = $val['room_code'];
+            }
+            $this->assign("house_id",$house_id);
+            $this->assign("ammeter_room",$ammeter_room);
+            $this->assign("ammeter_house",$ammeter_house);
+            $this->assign("house_code",$house_code);
+            $this->assign("year",$year);
+            $this->assign("month",$month);
+            $this->display("Common/header");
+            $this->display("Common/nav");
+            $this->display("check_SDQ");
+            $this->display("Common/footer");
+        }
+    }
+
+}

@@ -1,0 +1,436 @@
+@charset "utf-8";
+/* CSS Document */
+*{
+	margin:0;
+	padding:0;
+	}
+li{
+	list-style:none;
+	}
+h1,h2,h3,h4,h5,h6{
+	margin-top:0;
+	margin-bottom:0;
+	font-weight:normal;
+	}
+a{
+	text-decoration:none;
+	color:#555555;
+
+	}
+a:hover{
+	color:#c7ffec;
+	}
+img{
+	border:none;
+	}
+body{
+	font-family:"微软雅黑";
+	color:#555555;
+	}
+input{
+	border:none;
+	background-color:transparent;
+	}
+#fwxx{
+	width:100%;
+	}
+/* 响应式顶部头 */
+.container-fluid{
+	padding-right:0;
+	padding-left:0;
+	}
+.col-xs-4{
+	padding-right:0;
+	padding-left:0;
+	}
+.header{
+	width:100%;
+	background-color:#68bb9b;
+	height:44px;
+	position:fixed;
+	top:0px;
+	z-index:2;
+	}
+.retun-db-box{
+	width:100%;
+	height:44px;
+	position:absolute;
+	left:0;
+	background-color:rgba(0,0,0,0);
+	}
+.menu-db-box{
+	width:100%;
+	height:44px;
+	position:absolute;
+	right:0;
+	background-color:rgba(0,0,0,0);
+	}
+.icon-db-retun{
+	width:28px;
+	margin:8px;
+	position:absolute;
+	left:7px;
+	}
+.icon-db-menu{
+	width:28px;
+	margin:8px;
+	position:absolute;
+	right:7px;
+	}
+/* 响应式顶部尾 */
+.main{
+	width:100%;
+	}
+.main_margin_top44{
+	margin-top:44px;
+	}
+.back_color{
+	height:20px;
+	background-color:#fff;
+	}
+.main_hezi{
+	height:auto;
+	overflow:hidden;
+	}
+.main_hezi h2{
+	width:100%;
+	height:44px;
+	line-height:44px;
+	background-image:url(../images/xiantiao.jpg);
+	background-repeat:repeat-x;
+	background-position:center;
+	text-align:center;
+	font-size:16px;
+	color:#555555;
+	background-color:#fff;
+	overflow:hidden;
+	}
+.title{
+	line-height:44px;
+	background-color:#fff;
+	margin:0 auto;
+	padding:0 4px 0 4px;
+	}
+.title_jd{
+	background-color:#f4f4f4;
+	margin:0 0 10px;
+	}
+.title_width100{
+	width:100px;
+	}
+.main_ban{
+	width:100%;
+	height:42px;
+	margin-top:8px;
+	background-color:#f4f4f4;
+	}
+.lyb{
+	height:120px;
+	}
+.ban_lyb{
+	overflow:hidden;
+	}
+.font_dxys{
+	height:100px;
+	width:100%;
+	margin-top:8px;
+	color:#555555;
+	font-family:"微软雅黑";
+	border-radius:4px;
+	}
+.ban_tietu{
+	width:100%;
+	margin:0;
+	padding-right:15px;
+	padding-left:15px;
+	}
+.ban_one{
+	height:42px;
+	float:left;
+	overflow:hidden;
+	line-height:42px;
+	}
+.ban_two{
+	height:42px;
+	font-size:14px;
+	line-height:42px;
+	overflow-x:hidden;
+	}
+/* 冲突样式 */
+label{
+	}
+
+/* 冲突样式 */
+	
+.inp_jz{
+	width:300px;
+	height:42px;
+	margin:0 auto;
+	}
+.wzda20{
+	width:20px;
+	height:20px;
+	margin-top:11px;
+	}
+.ztsz14{
+	font-size:14px;
+	line-height:42px;
+	margin:0 10px 0 4px;
+	position:relative;
+	bottom:4px;
+	}
+
+.map{
+	width:100%;
+	}
+.map_ditu{
+	width:100%;
+	height:100%;
+	}
+.lcfh{
+	width:40px;
+	line-height:24px;
+	color:#555555;
+	text-align:center;
+	border:1px solid #555555;
+	margin-top:8px;
+	}
+.sl_guanjia{
+	width:100%;
+	font-size:14px;
+	height:26px;
+	font-family:"微软雅黑";
+	color:#555555;
+	margin-top:8px;
+	border:1px solid #fff;
+	border-radius:4px;
+	}
+.shuru{
+	width:100%;
+	font-family:"微软雅黑";
+	line-height:36px;
+	color:#555555;
+	border-bottom:1px solid #555555;
+	}
+.shuru_file_sx{
+	width:100%;
+	font-family:"微软雅黑";
+	line-height:36px;
+	color:#555555;
+	margin-top:10px;
+	}
+.shuru_tpsp{
+	height:28px;
+	line-height:28px;
+	margin-top:12px;
+	}
+.icon{
+	width:26px;
+	height:26px;
+	padding:8px 8px 8px;
+	}
+.money1{
+	height:42px;
+	text-align:center;
+	line-height:42px;
+	margin:0 auto;
+	background-color:#f4f4f4;
+	margin-top:8px;
+	}
+.money2{
+	height:42px;
+	text-align:center;
+	line-height:42px;
+	margin:0 auto;
+	background-color:#f4f4f4;
+	margin-bottom:8px;
+	}
+.money_box1{
+	font-size:16px;
+	color:#555555;
+	line-height:42px;
+	}	
+.money_box2{
+	font-size:15px;
+	color:#888888;
+	}
+.money_box1_shuru1{
+	font-family:"微软雅黑";
+	color:#555555;
+	font-size:16px;
+	line-height:42px;
+	}
+.money_box2_shuru2{
+	font-family:"微软雅黑";
+	color:#888888;
+	font-size:15px;
+	height:42px;
+	}
+
+.button{
+	width:100%;
+	height:50px;
+	}
+.button_ds{
+	width:100%;
+	height:50px;
+	background-color:#f8f8f8;
+	border-top:1px solid #ececec;
+	text-align:center;
+	margin:0 auto;
+	position:fixed;
+	bottom:0px;
+	}
+.button_icon{
+	width:30px;
+	height:auto;
+	padding-top:10px;
+	position:relative;
+	right:20px;
+	}
+.button_baoc{
+	font-size:16px;
+	width:100%;
+	line-height:50px;
+	color:#787878;
+	font-family:"微软雅黑";
+	padding-left:40px;
+	position:relative;
+	bottom:40px;
+	}
+/* 查看流程 */
+.user_icon{
+	width:100%;
+	height:100px;
+	}
+.user_icon_tx{
+	height:100px;
+	float:left;
+	padding-top:20px;
+	margin-left:26px;
+	}
+.user_tx{
+	width:60px;
+	height:auto;
+	border-radius:60px;
+	}
+.user_data_box{
+	height:60px;
+	float:left;
+	padding-top:20px;
+	}
+.user_data{
+	font-size:14px;
+	line-height:20px;
+	color:#868585;
+	padding-left:10px;
+	}
+.user_cor{
+	color:#555555;
+	}
+.scroll{
+	width:100%;
+	height:16px;
+	background-color:#f4f4f4;
+	}
+.peoess_jl{
+	width:100%;
+	padding-top:20px;
+	}
+.jl_order{
+	padding-left:30px;
+	height:78px;
+	margin:0 auto;
+	}
+.jl_order_mark{
+	height:78px;
+	float:left;
+	}
+.mark{
+	width:11px;
+	height:auto;
+	padding:0;
+	background-color:rgba(0,0,0,0);
+	}
+.mark_sx{	
+	}
+.jl_order_inf{
+	font-size:12px;
+	line-height:20px;
+	color:#9b9b9b;
+	float:left;
+	}
+.jl_order_infa{
+	color:#68bb9b;
+	}
+.order_event{
+	margin-left:24px;
+	}
+.bottom_jj{
+	height:50px;
+	}
+	
+
+.bottom-but{
+	border-top:1px solid #ececec;
+	height:50px;
+	width:100%;
+	background-color:#f8f8f8;
+	position:fixed;
+	bottom:0px;
+	}
+.but-box{
+	width:75%;
+	height:36px;
+	padding-top:8px;
+	margin:0 auto;
+	}
+.but-box a{
+	color:#f2f1f1;
+	}
+.but-box a:hover{
+	color:#555555;
+	}
+.box-solid{
+	width:70px;
+	height:36px;
+	margin:0 auto;
+	}
+.box-size{
+	height:36px;
+	width:45%;
+	border-radius:5px;
+	background-color:#f8c069;
+	float:left;
+	}
+.box-sze-right{
+	float:right;
+	background-color:#68bb9b;
+	}
+.box-icon{
+	height:32px;
+	width:32px;
+	padding-top:2px;
+	float:left;
+	}
+.box-baoc{
+	font-size:16px;
+	line-height:36px;
+	font-family:"微软雅黑";
+	}
+
+/* 查看流程 */
+/* 字体调试 */
+.text-letter-spacing-2{
+	letter-spacing:2em;
+	}
+.text-letter-spacing-2ys{
+	letter-spacing:3em;
+	}
+.text-letter-spacing-3ys{
+	letter-spacing:1em;
+	}
+.text-letter-spacing-4ys{
+	letter-spacing:.2em;
+	}
+/* 字体调试 */

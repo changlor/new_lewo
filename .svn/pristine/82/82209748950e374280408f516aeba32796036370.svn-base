@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>乐窝公寓管理系统</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/bootstrap.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/colorpicker.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/datepicker.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/uniform.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/select2.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/matrix-style.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/css/matrix-media.css" />
+<link href="__PUBLIC__/admin/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+</head>
+<body>
+<!--main-container-part-->
+<div>
+  <div class="widget-box">
+  <a href="javascript:window.history.back(-1)" class="btn btn-success">返回</a>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span6"> 
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+            <h5>修改账单</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <form action="{:U('Admin/Pay/edit_pay')}" method="post" class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label">支付方式</label>
+              <div class="controls">
+                  <select name="pay_type">
+                    <option value="0">请选择</option>
+                    <volist name="pay_type" id="vo">
+                      <option value="{$key}" <if condition="$pay_info['pay_type'] eq $key">selected</if>>{$vo}</option>
+                    </volist>
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">支付时间</label>
+                <div class="controls" >
+                  <div data-date="{$today}" data-date-format="yyyy-mm-dd" class="input-append date datepicker">
+                    <input name="pay_time" value="{$pay_info['pay_time']}" type="text" data-date-format="yyyy-mm-dd" class="span11" >
+                    <span class="add-on"><i class="icon-th"></i></span> </div>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">支付金额:</label>
+                <div class="controls">
+                  <input name="pay_money" type="text" value="{$pay_info['pay_money']}" class="span11"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">日志</label>
+                <div class="controls">
+                  <input name="pay_log" type="text" value="{$pay_info['pay_log']}">
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success">保存</button>
+                <input type="hidden" name="id" value="{$id}">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--main-container-part-->
+
+<!--Footer-part-->
+<div class="row-fluid">
+  <div id="footer" class="span12"> 2016 &copy; 广州百城网络科技有限公司 </div>
+</div>
+<!--end-Footer-part-->
+<script src="__PUBLIC__/admin/js/jquery.min.js"></script> 
+<script src="__PUBLIC__/admin/js/jquery.ui.custom.js"></script> 
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script> 
+<script src="__PUBLIC__/admin/js/bootstrap-colorpicker.js"></script> 
+<script src="__PUBLIC__/admin/js/bootstrap-datepicker.js"></script> 
+<!-- <script src="__PUBLIC__/admin/js/jquery.toggle.buttons.html"></script>  -->
+<script src="__PUBLIC__/admin/js/masked.js"></script> 
+<script src="__PUBLIC__/admin/js/jquery.uniform.js"></script> 
+<script src="__PUBLIC__/admin/js/select2.min.js"></script> 
+<script src="__PUBLIC__/admin/js/matrix.js"></script> 
+<script src="__PUBLIC__/admin/js/matrix.form_common.js"></script> 
+<script src="__PUBLIC__/admin/js/wysihtml5-0.3.0.js"></script> 
+<script src="__PUBLIC__/admin/js/jquery.peity.min.js"></script> 
+<script src="__PUBLIC__/admin/js/bootstrap-wysihtml5.js"></script> 
+</body>
+</html>

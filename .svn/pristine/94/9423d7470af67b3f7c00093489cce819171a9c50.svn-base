@@ -1,0 +1,46 @@
+<?php
+namespace Admin\Model;
+use Think\Model;
+/**
+* [房间数据层]
+*/
+class RoomModel extends Model{
+	/**
+	 * [获取房屋编码]
+	 **/
+	public function getHouseCodeById($room_id){
+        return $this->where(array("id"=>$room_id))->getField("house_code");
+	}
+	/**
+	 * [获取房间编码]
+	 **/
+	public function getRoomCodeById($room_id){
+        return $this->where(array("id"=>$room_id))->getField("room_code");
+	}
+	/**
+	 * [获取床位编码]
+	 **/
+	public function getBedCodeById($room_id){
+        return $this->where(array("id"=>$room_id))->getField("bed_code");
+	}
+	/**
+	* [获取room的id]
+	**/
+	public function getRoomIdByCode($room_code){
+		return $this->where(array("room_code"=>$room_code))->getField("id");
+	}
+	/**
+	* [获取房间部分信息]
+	**/
+	public function getRoomInfoById($room_id){
+		return $this->field("room_code,bed_code,house_code")->where(array("id"=>$room_id))->find();
+	}
+	/**
+	* [获取房间信息]
+	**/
+	public function getRoomById($room_id){
+		return $this->where(array("id"=>$room_id))->find();
+	}
+}
+
+?>

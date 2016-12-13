@@ -1,0 +1,1064 @@
+[ 2016-08-20T18:00:38+08:00 ] 127.0.0.1 /index.php/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.038002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.039002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:01:02+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `lewo_region` [ RunTime:0.2040s ]
+SQL: SELECT * FROM `lewo_region` WHERE `is_show` = 1  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.2870s ]
+NOTIC: [8] Undefined variable: condition E:\wamp2\www\lewo\lewo\Home\Controller\MapsearchController.class.php 第 43 行.
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0520s ]
+SQL: SELECT lewo_room.id,lewo_room.room_head_images,lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_houses.area_id,lewo_room.rent,lewo_room.room_parameter,lewo_houses.floor,lewo_houses.door_no,lewo_houses.building FROM `lewo_room` INNER JOIN lewo_houses ON lewo_room.house_code = lewo_houses.house_code  WHERE `is_show` = 1 ORDER BY lewo_room.create_time desc  [ RunTime:0.0160s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0730s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [2] Illegal string offset 'yangtai' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [2] Illegal string offset 'piaochuang' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [2] Illegal string offset 'duwei' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [2] Illegal string offset 'kongtiao' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.088005s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.089005s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:01:21+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/detail_room/id/35.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0090s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_admin_user` [ RunTime:0.1340s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 35 LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `area_id`,`address`,`floor`,`door_no`,`building`,`steward_id` FROM `lewo_houses` WHERE `house_code` = 'A806' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`username`,`nickname`,`mobile` FROM `lewo_admin_user` WHERE `id` = 4 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0110s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`house_code`,`room_code`,`room_sort`,`room_area`,`room_parameter`,`rent`,`room_fee`,`status`,`room_images_01`,`room_images_02`,`room_images_03`,`room_images_04` FROM `lewo_room` WHERE `house_code` = 'A806' AND `id` NOT IN ('35') AND `status` = 0 AND `is_show` = 1  [ RunTime:0.0020s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.002000s ]
+NOTIC: [8] Undefined index: room_images E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\16dde0c7a8188b9b4d6e2402b76d2544.php 第 58 行.
+NOTIC: [8] Undefined index: room_images E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\16dde0c7a8188b9b4d6e2402b76d2544.php 第 62 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.095005s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.096006s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.005000s ]
+
+[ 2016-08-20T18:10:10+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/loading_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+ERR: 非法操作:loading_page
+
+[ 2016-08-20T18:10:21+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.003000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:10:22+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/__PUBCLI__/images/landing_page.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-08-20T18:11:09+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:11:33+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.009001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.009001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.032002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.032002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.005000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.005000s ]
+
+[ 2016-08-20T18:12:41+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016000s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016000s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:13:48+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.018001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:13:56+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.036002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.036002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:14:05+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:14:46+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.023001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.026002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:15:45+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.033002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.033002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:16:40+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.004001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:16:55+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.027001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.028001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.007000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.011001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:17:21+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004000s ]
+
+[ 2016-08-20T18:17:41+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:17:49+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.018001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:18:04+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.031002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.033002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:18:14+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.023001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.024001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:18:22+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:18:31+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.010001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.002000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-08-20T18:18:36+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:18:46+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.024002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.026002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:18:51+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-08-20T18:19:41+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:20:26+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:20:41+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:23:54+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:24:32+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.005000s ]
+
+[ 2016-08-20T18:24:56+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:26:25+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:27:22+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.009001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.010001s ]
+
+[ 2016-08-20T18:27:26+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `lewo_region` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `lewo_region` WHERE `is_show` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0110s ]
+NOTIC: [8] Undefined variable: condition E:\wamp2\www\lewo\lewo\Home\Controller\MapsearchController.class.php 第 46 行.
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0090s ]
+SQL: SELECT lewo_room.id,lewo_room.room_head_images,lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_houses.area_id,lewo_room.rent,lewo_room.room_parameter,lewo_houses.floor,lewo_houses.door_no,lewo_houses.building FROM `lewo_room` INNER JOIN lewo_houses ON lewo_room.house_code = lewo_houses.house_code  WHERE `is_show` = 1 ORDER BY lewo_room.create_time desc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0100s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [2] Illegal string offset 'yangtai' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [2] Illegal string offset 'piaochuang' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [2] Illegal string offset 'duwei' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [2] Illegal string offset 'kongtiao' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.055003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.055003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004001s ]
+
+[ 2016-08-20T18:27:33+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `lewo_region` [ RunTime:0.0100s ]
+SQL: SELECT * FROM `lewo_region` WHERE `is_show` = 1  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0110s ]
+NOTIC: [8] Undefined variable: condition E:\wamp2\www\lewo\lewo\Home\Controller\MapsearchController.class.php 第 46 行.
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0170s ]
+SQL: SELECT lewo_room.id,lewo_room.room_head_images,lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_houses.area_id,lewo_room.rent,lewo_room.room_parameter,lewo_houses.floor,lewo_houses.door_no,lewo_houses.building FROM `lewo_room` INNER JOIN lewo_houses ON lewo_room.house_code = lewo_houses.house_code  WHERE `is_show` = 1 ORDER BY lewo_room.create_time desc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0100s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0030s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [2] Illegal string offset 'yangtai' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [2] Illegal string offset 'piaochuang' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [2] Illegal string offset 'duwei' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [2] Illegal string offset 'kongtiao' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.064004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.065004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-08-20T18:27:39+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `lewo_region` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `lewo_region` WHERE `is_show` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0070s ]
+NOTIC: [8] Undefined variable: condition E:\wamp2\www\lewo\lewo\Home\Controller\MapsearchController.class.php 第 46 行.
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0100s ]
+SQL: SELECT lewo_room.id,lewo_room.room_head_images,lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_houses.area_id,lewo_room.rent,lewo_room.room_parameter,lewo_houses.floor,lewo_houses.door_no,lewo_houses.building FROM `lewo_room` INNER JOIN lewo_houses ON lewo_room.house_code = lewo_houses.house_code  WHERE `is_show` = 1 ORDER BY lewo_room.create_time desc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0100s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [2] Illegal string offset 'yangtai' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [2] Illegal string offset 'piaochuang' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [2] Illegal string offset 'duwei' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [2] Illegal string offset 'kongtiao' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.041002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.042002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:27:42+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/landing_page
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:27:55+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `lewo_region` [ RunTime:0.0110s ]
+SQL: SELECT * FROM `lewo_region` WHERE `is_show` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0090s ]
+NOTIC: [8] Undefined variable: condition E:\wamp2\www\lewo\lewo\Home\Controller\MapsearchController.class.php 第 46 行.
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0100s ]
+SQL: SELECT lewo_room.id,lewo_room.room_head_images,lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_houses.area_id,lewo_room.rent,lewo_room.room_parameter,lewo_houses.floor,lewo_houses.door_no,lewo_houses.building FROM `lewo_room` INNER JOIN lewo_houses ON lewo_room.house_code = lewo_houses.house_code  WHERE `is_show` = 1 ORDER BY lewo_room.create_time desc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0100s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [2] Illegal string offset 'yangtai' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [2] Illegal string offset 'piaochuang' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [2] Illegal string offset 'duwei' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [2] Illegal string offset 'kongtiao' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.065003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.065003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:33:58+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `lewo_region` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `lewo_region` WHERE `is_show` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0090s ]
+NOTIC: [8] Undefined variable: condition E:\wamp2\www\lewo\lewo\Home\Controller\MapsearchController.class.php 第 46 行.
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0070s ]
+SQL: SELECT lewo_room.id,lewo_room.room_head_images,lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_houses.area_id,lewo_room.rent,lewo_room.room_parameter,lewo_houses.floor,lewo_houses.door_no,lewo_houses.building FROM `lewo_room` INNER JOIN lewo_houses ON lewo_room.house_code = lewo_houses.house_code  WHERE `is_show` = 1 ORDER BY lewo_room.create_time desc  [ RunTime:0.0020s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0080s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [2] Illegal string offset 'yangtai' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [2] Illegal string offset 'piaochuang' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [2] Illegal string offset 'duwei' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [2] Illegal string offset 'kongtiao' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.041003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.042003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:34:57+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/loading_page.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+ERR: 非法操作:loading_page
+
+[ 2016-08-20T18:35:11+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `lewo_region` [ RunTime:0.0120s ]
+SQL: SELECT * FROM `lewo_region` WHERE `is_show` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0090s ]
+NOTIC: [8] Undefined variable: condition E:\wamp2\www\lewo\lewo\Home\Controller\MapsearchController.class.php 第 46 行.
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0080s ]
+SQL: SELECT lewo_room.id,lewo_room.room_head_images,lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_houses.area_id,lewo_room.rent,lewo_room.room_parameter,lewo_houses.floor,lewo_houses.door_no,lewo_houses.building FROM `lewo_room` INNER JOIN lewo_houses ON lewo_room.house_code = lewo_houses.house_code  WHERE `is_show` = 1 ORDER BY lewo_room.create_time desc  [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0090s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [2] Illegal string offset 'yangtai' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [2] Illegal string offset 'piaochuang' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [2] Illegal string offset 'duwei' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [2] Illegal string offset 'kongtiao' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.049003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.049003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-08-20T18:35:58+08:00 ] 127.0.0.1 /index.php/Home/Mapsearch/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.004000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.011000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `lewo_region` [ RunTime:0.0090s ]
+SQL: SELECT * FROM `lewo_region` WHERE `is_show` = 1  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0110s ]
+NOTIC: [8] Undefined variable: condition E:\wamp2\www\lewo\lewo\Home\Controller\MapsearchController.class.php 第 46 行.
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0080s ]
+SQL: SELECT lewo_room.id,lewo_room.room_head_images,lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_houses.area_id,lewo_room.rent,lewo_room.room_parameter,lewo_houses.floor,lewo_houses.door_no,lewo_houses.building FROM `lewo_room` INNER JOIN lewo_houses ON lewo_room.house_code = lewo_houses.house_code  WHERE `is_show` = 1 ORDER BY lewo_room.create_time desc  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0090s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001001s ]
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+NOTIC: [2] Illegal string offset 'yangtai' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 114 行.
+NOTIC: [2] Illegal string offset 'piaochuang' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 115 行.
+NOTIC: [2] Illegal string offset 'duwei' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 116 行.
+NOTIC: [2] Illegal string offset 'kongtiao' E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 117 行.
+NOTIC: [8] Undefined index: buliding E:\wamp2\www\lewo\lewo\Runtime\Cache\Home\0f40dcd4da5ab9f7f1a40f2b7907a56c.php 第 111 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.051003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.051003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+

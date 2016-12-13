@@ -1,0 +1,556 @@
+[ 2016-11-15T22:19:27+08:00 ] 127.0.0.1 /index.php/Admin/Houses/bill_list/house_id/120.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000044s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001087s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001461s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001691s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0121s ]
+SQL: SELECT `house_code` FROM `lewo_houses` WHERE `id` = 120 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_house` [ RunTime:0.0075s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 AND `input_year` = 2016 AND `input_month` = 11 LIMIT 1   [ RunTime:0.0008s ]
+SQL: INSERT INTO `lewo_charge_house` (`house_id`,`input_year`,`input_month`,`is_send`,`is_create`) VALUES ('120','2016','11','0','0') [ RunTime:0.0013s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 AND `input_year` = 2016 AND `input_month` = 10 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT `house_code` FROM `lewo_houses` WHERE `id` = 120 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 ORDER BY input_year desc,input_month desc  [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0118s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 11 AND `type` = 1 LIMIT 1   [ RunTime:0.0086s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 11 AND `type` = 1 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0095s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 10 AND `type` = 1 LIMIT 1   [ RunTime:0.0098s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 10 AND `type` = 1 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0086s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 9 AND `type` = 1 LIMIT 1   [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 9 AND `type` = 1 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0086s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000120s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000263s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011138s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011322s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000526s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000649s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000111s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.008196s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010887s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001006s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000035s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.011381s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000144s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.020221s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014670s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.012668s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000049s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.026913s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000174s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.033442s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.007687s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.028249s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000048s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.035489s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001697s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001954s ]
+
+[ 2016-11-15T22:19:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000047s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001450s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.074239s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.074435s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0112s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0093s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0086s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0014s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0106s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2016-11-15T22:19:27+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001092s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001597s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001742s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0112s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0108s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0097s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0015s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0101s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2016-11-15T22:19:37+08:00 ] 127.0.0.1 /index.php/Admin/Houses/check_SDQ/house_id/120/year/2016/month/10.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000077s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003118s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003124s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003405s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0111s ]
+SQL: SHOW COLUMNS FROM `lewo_ammeter_house` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `lewo_ammeter_room` [ RunTime:0.0102s ]
+SQL: SELECT `house_code` FROM `lewo_houses` WHERE `id` = 120 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT * FROM `lewo_houses` WHERE `id` = 120 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0095s ]
+SQL: SELECT * FROM `lewo_room` WHERE `house_code` = 'CQ00008'  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0090s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0098s ]
+SQL: SELECT `id`,`mobile`,`email`,`sex`,`birthday`,`register_time`,`avatar`,`address`,`zipcode`,`card_no`,`enable`,`wx_no`,`wx_openid`,`card_z_pic`,`card_f_pic`,`extends`,`balance`,`login_time`,`ip`,`realname`,`contact2` FROM `lewo_account` WHERE `id` = 1970 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT * FROM `lewo_contract` WHERE `account_id` = 1970 AND `room_id` = 111 AND `pay_status` = 1 AND `contract_status` = 1 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT `id`,`mobile`,`email`,`sex`,`birthday`,`register_time`,`avatar`,`address`,`zipcode`,`card_no`,`enable`,`wx_no`,`wx_openid`,`card_z_pic`,`card_f_pic`,`extends`,`balance`,`login_time`,`ip`,`realname`,`contact2` FROM `lewo_account` WHERE `id` = 1235 LIMIT 1   [ RunTime:0.0016s ]
+SQL: SELECT * FROM `lewo_contract` WHERE `account_id` = 1235 AND `room_id` = 115 AND `pay_status` = 1 AND `contract_status` = 1 LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT `id`,`mobile`,`email`,`sex`,`birthday`,`register_time`,`avatar`,`address`,`zipcode`,`card_no`,`enable`,`wx_no`,`wx_openid`,`card_z_pic`,`card_f_pic`,`extends`,`balance`,`login_time`,`ip`,`realname`,`contact2` FROM `lewo_account` WHERE `id` = 1839 LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT * FROM `lewo_contract` WHERE `account_id` = 1839 AND `room_id` = 116 AND `pay_status` = 1 AND `contract_status` = 1 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT `id`,`mobile`,`email`,`sex`,`birthday`,`register_time`,`avatar`,`address`,`zipcode`,`card_no`,`enable`,`wx_no`,`wx_openid`,`card_z_pic`,`card_f_pic`,`extends`,`balance`,`login_time`,`ip`,`realname`,`contact2` FROM `lewo_account` WHERE `id` = 1843 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT * FROM `lewo_contract` WHERE `account_id` = 1843 AND `room_id` = 117 AND `pay_status` = 1 AND `contract_status` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `lewo_ammeter_house` WHERE `house_id` = 120 AND `input_month` = 10 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT * FROM `lewo_ammeter_room` WHERE `room_id` = '111' AND `input_month` = 10 AND `input_year` = 2016 LIMIT 1   [ RunTime:0.0035s ]
+SQL: SELECT * FROM `lewo_ammeter_room` WHERE `room_id` = '115' AND `input_month` = 10 AND `input_year` = 2016 LIMIT 1   [ RunTime:0.0027s ]
+SQL: SELECT * FROM `lewo_ammeter_room` WHERE `room_id` = '116' AND `input_month` = 10 AND `input_year` = 2016 LIMIT 1   [ RunTime:0.0026s ]
+SQL: SELECT * FROM `lewo_ammeter_room` WHERE `room_id` = '117' AND `input_month` = 10 AND `input_year` = 2016 LIMIT 1   [ RunTime:0.0028s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000129s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000282s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012883s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013134s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001079s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002608s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000111s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.011449s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011493s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.003447s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000045s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.012540s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000112s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.101119s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.081833s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.020291s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000037s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.099716s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000330s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.108154s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.006370s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.103004s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000037s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.106908s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001241s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001388s ]
+
+[ 2016-11-15T22:20:08+08:00 ] 127.0.0.1 /index.php/Admin/Houses/check_bill/charge_id/72/house_id/120/year/2016/month/10.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000060s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001808s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001628s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001893s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0080s ]
+SQL: SELECT `house_code` FROM `lewo_houses` WHERE `id` = 120 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT * FROM `lewo_houses` WHERE `house_code` = 'CQ00008' LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT * FROM `lewo_area` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0084s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0082s ]
+SQL: SELECT cb.*,p.*,cb.id AS cb_id,p.id AS p_id,a.realname FROM lewo_charge_bill cb INNER JOIN lewo_pay p ON cb.pro_id = p.pro_id INNER JOIN lewo_account a ON p.account_id = a.id  WHERE cb.house_code = 'CQ00008' AND p.input_year = '2016' AND p.input_month = '10' AND cb.type = 1  [ RunTime:0.0183s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_house` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 AND `input_year` = 2016 AND `input_month` = 10 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 10 AND `type` NOT IN ('1')  [ RunTime:0.0099s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0072s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0084s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 111 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 115 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 116 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 117 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 111 LIMIT 1   [ RunTime:0.0007s ]
+NOTIC: [8] Undefined variable: ammeter G:\wamp2\www\lewo\lewo\Admin\Controller\HousesController.class.php 第 533 行.
+NOTIC: [8] Undefined variable: last_ammeter G:\wamp2\www\lewo\lewo\Admin\Controller\HousesController.class.php 第 534 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000470s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000698s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.045494s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.045664s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000793s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000995s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003113s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003312s ]
+
+[ 2016-11-15T22:20:38+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000069s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001523s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001652s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001864s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0072s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0072s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0065s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-15T22:20:50+08:00 ] 127.0.0.1 /index.php/Admin/Houses/check_bill/charge_id/72/house_id/120/year/2016/month/10.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000899s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000903s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001045s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0064s ]
+SQL: SELECT `house_code` FROM `lewo_houses` WHERE `id` = 120 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT * FROM `lewo_houses` WHERE `house_code` = 'CQ00008' LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT * FROM `lewo_area` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0092s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0105s ]
+SQL: SELECT cb.*,p.*,cb.id AS cb_id,p.id AS p_id,a.realname FROM lewo_charge_bill cb INNER JOIN lewo_pay p ON cb.pro_id = p.pro_id INNER JOIN lewo_account a ON p.account_id = a.id  WHERE cb.house_code = 'CQ00008' AND p.input_year = '2016' AND p.input_month = '10' AND cb.type = 1  [ RunTime:0.0162s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_house` [ RunTime:0.0082s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 AND `input_year` = 2016 AND `input_month` = 10 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 10 AND `type` NOT IN ('1')  [ RunTime:0.0087s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0088s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 111 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 115 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 116 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 117 LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 111 LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: ammeter G:\wamp2\www\lewo\lewo\Admin\Controller\HousesController.class.php 第 533 行.
+NOTIC: [8] Undefined variable: last_ammeter G:\wamp2\www\lewo\lewo\Admin\Controller\HousesController.class.php 第 534 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000328s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000473s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.036050s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.036197s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000812s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000947s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001345s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001493s ]
+
+[ 2016-11-15T22:21:28+08:00 ] 127.0.0.1 /index.php/Admin/Houses/index/area_id/6.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000049s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001698s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001557s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001825s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0102s ]
+SQL: SHOW COLUMNS FROM `lewo_admin_user` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0073s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0084s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_house` [ RunTime:0.0060s ]
+SQL: SELECT `id`,`area_id`,`house_code`,`type`,`steward_id`,`create_time`,`create_time`,`floor`,`door_no`,`building`,`region_id` FROM `lewo_houses` WHERE `area_id` = 6  [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_ammeter_house` [ RunTime:0.0098s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = 'CQ00002' AND `status` = 2 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 114 AND `input_year` = 2016 AND `input_month` = 11 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT * FROM `lewo_ammeter_house` WHERE `house_id` = 114 AND `input_year` = 2016 AND `input_month` = 11 AND `status` = 1 LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT * FROM `lewo_admin_user` WHERE `id` = 11 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00002' AND `input_year` = 2016 AND `input_month` = 11 LIMIT 1   [ RunTime:0.0103s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00002' AND `input_year` = 2016 AND `input_month` = 11 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0090s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = 'CQ00008' AND `status` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 AND `input_year` = 2016 AND `input_month` = 11 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT * FROM `lewo_ammeter_house` WHERE `house_id` = 120 AND `input_year` = 2016 AND `input_month` = 11 AND `status` = 1 LIMIT 1   [ RunTime:0.0012s ]
+SQL: SELECT * FROM `lewo_admin_user` WHERE `id` = 11 LIMIT 1   [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 11 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0081s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 11 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0094s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00002' AND `input_year` = 2016 AND `input_month` = 11 AND `type` = 1 LIMIT 1   [ RunTime:0.0096s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00002' AND `input_year` = 2016 AND `input_month` = 11 AND `type` = 1 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0084s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00002' AND `input_year` = 2016 AND `input_month` = 10 LIMIT 1   [ RunTime:0.0086s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00002' AND `input_year` = 2016 AND `input_month` = 10 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0086s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 11 AND `type` = 1 LIMIT 1   [ RunTime:0.0093s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 11 AND `type` = 1 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0086s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 10 LIMIT 1   [ RunTime:0.0089s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 10 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0082s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000126s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000280s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012125s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012298s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000935s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001223s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000131s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.010163s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010536s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001935s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000034s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.011435s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000160s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.024722s ]
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\bf5a4a94b2e69f7e3fc497adf30ae5a3.php 第 66 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\bf5a4a94b2e69f7e3fc497adf30ae5a3.php 第 67 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\bf5a4a94b2e69f7e3fc497adf30ae5a3.php 第 66 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\bf5a4a94b2e69f7e3fc497adf30ae5a3.php 第 67 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019827s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.013269s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000074s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.032071s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000183s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.042239s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008683s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.034075s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000073s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.041756s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001381s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001623s ]
+
+[ 2016-11-15T22:21:30+08:00 ] 127.0.0.1 /index.php/Admin/Houses/bill_list/house_id/120.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000051s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001266s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001567s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001812s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0082s ]
+SQL: SELECT `house_code` FROM `lewo_houses` WHERE `id` = 120 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_house` [ RunTime:0.0093s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 AND `input_year` = 2016 AND `input_month` = 11 LIMIT 1   [ RunTime:0.0016s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 AND `input_year` = 2016 AND `input_month` = 10 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SELECT `house_code` FROM `lewo_houses` WHERE `id` = 120 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 ORDER BY input_year desc,input_month desc  [ RunTime:0.0013s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0095s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 11 AND `type` = 1 LIMIT 1   [ RunTime:0.0125s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 11 AND `type` = 1 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0109s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 10 AND `type` = 1 LIMIT 1   [ RunTime:0.0104s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 10 AND `type` = 1 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0117s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 9 AND `type` = 1 LIMIT 1   [ RunTime:0.0105s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 9 AND `type` = 1 AND `is_send` = 1 LIMIT 1   [ RunTime:0.0111s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000160s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000430s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.018610s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018809s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000694s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000955s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000240s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.012817s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015430s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001688s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000041s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.016372s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000155s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.030118s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017492s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.018445s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000051s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.035262s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000225s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.044279s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009230s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.037029s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000052s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.045526s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001408s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001608s ]
+
+[ 2016-11-15T22:21:37+08:00 ] 127.0.0.1 /index.php/Admin/Houses/check_bill/charge_id/72/house_id/120/year/2016/month/10.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000813s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000983s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001136s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0079s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0077s ]
+SQL: SELECT `house_code` FROM `lewo_houses` WHERE `id` = 120 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT * FROM `lewo_houses` WHERE `house_code` = 'CQ00008' LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT * FROM `lewo_area` WHERE `id` = 6 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0081s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0086s ]
+SQL: SELECT cb.*,p.*,cb.id AS cb_id,p.id AS p_id,a.realname FROM lewo_charge_bill cb INNER JOIN lewo_pay p ON cb.pro_id = p.pro_id INNER JOIN lewo_account a ON p.account_id = a.id  WHERE cb.house_code = 'CQ00008' AND p.input_year = '2016' AND p.input_month = '10' AND cb.type = 1  [ RunTime:0.0173s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_house` [ RunTime:0.0079s ]
+SQL: SELECT * FROM `lewo_charge_house` WHERE `house_id` = 120 AND `input_year` = 2016 AND `input_month` = 10 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT * FROM `lewo_charge_bill` WHERE `house_code` = 'CQ00008' AND `input_year` = 2016 AND `input_month` = 10 AND `type` NOT IN ('1')  [ RunTime:0.0095s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0069s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0086s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 111 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 115 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 116 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 117 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 111 LIMIT 1   [ RunTime:0.0007s ]
+NOTIC: [8] Undefined variable: ammeter G:\wamp2\www\lewo\lewo\Admin\Controller\HousesController.class.php 第 533 行.
+NOTIC: [8] Undefined variable: last_ammeter G:\wamp2\www\lewo\lewo\Admin\Controller\HousesController.class.php 第 534 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000321s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000465s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.037719s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.037871s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000812s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000959s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001002s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001135s ]
+
+[ 2016-11-15T22:21:38+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000979s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001214s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001361s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0072s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0064s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-15T22:22:38+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000052s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001217s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001411s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001600s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0069s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0071s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0064s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+
+[ 2016-11-15T22:23:38+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000114s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001476s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001292s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001487s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0069s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0073s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0066s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+
+[ 2016-11-15T22:23:40+08:00 ] 127.0.0.1 /index.php/Admin/Tenant/contract_info/account_id/1839.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000052s ]
+INFO: [ app_init ] --END-- [ RunTime:0.007269s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004902s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005193s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0095s ]
+SQL: SELECT * FROM `lewo_contract` WHERE `account_id` = 1839 ORDER BY id desc LIMIT 1   [ RunTime:0.0037s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0091s ]
+SQL: SELECT * FROM `lewo_account` WHERE `id` = 1839 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0142s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 116 LIMIT 1   [ RunTime:0.0012s ]
+SQL: SHOW COLUMNS FROM `lewo_pay` [ RunTime:0.0100s ]
+SQL: SELECT * FROM `lewo_pay` WHERE `pro_id` = '146373813652817' LIMIT 1   [ RunTime:0.0008s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000123s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000262s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.018962s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019138s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000749s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000904s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000142s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.013692s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016363s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001469s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000043s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.017130s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001021s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.039081s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.029464s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.019597s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000046s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.048471s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000183s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.057139s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014683s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.050152s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000053s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.064219s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001530s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001718s ]
+

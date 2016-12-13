@@ -1,0 +1,1125 @@
+[ 2016-11-11T18:06:38+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000901s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001399s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001594s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0101s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0085s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+
+[ 2016-11-11T18:06:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001611s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001763s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0051s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:07:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000898s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001081s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001231s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0086s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:08:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000031s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000897s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000740s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000845s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0058s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:09:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000682s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000858s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000961s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0058s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:10:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000693s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000772s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000874s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0056s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0048s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:11:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000626s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000740s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000850s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0058s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0050s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:12:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000729s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000870s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000975s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0058s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0052s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:13:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000029s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000634s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000752s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000852s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0048s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:14:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000882s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000807s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000916s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0056s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0053s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:15:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000700s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000870s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000979s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:16:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000614s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000736s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000839s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0056s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0048s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:17:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000686s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000747s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000851s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0055s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0007s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:18:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000698s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000881s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000986s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0056s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:19:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001004s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001046s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001172s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0048s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:20:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000656s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000755s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000857s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0053s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0053s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:21:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000668s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000859s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000963s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0056s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0049s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:22:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000634s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000753s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000856s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0055s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0056s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0055s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0053s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T18:23:52+08:00 ] 127.0.0.1 /index.php/Admin/Index/refesh_schedule_count.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000857s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000798s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000905s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0054s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0059s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0048s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 2 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2016-11-11T21:32:02+08:00 ] 127.0.0.1 /index.php/Admin/Tool
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000029s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000671s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001243s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001412s ]
+
+[ 2016-11-11T21:32:02+08:00 ] 127.0.0.1 /index.php/Admin/Index/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000029s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000693s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000797s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000919s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000104s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000220s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.026428s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.026583s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000639s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000780s ]
+
+[ 2016-11-11T21:32:07+08:00 ] 127.0.0.1 /index.php/Admin/Index/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000634s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001100s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001319s ]
+SQL: SHOW COLUMNS FROM `lewo_admin_user` [ RunTime:0.0104s ]
+SQL: SELECT * FROM `lewo_admin_user` WHERE `username` = 'admin' AND `password` = '7011211e1592352456f07c5d07412e96' AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0015s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000088s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000208s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.022251s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022393s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000581s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000690s ]
+
+[ 2016-11-11T21:32:09+08:00 ] 127.0.0.1 /index.php/Admin/Index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001235s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001319s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001490s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0077s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0075s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0114s ]
+SQL: SELECT * FROM `lewo_schedule` WHERE `is_finish` = 0 AND `admin_type` = 2  [ RunTime:0.0013s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `admin_type` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_back_bill` [ RunTime:0.0080s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 1 AND `back_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_back_bill` WHERE `is_finish` = 0 AND `is_affirm` = 1 AND `back_type` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0143s ]
+SQL: SELECT SUM(rent) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-11' LIMIT 1   [ RunTime:0.0033s ]
+SQL: SELECT SUM(fee) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-11' LIMIT 1   [ RunTime:0.0023s ]
+SQL: SELECT SUM(deposit) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-11' LIMIT 1   [ RunTime:0.0025s ]
+SQL: SELECT SUM(rent) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-10' LIMIT 1   [ RunTime:0.0025s ]
+SQL: SELECT SUM(fee) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-10' LIMIT 1   [ RunTime:0.0024s ]
+SQL: SELECT SUM(deposit) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-11-10' LIMIT 1   [ RunTime:0.0025s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_contract` WHERE `start_time` = '2016-11-11' LIMIT 1   [ RunTime:0.0024s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0066s ]
+SQL: SELECT SUM(money) AS tp_sum FROM `lewo_schedule` WHERE `create_date` = '2016-11-11' AND `schedule_type` = 4 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0068s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `room_type` = 1 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0026s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `status` = 0 AND `room_type` = 1 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0015s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `room_type` = 2 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0015s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `status` = 0 AND `room_type` = 2 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0014s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000132s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000293s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.038538s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.038707s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000540s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000749s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000117s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.037750s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.023945s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.004979s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000037s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.028354s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000102s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.060049s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017494s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.030251s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000045s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.047154s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000156s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.066154s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.005878s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.048731s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000035s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.054004s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.010297s ]
+INFO: [ app_end ] --END-- [ RunTime:0.010434s ]
+
+[ 2016-11-11T21:32:22+08:00 ] 127.0.0.1 /index.php/Admin/Pay/all_bill.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000044s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001053s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001493s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001725s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0057s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0081s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0063s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0079s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0061s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0062s ]
+SQL: SHOW COLUMNS FROM `lewo_charge_bill` [ RunTime:0.0096s ]
+SQL: SHOW COLUMNS FROM `lewo_pay` [ RunTime:0.0083s ]
+SQL: SELECT COUNT(*) AS tp_count FROM lewo_pay p left JOIN (select account_id,room_id,pay_date,create_time,actual_end_time,start_time,end_time,rent_date,period,deposit from lewo_contract c GROUP BY account_id) c ON (c.account_id=p.account_id AND  c.room_id=p.room_id) left JOIN lewo_charge_bill cb ON p.pro_id=cb.pro_id left JOIN lewo_account a ON p.account_id=a.id left JOIN lewo_room r ON p.room_id=r.id left JOIN lewo_houses h ON r.house_code=h.house_code left JOIN lewo_area area ON h.area_id=area.id  WHERE p.is_show = '1' LIMIT 1   [ RunTime:1.2204s ]
+SQL: SELECT c.*,cb.*,p.*,a.mobile,a.realname,r.room_code,r.bed_code,h.area_id,h.building,h.floor,h.door_no,area.city_id,area.area_name FROM lewo_pay p left JOIN (select account_id,room_id,pay_date,MAX(create_time),actual_end_time,start_time,end_time,rent_date,period,deposit,rent AS ht_rent,fee AS ht_fee from lewo_contract c GROUP BY account_id) c ON (c.account_id=p.account_id AND  c.room_id=p.room_id) left JOIN lewo_charge_bill cb ON p.pro_id=cb.pro_id left JOIN lewo_account a ON p.account_id=a.id left JOIN lewo_room r ON p.room_id=r.id left JOIN lewo_houses h ON r.house_code=h.house_code left JOIN lewo_area area ON h.area_id=area.id  WHERE p.is_show = '1' ORDER BY p.id desc,p.create_time desc LIMIT 0,100   [ RunTime:2.3526s ]
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index: rent_type G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 196 行.
+NOTIC: [8] Undefined offset: 1 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 197 行.
+NOTIC: [8] Undefined index: contract_status G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined index:  G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 198 行.
+NOTIC: [8] Undefined offset: 0 G:\wamp2\www\lewo\lewo\Admin\Controller\PayController.class.php 第 199 行.
+SQL: SELECT * FROM `lewo_area`  [ RunTime:0.0014s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000274s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000396s ]
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: area_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 100 行.
+NOTIC: [8] Undefined variable: city_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 107 行.
+NOTIC: [8] Undefined variable: city_id G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 107 行.
+NOTIC: [8] Undefined variable: input_year G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 114 行.
+NOTIC: [8] Undefined variable: input_year G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 114 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: input_month G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 119 行.
+NOTIC: [8] Undefined variable: is_send G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 127 行.
+NOTIC: [8] Undefined variable: is_send G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 128 行.
+NOTIC: [8] Undefined variable: pay_status G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 135 行.
+NOTIC: [8] Undefined variable: pay_status G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 136 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 144 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 144 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 144 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 144 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 144 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 144 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 144 行.
+NOTIC: [8] Undefined variable: bill_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 144 行.
+NOTIC: [8] Undefined variable: search_time G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 151 行.
+NOTIC: [8] Undefined variable: search_time G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 152 行.
+NOTIC: [8] Undefined variable: search_time G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 153 行.
+NOTIC: [8] Undefined variable: search_time G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 154 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 173 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 173 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 173 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 173 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 173 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 173 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 173 行.
+NOTIC: [8] Undefined variable: pay_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 173 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 180 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 181 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 182 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 183 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 184 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 185 行.
+NOTIC: [8] Undefined variable: sort_type G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 186 行.
+NOTIC: [8] Undefined variable: sort G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 189 行.
+NOTIC: [8] Undefined variable: sort G:\wamp2\www\lewo\lewo\Runtime\Cache\Admin\dd9ee75795692956ae2b71727dca906a.php 第 190 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.144114s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.144252s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000592s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000709s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001092s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001213s ]
+
+[ 2016-11-11T21:32:26+08:00 ] 127.0.0.1 /index.php/Admin/Tenant/contract_info/account_id/1827.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000870s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001096s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001263s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0092s ]
+SQL: SELECT * FROM `lewo_contract` WHERE `account_id` = 1827 ORDER BY id desc LIMIT 1   [ RunTime:0.0045s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0075s ]
+SQL: SELECT * FROM `lewo_account` WHERE `id` = 1827 LIMIT 1   [ RunTime:0.0014s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0077s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 448 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_pay` [ RunTime:0.0072s ]
+SQL: SELECT * FROM `lewo_pay` WHERE `pro_id` = '146336670743817' LIMIT 1   [ RunTime:0.0011s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000124s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000279s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013961s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014208s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000856s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001006s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000120s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.009528s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013398s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001543s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000048s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.014099s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000247s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.039343s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.026609s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.016100s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000037s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.041858s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000197s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.049050s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.006832s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.043617s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000042s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.049701s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001487s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001649s ]
+
+[ 2016-11-11T21:33:12+08:00 ] 127.0.0.1 /index.php/Admin/Tenant/contract_info/account_id/1827.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000056s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001014s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001108s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001308s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0091s ]
+SQL: SELECT * FROM `lewo_contract` WHERE `account_id` = 1827 ORDER BY id desc LIMIT 1   [ RunTime:0.0011s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0080s ]
+SQL: SELECT * FROM `lewo_account` WHERE `id` = 1827 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0059s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 448 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_pay` [ RunTime:0.0057s ]
+SQL: SELECT * FROM `lewo_pay` WHERE `pro_id` = '146336670743817' LIMIT 1   [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000100s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000225s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009887s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.010026s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000457s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000559s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000094s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.006273s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009213s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.000920s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000028s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.009687s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000189s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.020688s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012426s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.010841s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000029s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.022819s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000137s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.027713s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.004587s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.023873s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000028s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.028004s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001014s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001128s ]
+
+[ 2016-11-11T21:33:59+08:00 ] 127.0.0.1 /index.php/Admin/Tenant/contract_info/account_id/1827.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001030s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001537s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001743s ]
+

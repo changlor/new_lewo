@@ -113,6 +113,9 @@
                       <a class="color-white" href="<?php echo U('Home/Steward/houses');?>"><span>&nbsp;</span><br/><span>[&nbsp;房屋管理&nbsp;]</span></a>
                     </div>
                     <div class="col-xs-4 bg_ly">
+                      <a class="color-white" href="<?php echo U('Home/Steward/allhouses',array('select'=>'empty'));?>"><span>&nbsp;</span><br/><span>[&nbsp;空置房源&nbsp;]</span></a>
+                    </div>
+                    <div class="col-xs-4 bg_ly">
                       <a class="color-white" href="<?php echo U('Home/Steward/stewardtasks');?>"><span>&nbsp;</span><br/><span>[&nbsp;待办工作&nbsp;]<b>[<a id="steward_schedule_count"><?php echo (session('steward_schedule_count')); ?></a>]</b></span></a>
                     </div>
                 </div>

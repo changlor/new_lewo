@@ -176,6 +176,7 @@ class HousesModel extends Model{
 	 * [针对管家id进行显示]
 	 **/
 	public function getHouseAndRoom($where, $type = ''){
+		//获取不同分类的房源，默认获取所有房源
 		$type = empty($type) ? 'all' : $type;
 		$MRoom = M("room");
 		$MArea = M("area");
@@ -189,6 +190,7 @@ class HousesModel extends Model{
 			} else {
 				$houses[$key]['is_checkin'] = false;
 			}
+			//设置需要获取的房源的过滤规则
 			$filters = array("house_code"=>$val['house_code'],"is_show"=>1);
 			switch ($type) {
 				case 'empty':
@@ -205,6 +207,7 @@ class HousesModel extends Model{
 			$houses[$key]['area_name'] = $MArea->where(array("id"=>$val['area_id']))->getField("area_name");
 			$houses[$key]['room_list'] = $MRoom->field("lewo_room.id,lewo_room.account_id,lewo_room.room_code,lewo_room.room_nickname,lewo_room.room_sort,lewo_room.room_type,lewo_room.bed_code,lewo_room.rent,lewo_room.status,lewo_room.is_show,lewo_account.realname,lewo_account.sex")->join("lewo_account ON lewo_room.account_id=lewo_account.id","left")->where($filters)->order("room_sort asc")->select();
 		}
+		//当所获取的分类下的房源为空时，删除掉此记录
 		foreach ($houses as $key => $value) {
 			$count_room = count($value['room_list']);
 			if ($count_room == 0) {

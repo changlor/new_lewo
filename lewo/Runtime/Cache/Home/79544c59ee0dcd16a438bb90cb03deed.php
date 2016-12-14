@@ -118,6 +118,9 @@
                     <div class="col-xs-4 bg_ly">
                       <a class="color-white" href="<?php echo U('Home/Steward/stewardtasks');?>"><span>&nbsp;</span><br/><span>[&nbsp;待办工作&nbsp;]<b>[<a id="steward_schedule_count"><?php echo (session('steward_schedule_count')); ?></a>]</b></span></a>
                     </div>
+                    <div class="col-xs-4 bg_lb">
+                      <a class="color-white" href="<?php echo U('Home/Steward/allbills');?>"><span>&nbsp;</span><br/><span>[&nbsp;账单管理&nbsp;]</span></a>
+                    </div>
                 </div>
                 <div class="row-fluid">
                   <div class="col-xs-12">

@@ -171,6 +171,7 @@ class TenantController extends Controller {
         $this->assign("bill_list",$all_bill_list);
     	$this->display('fee-list');
     }
+
     /**
     * [费用详细]
     **/

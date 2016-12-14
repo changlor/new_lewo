@@ -22,7 +22,7 @@
     var myScroll;
 
     function loaded () {
-        myScroll = new IScroll('#wrapper', { mouseWheel: true, click: true  });
+        myScroll = new IScroll('#wrapper', { mouseWheel: true, tap : true });
     }
 
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
@@ -120,7 +120,7 @@
                                                 <td>床位<?php echo ($v["bed_code"]); ?></td><?php endif; ?>
                                             <td>￥<?php echo ($v["rent"]); ?></td>
                                                 <td>
-                                                    <?php if($v['account_id'] != 0): ?><a href="<?php echo U('Home/Steward/tenant_info',array('account_id'=>$v['account_id'],'room_id'=>$v['id']));?>" class="btn btn-primary"><?php echo ($v["realname"]); ?>
+                                                    <?php if($v['account_id'] != 0): ?><a href="<?php echo U('Home/Steward/tenant_contract',array('account_id'=>$v['account_id'],'room_id'=>$v['id']));?>" class="btn btn-primary"><?php echo ($v["realname"]); ?>
                                                         
                                                         <?php switch($v["sex"]): case "1": ?>男<?php break;?>
                                                          <?php case "2": ?>女<?php break;?>

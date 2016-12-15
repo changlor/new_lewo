@@ -616,11 +616,100 @@ class StewardController extends Controller {
     public function steward_collection() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $pro_id = I('pro_id');
-            $deposit = I('deposit');
-            $rent = I('rent');
-            $fee = I('fee');
-            $wg_fee = I('wg_fee');
+            $actual_deposit = I('actual_deposit');
+            $actual_rent = I('actual_rent');
+            $pay_money = I('pay_money');
+            $check_price = I('check_price');
+
+            $MContract  = M("contract");
+            $MPay       = M('pay');
+            $DPay       = D('pay');
+            $bill_des   = I('bill_des');
+
+            $pay_info   = $MPay->where(array("pro_id"=>$pro_id))->find();
+            $bill_type  = $pay_info['bill_type'];
+            $account_id = $pay_info["account_id"];
+            $room_id    = $pay_info["room_id"];
+            $not_create_bill_id = array(5,8,10);//5押金抵扣，8退房的支付方式不生成拖欠账单 10违约退房
+            $is_in_not_create = in_array($pay_type, $not_create_bill_id);
+
+            //未支付和未付完 则生成欠款
+            if ( $pay_money > $pay_info['price'] ) $this->error('输入的金额大于应付金额');
+            if ( $pay_money != $pay_info['price'] && $pay_status == 1 && !$is_in_not_create){           
+                switch ($bill_type) {
+                    case 2:
+                    case 7:
+                        if ($pay_type == 9) {//如果是错误扣除 那么新账单的类型是账单更改
+                            $due_bill_type = C('bill_type_zdgg');
+                        } else {
+                            $due_bill_type = 7;
+                        }
+                        break;
+                    case 3:
+                    case 8:
+                        if ($pay_type == 9) {//如果是错误扣除 那么新账单的类型是账单更改
+                            $due_bill_type = C('bill_type_zdgg');
+                        } else {
+                            $due_bill_type = 8;
+                        }
+                        break;
+                    default:
+                        $due_bill_type = 9;
+                        break;
+                }
+
+                $due_price = $pay_info['price'] - $pay_money;
+                $param = array(
+                            'account_id'=>$account_id,
+                            'room_id'=>$room_id,
+                            'bill_type'=>$due_bill_type,
+                            'input_year'=>$pay_info['input_year'],
+                            'input_month'=>$pay_info['input_month'],
+                            'should_date'=>$pay_info['should_date'],
+                            'last_date'=>$pay_info['last_date'],
+                            'price'=>$due_price,
+                            'is_send'=>1
+                            );
+                $result = $DPay->create_bill($param);
+                if ( !$result ) $this->error('欠款账单生成失败!');
+            }
+
+            switch ($bill_type) {
+                case 2:
+                // 2/7 合同
+                    $DRoom = D("room");
+                    $DRoom->setRoomStatus($room_id,2);
+                    $DRoom->setRoomPerson($room_id,$account_id);
+                    //修改合同正常
+                    $MContract->where(array("pro_id"=>$pro_id))->save(array("contract_status"=>1));
+                    break;
+                case 3:
+                // 3/8 日常
+                    //修改合同信息
+                    $charge_info = M("charge_bill")->where(array("pro_id"=>$pro_id))->find();
+                    $rent_date = $charge_info['rent_date_to']; //房租到期日
+                    $MContract->where(array('account_id'=>$account_id,'room_id'=>$room_id,'contract_status'=>1))->save(array("rent_date"=>$rent_date));
+                    break;
+            }
             
+            $save = $_POST;
+
+            $modify_log = $this->modify_log($pro_id,$save,$extra_modify_log);
+
+            $data['modify_log'] = $modify_log; 
+            $data['pay_type'] = '';
+            $data['pay_time'] = I("pay_time");
+            $data['pay_money']  = $pay_money;
+            $data['pay_status'] = 1;
+
+            $result = M("pay")->where(array("pro_id"=>$pro_id))->save($data);
+
+            if ( !empty($result) ) {
+                /*$this->success("修改成功.".$success_msg,U('Admin/Pay/all_bill'),10);*/
+                redirect($_SESSION['P_REFERER']);
+            } else {
+                $this->error("修改失败",U('Admin/Pay/all_bill'));
+            }
         } else {
             $account_id = I('account_id');
             $room_id = I('room_id');

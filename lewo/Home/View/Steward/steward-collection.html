@@ -131,7 +131,7 @@ function toIndex(){
                                     <ul>
                                     <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
                                     <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
-                                    <li class="innre-bill-text3">¥<input class="money" onchange="check($(this))" maxlength="5" style="width: 63px; text-align: right;" name="deposit" value="{$vo.deposit}" /><input type="hidden" value="{$vo.deposit}" /></li>
+                                    <li class="innre-bill-text3">¥<input class="money" onchange="check($(this))" maxlength="5" style="width: 63px; text-align: right;" name="actual_deposit" value="{$vo.deposit}" /><input type="hidden" value="{$vo.deposit}" /></li>
                                     <li class="innre-bill-text1">押金</li><br>
                                     </ul>
                                 </div>
@@ -147,7 +147,7 @@ function toIndex(){
                                     <ul>
                                     <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
                                     <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
-                                    <li class="innre-bill-text3">¥<input class="money" onchange="check($(this))" maxlength="5" style="text-align: right;width: 63px;" name="rent" value="{$vo.rent}" /><input type="hidden" value="{$vo.rent}"></li>
+                                    <li class="innre-bill-text3">¥<input class="money" onchange="check($(this))" maxlength="5" style="text-align: right;width: 63px;" name="actual_rent" value="{$vo.rent}" /><input type="hidden" value="{$vo.rent}"></li>
                                     <li class="innre-bill-text1">房租</li><br>
                                     </ul>
                                 </div>
@@ -163,7 +163,7 @@ function toIndex(){
                                     <ul>
                                     <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
                                     <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
-                                    <li class="innre-bill-text3">￥<input class="money" style="text-align: right;width: 60px;" readonly name="fee" value="{$vo.fee}" /></li>
+                                    <li class="innre-bill-text3">￥<input class="money" style="text-align: right;width: 60px;" readonly value="{$vo.fee}" /></li>
                                     <li class="innre-bill-text1">服务费</li><br>
                                     </ul>
                                 </div>
@@ -179,7 +179,7 @@ function toIndex(){
                                     <ul>
                                     <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
                                     <li class="innre-bill-top"><img src="__PUBLIC__/images/icon-tenant-bot.png" class="icon-tenant-bot"></li>
-                                    <li class="innre-bill-text3">￥<input class="money" style="text-align: right;width: 60px;" readonly name="wg_fee" value="{$vo.wg_fee}" /></li>
+                                    <li class="innre-bill-text3">￥<input class="money" style="text-align: right;width: 60px;" readonly value="{$vo.wg_fee}" /></li>
                                     <li class="innre-bill-text1">物业费</li><br>
                                     </ul>
                                 </div>

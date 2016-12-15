@@ -429,7 +429,7 @@ class PayController extends Controller {
                     $DRoom = D("room");
                     $DRoom->setRoomStatus($room_id,2);
                     $DRoom->setRoomPerson($room_id,$account_id);
-                    //修改合同未正常
+                    //修改合同正常
                     $MContract->where(array("pro_id"=>$pro_id))->save(array("contract_status"=>1));
                     break;
                 case 3:

@@ -211,12 +211,35 @@ class PayController extends Controller {
 
         $show       = $Page->show();// 分页显示输出
         // 这一堆 有待优化 在租客表中加上合同的pro_id
-        $field .= 'c.ht_id,c.account_id,c.room_id,c.pay_date,c.create_time,c.actual_end_time,c.start_time,c.end_time,c.rent_date,c.period,c.deposit,c.ht_rent,c.ht_fee,c.ht_wgfee,c.contract_status,';
-        $field .= 'cb.room_id,cb.house_id,cb.house_code,cb.account_id,cb.water_fee,cb.public_energy_fee,cb.energy_fee,cb.gas_fee,cb.rubbish_fee,cb.person_day,cb.total_person_day,cb.total_energy,cb.total_water,cb.total_gas,cb.wgfee_unit,cb.room_energy_fee,cb.rent_fee,cb.rent_des,cb.service_fee,cb.wx_fee,cb.wx_des,cb.type,cb.handling_fee,cb.total_person_energy,cb.rent_date_old,cb.rent_date_to,';
-        $field .= 'p.room_id,p.price,p.bill_type,p.pay_money,p.pay_status,p.pay_time,p.account_id,p.pro_id,p.pay_type,p.is_show,p.input_month,p.input_year,p.should_date,p.last_date,p.is_send,p.favorable,p.favorable_des,p.bill_des,';
-        $field .= 'a.mobile,a.realname,';
-        $field .= 'r.room_code,r.bed_code,h.id AS house_id,h.area_id,h.building,h.floor,h.door_no,h.steward_id,area.city_id,area.area_name,';
-        $field .= 'au.username,au.nickname AS gj_nickname,au.realname AS gj_realname,au.admin_type';
+        $field = [
+        //lewo_contract
+        'c.ht_id', 'c.account_id', 'c.room_id', 'c.pay_date', 
+        'c.create_time', 'c.actual_end_time', 'c.start_time',
+        'c.end_time' ,'c.rent_date', 'c.period', 'c.deposit',
+        'c.ht_rent', 'c.ht_fee', 'c.ht_wgfee', 'c.contract_status',
+        //lewo_charge_bill
+        'cb.room_id', 'cb.house_id', 'cb.house_code', 'cb.account_id',
+        'cb.water_fee', 'cb.public_energy_fee', 'cb.energy_fee',
+        'cb.gas_fee', 'cb.rubbish_fee', 'cb.person_day',
+        'cb.total_person_day', 'cb.total_energy', 'cb.total_water',
+        'cb.total_gas', 'cb.wgfee_unit', 'cb.room_energy_fee',
+        'cb.rent_fee', 'cb.rent_des', 'cb.service_fee', 'cb.wx_fee',
+        'cb.wx_des', 'cb.type,cb.handling_fee', 'cb.total_person_energy',
+        'cb.rent_date_old', 'cb.rent_date_to',
+        //lewo_pay
+        'p.room_id', 'p.price', 'p.bill_type', 'p.pay_money',
+        'p.pay_status', 'p.pay_time', 'p.account_id', 'p.pro_id',
+        'p.pay_type', 'p.is_show', 'p.input_month', 'p.input_year',
+        'p.should_date', 'p.last_date', 'p.is_send', 'p.favorable',
+        'p.favorable_des', 'p.bill_des',
+        //lewo_account
+        'a.mobile', 'a.realname',
+        //lewo_room
+        'r.room_code', 'r.bed_code', 'h.id AS house_id', 'h.area_id',
+        'h.building', 'h.floor', 'h.door_no', 'h.steward_id', 'area.city_id', 'area.area_name',
+        //lewo_admin_user
+        'au.username', 'au.nickname AS gj_nickname', 'au.realname AS gj_realname', 'au.admin_type'
+        ];
 
         $list       = $MPay
                     ->alias('p')
@@ -296,7 +319,7 @@ class PayController extends Controller {
             //最迟缴费倒计时
             if ( $val['pay_status'] != 1 ) {
                 $last_date          =strtotime($val['last_date']);
-                $enddate            =time();
+                $enddate            =strtotime(date("Y-m-d",time()));
                 $count_down_days    =round(($last_date-$enddate)/86400);
                 $list[$key]['count_down_days'] = $count_down_days;
             }

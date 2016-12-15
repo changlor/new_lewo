@@ -366,6 +366,85 @@ class StewardController extends Controller {
         }
     }
 
+    public function total_daily_room_fee(){
+        header("Content-type: text/html; charset=utf-8"); 
+        $account_id = I("account_id");
+        $pro_id = I("pro_id");
+        $DArea = D("area");
+        $MArea = M("area");
+        $DCharge = D("charge_house");
+        $DChargeBill = D("charge_bill");
+        $DHouses = D("houses");
+        $DAmmeterHouse = D("ammeter_house");
+        $bill_info = $DChargeBill->getDetailBillById($pro_id);
+        $bill_info['total_energy_fee'] = $bill_info['energy_fee'] + $bill_info['room_energy_fee'];
+        $bill_info['total_gas_fee'] = $bill_info['gas_fee'] + $bill_info['rubbish_fee'];
+        $bill_info['service_fee_des'] = preg_replace('/房租/', '服务费', $bill_info['rent_des']);
+
+        if ( $bill_info['account_id'] != $account_id){
+            $this->error("非法查看~");
+        }
+        $area_id = $DHouses->getAreaIdByCode($bill_info['house_code']);
+        $house_id = $DHouses->getHouseIdByCode($bill_info['house_code']);
+        
+        $WYfee = $DHouses->getWYfee($bill_info['house_code']);
+        $this->assign("WYfee",$WYfee);
+        $this->assign("bill_info",$bill_info);
+        $this->display("detail-fee");
+        
+    }
+
+    /*
+     * author: changle
+     */
+    public function allbills(){
+        //获取账单类别
+        //$type = I("select");
+        //$_SESSION['stewrad_houses_back_url'] = U('Home/Steward/allhouses'); 
+        $where = [];
+        $search = I("search");
+        $chips = explode('-', $search);
+        if (isset($chips[0])) {
+            $where['building'] = $chips[0];
+        }
+        if (isset($chips[1])) {
+            $where['floor'] = $chips[1];
+        }
+        if (isset($chips[2])) {
+            $where['door_no'] = $chips[2];
+        }
+        /*
+        //$is_has_flag = strpos($search, '-');
+        if ( $is_has_flag && !empty($search)) {
+            $search_arr = explode('-',$search);
+            if ( !is_null($search_arr['0']) ) {
+                $where['building'] = $search_arr['0'];
+            }
+            if ( !is_null($search_arr['1']) ) {
+                $where['floor'] = $search_arr['1'];
+            }
+            if ( !is_null($search_arr['2']) ) {
+                $where['door_no'] = $search_arr['2'];
+            }
+        } else {
+            $where['_string'] = "house_code LIKE '%".$search."%' OR area_name LIKE '%".$search."%'";
+        }
+        */
+        //$this->assign("search",$search);
+        //输出房屋类别
+        //$this->assign("type", $type);
+        $type = '';
+        $DPay = D('pay');
+        $bills = $DPay->getBills($where, $type);
+        //echo'<pre>';print_r($bills);
+        if (!empty($search)) {
+            $this->assign('search_history', $search);
+        }
+        $this->assign('houses', $bills);
+        $this->display('bills');
+        $this->display("Steward/common/footer");
+    }
+
     /**
      * [入住--房屋列表]
      **/
@@ -612,23 +691,25 @@ class StewardController extends Controller {
     //管家查看的租客合同 自有管家才能进
     public function tenant_contract(){
         $account_id = I('account_id');
-        $room_id    = I('room_id');
-
+        $room_id = I('room_id');
+        $pro_id = I('pro_id');
+        $filters = empty($pro_id)
+        ? ['c.account_id' => $account_id, 'c.room_id' => $room_id]
+        : ['c.pro_id' => $pro_id];
         $MContract = M('contract');
         $contract_list = $MContract
-                        ->alias('c')
-                        ->field('a.mobile,a.realname,c.deposit,c.book_deposit,c.balance,c.period,c.rent_type,c.contract_status,c.actual_end_time,c.start_time,c.end_time,c.rent_date,c.rent,c.fee,c.contact2,c.person_count,c.photo,c.wg_fee,c.total_fee,c.pro_id,r.room_code,r.house_code,h.area_id,area.area_name,p.price')
-                        ->join('lewo_pay p ON p.pro_id = c.pro_id')
-                        ->join('lewo_account a ON a.id = c.account_id')
-                        ->join('lewo_room r ON r.id = c.room_id')
-                        ->join('lewo_houses h ON h.house_code = r.house_code')
-                        ->join('lewo_area area ON h.area_id = area.id')
-                        ->where(array('c.account_id'=>$account_id,'c.room_id'=>$room_id))
-                        ->select();
+        ->alias('c')
+        ->field('a.mobile,a.realname,c.deposit,c.book_deposit,c.balance,c.period,c.rent_type,c.contract_status,c.actual_end_time,c.start_time,c.end_time,c.rent_date,c.rent,c.fee,c.contact2,c.person_count,c.photo,c.wg_fee,c.total_fee,c.pro_id,r.room_code,r.house_code,h.area_id,area.area_name,p.price')
+        ->join('lewo_pay p ON p.pro_id = c.pro_id')
+        ->join('lewo_account a ON a.id = c.account_id')
+        ->join('lewo_room r ON r.id = c.room_id')
+        ->join('lewo_houses h ON h.house_code = r.house_code')
+        ->join('lewo_area area ON h.area_id = area.id')
+        ->where($filters)
+        ->select();
         foreach ($contract_list as $key => $val) {
             $contract_list[$key]['rent_type'] = explode('_', $val['rent_type']);
         }
-
         $this->assign('contract_list',$contract_list);
         $this->display('tenant-contract');
     }

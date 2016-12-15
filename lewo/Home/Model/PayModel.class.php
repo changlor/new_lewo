@@ -95,6 +95,63 @@ class PayModel extends Model{
 
 		return $bill_list;
 	}
+
+	/*
+	 * author: changle
+	 * desc: get stedward bills depends on bills
+	 */
+	public function getBills($where, $type = ''){
+		$type = empty($type) ? 'all' : $type;
+		$steward_id = $_SESSION['steward_id'];
+		$MPay = M('pay');
+		$filters = [
+			'lewo_pay.is_show' => 1,
+			'lewo_houses.steward_id' => $steward_id,
+		];
+		$field = [
+			//lewo_pay
+			'lewo_pay.room_id', 'lewo_pay.pro_id',
+			'lewo_pay.price', 'lewo_pay.pay_money', 'lewo_pay.pay_status', 'lewo_pay.bill_type', 'lewo_pay.bill_des', 'lewo_pay.account_id',
+			'lewo_pay.is_show', 'lewo_pay.is_send',
+			'lewo_pay.create_time', 'lewo_pay.should_date', 'lewo_pay.last_date',
+			'lewo_pay.favorable', 'lewo_pay.favorable_des',
+			//lewo_contract
+			'lewo_contract.deposit', 'lewo_contract.rent', 'lewo_contract.fee', 'lewo_contract.rent_type',
+			//lewo_charge_bill
+			'lewo_charge_bill.water_fee',
+			'lewo_charge_bill.room_energy_fee',
+			'lewo_charge_bill.wx_fee',
+			'lewo_charge_bill.rubbish_fee',
+			'lewo_charge_bill.energy_fee',
+			//lewo_houses
+			'lewo_houses.building', 'lewo_houses.door_no', 'lewo_houses.floor',
+			//lewo_area
+			'lewo_area.area_name',
+			//lewo_account
+			'lewo_account.realname',
+		];
+		$field = implode(',', $field);
+		$bills = $this->field($field)
+		->join('lewo_room ON lewo_room.id = lewo_pay.room_id', 'left')
+		->join('lewo_houses ON lewo_houses.id = lewo_room.house_id', 'left')
+		->join('lewo_account ON lewo_account.id = lewo_pay.account_id', 'left')
+		->join('lewo_area ON lewo_area.id = lewo_houses.area_id', 'left')
+		->join('lewo_charge_bill ON lewo_charge_bill.pro_id = lewo_pay.pro_id', 'left')
+		->join('lewo_contract ON lewo_contract.pro_id = lewo_pay.pro_id', 'left')
+		->where($filters)
+		->where($where)
+		->order('lewo_pay.input_year desc, lewo_pay.input_month desc')
+		->select();
+
+		foreach($bills as $key => $value){
+			$bills[$key]['bill_type'] = C('bill_type')[$value['bill_type']];
+			$bills[$key]['rent_type'] = '压' . str_replace('_', '付', $value['rent_type']);
+			$bills[$key]['bill_des'] = empty($value['bill_des']) ? '无' : $value['bill_des'];
+			$bills[$key]['total_daily_room_fee'] = $value['water_fee'] + $value['energy_fee'] + $value['room_energy_fee'] + $value['gas_fee'] + $value['rubbish_fee'];
+		}
+		
+		return $bills;
+	}
 }
 
 ?>

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,11 +9,11 @@
   <meta http-equiv="expires" content="0">    
   <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
   <meta http-equiv="description" content="This is my page">
-  <link href="__PUBLIC__/css/normalize.css" rel="stylesheet" type="text/css">
-  <script src="__PUBLIC__/js/jquery-1.9.1.js" type="text/javascript"></script>
-  <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
-  <link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css">
-  <link href="__PUBLIC__/css/grzx.css" rel="stylesheet" type="text/css">
+  <link href="/Public/css/normalize.css" rel="stylesheet" type="text/css">
+  <script src="/Public/js/jquery-1.9.1.js" type="text/javascript"></script>
+  <link href="/Public/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/Public/css/common.css" rel="stylesheet" type="text/css">
+  <link href="/Public/css/grzx.css" rel="stylesheet" type="text/css">
 
   <style>
   #schedule_count {
@@ -62,15 +62,13 @@
                     <div class="row-fluid">
                       <div class="col-xs-12">
                         <div class="img-icon1-tx">
-                          <notempty name="steward_info.avatar">
-                          <a href="">
-                            <img src="{$steward_info.avatar}" style="margin-top:20px;width:66px;height:66px;border:2px solid #fff;" class="img-circle">
+                          <?php if(!empty($steward_info["avatar"])): ?><a href="">
+                            <img src="<?php echo ($steward_info["avatar"]); ?>" style="margin-top:20px;width:66px;height:66px;border:2px solid #fff;" class="img-circle">
                           </a>
-                          <else/>
+                          <?php else: ?>
                           <a href="">
-                            <img src="__PUBLIC__/images/user.jpg" style="margin-top:20px;width:66px;height:66px;border:2px solid #fff;" class="img-circle">
-                          </a>
-                          </notempty>
+                            <img src="/Public/images/user.jpg" style="margin-top:20px;width:66px;height:66px;border:2px solid #fff;" class="img-circle">
+                          </a><?php endif; ?>
                           
                         </div>
                       </div>
@@ -78,9 +76,9 @@
                     <div class="row-fluid">
                       <div class="col-xs-12">
                         <div class="banner-wz">
-                        <span class="banner-wz-tz1">{$Think.session.steward_nickname}</span>
+                        <span class="banner-wz-tz1"><?php echo (session('steward_nickname')); ?></span>
                         <br/>
-                        <a href="{:U('Home/Steward/login_out')}" class="banner-wz-tz2" style="color:#fff">退出</a></span>
+                        <a href="<?php echo U('Home/Steward/login_out');?>" class="banner-wz-tz2" style="color:#fff">退出</a></span>
                       </div>
                       </div>
                     </div>
@@ -98,30 +96,30 @@
               <div class="col-xs-12 icon-top-h20">
                 <div class="row-fluid">
                     <div class="col-xs-4 bg_lg">
-                      <span>{$empty_room_count}({$percent_room}%)</span><br/><span>[&nbsp;空房间&nbsp;]</span>
+                      <span><?php echo ($empty_room_count); ?>(<?php echo ($percent_room); ?>%)</span><br/><span>[&nbsp;空房间&nbsp;]</span>
                     </div>
                     <div class="col-xs-4 bg_lo">
-                      <span>{$empty_bed_count}({$percent_bed}%)</span><br/><span>[&nbsp;空床位&nbsp;]</span>
+                      <span><?php echo ($empty_bed_count); ?>(<?php echo ($percent_bed); ?>%)</span><br/><span>[&nbsp;空床位&nbsp;]</span>
                     </div>
                     <div class="col-xs-4 bg_lb">
-                      <span>￥{$JD_total_money}</span><br/><span>[&nbsp;缴定金额&nbsp;]</span>
+                      <span>￥<?php echo ($JD_total_money); ?></span><br/><span>[&nbsp;缴定金额&nbsp;]</span>
                     </div>
                 </div>
                 <div class="row-fluid">
                   <div class="col-xs-4 bg_lo">
-                      <a class="color-white" href="{:U('Home/Steward/checkbill')}"><span>&nbsp;</span><br/><span>[&nbsp;集中抄表&nbsp;]</span></a>
+                      <a class="color-white" href="<?php echo U('Home/Steward/checkbill');?>"><span>&nbsp;</span><br/><span>[&nbsp;集中抄表&nbsp;]</span></a>
                     </div>
                     <div class="col-xs-4 bg_lg">
-                      <a class="color-white" href="{:U('Home/Steward/houses')}"><span>&nbsp;</span><br/><span>[&nbsp;房屋管理&nbsp;]</span></a>
+                      <a class="color-white" href="<?php echo U('Home/Steward/houses');?>"><span>&nbsp;</span><br/><span>[&nbsp;房屋管理&nbsp;]</span></a>
                     </div>
                     <div class="col-xs-4 bg_ly">
-                      <a class="color-white" href="{:U('Home/Steward/allhouses',array('select'=>'empty'))}"><span>&nbsp;</span><br/><span>[&nbsp;空置房源&nbsp;]</span></a>
+                      <a class="color-white" href="<?php echo U('Home/Steward/allhouses',array('select'=>'empty'));?>"><span>&nbsp;</span><br/><span>[&nbsp;空置房源&nbsp;]</span></a>
                     </div>
                     <div class="col-xs-4 bg_ly">
-                      <a class="color-white" href="{:U('Home/Steward/stewardtasks')}"><span>&nbsp;</span><br/><span>[&nbsp;待办工作&nbsp;]<b>[<a id="steward_schedule_count">{$Think.session.steward_schedule_count}</a>]</b></span></a>
+                      <a class="color-white" href="<?php echo U('Home/Steward/stewardtasks');?>"><span>&nbsp;</span><br/><span>[&nbsp;待办工作&nbsp;]<b>[<a id="steward_schedule_count"><?php echo (session('steward_schedule_count')); ?></a>]</b></span></a>
                     </div>
                     <div class="col-xs-4 bg_lb">
-                      <a class="color-white" href="{:U('Home/Steward/allbills')}"><span>&nbsp;</span><br/><span>[&nbsp;账单管理&nbsp;]</span></a>
+                      <a class="color-white" href="<?php echo U('Home/Steward/allbills');?>"><span>&nbsp;</span><br/><span>[&nbsp;账单管理&nbsp;]</span></a>
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -162,14 +160,14 @@
 </body>
 </html>
 <script>
-   var refesh_schedule_count_url = "{:U('Home/Steward/refesh_schedule_count')}";
+   var refesh_schedule_count_url = "<?php echo U('Home/Steward/refesh_schedule_count');?>";
 
    //监控待办数目，异步修改#steward_schedule_count
     setInterval(function(){
       $.ajax({
          type: "POST",
          url: refesh_schedule_count_url,
-         data: "steward_id="+{$Think.session.steward_id},
+         data: "steward_id="+<?php echo (session('steward_id')); ?>,
          dataType: "json",
          success: function(data){
            $("#steward_schedule_count").html(data.steward_schedule_count);

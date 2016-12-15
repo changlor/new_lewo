@@ -123,6 +123,7 @@ class PayModel extends Model{
 			'lewo_charge_bill.wx_fee',
 			'lewo_charge_bill.rubbish_fee',
 			'lewo_charge_bill.energy_fee',
+			'lewo_charge_bill.gas_fee',
 			//lewo_houses
 			'lewo_houses.building', 'lewo_houses.door_no', 'lewo_houses.floor',
 			//lewo_area
@@ -147,7 +148,7 @@ class PayModel extends Model{
 			$bills[$key]['bill_type'] = C('bill_type')[$value['bill_type']];
 			$bills[$key]['rent_type'] = '压' . str_replace('_', '付', $value['rent_type']);
 			$bills[$key]['bill_des'] = empty($value['bill_des']) ? '无' : $value['bill_des'];
-			$bills[$key]['total_daily_room_fee'] = $value['water_fee'] + $value['energy_fee'] + $value['room_energy_fee'] + $value['gas_fee'] + $value['rubbish_fee'];
+			$bills[$key]['total_daily_room_fee'] = $value['water_fee'] + $value['energy_fee'] + $value['gas_fee'] + $value['rubbish_fee'];
 		}
 		
 		return $bills;

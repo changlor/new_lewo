@@ -612,6 +612,42 @@ class StewardController extends Controller {
         }
     }
 
+    //管家代收
+    public function steward_collection() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $pro_id = I('pro_id');
+            $deposit = I('deposit');
+            $rent = I('rent');
+            $fee = I('fee');
+            $wg_fee = I('wg_fee');
+            
+        } else {
+            $account_id = I('account_id');
+            $room_id = I('room_id');
+            $pro_id = I('pro_id');
+            $filters = empty($pro_id)
+            ? ['c.account_id' => $account_id, 'c.room_id' => $room_id]
+            : ['c.pro_id' => $pro_id];
+            $MContract = M('contract');
+            $contract_list = $MContract
+            ->alias('c')
+            ->field('a.mobile,a.realname,c.deposit,c.book_deposit,c.balance,c.period,c.rent_type,c.contract_status,c.actual_end_time,c.start_time,c.end_time,c.rent_date,c.rent,c.fee,c.contact2,c.person_count,c.photo,c.wg_fee,c.total_fee,c.pro_id,r.room_code,r.house_code,h.area_id,area.area_name,p.price')
+            ->join('lewo_pay p ON p.pro_id = c.pro_id')
+            ->join('lewo_account a ON a.id = c.account_id')
+            ->join('lewo_room r ON r.id = c.room_id')
+            ->join('lewo_houses h ON h.house_code = r.house_code')
+            ->join('lewo_area area ON h.area_id = area.id')
+            ->where($filters)
+            ->select();
+            foreach ($contract_list as $key => $val) {
+                $contract_list[$key]['rent_type'] = explode('_', $val['rent_type']);
+            }
+            $this->assign('contract_list',$contract_list);
+            $this->assign('pro_id', $pro_id);
+            $this->display('steward-collection');
+        }
+    }
+
     /**
      * [入住-签约]
      **/

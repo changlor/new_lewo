@@ -108,29 +108,38 @@
                                             <td>
                                                 <?php echo ($vo["price"]); ?>
                                             </td>
-                                            <td><?=$vo.pay_status == 0 ? '<label class="btn btn-success btn-mini">已付</label>' : '<label class="btn btn-danger btn-mini">未付</label>';?></td>
+                                            <td>
+                                                <?php if($vo["pay_status"] == 1): ?><label class="btn btn-success btn-mini">已付</label>
+                                                <?php else: ?>
+                                                    <label class="btn btn-danger btn-mini">未付</label><?php endif; ?>
+                                            </td>
                                         </tr>
+                                        <?php if($vo["pay_status"] == 0): ?><tr>
+                                            <td colspan="5" align="center" style="padding: 0px;font-size: 8px;">
+                                                最迟还款日: <?php echo ($vo["last_date"]); ?>
+                                                |
+                                                <?php if($vo["count_down_days"] <= 5 and $vo["count_down_days"] >= 0): ?><font style="color: rgb(128, 64, 0);">倒计时: <?php echo ($vo["count_down_days"]); ?></font>
+                                                <?php elseif($vo["count_down_days"] > 5): ?>
+                                                    <font color="green">倒计时: <?php echo ($vo["count_down_days"]); ?></font>
+                                                <?php else: ?>
+                                                    <font color="red">倒计时: <?php echo ($vo["count_down_days"]); ?></font><?php endif; ?>
+                                            </td>
+                                        </tr><?php endif; ?>
                                         <tr class="drop-arrow">
                                             <td colspan="5" align="center" style="padding: 0px;font-size: 8px;transform: rotate(180deg);">▲</td>
                                         </tr>
                                     </tbody>
                                     <tbody class="second-tbody" >
                                         <?php if($vo["bill_type"] == '合同'): ?><tr class="info">
-                                                <td align="center">押金</td>
-                                                <td align="center"><?php echo ($vo["deposit"]); ?></td>
-                                                <td align="center">房租</td>
-                                                <td align="center"><?php echo ($vo["rent"]); ?></td>
+                                                <td align="center" colspan="5">押金: <?php echo ($vo["deposit"]); ?> | 房租: <?php echo ($vo["rent"]); ?></td>
                                             </tr>
                                             <tr class="info">
-                                                <td align="center">服务费</td>
-                                                <td align="center"><?php echo ($vo["fee"]); ?></td>
-                                                <td align="center">付费方式</td>
-                                                <td align="center"><?php echo ($vo["rent_type"]); ?></td>
+                                                <td align="center" colspan="5">服务费: <?php echo ($vo["fee"]); ?> | 付费方式: <?php echo ($vo["rent_type"]); ?></td>
                                             </tr>
                                             <tr class="info">
                                                 <td colspan="5" align="center">
-                                                    <a class="btn btn-success btn-mini">管家代收</a>
-                                                    <a class="btn btn-success btn-mini">催款</a>
+                                                    <?php if($vo["pay_status"] == 0): ?><a class="btn btn-success btn-mini">管家代收</a>
+                                                        <a class="btn btn-success btn-mini">催款</a><?php endif; ?>
                                                     <label onclick="window.location.href = '<?php echo U('Home/Steward/tenant_contract', ['pro_id' => $vo['pro_id']]);?>'" class="btn btn-warning btn-mini">详情</label>
                                                 </td>
                                             </tr>
@@ -139,12 +148,15 @@
                                                 <td align="center" colspan="5">水电气: <?php echo ($vo["total_daily_room_fee"]); ?> | 个人电费: <?php echo ($vo["room_energy_fee"]); ?></td>
                                             </tr>
                                             <tr class="info">
-                                                <td colspan="5" align="center">维修费: <?php echo ($vo["wx_fee"]); ?></td>
+                                                <td colspan="5" align="center">房租: <?php echo ($vo["rent_fee"]); ?> | 服务费: <?php echo ($vo["service_fee"]); ?></td>
+                                            </tr>
+                                            <tr class="info">
+                                                <td colspan="5" align="center">物管费: <?php echo ($vo["wgfee_unit"]); ?> | 维修费: <?php echo ($vo["wx_fee"]); ?></td>
                                             </tr>
                                             <tr class="info">
                                                 <td colspan="5" align="center">
-                                                    <a class="btn btn-success btn-mini">管家代收</a>
-                                                    <a class="btn btn-danger btn-mini">催款</a>
+                                                    <?php if($vo["pay_status"] == 0): ?><a class="btn btn-success btn-mini">管家代收</a>
+                                                        <a class="btn btn-danger btn-mini">催款</a><?php endif; ?>
                                                     <label onclick="window.location.href = '<?php echo U('Home/Steward/total_daily_room_fee', ['pro_id' => $vo['pro_id'], 'account_id' => $vo['account_id']]);?>'" class="btn btn-warning btn-mini">详情</label>
                                                 </td>
                                             </tr>

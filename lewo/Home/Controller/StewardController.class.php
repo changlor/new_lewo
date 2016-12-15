@@ -402,8 +402,8 @@ class StewardController extends Controller {
         //$type = I("select");
         //$_SESSION['stewrad_houses_back_url'] = U('Home/Steward/allhouses'); 
         $where = [];
-        $search = I("search");
-        $chips = explode('-', $search);
+        $search = trim(I("search"));
+        $chips = empty($search) ? '' : explode('-', $search);
         if (isset($chips[0])) {
             $where['building'] = $chips[0];
         }

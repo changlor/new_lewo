@@ -124,6 +124,9 @@ class PayModel extends Model{
 			'lewo_charge_bill.rubbish_fee',
 			'lewo_charge_bill.energy_fee',
 			'lewo_charge_bill.gas_fee',
+			'lewo_charge_bill.rent_fee',
+			'lewo_charge_bill.wgfee_unit',
+			'lewo_charge_bill.service_fee',
 			//lewo_houses
 			'lewo_houses.building', 'lewo_houses.door_no', 'lewo_houses.floor',
 			//lewo_area
@@ -141,7 +144,7 @@ class PayModel extends Model{
 		->join('lewo_contract ON lewo_contract.pro_id = lewo_pay.pro_id', 'left')
 		->where($filters)
 		->where($where)
-		->order('lewo_pay.input_year desc, lewo_pay.input_month desc')
+		->order('lewo_pay.pay_status asc, lewo_pay.last_date asc, lewo_pay.input_year desc, lewo_pay.input_month desc')
 		->select();
 
 		foreach($bills as $key => $value){
@@ -149,6 +152,7 @@ class PayModel extends Model{
 			$bills[$key]['rent_type'] = '压' . str_replace('_', '付', $value['rent_type']);
 			$bills[$key]['bill_des'] = empty($value['bill_des']) ? '无' : $value['bill_des'];
 			$bills[$key]['total_daily_room_fee'] = $value['water_fee'] + $value['energy_fee'] + $value['gas_fee'] + $value['rubbish_fee'];
+			$bills[$key]['count_down_days'] = -floor((time() - strtotime($value['last_date'])) / 60 /60 /24);
 		}
 		
 		return $bills;

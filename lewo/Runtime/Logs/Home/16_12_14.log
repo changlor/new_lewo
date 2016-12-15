@@ -15,3 +15,456 @@ INFO: [ view_filter ] --START--
 INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000552s ]
 INFO: [ view_filter ] --END-- [ RunTime:0.000678s ]
 
+[ 2016-12-14T17:27:28+08:00 ] 127.0.0.1 /index.php/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003011s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002006s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002272s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000388s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000532s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017739s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017898s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000710s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000866s ]
+
+[ 2016-12-14T17:51:04+08:00 ] 127.0.0.1 /index.php/Stewatrd
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000047s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001101s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001343s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001512s ]
+ERR: 无法加载控制器:Stewatrd
+
+[ 2016-12-14T17:51:15+08:00 ] 127.0.0.1 /index.php/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000040s ]
+INFO: [ app_init ] --END-- [ RunTime:0.006775s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001616s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003026s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000133s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000304s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014584s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014780s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001084s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001315s ]
+
+[ 2016-12-14T17:51:16+08:00 ] 127.0.0.1 /index.php/Home/steward/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003279s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003527s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000122s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000278s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.018304s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018620s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000769s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000928s ]
+
+[ 2016-12-14T17:51:23+08:00 ] 127.0.0.1 /index.php/Home/Steward/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000044s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001005s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000820s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000954s ]
+SQL: SHOW COLUMNS FROM `lewo_admin_user` [ RunTime:0.0074s ]
+SQL: SELECT * FROM `lewo_admin_user` WHERE `username` = 'lewoGJ' AND `password` = '233ffb4cc18ec70bbe332df5efb42662' LIMIT 1   [ RunTime:0.0007s ]
+
+[ 2016-12-14T17:51:23+08:00 ] 127.0.0.1 /index.php/Home/Steward/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000644s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000778s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000901s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0075s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `steward_id` = 35 AND `admin_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `steward_id` = 35 AND `admin_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `steward_id` = 35 AND `admin_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 4 AND `is_finish` = 0 AND `steward_id` = 35 AND `admin_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0080s ]
+SQL: SELECT SUM(rent) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-14' LIMIT 1   [ RunTime:0.0015s ]
+SQL: SELECT SUM(fee) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-14' LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT SUM(deposit) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-14' LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT SUM(rent) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-13' LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT SUM(fee) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-13' LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT SUM(deposit) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-13' LIMIT 1   [ RunTime:0.0016s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_contract` WHERE `start_time` = '2016-12-14' LIMIT 1   [ RunTime:0.0013s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0063s ]
+SQL: SELECT SUM(money) AS tp_sum FROM `lewo_schedule` WHERE `create_date` = '2016-12-14' AND `schedule_type` = 4 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0074s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `room_type` = 1 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `status` = 0 AND `room_type` = 1 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `room_type` = 2 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `status` = 0 AND `room_type` = 2 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0014s ]
+SQL: SHOW COLUMNS FROM `lewo_admin_user` [ RunTime:0.0061s ]
+SQL: SELECT * FROM `lewo_admin_user` WHERE `id` = 35 LIMIT 1   [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000131s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000252s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013491s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013703s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001022s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001212s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001627s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001765s ]
+
+[ 2016-12-14T17:51:26+08:00 ] 127.0.0.1 /index.php/Home/Steward/houses.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000876s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001616s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001821s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0076s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0067s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0076s ]
+SQL: SELECT `id`,`area_id`,`steward_id`,`house_code`,`type`,`building`,`floor`,`door_no` FROM `lewo_houses` WHERE `steward_id` = 35 AND ( house_code LIKE '%%' OR area_name LIKE '%%' ) ORDER BY area_id desc, building desc,floor desc,door_no desc  [ RunTime:0.0015s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = '重庆测试01' AND `is_show` = 1 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = '重庆测试01' AND `is_show` = 1 AND `status` = 2 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 38 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT lewo_room.id,lewo_room.account_id,lewo_room.room_code,lewo_room.room_nickname,lewo_room.room_sort,lewo_room.room_type,lewo_room.bed_code,lewo_room.rent,lewo_room.status,lewo_room.is_show,lewo_account.realname,lewo_account.sex FROM `lewo_room` left JOIN lewo_account ON lewo_room.account_id=lewo_account.id  WHERE `house_code` = '重庆测试01' AND `is_show` = 1 ORDER BY room_sort asc  [ RunTime:0.0007s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000143s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000264s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.021943s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022085s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000730s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000882s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000085s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.011235s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.005001s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001508s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000031s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.005736s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000829s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000941s ]
+
+[ 2016-12-14T17:52:00+08:00 ] 127.0.0.1 /index.php/Home/Steward/houses.html?search=1
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000031s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000733s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000809s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000953s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0072s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0066s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0086s ]
+SQL: SELECT `id`,`area_id`,`steward_id`,`house_code`,`type`,`building`,`floor`,`door_no` FROM `lewo_houses` WHERE `steward_id` = 35 AND ( house_code LIKE '%1%' OR area_name LIKE '%1%' ) ORDER BY area_id desc, building desc,floor desc,door_no desc  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = '重庆测试01' AND `is_show` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = '重庆测试01' AND `is_show` = 1 AND `status` = 2 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 38 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT lewo_room.id,lewo_room.account_id,lewo_room.room_code,lewo_room.room_nickname,lewo_room.room_sort,lewo_room.room_type,lewo_room.bed_code,lewo_room.rent,lewo_room.status,lewo_room.is_show,lewo_account.realname,lewo_account.sex FROM `lewo_room` left JOIN lewo_account ON lewo_room.account_id=lewo_account.id  WHERE `house_code` = '重庆测试01' AND `is_show` = 1 ORDER BY room_sort asc  [ RunTime:0.0007s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000142s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000267s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.022384s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022511s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000495s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000607s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000081s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.007796s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.003905s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001074s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000031s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.004488s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000840s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000955s ]
+
+[ 2016-12-14T17:52:04+08:00 ] 127.0.0.1 /index.php/Home/Steward/houses.html?search=111
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000042s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001010s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000898s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001034s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0070s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0081s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0057s ]
+SQL: SELECT `id`,`area_id`,`steward_id`,`house_code`,`type`,`building`,`floor`,`door_no` FROM `lewo_houses` WHERE `steward_id` = 35 AND ( house_code LIKE '%111%' OR area_name LIKE '%111%' ) ORDER BY area_id desc, building desc,floor desc,door_no desc  [ RunTime:0.0008s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000137s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000255s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.020508s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020635s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000481s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000593s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000166s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.008144s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.006338s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001089s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000040s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.007031s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001132s ]
+
+[ 2016-12-14T17:52:07+08:00 ] 127.0.0.1 /index.php/Home/Steward/houses.html?search=
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000033s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000641s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001033s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001215s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0084s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0073s ]
+SQL: SELECT `id`,`area_id`,`steward_id`,`house_code`,`type`,`building`,`floor`,`door_no` FROM `lewo_houses` WHERE `steward_id` = 35 AND ( house_code LIKE '%%' OR area_name LIKE '%%' ) ORDER BY area_id desc, building desc,floor desc,door_no desc  [ RunTime:0.0009s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = '重庆测试01' AND `is_show` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = '重庆测试01' AND `is_show` = 1 AND `status` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 38 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT lewo_room.id,lewo_room.account_id,lewo_room.room_code,lewo_room.room_nickname,lewo_room.room_sort,lewo_room.room_type,lewo_room.bed_code,lewo_room.rent,lewo_room.status,lewo_room.is_show,lewo_account.realname,lewo_account.sex FROM `lewo_room` left JOIN lewo_account ON lewo_room.account_id=lewo_account.id  WHERE `house_code` = '重庆测试01' AND `is_show` = 1 ORDER BY room_sort asc  [ RunTime:0.0008s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000142s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000259s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.023215s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.023373s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000600s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000734s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000085s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.010332s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.004949s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001214s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000031s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.005528s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000865s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000978s ]
+
+[ 2016-12-14T17:52:14+08:00 ] 127.0.0.1 /index.php/Home/Steward/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000049s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001216s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001097s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001267s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0067s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 1 AND `is_finish` = 0 AND `steward_id` = 35 AND `admin_type` = 1 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 2 AND `is_finish` = 0 AND `steward_id` = 35 AND `admin_type` = 1 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 3 AND `is_finish` = 0 AND `steward_id` = 35 AND `admin_type` = 1 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_schedule` WHERE `schedule_type` = 4 AND `is_finish` = 0 AND `steward_id` = 35 AND `admin_type` = 1 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SHOW COLUMNS FROM `lewo_contract` [ RunTime:0.0094s ]
+SQL: SELECT SUM(rent) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-14' LIMIT 1   [ RunTime:0.0015s ]
+SQL: SELECT SUM(fee) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-14' LIMIT 1   [ RunTime:0.0015s ]
+SQL: SELECT SUM(deposit) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-14' LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT SUM(rent) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-13' LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT SUM(fee) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-13' LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT SUM(deposit) AS tp_sum FROM `lewo_contract` WHERE `start_time` = '2016-12-13' LIMIT 1   [ RunTime:0.0014s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_contract` WHERE `start_time` = '2016-12-14' LIMIT 1   [ RunTime:0.0013s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0083s ]
+SQL: SELECT SUM(money) AS tp_sum FROM `lewo_schedule` WHERE `create_date` = '2016-12-14' AND `schedule_type` = 4 LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0081s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `room_type` = 1 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `status` = 0 AND `room_type` = 1 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0017s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `room_type` = 2 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0015s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `status` = 0 AND `room_type` = 2 AND `is_show` = 1 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SHOW COLUMNS FROM `lewo_admin_user` [ RunTime:0.0067s ]
+SQL: SELECT * FROM `lewo_admin_user` WHERE `id` = 35 LIMIT 1   [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000131s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000247s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014248s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014405s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000643s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000796s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001223s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001399s ]
+
+[ 2016-12-14T17:52:52+08:00 ] 127.0.0.1 /index.php/Home/Steward/houses.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000030s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000714s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001209s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001370s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0081s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0081s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0061s ]
+SQL: SELECT `id`,`area_id`,`steward_id`,`house_code`,`type`,`building`,`floor`,`door_no` FROM `lewo_houses` WHERE `steward_id` = 35 AND ( house_code LIKE '%%' OR area_name LIKE '%%' ) ORDER BY area_id desc, building desc,floor desc,door_no desc  [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = '重庆测试01' AND `is_show` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `lewo_room` WHERE `house_code` = '重庆测试01' AND `is_show` = 1 AND `status` = 2 LIMIT 1   [ RunTime:0.0008s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 38 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT lewo_room.id,lewo_room.account_id,lewo_room.room_code,lewo_room.room_nickname,lewo_room.room_sort,lewo_room.room_type,lewo_room.bed_code,lewo_room.rent,lewo_room.status,lewo_room.is_show,lewo_account.realname,lewo_account.sex FROM `lewo_room` left JOIN lewo_account ON lewo_room.account_id=lewo_account.id  WHERE `house_code` = '重庆测试01' AND `is_show` = 1 ORDER BY room_sort asc  [ RunTime:0.0012s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000136s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000256s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.022704s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022903s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001018s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001250s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000084s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.009912s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.005821s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.002087s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000043s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.006794s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000932s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001056s ]
+
+[ 2016-12-14T17:52:54+08:00 ] 127.0.0.1 /index.php/Home/Steward/tenant_info/account_id/2389/room_id/781.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000891s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001166s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001339s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0086s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0093s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0128s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0141s ]
+SQL: SELECT * FROM `lewo_account` WHERE `id` = 2389 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT r.id,r.room_code,r.bed_code,h.building,h.floor,h.door_no,area.area_name FROM lewo_room r left JOIN lewo_houses h ON r.house_code=h.house_code left JOIN lewo_area area ON area.id=h.area_id  WHERE r.id = '781' LIMIT 1   [ RunTime:0.0007s ]
+NOTIC: [8] Undefined variable: area_name G:\wamp2\www\new_lewo\lewo\Home\Controller\StewardController.class.php 第 362 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000599s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000817s ]
+NOTIC: [8] Undefined variable: room_code G:\wamp2\www\new_lewo\lewo\Runtime\Cache\Home\3318eaaab3dfb7c31c61d65acd2ac28f.php 第 130 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.026596s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.026763s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000876s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001120s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001294s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001454s ]
+
+[ 2016-12-14T17:52:58+08:00 ] 127.0.0.1 /index.php/Home/Steward/check_out/account_id/2389/room_id/781/type/1.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000050s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000937s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001111s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001295s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0101s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0092s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0090s ]
+SQL: SHOW COLUMNS FROM `lewo_ammeter_house` [ RunTime:0.0076s ]
+SQL: SHOW COLUMNS FROM `lewo_ammeter_room` [ RunTime:0.0127s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0097s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0067s ]
+SQL: SELECT `id`,`mobile`,`email`,`sex`,`tag`,`birthday`,`register_time`,`avatar`,`address`,`zipcode`,`card_no`,`balance`,`realname`,`contact2` FROM `lewo_account` WHERE `id` = 2389 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0096s ]
+SQL: SHOW COLUMNS FROM `lewo_admin_user` [ RunTime:0.0061s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 781 LIMIT 1   [ RunTime:0.0006s ]
+SQL: SELECT `area_id`,`address`,`floor`,`door_no`,`building`,`steward_id`,`address` FROM `lewo_houses` WHERE `house_code` = '重庆测试01' LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT `id`,`username`,`nickname`,`mobile` FROM `lewo_admin_user` WHERE `id` = 35 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0078s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 38 LIMIT 1   [ RunTime:0.0004s ]
+SQL: SELECT `id`,`room_code` FROM `lewo_room` WHERE `house_id` = 302 AND `is_show` = 1  [ RunTime:0.0017s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000238s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000352s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.028657s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.028866s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000510s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000622s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001138s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001317s ]
+
+[ 2016-12-14T17:53:05+08:00 ] 127.0.0.1 /index.php/Home/Steward/check_out/account_id/2389/room_id/781/type/1.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000042s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001694s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001292s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001507s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0068s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0096s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0120s ]
+SQL: SHOW COLUMNS FROM `lewo_ammeter_house` [ RunTime:0.0085s ]
+SQL: SHOW COLUMNS FROM `lewo_ammeter_room` [ RunTime:0.0132s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0100s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0098s ]
+SQL: SELECT `id`,`mobile`,`email`,`sex`,`tag`,`birthday`,`register_time`,`avatar`,`address`,`zipcode`,`card_no`,`balance`,`realname`,`contact2` FROM `lewo_account` WHERE `id` = 2389 LIMIT 1   [ RunTime:0.0011s ]
+SQL: SHOW COLUMNS FROM `lewo_houses` [ RunTime:0.0237s ]
+SQL: SHOW COLUMNS FROM `lewo_admin_user` [ RunTime:0.0088s ]
+SQL: SELECT * FROM `lewo_room` WHERE `id` = 781 LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT `area_id`,`address`,`floor`,`door_no`,`building`,`steward_id`,`address` FROM `lewo_houses` WHERE `house_code` = '重庆测试01' LIMIT 1   [ RunTime:0.0009s ]
+SQL: SELECT `id`,`username`,`nickname`,`mobile` FROM `lewo_admin_user` WHERE `id` = 35 LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `lewo_area` [ RunTime:0.0084s ]
+SQL: SELECT `area_name` FROM `lewo_area` WHERE `id` = 38 LIMIT 1   [ RunTime:0.0033s ]
+SQL: SELECT `id`,`room_code` FROM `lewo_room` WHERE `house_id` = 302 AND `is_show` = 1  [ RunTime:0.0017s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000285s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000456s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.061672s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.061868s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000666s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000806s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001233s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001388s ]
+
+[ 2016-12-14T17:53:36+08:00 ] 127.0.0.1 /index.php/Home/Steward/check_out/account_id/2389/room_id/781/type/1.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000040s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001234s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001677s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `lewo_account` [ RunTime:0.0078s ]
+SQL: SHOW COLUMNS FROM `lewo_room` [ RunTime:0.0076s ]
+SQL: SHOW COLUMNS FROM `lewo_schedule` [ RunTime:0.0080s ]
+SQL: SHOW COLUMNS FROM `lewo_ammeter_house` [ RunTime:0.0076s ]
+SQL: SHOW COLUMNS FROM `lewo_ammeter_room` [ RunTime:0.0068s ]
+SQL: SELECT h.id FROM lewo_room r INNER JOIN lewo_houses h ON r.house_code=h.house_code  WHERE r.id = '781' LIMIT 1   [ RunTime:0.0005s ]
+SQL: SELECT `house_id`,`input_month`,`input_year`,`total_water`,`total_energy`,`total_gas` FROM `lewo_ammeter_house` WHERE `house_id` = 302 ORDER BY input_month desc,input_year desc LIMIT 1   [ RunTime:0.0054s ]
+SQL: SELECT * FROM `lewo_ammeter_room` WHERE `room_id` = 781 AND `status` = 1 ORDER BY input_year desc , input_month desc LIMIT 1   [ RunTime:0.0127s ]
+SQL: SELECT * FROM `lewo_ammeter_room` WHERE `room_id` = 782 AND `status` = 1 ORDER BY input_year desc , input_month desc LIMIT 1   [ RunTime:0.0066s ]
+SQL: SELECT * FROM `lewo_ammeter_room` WHERE `room_id` = 783 AND `status` = 1 ORDER BY input_year desc , input_month desc LIMIT 1   [ RunTime:0.0075s ]
+

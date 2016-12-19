@@ -138,7 +138,7 @@
                                             </tr>
                                             <tr class="info">
                                                 <td colspan="5" align="center">
-                                                    <?php if($vo["pay_status"] == 0): ?><a class="btn btn-success btn-mini">管家代收</a>
+                                                    <?php if($vo["pay_status"] == 0): ?><a href="<?php echo U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']]);?>" class="btn btn-success btn-mini">管家代收</a>
                                                         <a class="btn btn-success btn-mini">催款</a><?php endif; ?>
                                                     <label onclick="window.location.href = '<?php echo U('Home/Steward/tenant_contract', ['pro_id' => $vo['pro_id']]);?>'" class="btn btn-warning btn-mini">详情</label>
                                                 </td>
@@ -155,22 +155,19 @@
                                             </tr>
                                             <tr class="info">
                                                 <td colspan="5" align="center">
-                                                    <?php if($vo["pay_status"] == 0): ?><a class="btn btn-success btn-mini">管家代收</a>
+                                                    <?php if($vo["pay_status"] == 0): ?><a href="<?php echo U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']]);?>" class="btn btn-success btn-mini">管家代收</a>
                                                         <a class="btn btn-danger btn-mini">催款</a><?php endif; ?>
                                                     <label onclick="window.location.href = '<?php echo U('Home/Steward/total_daily_room_fee', ['pro_id' => $vo['pro_id'], 'account_id' => $vo['account_id']]);?>'" class="btn btn-warning btn-mini">详情</label>
                                                 </td>
                                             </tr>
                                         <?php else: ?>
                                             <tr class="info">
-                                                <td align="center">订单描述</td>
-                                                <td colspan="3" align="center"><?php echo ($vo["bill_des"]); ?></td>
+                                                <td align="center" colspan="5">订单描述: <?php echo ($vo["bill_des"]); ?></td>
                                             </tr>
                                             <tr class="info">
-                                                <td colspan="4" align="center">
-                                                    <a class="btn btn-success btn-mini">管家代收</a>
-                                                </td>
-                                                <td colspan="1" align="center">
-                                                    <a class="btn btn-success btn-mini">催款</a>
+                                                <td colspan="5" align="center">
+                                                    <a href="<?php echo U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']]);?>" class="btn btn-success btn-mini">管家代收</a>
+                                                    <a class="btn btn-danger btn-mini">催款</a>
                                                 </td>
                                             </tr><?php endif; ?>
                                     </tbody><?php endforeach; endif; else: echo "" ;endif; ?>

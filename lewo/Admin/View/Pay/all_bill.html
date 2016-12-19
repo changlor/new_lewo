@@ -357,16 +357,45 @@
               <td>
                 <a <if condition="$vo['bill_type'] eq 3"> href="{:U('Admin/Houses/check_bill',array('house_id'=>$vo['house_id'],'year'=>$vo['input_year'],'month'=>$vo['input_month']))}" </if>>{$vo.input_year}年<br/>{$vo.input_month}月</a>
               </td>
-              <td><notempty name='vo.ht_deposit'>{$vo.ht_deposit}</notempty></td>
-              <td><notempty name='vo.rent'>{$vo.rent}</notempty></td>
-              <td><notempty name='vo.service_fee'>{$vo.service_fee}</notempty></td>
-              <td><notempty name='vo.SDQtotal'><a style="display: block" class="tip-bottom" data-original-title="{$vo.SDQtotal_des}">{$vo.SDQtotal}</a></notempty></td>
-              <td><notempty name='vo.wg_fee'>{$vo.wg_fee}</notempty></td>
-              <td><if condition="$vo.wx_fee neq 0"><a style="display: block" class="tip-bottom" data-original-title="{$vo.wx_des}">{$vo.wx_fee}</a></if></td>
-              <td><if condition="$vo.favorable neq 0"><a style="display: block" class="tip-bottom" data-original-title="{$vo.favorable_des}">-{$vo.favorable}</a></if></td>
-              <td><a class="tip-bottom" <if condition="$vo['bill_des'] neq ''"> data-original-title="账单描述：{$vo.bill_des}" </if>>{$vo.price}</a></td>
+              <td>
+                <notempty name='vo.ht_deposit'>
+                  <a <if condition="$vo.bill_type eq 2"> class="tip-bottom" data-original-title="实收押金:{$vo.actual_deposit}" </if> >{$vo.ht_deposit}</a>
+                </notempty>
+              </td>
+              <td>
+                <notempty name='vo.rent'>
+                  <a <if condition="$vo.bill_type eq 2"> class="tip-bottom" data-original-title="实收房租:{$vo.actual_rent}" </if> >{$vo.rent}</a>
+                </notempty>
+              </td>
+              <td>
+                <notempty name='vo.service_fee'>{$vo.service_fee}</notempty>
+              </td>
+              <td>
+                <notempty name='vo.SDQtotal'>
+                  <a style="display: block" class="tip-bottom" data-original-title="{$vo.SDQtotal_des}">{$vo.SDQtotal}</a>
+                </notempty>
+              </td>
+              <td>
+                <notempty name='vo.wg_fee'>{$vo.wg_fee}</notempty>
+              </td>
+              <td>
+                <if condition="$vo.wx_fee neq 0">
+                  <a style="display: block" class="tip-bottom" data-original-title="{$vo.wx_des}">{$vo.wx_fee}</a>
+                </if>
+              </td>
+              <td>
+                <if condition="$vo.favorable neq 0">
+                  <a style="display: block" class="tip-bottom" data-original-title="{$vo.favorable_des}">-{$vo.favorable}</a>
+                </if>
+              </td>
+              <td>
+                <a class="tip-bottom" <if condition="$vo['bill_des'] neq ''"> data-original-title="账单描述：{$vo.bill_des}" </if>>{$vo.price}
+                </a>
+              </td>
               <td>{$vo.pay_money}</td>
-              <td><if condition="$vo['pay_time'] neq 0">{$vo.pay_time}</if></td>
+              <td>
+                <if condition="$vo['pay_time'] neq 0">{$vo.pay_time}</if>
+              </td>
               <td>{$vo.pay_type_name}</td>
               <!-- <td id="send{$vo.id}">
                 <if condition="$vo.is_send eq 1 ">
@@ -394,7 +423,7 @@
                </if>
               <else/>
                 <a href="{:U('Admin/Pay/back_pay',array('pro_id'=>$vo['pro_id']))}" class="btn btn-success btn-mini">恢复</a>
-                <a href="{:U('Admin/Pay/clear_pay',array('pro_id'=>$vo['pro_id']))}" class="btn btn-danger btn-mini" onclick="if(!confirm('确定删除')) return false;">彻底删除</a>
+                <!-- <a href="{:U('Admin/Pay/clear_pay',array('pro_id'=>$vo['pro_id']))}" class="btn btn-danger btn-mini" onclick="if(!confirm('确定删除')) return false;">彻底删除</a> -->
               </if>
 <else/>
               <a href="{:U('Admin/Pay/check_log',array('pro_id'=>$vo['pro_id']))}" class="btn btn-success btn-mini tip-bottom" <if condition="$vo['bill_des'] neq ''"> data-original-title="账单描述：{$vo.bill_des}" </if>>查看</a>

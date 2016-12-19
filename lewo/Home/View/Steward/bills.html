@@ -151,7 +151,7 @@
                                             <tr class="info">
                                                 <td colspan="5" align="center">
                                                     <if condition="$vo.pay_status eq 0">
-                                                        <a class="btn btn-success btn-mini">管家代收</a>
+                                                        <a href="{:U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']])}" class="btn btn-success btn-mini">管家代收</a>
                                                         <a class="btn btn-success btn-mini">催款</a>
                                                     </if>
                                                     <label onclick="window.location.href = '{:U('Home/Steward/tenant_contract', ['pro_id' => $vo['pro_id']])}'" class="btn btn-warning btn-mini">详情</label>
@@ -170,7 +170,7 @@
                                             <tr class="info">
                                                 <td colspan="5" align="center">
                                                     <if condition="$vo.pay_status eq 0">
-                                                        <a class="btn btn-success btn-mini">管家代收</a>
+                                                        <a href="{:U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']])}" class="btn btn-success btn-mini">管家代收</a>
                                                         <a class="btn btn-danger btn-mini">催款</a>
                                                     </if>
                                                     <label onclick="window.location.href = '{:U('Home/Steward/total_daily_room_fee', ['pro_id' => $vo['pro_id'], 'account_id' => $vo['account_id']])}'" class="btn btn-warning btn-mini">详情</label>
@@ -178,15 +178,12 @@
                                             </tr>
                                         <else />
                                             <tr class="info">
-                                                <td align="center">订单描述</td>
-                                                <td colspan="3" align="center">{$vo.bill_des}</td>
+                                                <td align="center" colspan="5">订单描述: {$vo.bill_des}</td>
                                             </tr>
                                             <tr class="info">
-                                                <td colspan="4" align="center">
-                                                    <a class="btn btn-success btn-mini">管家代收</a>
-                                                </td>
-                                                <td colspan="1" align="center">
-                                                    <a class="btn btn-success btn-mini">催款</a>
+                                                <td colspan="5" align="center">
+                                                    <a href="{:U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']])}" class="btn btn-success btn-mini">管家代收</a>
+                                                    <a class="btn btn-danger btn-mini">催款</a>
                                                 </td>
                                             </tr>
                                         </if>

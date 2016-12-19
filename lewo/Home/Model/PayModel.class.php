@@ -151,7 +151,7 @@ class PayModel extends Model{
 			$bills[$key]['bill_type'] = C('bill_type')[$value['bill_type']];
 			$bills[$key]['rent_type'] = '压' . str_replace('_', '付', $value['rent_type']);
 			$bills[$key]['bill_des'] = empty($value['bill_des']) ? '无' : $value['bill_des'];
-			$bills[$key]['total_daily_room_fee'] = $value['water_fee'] + $value['energy_fee'] + $value['gas_fee'] + $value['rubbish_fee'];
+			$bills[$key]['total_daily_room_fee'] = $value['room_energy_fee'] + $value['water_fee'] + $value['energy_fee'] + $value['gas_fee'] + $value['rubbish_fee'];
 			$bills[$key]['count_down_days'] = -floor((time() - strtotime($value['last_date'])) / 60 /60 /24);
 		}
 		

@@ -101,41 +101,90 @@ class ScheduleModel extends Model{
 	* [2016-12-8 10:46][author:feng]
 	* [方法二]
 	* [插入一条待办]
+	* @param schedule_type 待办工作类型 1：退房 2：转房 3：换房 4：缴定 5:例行打款
+	* @param status 待办状态 1）退房：1租客申请，2管家录入水电气，3财务发送账单，4租客确认账单，5财务点击完成。2）转房3）换房同上。4）缴定：1管家录入缴定，2管家已跟租客签约
+	* @param pay_type 1=>'支付宝',2=>'微信',3=>'银行卡',4=>'现金'
 	**/
 	public function create_new_schedule($param){
+		$MSchedule = M('schedule');
+		$MSchedule->startTrans();
 		if ( is_null($param['schedule_type']) || is_null($param['account_id']) || is_null($param['room_id']) || is_null($param['status']) ) {
 			return false;
 		}
 		$data = array();
-		$data['account_id'] = $param['account_id'];
-		$data['room_id']    = $param['room_id'];
-		//待办工作类型 1：退房 2：转房 3：换房 4：缴定 5:例行打款
+		$data['account_id'] 	= $param['account_id'];
+		$data['room_id']    	= $param['room_id'];
 		$data['schedule_type']  = $param['schedule_type'];
-		//待办状态 1）退房：1租客申请，2管家录入水电气，3财务发送账单，4租客确认账单，5财务点击完成。2）转房3）换房同上。4）缴定：1管家录入缴定，2管家已跟租客签约
 		$data['status']			= $param['status'];
-		$data['create_time']= date('Y-m-d H:i:s', time());
-		$data['create_date']= is_null($param['create_date'])? 0: date('Y-m-d', time());
-		$data['money']      = is_null($param['money'])? 0: $param['money'];
-		
-		$data['pay_account'] 	= is_null($param['pay_account'])? 0: $param['pay_account'] ;
-		//1=>'支付宝',2=>'微信',3=>'银行卡',4=>'现金'
-		$data['pay_type'] 		= is_null($param['pay_type'])? 0: $param['pay_type'];
-		$data['appoint_time'] 	= is_null($param['appoint_time'])? 0: $param['appoint_time'];
-		$data['msg'] 			= is_null($param['msg'])? '': $param['msg'];
-		$data['is_finish']      = is_null($param['is_finish'])? 0: $param['is_finish'];
-		$data['steward_id']     = is_null($param['steward_id'])? 0: $param['steward_id'];
-		$data['admin_type']     = is_null($param['admin_type'])? 0: $param['admin_type'];
-		$data['zS']				= is_null($param['zS'])? 0: $param['zS'];
-		$data['zD']				= is_null($param['zD'])? 0: $param['zD'];
-		$data['zQ']				= is_null($param['zQ'])? 0: $param['zQ'];
-		$data['roomD']			= is_null($param['roomD'])? 0: $param['roomD'];
-		$data['wx_fee']         = is_null($param['wx_fee'])? 0: $param['wx_fee'];
-		$data['wx_des']			= is_null($param['wx_des'])? '': $param['wx_des'];
-		$data['check_item']     = is_null($param['check_item'])? 0: $param['check_item'];
-		$data['check_out_goods']= is_null($param['check_out_goods'])? 0: $param['check_out_goods'];
-		$data['check_out_type'] = is_null($param['check_out_type'])? 0: $param['check_out_type'];
+		$data['create_time']	= date('Y-m-d H:i:s', time());
 
-		dump($data);exit;
+		$data['create_date']	= is_null($param['create_date'])
+								? date('Y-m-d', time()) 
+								: $param['create_date'];
+		$data['mobile'] 		= is_null($param['mobile'])
+								? 0 
+								: $param['mobile'];
+		$data['money']      	= is_null($param['money'])
+								? 0
+								: $param['money'];
+		$data['pay_account'] 	= is_null($param['pay_account'])
+								? 0
+								: $param['pay_account'] ;
+		$data['pay_type'] 		= is_null($param['pay_type'])
+								? 0
+								: $param['pay_type'];
+		$data['appoint_time'] 	= is_null($param['appoint_time'])
+								? 0
+								: $param['appoint_time'];
+		$data['msg'] 			= is_null($param['msg'])
+								? ''
+								: $param['msg'];
+		$data['is_finish']      = is_null($param['is_finish'])
+								? 0
+								: $param['is_finish'];
+		$data['steward_id']     = is_null($param['steward_id'])
+								? 0
+								: $param['steward_id'];
+		$data['admin_type']     = is_null($param['admin_type'])
+								? 0
+								: $param['admin_type'];
+		$data['zS']				= is_null($param['zS'])
+								? 0
+								: $param['zS'];
+		$data['zD']				= is_null($param['zD'])
+								? 0
+								: $param['zD'];
+		$data['zQ']				= is_null($param['zQ'])
+								? 0
+								: $param['zQ'];
+		$data['roomD']			= is_null($param['roomD'])
+								? 0
+								: $param['roomD'];
+		$data['wx_fee']         = is_null($param['wx_fee'])
+								? 0
+								: $param['wx_fee'];
+		$data['wx_des']			= is_null($param['wx_des'])
+								? ''
+								: $param['wx_des'];
+		$data['check_item']     = is_null($param['check_item'])
+								? 0
+								: $param['check_item'];
+		$data['check_out_goods']= is_null($param['check_out_goods'])
+								? 0
+								: $param['check_out_goods'];
+		$data['check_out_type'] = is_null($param['check_out_type'])
+								? 0
+								: $param['check_out_type'];
+
+		$res = $MSchedule->add($data);
+
+		if ( $res ) {
+			$MSchedule->commit();
+			return true;
+		} else {
+			$MSchedule->rollback();
+			return false;
+		}
 	}
 
 	/**

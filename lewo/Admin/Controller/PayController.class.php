@@ -211,7 +211,7 @@ class PayController extends Controller {
 
         $show       = $Page->show();// 分页显示输出
         // 这一堆 有待优化 在租客表中加上合同的pro_id
-        $field .= 'c.ht_id,c.account_id,c.room_id,c.pay_date,c.create_time,c.actual_end_time,c.start_time,c.end_time,c.rent_date,c.period,c.deposit,c.ht_rent,c.ht_fee,c.ht_wgfee,c.contract_status,';
+        $field .= 'c.ht_id,c.account_id,c.room_id,c.pay_date,c.create_time,c.actual_end_time,c.start_time,c.end_time,c.rent_date,c.period,c.deposit,c.actual_deposit,c.ht_rent,actual_rent,c.ht_fee,c.ht_wgfee,c.contract_status,';
         $field .= 'cb.room_id,cb.house_id,cb.house_code,cb.account_id,cb.water_fee,cb.public_energy_fee,cb.energy_fee,cb.gas_fee,cb.rubbish_fee,cb.person_day,cb.total_person_day,cb.total_energy,cb.total_water,cb.total_gas,cb.wgfee_unit,cb.room_energy_fee,cb.rent_fee,cb.rent_des,cb.service_fee,cb.wx_fee,cb.wx_des,cb.type,cb.handling_fee,cb.total_person_energy,cb.rent_date_old,cb.rent_date_to,';
         $field .= 'p.room_id,p.price,p.bill_type,p.pay_money,p.pay_status,p.pay_time,p.account_id,p.pro_id,p.pay_type,p.is_show,p.input_month,p.input_year,p.should_date,p.last_date,p.is_send,p.favorable,p.favorable_des,p.bill_des,';
         $field .= 'a.mobile,a.realname,';
@@ -221,7 +221,7 @@ class PayController extends Controller {
         $list       = $MPay
                     ->alias('p')
                     ->field($field)
-                    ->join('(select id AS ht_id,account_id,room_id,pay_date,create_time,actual_end_time,MAX(start_time) AS start_time,end_time,rent_date,period,deposit,rent AS ht_rent,fee AS ht_fee,wg_fee AS ht_wgfee,contract_status from lewo_contract GROUP BY account_id,room_id) AS c ON p.account_id=c.account_id AND p.room_id=c.room_id ','left')
+                    ->join('(select id AS ht_id,account_id,room_id,pay_date,create_time,actual_end_time,MAX(start_time) AS start_time,end_time,rent_date,period,deposit,actual_deposit,rent AS ht_rent,actual_rent,fee AS ht_fee,wg_fee AS ht_wgfee,contract_status from lewo_contract GROUP BY account_id,room_id) AS c ON p.account_id=c.account_id AND p.room_id=c.room_id ','left')
                     ->join('lewo_charge_bill cb ON p.pro_id=cb.pro_id','left')
                     ->join('lewo_account a ON p.account_id=a.id','left')
                     ->join('lewo_room r ON p.room_id=r.id','left')

@@ -695,9 +695,13 @@ class StewardController extends Controller {
                 case 3:
                     // 日常
                     // 修改合同信息
-                    $charge_info = M("charge_bill")->where(array("pro_id"=>$pro_id))->find();
+                    $charge_info = M('charge_bill')->where(['pro_id' => $pro_id])->find();
                     $rent_date = $charge_info['rent_date_to']; //房租到期日
-                    $MContract->where(array('account_id'=>$account_id,'room_id'=>$room_id,'contract_status'=>1))->save(array("rent_date"=>$rent_date));
+                    $MContract->where([
+                        'account_id' => $account_id, 
+                        'room_id' => $room_id, 
+                        'contract_status'=>1
+                    ])->save(['rent_date' => $rent_date]);
                     break;
             }
             // lewo_pay表修改内容
@@ -764,11 +768,11 @@ class StewardController extends Controller {
                 'rent_fee' => ['房租', $pay_list['rent_fee']],
                 'total_daily_room_fee' => [
                     '水电气',
-                    $pay_list['room_energy_fee']
-                    + $pay_list['water_fee']
-                    + $pay_list['energy_fee']
-                    + $pay_list['gas_fee']
-                    + $pay_list['rubbish_fee']
+                    $pay_list['room_energy_fee'] +
+                    $pay_list['water_fee'] +
+                    $pay_list['energy_fee'] +
+                    $pay_list['gas_fee'] +
+                    $pay_list['rubbish_fee'],
                 ],
                 'wx_fee' => ['维修费', $pay_list['wx_fee']],
                 'wgfee_unit' => ['物管费', $pay_list['wgfee_unit']],

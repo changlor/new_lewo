@@ -617,7 +617,7 @@ class StewardController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $pro_id = I('pro_id');
             $pay_type = I('pay_type');
-            $pay_money = I('actual_price'),
+            $pay_money = I('actual_price');
             // 合同账单
             $contract_bill = [
                 'check_price' => I('check_price'),

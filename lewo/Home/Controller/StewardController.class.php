@@ -445,6 +445,7 @@ class StewardController extends Controller {
         $this->display("Steward/common/footer");
     }
 
+
     /**
      * [入住--房屋列表]
      **/
@@ -866,11 +867,12 @@ class StewardController extends Controller {
     //管家查看的租客合同 自有管家才能进
     public function tenant_contract(){
         $account_id = I('account_id');
-        $room_id = I('room_id');
+        $room_id    = I('room_id');
         $pro_id = I('pro_id');
         $filters = empty($pro_id)
         ? ['c.account_id' => $account_id, 'c.room_id' => $room_id]
         : ['c.pro_id' => $pro_id];
+
         $MContract = M('contract');
         $contract_list = $MContract
         ->alias('c')
@@ -885,6 +887,7 @@ class StewardController extends Controller {
         foreach ($contract_list as $key => $val) {
             $contract_list[$key]['rent_type'] = explode('_', $val['rent_type']);
         }
+
         $this->assign('contract_list',$contract_list);
         $this->display('tenant-contract');
     }
@@ -1055,16 +1058,16 @@ class StewardController extends Controller {
         $DAmmeterRoom = D("ammeter_room");
         $flag       = true;
         switch ($type) {
-            case 1:
+            case 2:
                 $schedule_type = 1;//退房
                 break;
-            case 2:
+            case 3:
                 $schedule_type = 2;//换房
                 break;
-            case 3:
+            case 4:
                 $schedule_type = 3;//转房
                 break;
-            case 4:
+            case 5:
                 $schedule_type = 1;//退房
                 $param['check_out_type'] = 1;//违约退租
                 break;
@@ -1076,9 +1079,10 @@ class StewardController extends Controller {
         if ( empty($account_id) || empty($room_id) ) $this->error('数据丢失');
         if ( !empty($_POST) ) {
             if ( I('is_success') != 1 ) $this->error('未验房');
-            $check_item_keys  = array_fill_keys(array_keys(C('check_item')),'0');//将config中的数据 值转换成 false
-            //序列化 检查物品数据
-            $check_item_data = serialize(array_replace($check_item_keys, I('check_item')));
+            //判断是否已经提交退房请求
+
+            $check_item_keys  = array_fill_keys(array_keys(C('check_item')),'0');
+            $check_item_data  = serialize(array_replace($check_item_keys, I('check_item')));
 
             $house_id = $MRoom->alias('r')->join('lewo_houses h ON r.house_code=h.house_code')->where(array('r.id'=>$room_id))->getField('h.id');
             //判断录入的水电气是否低于最新录入的水电气
@@ -1102,26 +1106,31 @@ class StewardController extends Controller {
                 }
             }
             $roomD = serialize(i_array_column(I('roomD'), 'room_energy'));
-
-            $param = array(
-                'steward_id' => $_SESSION['steward_id'],
-                'account_id' => $account_id,
-                'room_id' => $room_id,
+            $mobile = M('account')->where(['id'=>$account_id])->getField('mobile');
+            $param = [
+                'steward_id'    => $_SESSION['steward_id'],
+                'account_id'    => $account_id,
+                'mobile'        => $mobile,
+                'room_id'       => $room_id,
                 'schedule_type' => $schedule_type,
-                'check_item' => $check_item_data,
-                'pay_account' => I('pay_account'),
-                'pay_type' => I('pay_type'),
-                'admin_type' => C('admin_type_cn'),//出纳
-                'zS' => I('zS'),
-                'zD' => I('zD'),
-                'zQ' => I('zQ'),
-                'roomD' => $roomD,
-                'wx_fee' => I('wx_fee'),
-                'wx_des' => I('wx_des'),
-                );
-            dump($param);exit;
+                'check_item'    => $check_item_data,
+                'pay_account'   => I('pay_account'),
+                'pay_type'      => I('pay_type'),
+                'msg'           => I('check_out_msg'),
+                'admin_type'    => C('admin_type_cn'),//出纳
+                'zS'            => I('zS'),
+                'zD'            => I('zD'),
+                'zQ'            => I('zQ'),
+                'roomD'         => $roomD,
+                'wx_fee'        => I('wx_fee'),
+                'wx_des'        => I('check_out_msg'),
+                'status'        => 2,
+                'check_out_goods' => serialize(I('goods')),
+            ];
+
             //将数据放入schedule表中，展示给后台看
-            $DSchedule->create_new_schedule($param);
+            $result = $DSchedule->create_new_schedule($param);
+            if ( !$result ) $this->error('插入待办有误，请联系管理员!');
 exit;
             //执行退房修改操作
             //修改房间状态

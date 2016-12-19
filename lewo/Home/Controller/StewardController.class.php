@@ -732,7 +732,7 @@ class StewardController extends Controller {
                 'lewo_charge_bill.rent_fee',
                 'lewo_charge_bill.wgfee_unit',
                 'lewo_charge_bill.service_fee',
-                //room
+                // room
                 'lewo_room.room_code', 'lewo_room.house_code',
                 //houses
                 'lewo_houses.area_id',

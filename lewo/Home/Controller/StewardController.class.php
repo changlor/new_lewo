@@ -613,37 +613,172 @@ class StewardController extends Controller {
         }
     }
 
-    //管家代收
+    // 管家代收
     public function steward_collection() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $pro_id = I('pro_id');
-            $deposit = I('deposit');
-            $rent = I('rent');
-            $fee = I('fee');
-            $wg_fee = I('wg_fee');
-            
-        } else {
-            $account_id = I('account_id');
-            $room_id = I('room_id');
-            $pro_id = I('pro_id');
-            $filters = empty($pro_id)
-            ? ['c.account_id' => $account_id, 'c.room_id' => $room_id]
-            : ['c.pro_id' => $pro_id];
-            $MContract = M('contract');
-            $contract_list = $MContract
-            ->alias('c')
-            ->field('a.mobile,a.realname,c.deposit,c.book_deposit,c.balance,c.period,c.rent_type,c.contract_status,c.actual_end_time,c.start_time,c.end_time,c.rent_date,c.rent,c.fee,c.contact2,c.person_count,c.photo,c.wg_fee,c.total_fee,c.pro_id,r.room_code,r.house_code,h.area_id,area.area_name,p.price')
-            ->join('lewo_pay p ON p.pro_id = c.pro_id')
-            ->join('lewo_account a ON a.id = c.account_id')
-            ->join('lewo_room r ON r.id = c.room_id')
-            ->join('lewo_houses h ON h.house_code = r.house_code')
-            ->join('lewo_area area ON h.area_id = area.id')
-            ->where($filters)
-            ->select();
-            foreach ($contract_list as $key => $val) {
-                $contract_list[$key]['rent_type'] = explode('_', $val['rent_type']);
+            $pay_type = I('pay_type');
+            $pay_money = I('actual_price');
+            // 合同账单
+            $contract_bill = [
+                'check_price' => I('check_price'),
+                'actual_deposit' => I('actual_deposit'),
+                'actual_rent' => I('actual_rent'),
+            ];
+            // 日常账单
+            $charge_bill = [
+                'should_price' => I('should_price'),
+            ];
+            // 获取模型实例
+            $MContract  = M('contract'); $MPay = M('pay'); $DPay = D('pay');
+            // 获取支付信息
+            $pay_info = $MPay->where(array("pro_id"=>$pro_id))->find();
+            // 账单类型
+            $bill_type = $pay_info['bill_type'];
+            // 租客id
+            $account_id = $pay_info["account_id"];
+            // 房间id
+            $room_id = $pay_info["room_id"];
+            // 如果实际收取金额大于支付金额，则返回数据错误
+            if ($pay_money > $pay_info['price']) {
+                $this->error('输入的金额大于应付金额');
             }
-            $this->assign('contract_list',$contract_list);
+            // 未支付和未付完 则生成欠款
+            if ($pay_money < $pay_info['price'] && $pay_status == 1) {           
+                switch ($bill_type) {
+                    case 2:
+                    case 7:
+                        $due_bill_type = 7;
+                        break;
+                    case 3:
+                    case 8:
+                        $due_bill_type = 8;
+                        break;
+                    default:
+                        $due_bill_type = 9;
+                        break;
+                }
+
+                $due_price = $pay_info['price'] - $pay_money;
+                $lewo_pay_due = [
+                    'account_id' => $account_id,
+                    'room_id' => $room_id,
+                    'bill_type' => $due_bill_type,
+                    'input_year' => $pay_info['input_year'],
+                    'input_month' => $pay_info['input_month'],
+                    'should_date' => $pay_info['should_date'],
+                    'last_date' => $pay_info['last_date'],
+                    'price' => $due_price,
+                    'is_send' => 1,
+                ];
+                $res = $DPay->create_bill($lewo_pay_due);
+                if (!$res) {
+                    $this->error('欠款账单生成失败!');
+                }
+            }
+            // 修改房屋合同信息
+            switch ($bill_type) {
+                case 2:
+                    // 合同
+                    $DRoom = D('room');
+                    // roomstatus
+                    // 0 未租, 1 缴纳定金, 2 已住
+                    $DRoom->setRoomStatus($room_id, 2);
+                    $DRoom->setRoomPerson($room_id, $account_id);
+                    //修改合同正常
+                    $lewo_contract = [
+                        'actual_rent' => $contract_bill['actual_rent'],
+                        'actual_deposit' => $contract_bill['actual_deposit'],
+                        'contract_status' => 1,
+                    ];
+                    M('contract')->where(['pro_id' => $pro_id])->save($lewo_contract);
+                    break;
+                case 3:
+                    // 日常
+                    // 修改合同信息
+                    $charge_info = M("charge_bill")->where(array("pro_id"=>$pro_id))->find();
+                    $rent_date = $charge_info['rent_date_to']; //房租到期日
+                    $MContract->where(array('account_id'=>$account_id,'room_id'=>$room_id,'contract_status'=>1))->save(array("rent_date"=>$rent_date));
+                    break;
+            }
+            // lewo_pay表修改内容
+            $lewo_pay = [
+                'pay_type' => $pay_type,
+                'pay_status' => 1,
+                'pay_time' => date('Y-m-d H:i:s'),
+                'pay_money' => $pay_money,
+            ];
+            
+            $res = M('pay')->where(['pro_id' => $pro_id])->save($lewo_pay);
+            $res == false ? $this->error('修改账单失败!', U('Steward/steward_collection', ['pro_id' => $pro_id])) : U('Steward/allbills');
+        } else {
+            $pro_id = I('pro_id');
+            $field = [
+                // account
+                'lewo_account.realname',
+                // area
+                'lewo_area.area_name', 'lewo_area.id',
+                // contract
+                'lewo_contract.pro_id',
+                'lewo_contract.deposit', 'lewo_contract.rent',
+                'lewo_contract.fee', 'lewo_contract.wg_fee',
+                //
+                'lewo_charge_bill.pro_id',
+                'lewo_charge_bill.water_fee',
+                'lewo_charge_bill.room_energy_fee',
+                'lewo_charge_bill.wx_fee',
+                'lewo_charge_bill.rubbish_fee',
+                'lewo_charge_bill.energy_fee',
+                'lewo_charge_bill.gas_fee',
+                'lewo_charge_bill.rent_fee',
+                'lewo_charge_bill.wgfee_unit',
+                'lewo_charge_bill.service_fee',
+                // room
+                'lewo_room.room_code', 'lewo_room.house_code',
+                //houses
+                'lewo_houses.area_id',
+                //pay
+                'lewo_pay.price', 'lewo_pay.bill_type',
+            ];
+            $field = implode(',', $field);
+            $filters = ['lewo_pay.pro_id' => $pro_id];
+            $MPay = M('pay');
+            $pay_list = $MPay
+            ->field($field)
+            ->join('lewo_contract ON lewo_pay.pro_id = lewo_contract.pro_id', 'left')
+            ->join('lewo_account ON lewo_account.id = lewo_pay.account_id', 'left')
+            ->join('lewo_room ON lewo_room.id = lewo_pay.room_id', 'left')
+            ->join('lewo_charge_bill ON lewo_charge_bill.pro_id = lewo_pay.pro_id', 'left')
+            ->join('lewo_houses ON lewo_houses.house_code = lewo_room.house_code', 'left')
+            ->join('lewo_area ON lewo_houses.area_id = lewo_area.id', 'left')
+            ->where($filters)
+            ->find();
+
+            $pay_classify['合同'] = [
+                'deposit' => ['押金', $pay_list['deposit'], 'need_modify'],
+                'rent' => ['房租', $pay_list['rent'], 'need_modify'],
+                'fee' => ['服务费', $pay_list['fee']],
+                'wg_fee' => ['物业费', $pay_list['wg_fee']],
+                'price' => ['总金额', $pay_list['price']],
+            ];
+            $pay_classify['日常'] = [
+                'rent_fee' => ['房租', $pay_list['rent_fee']],
+                'total_daily_room_fee' => [
+                    '水电气',
+                    $pay_list['room_energy_fee']
+                    + $pay_list['water_fee']
+                    + $pay_list['energy_fee']
+                    + $pay_list['gas_fee']
+                    + $pay_list['rubbish_fee']
+                ],
+                'wx_fee' => ['维修费', $pay_list['wx_fee']],
+                'wgfee_unit' => ['物管费', $pay_list['wgfee_unit']],
+                'service_fee' => ['服务费', $pay_list['service_fee']],
+                'should_price' => ['总金额', $pay_list['price']],
+                'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
+            ];
+            $pay_list['pay_classify'] = $pay_classify[C('bill_type')[$pay_list['bill_type']]];
+            $this->assign('pay_list',$pay_list);
             $this->assign('pro_id', $pro_id);
             $this->display('steward-collection');
         }

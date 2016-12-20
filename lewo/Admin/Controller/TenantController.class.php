@@ -101,7 +101,7 @@ class TenantController extends Controller {
             $account_id = I("account_id");
             $is_can_create_bill = I("is_can_create_bill");
             $where['pro_id']        = $pro_id;
-            $save['contract_number']= I("contract_number");
+            
             $save['start_time']     = I("start_time");
             $save['end_time']       = I("end_time");
             $save['rent_date']      = I("rent_date");
@@ -116,6 +116,7 @@ class TenantController extends Controller {
             $save['roomD']          = I("roomd");
             $save['total_fee']      = I("total_fee");
             $save['contract_status']= I("contract_status");
+            $save['contract_number']= I("contract_number");
 
             M()->startTrans();
 
@@ -139,7 +140,7 @@ class TenantController extends Controller {
 
             $psave['modify_log'] = $modify_log;
 
-            $result     = $MContract->where($where)->save($save);  
+            $result     = $MContract->where($where)->save($save); 
             $result2    = $MPay->where($where)->save($psave);
 
             if ( $result ) {    
@@ -155,7 +156,7 @@ class TenantController extends Controller {
                 }
             }
 
-            if( $result || $result2 ){
+            if( $result && $result2 ){
                 M()->commit();
                 $this->success($msg."修改成功!");
             } else {

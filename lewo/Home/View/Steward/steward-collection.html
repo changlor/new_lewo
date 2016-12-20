@@ -113,6 +113,28 @@ function toIndex(){
                             </div>
                         </volist>
                         <div class="row-fluid">
+                            <div class="col-xs-12 innre-bill-box">
+                                <div class="panel-heading innre-bill-image-i">
+                                    <ul>
+                                        <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
+                                        <li class="innre-bill-text3">
+                                            <style>
+                                                select {
+                                                    background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+                                                }
+                                            </style>
+                                            <select name="pay_type">
+                                                <volist name="pay_type" id="value">
+                                                    <option value="{$value}">{$key}</option>
+                                                </volist>
+                                            </select>
+                                        </li>
+                                        <li class="innre-bill-text1" style="line-height: 36px;">支付类型</li><br>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
                             <div class="col-xs-12"><div style="height:90px;"></div></div>
                         </div>
                     </div>

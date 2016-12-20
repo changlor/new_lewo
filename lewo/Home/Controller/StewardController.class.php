@@ -616,29 +616,39 @@ class StewardController extends Controller {
     // 管家代收
     public function steward_collection() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // 获取订单id
             $pro_id = I('pro_id');
-            $pay_type = I('pay_type');
-            $pay_money = I('actual_price');
-            // 合同账单
-            $contract_bill = [
-                'check_price' => I('check_price'),
-                'actual_deposit' => I('actual_deposit'),
-                'actual_rent' => I('actual_rent'),
-            ];
-            // 日常账单
-            $charge_bill = [
-                'should_price' => I('should_price'),
-            ];
             // 获取模型实例
             $MContract  = M('contract'); $MPay = M('pay'); $DPay = D('pay');
             // 获取支付信息
-            $pay_info = $MPay->where(array("pro_id"=>$pro_id))->find();
+            $pay_info = $MPay->where(['pro_id' => $pro_id])->find();
+            // 所有类型账单通用数据
+            $pay_type = I('pay_type');
+            $pay_money = I('actual_price');
+            $pay_time = date('Y-m-d H:i:s');
+            // 合同账单
+            $contract_bill = [
+                'actual_deposit' => I('actual_deposit'),
+                'actual_rent' => I('actual_rent'),
+            ];
             // 账单类型
             $bill_type = $pay_info['bill_type'];
             // 租客id
             $account_id = $pay_info["account_id"];
             // 房间id
             $room_id = $pay_info["room_id"];
+            // 修改日志
+            $modify_log  = $pay_info['modify_log'];
+            $modify['修改人'] = '管家(' . $_SESSION['steward_nickname'] . '|' . $_SESSION['steward_user'] . ')时间:' . date('Y-m-d H:i:s') . '代收';
+            $modify['支付状态'] = '未支付-><b style="color: green;">已支付</b>';
+            $modify['支付方式'] = C('pay_type')[$pay_type];
+            $modify['支付金额'] = $pay_info['pay_money'] . '-><b style="color: green;">' . $pay_money . '</b>';
+            $modify['支付时间'] = '<b style="color: green;">' . $pay_time . '</b>';
+            $modify['备注'] = '管家代收';
+            $modify_log = '';
+            foreach ($modify as $key => $value) {
+                $modify_log .= '<br>' . $key . ': ' . $value;
+            }
             // 如果实际收取金额大于支付金额，则返回数据错误
             if ($pay_money > $pay_info['price']) {
                 $this->error('输入的金额大于应付金额');
@@ -709,12 +719,15 @@ class StewardController extends Controller {
             $lewo_pay = [
                 'pay_type' => $pay_type,
                 'pay_status' => 1,
-                'pay_time' => date('Y-m-d H:i:s'),
+                'pay_time' => $pay_time,
                 'pay_money' => $pay_money,
+                'modify_log' => $modify_log,
             ];
             
             $res = M('pay')->where(['pro_id' => $pro_id])->save($lewo_pay);
-            $res == false ? $this->error('修改账单失败!', U('Steward/steward_collection', ['pro_id' => $pro_id])) : U('Steward/allbills');
+            $res == false
+            ? $this->error('修改账单失败!', U('Steward/steward_collection', ['pro_id' => $pro_id]))
+            : $this->success('成功', U('Steward/allbills'));
         } else {
             $pro_id = I('pro_id');
             $field = [
@@ -759,8 +772,8 @@ class StewardController extends Controller {
             ->find();
 
             $pay_classify['合同'] = [
-                'deposit' => ['押金', $pay_list['deposit'], 'need_modify'],
-                'rent' => ['房租', $pay_list['rent'], 'need_modify'],
+                'actual_deposit' => ['押金', $pay_list['deposit'], 'need_modify'],
+                'actual_rent' => ['房租', $pay_list['rent'], 'need_modify'],
                 'fee' => ['服务费', $pay_list['fee']],
                 'wg_fee' => ['物业费', $pay_list['wg_fee']],
                 'price' => ['总金额', $pay_list['price']],
@@ -781,7 +794,15 @@ class StewardController extends Controller {
                 'should_price' => ['总金额', $pay_list['price']],
                 'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
             ];
-            $pay_list['pay_classify'] = $pay_classify[C('bill_type')[$pay_list['bill_type']]];
+            $pay_classify['others'] = [
+                'should_price' => ['应收金额', $pay_list['price']],
+                'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
+            ];
+
+            isset($pay_classify[C('bill_type')[$pay_list['bill_type']]])
+            ? $pay_list['pay_classify'] = $pay_classify[C('bill_type')[$pay_list['bill_type']]]
+            : $pay_list['pay_classify'] = $pay_classify['others'];
+            
             $this->assign('pay_list',$pay_list);
             $this->assign('pro_id', $pro_id);
             $this->display('steward-collection');

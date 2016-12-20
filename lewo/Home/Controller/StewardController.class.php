@@ -629,7 +629,10 @@ class StewardController extends BaseController {
         ->join('lewo_account ON lewo_account.id = lewo_pay.account_id', 'left')
         ->find();
         $content = '乐窝小主' . $pay_info['realname'] . '，你有' . $pay_info['price'] . '元的' . C('bill_type')[$pay_info['bill_type']] . '账单' . '还没支付，请到个人页面进行支付 http://' . $_SERVER['HTTP_HOST'];
-        parent::sms($pro_id, $content);
+        $res = parent::sms($pro_id, $content);
+        $res['sms_callback'][1] == 0
+        ? $this->success('发送成功',  U('Steward/allbills'))
+        : $this->error('发送失败',  U('Steward/allbills'));
     }
 
     // 管家代收
@@ -828,11 +831,19 @@ class StewardController extends BaseController {
                 'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
             ];
 
+            $pay_type = [
+                '支付宝(转账)' => 2,
+                '微信(转账)' => 4,
+                '现金' => 6,
+                '银行卡' => 7,
+            ];
+
             isset($pay_classify[C('bill_type')[$pay_list['bill_type']]])
             ? $pay_list['pay_classify'] = $pay_classify[C('bill_type')[$pay_list['bill_type']]]
             : $pay_list['pay_classify'] = $pay_classify['others'];
 
             $this->assign('pay_list',$pay_list);
+            $this->assign('pay_type', $pay_type);
             $this->assign('pro_id', $pro_id);
             $this->display('steward-collection');
         }

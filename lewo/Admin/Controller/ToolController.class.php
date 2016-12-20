@@ -16,6 +16,41 @@ class ToolController extends Controller {
         $this->display("index");
         $this->display("Common/footer");
     }
+
+    private function _deleteDir($R){
+        //打开一个目录句柄
+        $handle = opendir($R);
+        //读取目录,直到没有目录为止
+        while(($item = readdir($handle)) !== false){
+            //跳过. ..两个特殊目录
+            if($item != '.' and $item != '..'){
+                //如果遍历到的是目录
+                if(is_dir($R.'/'.$item)){
+                    //继续向目录里面遍历
+                    $this->_deleteDir($R.'/'.$item);
+                }else{
+                    //如果不是目录，删除该文件
+                    if(!unlink($R.'/'.$item))
+                        die('error!');
+                }
+            }
+        }
+        //关闭目录
+        closedir( $handle );
+        //删除空的目录
+        return rmdir($R); 
+    }
+
+    //清除缓存--删除runtime文件夹
+    public function delRun () {
+        //获取当前的缓存目录
+        $R = RUNTIME_PATH;
+        //执行删除函数
+        if($this->_deleteDir($R))
+            //$this->error('删除成功！');
+        die("清除成功!");
+    }
+
     /**
     * [针对之前的日常账单和合同账单没有在lewo_pay表中生成关联数据，此功能将未生成的数据在lewo_pay中添加数据以致能够关联]
     **/

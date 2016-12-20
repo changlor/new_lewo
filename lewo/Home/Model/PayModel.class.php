@@ -106,6 +106,7 @@ class PayModel extends Model{
 		$MPay = M('pay');
 		$filters = [
 			'lewo_pay.is_show' => 1,
+			'lewo_pay.is_send' => 1,
 			'lewo_houses.steward_id' => $steward_id,
 		];
 		$field = [

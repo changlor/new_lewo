@@ -152,7 +152,7 @@
                                                 <td colspan="5" align="center">
                                                     <if condition="$vo.pay_status eq 0">
                                                         <a href="{:U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']])}" class="btn btn-success btn-mini">管家代收</a>
-                                                        <a class="btn btn-success btn-mini">催款</a>
+                                                        <a onclick="window.location.href = '{:U('Home/Steward/press_money', ['pro_id' => $vo['pro_id']])}'" class="btn btn-success btn-mini">催款</a>
                                                     </if>
                                                     <label onclick="window.location.href = '{:U('Home/Steward/tenant_contract', ['pro_id' => $vo['pro_id']])}'" class="btn btn-warning btn-mini">详情</label>
                                                 </td>
@@ -171,7 +171,7 @@
                                                 <td colspan="5" align="center">
                                                     <if condition="$vo.pay_status eq 0">
                                                         <a href="{:U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']])}" class="btn btn-success btn-mini">管家代收</a>
-                                                        <a class="btn btn-danger btn-mini">催款</a>
+                                                        <a onclick="window.location.href = '{:U('Home/Steward/press_money', ['pro_id' => $vo['pro_id']])}'" class="btn btn-danger btn-mini">催款</a>
                                                     </if>
                                                     <label onclick="window.location.href = '{:U('Home/Steward/total_daily_room_fee', ['pro_id' => $vo['pro_id'], 'account_id' => $vo['account_id']])}'" class="btn btn-warning btn-mini">详情</label>
                                                 </td>
@@ -183,7 +183,7 @@
                                             <tr class="info">
                                                 <td colspan="5" align="center">
                                                     <a href="{:U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']])}" class="btn btn-success btn-mini">管家代收</a>
-                                                    <a class="btn btn-danger btn-mini">催款</a>
+                                                    <a onclick="window.location.href = '{:U('Home/Steward/press_money', ['pro_id' => $vo['pro_id']])}'" class="btn btn-danger btn-mini">催款</a>
                                                 </td>
                                             </tr>
                                         </if>

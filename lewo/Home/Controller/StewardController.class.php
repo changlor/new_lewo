@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class StewardController extends Controller {
+class StewardController extends BaseController {
 	public function __construct(){
 		parent::__construct();
 		if ( empty($_SESSION['steward_id'])) {
@@ -611,6 +611,25 @@ class StewardController extends Controller {
             $this->assign('room_info',$DRoom->getRoom($schedule_info['room_id']));
             $this->display("check-in");
         }
+    }
+
+    //催款
+    public function press_money($pro_id) {
+        $MPay = M('pay');
+        $field = [
+            // account
+            'lewo_account.realname',
+            //pay
+            'lewo_pay.price', 'lewo_pay.bill_type',
+        ];
+        $field = implode(',', $field);
+        $pay_info = $MPay
+        ->field($field)
+        ->where(['pro_id' => $pro_id])
+        ->join('lewo_account ON lewo_account.id = lewo_pay.account_id', 'left')
+        ->find();
+        $content = '乐窝小主' . $pay_info['realname'] . '，你有' . $pay_info['price'] . '元的' . C('bill_type')[$pay_info['bill_type']] . '账单' . '还没支付，请到个人页面进行支付 http://' . $_SERVER['HTTP_HOST'];
+        parent::sms($pro_id, $content);
     }
 
     // 管家代收

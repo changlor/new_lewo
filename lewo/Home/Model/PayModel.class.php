@@ -4,7 +4,45 @@ use Think\Model;
 /**
 * [支付表]
 */
-class PayModel extends Model{
+class PayModel extends Model {
+
+	protected $table;
+	protected $tableName = 'pay';
+	protected $field = [
+		'pro_id', 'account_id', 'room_id', 
+		'price',
+		'pay_money', 'pay_status',
+		'bill_type', 'bill_des',
+		'is_show', 'is_send',
+		'create_time', 'should_date', 'last_date',
+		'favorable', 'favorable_des',
+	];
+
+	public function __construct()
+	{
+		$this->table = M($this->tableName);
+	}
+
+	public function select($where, $field)
+	{
+		$field = empty($field) ? '' : $field;
+		$where = empty($where) ? '' : $where;
+		$field = implode(',', $field);
+		return $this->table
+		->field($field)
+		->where($where);
+	}
+
+	public function getPayList($where, $field)
+	{
+		return $this->select($where, $field)->find();
+	}
+
+	public function getPayLists($where, $field)
+	{
+		return $this->select($where, $field)->select();
+	}
+
 	/**
 	* [生成一个账单]
 	* @param $account_id 租客账号id

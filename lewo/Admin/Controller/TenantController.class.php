@@ -101,6 +101,7 @@ class TenantController extends Controller {
             $account_id = I("account_id");
             $is_can_create_bill = I("is_can_create_bill");
             $where['pro_id']        = $pro_id;
+            $save['contract_number']= I("contract_number");
             $save['start_time']     = I("start_time");
             $save['end_time']       = I("end_time");
             $save['rent_date']      = I("rent_date");
@@ -206,6 +207,10 @@ class TenantController extends Controller {
         //合同状态
         if ( $save['contract_status'] != $contract_info['contract_status'] ) {
             $modify_log .= C('contract_status_arr')[$contract_info['contract_status']].'--> <b style="color:green">'.C('contract_status_arr')[$save['contract_status']].'</b>;<br/>';
+        }
+        //开始日期
+        if ( $save['contract_number'] != $contract_info['contract_number'] ) {
+            $modify_log .= '合同编号:'.$contract_info['contract_number'].'--> <b style="color:green">'.$save['contract_number'].'</b>;<br/>';
         }
         //开始日期
         if ( $save['start_time'] != $contract_info['start_time'] ) {

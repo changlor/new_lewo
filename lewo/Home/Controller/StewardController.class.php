@@ -754,6 +754,9 @@ class StewardController extends Controller {
                 'lewo_room.room_code', 'lewo_room.house_code',
                 //houses
                 'lewo_houses.area_id',
+                'lewo_houses.building',
+                'lewo_houses.floor',
+                'lewo_houses.door_no',
                 //pay
                 'lewo_pay.price', 'lewo_pay.bill_type',
             ];
@@ -772,13 +775,18 @@ class StewardController extends Controller {
             ->find();
 
             $pay_classify['合同'] = [
+                'realname' => ['租客', $pay_list['realname']],
+                'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
                 'actual_deposit' => ['押金', $pay_list['deposit'], 'need_modify'],
                 'actual_rent' => ['房租', $pay_list['rent'], 'need_modify'],
                 'fee' => ['服务费', $pay_list['fee']],
                 'wg_fee' => ['物业费', $pay_list['wg_fee']],
                 'price' => ['总金额', $pay_list['price']],
             ];
+
             $pay_classify['日常'] = [
+                'realname' => ['租客', $pay_list['realname']],
+                'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
                 'rent_fee' => ['房租', $pay_list['rent_fee']],
                 'total_daily_room_fee' => [
                     '水电气',
@@ -795,6 +803,8 @@ class StewardController extends Controller {
                 'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
             ];
             $pay_classify['others'] = [
+                'realname' => ['租客', $pay_list['realname']],
+                'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
                 'should_price' => ['应收金额', $pay_list['price']],
                 'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
             ];
@@ -802,7 +812,7 @@ class StewardController extends Controller {
             isset($pay_classify[C('bill_type')[$pay_list['bill_type']]])
             ? $pay_list['pay_classify'] = $pay_classify[C('bill_type')[$pay_list['bill_type']]]
             : $pay_list['pay_classify'] = $pay_classify['others'];
-            
+
             $this->assign('pay_list',$pay_list);
             $this->assign('pro_id', $pro_id);
             $this->display('steward-collection');

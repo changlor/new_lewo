@@ -629,8 +629,10 @@ class StewardController extends BaseController {
         ->join('lewo_account ON lewo_account.id = lewo_pay.account_id', 'left')
         ->find();
         $content = '乐窝小主' . $pay_info['realname'] . '，你有' . $pay_info['price'] . '元的' . C('bill_type')[$pay_info['bill_type']] . '账单' . '还没支付，请到个人页面进行支付 http://' . $_SERVER['HTTP_HOST'];
-        parent::sms($pro_id, $content);
-        $this->success('成功', U('Steward/allbills'));
+        $res = parent::sms($pro_id, $content);
+        $res['sms_callback'][1] == 0
+        ? $this->success('发送成功',  U('Steward/allbills'))
+        : $this->error('发送失败',  U('Steward/allbills'));
     }
 
     // 管家代收

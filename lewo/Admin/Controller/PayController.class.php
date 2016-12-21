@@ -279,6 +279,10 @@ class PayController extends Controller {
                     $service_fee = $val['ht_fee'];
                     $wg_fee = $val['ht_wgfee'];
                     $ht_deposit = $val['deposit'];
+                    // 合同实收押金
+                    $list[$key]['ht_actual_deposit'] = $val['actual_deposit'];
+                    // 合同实收房租
+                    $list[$key]['ht_actual_rent'] = $val['actual_rent'];
                     //合同账单的房租到期日计算
                     $list[$key]['rent_date_to'] = date('Y-m-d',strtotime($val['start_time'].' +'.$val['period'].' month -1 day'));
                     break;
@@ -318,11 +322,11 @@ class PayController extends Controller {
             $file_time = date('Ymd',time());
             header("Content-Disposition: attachment; filename=".$file_time."乐窝账单.xls");
             $data = null;
-            $data .= "类型\t房间编号\t床位编号\t小区楼层\t管家\t姓名\t电话\t合同开始\t合同结束\t房租到期\t最迟缴费\t倒计时\t缴费周期\t批次\t押金\t房租\t服务费\t水电气\t物管\t欠费\t欠费描述\t优惠\t应付\t实收\t支付时间\t支付方式\n";
+            $data .= "类型\t房间编号\t床位编号\t小区楼层\t管家\t姓名\t电话\t合同开始\t合同结束\t房租到期\t最迟缴费\t倒计时\t缴费周期\t批次\t押金\t实收押金\t房租\t实收房租\t服务费\t水电气\t物管\t欠费\t欠费描述\t优惠\t应付\t实收\t支付时间\t支付方式\n";
 
             foreach ($list AS $row)
             {
-                $data .= "$row[bill_type_name]\t$row[room_code]\t$row[bed_code]\t$row[area_name]($row[building]-$row[floor]-$row[door_no])\t$row[gj_nickname]$row[gj_realname]\t$row[realname]\t$row[mobile]\t$row[start_time]\t$row[end_time]\t$row[rent_date]\t$row[last_date]\t$row[count_down_days]\t$row[period]\t$row[input_year]年$row[input_month]月\t$row[ht_deposit]\t$row[rent]\t$row[service_fee]\t$row[SDQtotal]\t$row[wgfee_unit]\t$row[wx_fee]\t$row[wx_des]\t$row[favorable]\t$row[price]\t$row[pay_money]\t$row[pay_time]\t$row[pay_type_name]\n";
+                $data .= "$row[bill_type_name]\t$row[room_code]\t$row[bed_code]\t$row[area_name]($row[building]-$row[floor]-$row[door_no])\t$row[gj_nickname]$row[gj_realname]\t$row[realname]\t$row[mobile]\t$row[start_time]\t$row[end_time]\t$row[rent_date_to]\t$row[last_date]\t$row[count_down_days]\t$row[period]\t$row[input_year]年$row[input_month]月\t$row[ht_deposit]\t$row[ht_actual_deposit]\t$row[rent]\t$row[ht_actual_rent]\t$row[service_fee]\t$row[SDQtotal]\t$row[wgfee_unit]\t$row[wx_fee]\t$row[wx_des]\t$row[favorable]\t$row[price]\t$row[pay_money]\t$row[pay_time]\t$row[pay_type_name]\n";
             }
             echo iconv("UTF-8","GB2312//IGNORE",$data);
             exit;

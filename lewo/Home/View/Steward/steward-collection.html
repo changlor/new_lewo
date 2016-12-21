@@ -187,13 +187,11 @@ var check = function (input) {
     }
     input.value = parseFloat(clearValue);
     var totalMoney = 0;
-    $('.money').each(function (k,v) {
-        console.log($(this));
+    $('.money').each(function () {
         totalMoney = totalMoney + parseFloat($(this)[0]['value']);
     });
-    if (typeof $('input[name=price]')[0] != 'undefined') {
-        var price = $('input[name=price]')[0];
-        console.log(totalMoney)
+    if (typeof $('input[name=actual_price]')[0] != 'undefined') {
+        var price = $('input[name=actual_price]')[0];
         price.value = Math.round((totalMoney - parseFloat(price.value)) * 100) / 100;
     }
 }

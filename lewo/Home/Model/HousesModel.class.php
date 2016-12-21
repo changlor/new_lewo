@@ -4,7 +4,29 @@ use Think\Model;
 /**
 * [房源数据层]
 */
-class HousesModel extends Model{
+class HousesModel extends Model {
+	protected $table;
+	protected $tableName = 'houses';
+
+	public function __construct()
+    {
+        parent::__construct();
+    	$this->table = M($this->tableName);
+    }
+
+    public function select($where, $field)
+	{
+		$field = empty($field) ? '' : $field;
+		$where = empty($where) ? '' : $where;
+		$field = implode(',', $field);
+		return $this->table->field($field)->where($where);
+	}
+
+    public function insert($contract)
+    {
+    	return $this->table->add($contract);
+    }
+
 	/**
 	 * [获取房源列表]
 	 **/

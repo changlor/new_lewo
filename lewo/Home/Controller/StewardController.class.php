@@ -797,8 +797,6 @@ class StewardController extends BaseController {
             ->find();
 
             $pay_classify['合同'] = [
-                'realname' => ['租客', $pay_list['realname']],
-                'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
                 'actual_deposit' => ['押金', $pay_list['deposit'], 'need_modify'],
                 'actual_rent' => ['房租', $pay_list['rent'], 'need_modify'],
                 'fee' => ['服务费', $pay_list['fee']],
@@ -807,8 +805,6 @@ class StewardController extends BaseController {
             ];
 
             $pay_classify['日常'] = [
-                'realname' => ['租客', $pay_list['realname']],
-                'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
                 'rent_fee' => ['房租', $pay_list['rent_fee']],
                 'total_daily_room_fee' => [
                     '水电气',
@@ -825,10 +821,13 @@ class StewardController extends BaseController {
                 'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
             ];
             $pay_classify['others'] = [
-                'realname' => ['租客', $pay_list['realname']],
-                'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
                 'should_price' => ['应收金额', $pay_list['price']],
                 'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
+            ];
+
+            $account_info = [
+                'realname' => ['租客', $pay_list['realname']],
+                'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
             ];
 
             $pay_type = [
@@ -842,6 +841,7 @@ class StewardController extends BaseController {
             ? $pay_list['pay_classify'] = $pay_classify[C('bill_type')[$pay_list['bill_type']]]
             : $pay_list['pay_classify'] = $pay_classify['others'];
 
+            $this->assign('account_info',$account_info);
             $this->assign('pay_list',$pay_list);
             $this->assign('pay_type', $pay_type);
             $this->assign('pro_id', $pro_id);

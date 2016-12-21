@@ -97,7 +97,7 @@ function toIndex(){
                                         <ul>
                                             <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
                                             <li class="innre-bill-text3">
-                                                    <input disabled="disabled" name="{$key}" style="width: 200px; text-align: right" value="{$value[1]}" />
+                                                <input disabled="disabled" name="{$key}" style="width: 200px; text-align: right" value="{$value[1]}" />
                                             </li>
                                             <li class="innre-bill-text1" style="line-height: 36px;">{$value.0}</li><br>
                                         </ul>
@@ -192,7 +192,8 @@ var check = function (input) {
     });
     if (typeof $('input[name=actual_price]')[0] != 'undefined') {
         var price = $('input[name=actual_price]')[0];
-        price.value = Math.round((totalMoney - parseFloat(price.value)) * 100) / 100;
+        var shouldPrice = $('input[name=should_price]')[0];
+        price.value = Math.round((totalMoney - parseFloat(shouldPrice.value) - parseFloat(shouldPrice.value)) * 100) / 100;
     }
 }
 var checkform = function(){

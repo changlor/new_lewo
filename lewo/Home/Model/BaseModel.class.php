@@ -10,6 +10,7 @@ class BaseModel extends Model {
 
     public function __construct()
     {
+        parent::__construct();
         $this->steward_id = $_SESSION['steward_id'];
     }
 

@@ -897,6 +897,7 @@ class StewardController extends BaseController {
                 }
             }
             */
+            $DContract = D('contract');
 
             $res = $DContract->addContract([
                 'DContract' => D('contract'),

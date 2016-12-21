@@ -67,11 +67,12 @@ class PayModel extends Model {
 		$pdata['create_time'] 	= date('Y-m-d H:i:s',time());
 		$pdata['account_id'] 	= $param['account_id'];
 		$pdata['room_id'] 		= $param['room_id'];
-		$pdata['input_year']    = date('Y',time());
-		$pdata['input_month']   = date('m',time());
-		$pdata['should_date']	= !is_null($param['should_date'])? $param['should_date'] : date('Y-m-d',time());
-		$pdata['last_date']		= !is_null($param['last_date'])? $param['last_date'] : date('Y-m-d',time());
-		$pdata['is_send']       = 1;
+		$pdata['input_year']    = !is_null($param['input_year'])? $param['input_year'] : date('Y',time());
+		$pdata['input_month']   = !is_null($param['input_month'])? $param['input_month'] : date('m',time());
+		$pdata['should_date']	= !is_null($param['should_date'])? $param['should_date'] : date('Y-m-d H:i:s',time());
+		$pdata['last_date']		= !is_null($param['last_date'])? $param['last_date'] : date('Y-m-d H:i:s',time());
+		$pdata['pay_status'] 	= !is_null($param['pay_status'])? $param['pay_status'] : 0;
+		$pdata['is_send']		= 1;
 		$result = $this->add($pdata);
 		
 		return $result;
@@ -145,6 +146,7 @@ class PayModel extends Model {
 		$MPay = M('pay');
 		$filters = [
 			'lewo_pay.is_show' => 1,
+			'lewo_pay.is_send' => 1,
 			'lewo_houses.steward_id' => $steward_id,
 		];
 		$field = [

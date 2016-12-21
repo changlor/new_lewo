@@ -14,6 +14,12 @@
         <div class="widget-content nopadding">
           <form action="" method="post" class="form-horizontal form-inline">
             <div class="control-group">
+              <label class="control-label">合同编号 :</label>
+              <div class="controls">
+                <input type="text" name="contract_number" value="{$contract_info['contract_number']}">
+              </div>
+            </div>
+            <div class="control-group">
               <label class="control-label">真实姓名 :</label>
               <div class="controls">
                 <a href="{:U('Admin/Tenant/tenant_info',array('account_id'=>$contract_info['account_info']['id']))}" class="btn btn-mini btn-info">{$contract_info.account_info.realname}</a>

@@ -641,13 +641,15 @@ class StewardController extends BaseController {
             // 获取订单id
             $pro_id = I('pro_id');
             // 获取模型实例
-            $MContract  = M('contract'); $MPay = M('pay'); $DPay = D('pay');
+            $MContract  = M('contract'); $MPay = M('pay'); $DPay = D('pay'); M()->startTrans();
             // 获取支付信息
             $pay_info = $MPay->where(['pro_id' => $pro_id])->find();
             // 所有类型账单通用数据
             $pay_type = I('pay_type');
             $pay_money = I('actual_price');
             $pay_time = date('Y-m-d H:i:s');
+            // 管家代收是已支付
+            $pay_status = 1;
             // 合同账单
             $contract_bill = [
                 'actual_deposit' => I('actual_deposit'),
@@ -700,6 +702,8 @@ class StewardController extends BaseController {
                     'input_month' => $pay_info['input_month'],
                     'should_date' => $pay_info['should_date'],
                     'last_date' => $pay_info['last_date'],
+                    'input_month' => $pay_info['input_month'],
+                    'input_year' => $pay_info['input_year'],
                     'price' => $due_price,
                     'is_send' => 1,
                 ];
@@ -737,19 +741,24 @@ class StewardController extends BaseController {
                     ])->save(['rent_date' => $rent_date]);
                     break;
             }
+
             // lewo_pay表修改内容
             $lewo_pay = [
                 'pay_type' => $pay_type,
-                'pay_status' => 1,
+                'pay_status' => $pay_status,
                 'pay_time' => $pay_time,
                 'pay_money' => $pay_money,
                 'modify_log' => $modify_log,
             ];
             
             $res = M('pay')->where(['pro_id' => $pro_id])->save($lewo_pay);
-            $res == false
-            ? $this->error('修改账单失败!', U('Steward/steward_collection', ['pro_id' => $pro_id]))
-            : $this->success('成功', U('Steward/allbills'));
+            if ($res == false){
+                M()->rollback();
+                $this->error('修改账单失败!', U('Steward/steward_collection', ['pro_id' => $pro_id]),3);
+            } else {
+                M()->commit();
+                $this->success('管家代收成功', U('Steward/allbills'),3);
+            }
         } else {
             $pro_id = I('pro_id');
             $field = [
@@ -776,6 +785,9 @@ class StewardController extends BaseController {
                 'lewo_room.room_code', 'lewo_room.house_code',
                 //houses
                 'lewo_houses.area_id',
+                'lewo_houses.building',
+                'lewo_houses.floor',
+                'lewo_houses.door_no',
                 //pay
                 'lewo_pay.price', 'lewo_pay.bill_type',
             ];
@@ -800,6 +812,7 @@ class StewardController extends BaseController {
                 'wg_fee' => ['物业费', $pay_list['wg_fee']],
                 'actual_price' => ['总金额', $pay_list['price']],
             ];
+
             $pay_classify['日常'] = [
                 'rent_fee' => ['房租', $pay_list['rent_fee']],
                 'total_daily_room_fee' => [
@@ -821,6 +834,11 @@ class StewardController extends BaseController {
                 'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
             ];
 
+            $account_info = [
+                'realname' => ['租客', $pay_list['realname']],
+                'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
+            ];
+
             $pay_type = [
                 '支付宝(转账)' => 2,
                 '微信(转账)' => 4,
@@ -831,7 +849,8 @@ class StewardController extends BaseController {
             isset($pay_classify[C('bill_type')[$pay_list['bill_type']]])
             ? $pay_list['pay_classify'] = $pay_classify[C('bill_type')[$pay_list['bill_type']]]
             : $pay_list['pay_classify'] = $pay_classify['others'];
-            
+
+            $this->assign('account_info',$account_info);
             $this->assign('pay_list',$pay_list);
             $this->assign('pay_type', $pay_type);
             $this->assign('pro_id', $pro_id);

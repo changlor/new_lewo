@@ -101,6 +101,7 @@ class TenantController extends Controller {
             $account_id = I("account_id");
             $is_can_create_bill = I("is_can_create_bill");
             $where['pro_id']        = $pro_id;
+            
             $save['start_time']     = I("start_time");
             $save['end_time']       = I("end_time");
             $save['rent_date']      = I("rent_date");
@@ -115,10 +116,9 @@ class TenantController extends Controller {
             $save['roomD']          = I("roomd");
             $save['total_fee']      = I("total_fee");
             $save['contract_status']= I("contract_status");
+            $save['contract_number']= I("contract_number");
 
-            $MContract->startTrans();
-            $MPay->startTrans();
-            $MRoom->startTrans();
+            M()->startTrans();
 
             //如果修改了房租到期日，并是往后修改日期的，则生成一个月的房租和服务费
             $contract_info = $MContract
@@ -140,7 +140,7 @@ class TenantController extends Controller {
 
             $psave['modify_log'] = $modify_log;
 
-            $result     = $MContract->where($where)->save($save);  
+            $result     = $MContract->where($where)->save($save); 
             $result2    = $MPay->where($where)->save($psave);
 
             if ( $result ) {    
@@ -149,28 +149,18 @@ class TenantController extends Controller {
                 if ( I("contract_status") != $ht_zc ) {
                     $update_room_result = $MRoom->where(array('id'=>$room_id))->save(array('account_id'=>0,'status'=>0));
                     if ( $update_room_result === 1 ) {
-                        $msg = '退房成功,';
-                        $MRoom->commit();
+                        $msg = '修改房间状态为未租成功,';
                     } else {
-                        $msg = '退房失败,请手动修改房间状态!';
-                        $MRoom->rollback();
+                        $msg = '修改房间状态失败!';
                     }
                 }
             }
 
-            if ( $result === 1) {
-                $MContract->commit();
-            } else {
-                $MContract->rollback();
-            }
-            if ( $result2 === 1) {
-                $MPay->commit();
-            } else {
-                $MPay->rollback();
-            }
-            if( $result || $result2 ){
+            if( $result && $result2 ){
+                M()->commit();
                 $this->success($msg."修改成功!");
             } else {
+                M()->rollback();
                 $this->error("修改失败!");
             }
         } else {
@@ -218,6 +208,10 @@ class TenantController extends Controller {
         //合同状态
         if ( $save['contract_status'] != $contract_info['contract_status'] ) {
             $modify_log .= C('contract_status_arr')[$contract_info['contract_status']].'--> <b style="color:green">'.C('contract_status_arr')[$save['contract_status']].'</b>;<br/>';
+        }
+        //开始日期
+        if ( $save['contract_number'] != $contract_info['contract_number'] ) {
+            $modify_log .= '合同编号:'.$contract_info['contract_number'].'--> <b style="color:green">'.$save['contract_number'].'</b>;<br/>';
         }
         //开始日期
         if ( $save['start_time'] != $contract_info['start_time'] ) {

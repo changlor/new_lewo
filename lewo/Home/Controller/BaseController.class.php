@@ -7,6 +7,11 @@ class BaseController extends Controller {
         parent::__construct();
     }
 
+    public function isPostRequest()
+    {
+        return  strtoupper($_SERVER['REQUEST_METHOD']) == 'POST';
+    }
+
     public function sms($id, $content)
     {
         //获取订单信息，只针对租客

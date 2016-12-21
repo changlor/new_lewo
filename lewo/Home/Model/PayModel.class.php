@@ -22,7 +22,7 @@ class PayModel extends Model {
 	{
 		$this->table = M($this->tableName);
 	}
-
+	
 	public function select($where, $field)
 	{
 		$field = empty($field) ? '' : $field;
@@ -32,6 +32,7 @@ class PayModel extends Model {
 		->field($field)
 		->where($where);
 	}
+	
 
 	public function getPayList($where, $field)
 	{
@@ -173,7 +174,7 @@ class PayModel extends Model {
 			'lewo_account.realname',
 		];
 		$field = implode(',', $field);
-		$bills = $this->field($field)
+		$bills = $this->table->field($field)
 		->join('lewo_room ON lewo_room.id = lewo_pay.room_id', 'left')
 		->join('lewo_houses ON lewo_houses.id = lewo_room.house_id', 'left')
 		->join('lewo_account ON lewo_account.id = lewo_pay.account_id', 'left')
@@ -185,7 +186,7 @@ class PayModel extends Model {
 		->order('lewo_pay.pay_status asc, lewo_pay.last_date asc, lewo_pay.input_year desc, lewo_pay.input_month desc')
 		->select();
 
-		foreach($bills as $key => $value){
+		foreach ($bills as $key => $value) {
 			$bills[$key]['bill_type'] = C('bill_type')[$value['bill_type']];
 			$bills[$key]['rent_type'] = '压' . str_replace('_', '付', $value['rent_type']);
 			$bills[$key]['bill_des'] = empty($value['bill_des']) ? '无' : $value['bill_des'];

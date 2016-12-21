@@ -4,7 +4,20 @@ use Think\Model;
 /**
 * [帐号数据层]
 */
-class AccountModel extends Model{
+class AccountModel extends Base {
+
+	protected $table;
+	protected $tableName = 'account';
+
+	public function __construct()
+	{
+		$this->table = M($this->tableName);
+	}
+
+	public function insert($account)
+	{
+		return $this->table->add($account);
+	}
 	/**
 	 * [获取帐号id]
 	 * @param $key 键值

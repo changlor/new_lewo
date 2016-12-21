@@ -4,7 +4,104 @@ use Think\Model;
 /**
 * [合同数据层]
 */
-class ContractModel extends Model{
+class ContractModel extends Base {
+	protected $table;
+	protected $tableName = 'contract';
+
+	public function __construct()
+    {
+        parent::__construct();
+    	$this->table = M($this->tableName);
+    }
+
+    public function insert($contract)
+    {
+    	return $this->table->add($contract);
+    }
+
+	public function addContract($input)
+	{
+		// 获取模型
+        $DContract = $input['DContract'];
+        // 房屋id
+        $roomId = $input['roomId'];
+        // 租客id
+        $accountId = $input['accountId'];
+        // 租客姓名
+        $realName = $input['realName'];
+        // 租客电话
+        $mobile = $input['mobile'];
+        // 紧急联系人电话
+        $contact2 = $input['contact2'];
+        // 租客身份证号
+        $idNo = $input['idNo'];
+        // 租客邮箱
+        $email = $input['email'];
+        // 房租
+        $rent = $input['rent'];
+        // 租客人数
+        $personCount = $input['personCount'];
+        // 合租人电话，如果有
+        $hzMobile = $input['hzMobile'];
+        // 合租人身份证，如果有
+        $hzCardNo = $input['hzCardNo'];
+        // 物业费
+        $wgFee = $input['wgFee'];
+        // 服务费
+        $fee = $input['fee'];
+        // 付款方式
+        $rentType = $input['rentType'];
+        // 租期开始日
+        $startDate = $input['startDate'];
+        // 租期截止日
+        $endDate = $input['endDate'];
+        // 房间电表
+        $roomD = $input['roomD'];
+        // 押金
+        $deposit = $input['deposit'];
+        // 优惠
+        $favorable = $input['favorable'];
+        // 优惠描述
+        $favorableDes = $input['favorableDes'];
+        // 是否有换房余额抵扣
+        $is_deduct = $input['is_deduct'];
+        // 合同总金额
+        $total = $input['total'];
+        // 实际支付金额
+        $paytotal = $input['paytotal'];
+        // 缴定抵扣
+        $bookDeposit = $input['bookDeposit'];
+
+        // 获取account模型
+        $DAccount = D('account');
+        // 根据mobile获取account列表
+        $accountList = $DAccount->getAccountList(['mobile' => $mobile]);
+        // 如果获取不到
+        if (!is_array($accountList)) {
+        	$DAccount = D('account');
+        	// 插入帐号
+        	$account = [];
+			$account['realname'] = $realName;
+			$account['password'] = md5("123456");
+			// 默认密码
+			$account['mobile'] = $mobile;
+			$account['contact2'] = $contact2;
+			$account['card_no'] = $idNo;
+			$account['email'] = $email;
+			$account['register_time'] = date("Y-m-d H:i:s",time());
+			// 插入account并返回account_id
+			$accountId = $DAccount->insert($account);
+        } else {
+        	$account_id = $account_info['id'];
+			$account = [];
+			$account['realname'] 		= $post['realName'];
+			$save['contact2'] 		= $post['contact2'];
+			$save['card_no'] 		= $post['idNo'];
+			$save['email'] 			= $post['email'];
+
+			$MAccount->where(array('id'=>$id))->save($save);
+        }
+	}
 	/**
 	 * [插入一条新的合同]
 	 **/
@@ -29,7 +126,6 @@ class ContractModel extends Model{
 			$id = $account_info['id'];
 			$save = array();
 			$save['realname'] 		= $post['realName'];
-			$save['mobile'] 		= $post['mobile'];
 			$save['contact2'] 		= $post['contact2'];
 			$save['card_no'] 		= $post['idNo'];
 			$save['email'] 			= $post['email'];

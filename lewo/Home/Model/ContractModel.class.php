@@ -4,7 +4,7 @@ use Think\Model;
 /**
 * [合同数据层]
 */
-class ContractModel extends Base {
+class ContractModel extends BaseModel {
 	protected $table;
 	protected $tableName = 'contract';
 
@@ -24,6 +24,8 @@ class ContractModel extends Base {
 		// 获取模型
         $DAccount = D('account');
         $DPay = D('pay');
+        $DRoom = D('room');
+        $DHouses = D('houses');
         // 房屋id
         $roomId = $input['roomId'];
         // 租客id
@@ -56,6 +58,16 @@ class ContractModel extends Base {
         $startDate = $input['startDate'];
         // 租期截止日
         $endDate = $input['endDate'];
+        // 租期开始日大于租期截止日
+        if (strtotime($startDate) > strtotime($endDate)) {
+            $this->error('签约失败，租期开始日：'.$startDate." 大于 租期结束日:".$endDate,'',10);
+        }
+        $houseCode = $DRoom->select(['id' => $roomId], ['house_code']);
+        $houseEndDate = $DHouses->select(['house_code' => $houseCode], ['end_date']);
+        // 判断租期结束日是否大于房间托管结束日
+        if (strtotime($endDate) > strtotime($houseEndDate)) {
+            $this->error('签约失败，租期结束日：' . $endDate . ' 大于 房间托管结束日：' . $end_date);
+        }
         // 房间电表
         $roomD = $input['roomD'];
         // 押金
@@ -72,6 +84,28 @@ class ContractModel extends Base {
         $paytotal = $input['paytotal'];
         // 缴定抵扣
         $bookDeposit = $input['bookDeposit'];
+        // 拍照
+        $photo = $input['photo'];
+        if (!empty($photo)) {
+            // 实例化上传类
+            $upload = new \Think\Upload();
+            // 设置附件上传大小
+            $upload->maxSize = 3145728 ;
+            // 设置附件上传类型
+            $upload->exts = ['jpg', 'gif', 'png', 'jpeg'];
+            // 设置附件上传根目录
+            $upload->rootPath = './Uploads/';
+            // 设置附件上传（子）目录
+            $upload->savePath = '';
+            $info = $upload->upload();
+            if (count($info) != 0) { 
+                foreach ($info as $key => $val) {
+                    if ($val['key'] == 'photo') {
+                        $photo = $val['savepath'] . $val['savename'];
+                    }
+                }
+            }
+        }
 
         // 根据mobile获取account列表
         $accountList = $DAccount->getAccountList(['mobile' => $mobile]);
@@ -183,7 +217,10 @@ class ContractModel extends Base {
 			$MAccount->where(array("id"=>$id))->save(array("balance"=>$change_balance));
 		}
 		*/
-		// 插入contract数据
+        // 
+        
+		
+        // 插入contract数据
 		$this->table->insert($contract);
 		// 插入pay数据
 		$res['id'] = $DPay->insert($pay);

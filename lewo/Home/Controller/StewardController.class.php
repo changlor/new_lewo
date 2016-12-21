@@ -925,6 +925,7 @@ class StewardController extends BaseController {
                 'total' => I('post.total'),
                 'paytotal' => I('post.paytotal'),
                 'bookDeposit' => I('bookDeposit'),
+                'photo' => $_FILES['photo']['name']['0'],
             ]);
             $res['success']
             ? $this->success('合同生成成功!', U('Home/Steward/check_contract', ['id' => $res['id']]))

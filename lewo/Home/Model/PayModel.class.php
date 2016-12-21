@@ -4,7 +4,7 @@ use Think\Model;
 /**
 * [支付表]
 */
-class PayModel extends Model {
+class PayModel extends BaseModel {
 
 	protected $table;
 	protected $tableName = 'pay';

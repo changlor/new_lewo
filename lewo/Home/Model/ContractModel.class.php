@@ -22,7 +22,8 @@ class ContractModel extends Base {
 	public function addContract($input)
 	{
 		// 获取模型
-        $DContract = $input['DContract'];
+        $DAccount = D('account');
+        $DPay = D('pay');
         // 房屋id
         $roomId = $input['roomId'];
         // 租客id
@@ -64,7 +65,7 @@ class ContractModel extends Base {
         // 优惠描述
         $favorableDes = $input['favorableDes'];
         // 是否有换房余额抵扣
-        $is_deduct = $input['is_deduct'];
+        $isDeduct = $input['is_deduct'];
         // 合同总金额
         $total = $input['total'];
         // 实际支付金额
@@ -72,8 +73,6 @@ class ContractModel extends Base {
         // 缴定抵扣
         $bookDeposit = $input['bookDeposit'];
 
-        // 获取account模型
-        $DAccount = D('account');
         // 根据mobile获取account列表
         $accountList = $DAccount->getAccountList(['mobile' => $mobile]);
         // 如果获取不到
@@ -94,13 +93,102 @@ class ContractModel extends Base {
         } else {
         	$account_id = $account_info['id'];
 			$account = [];
-			$account['realname'] 		= $post['realName'];
-			$save['contact2'] 		= $post['contact2'];
-			$save['card_no'] 		= $post['idNo'];
-			$save['email'] 			= $post['email'];
-
-			$MAccount->where(array('id'=>$id))->save($save);
+			$account['realname'] 		= $realName;
+			$account['contact2'] 		= $contact2;
+			$account['card_no'] 		= $idNo;
+			$account['email'] 			= $email;
+			// 更新account数据
+			$DAccount->update($account, ['id' => $account_id]);
         }
+        $res = [];
+        $res['success'] = true;
+        // 计算起始年月
+        $startYear = date('Y', strtotime($startDate));
+		$startMonth = date('m', strtotime($endDate));
+		// 获取账单号
+		$proId = getOrderNo();
+		// 获取操作时间
+		$createTime = date('Y-m-d H:i:s', time());
+		// 获取支付方式
+		$rentType = explode('_', $rentType);
+		// 押几
+		$depositCount = $rentType['0'];
+		// 付几
+		$payCount = $rentType['1'];
+		//房租到期日
+		$rentDate = date('Y-m-d', strtotime($cData['start_time'].' +'.$payCount.' month -1 day'));
+		// 合租信息
+		$hzInfo = [];
+		$hzInfo['hzRealname'] 	= $hzRealname;
+		$hzInfo['hzMobile'] 	= $hzMobile;
+		$hzInfo['hzCardNo'] 	= $hzCardNo;
+		$hzInfo = serialize($hzInfo);
+		// 合影
+		$photo = !empty($photo) ? $post['photo'] : '';
+		// 管家id
+		$stewardId = $_SESSION['steward_id'];
+		// contract数据
+		$contract = [];
+		$contract['start_time'] = $startDate;
+		$contract['end_time'] = $endDate;
+		$contract['pro_id'] = $proId;
+		$contract['account_id'] = $accountId;
+		$contract['room_id'] = $roomId;
+		$contract['create_time'] = $createTime;
+		$contract['deposit'] = $deposit;
+		$contract['wg_fee'] = $wgFee;
+		$contract['book_deposit'] = $bookDeposit;
+		$contract['period'] = $payCount;
+		$contract['steward_id'] = $stewardId;
+		$contract['rent_type'] = $rentType;
+		$contract['rent_date'] = $rentDate;
+		$contract['rent'] = $rent;
+		$contract['fee'] = $fee;
+		$contract['contact2'] = $contact2;
+		$contract['person_count'] = $personCount;
+		$contract['cotenant'] = $hzInfo;
+		$contract['roomD'] = $roomD;
+		$contract['total_fee'] = $total;
+		$contract['photo'] = $photo;
+		$contract['pay_total'] = $paytotal;
+		// pay数据
+		$pay = [];
+		$pay['pay_status'] = 0;
+		$pay['bill_type'] = 2;
+		$pay['is_send']	= 0;
+		$pay['pro_id'] = $pro_id;
+		$pay['account_id'] = $accountId;
+		$pay['room_id'] = $roomId;
+		$pay['create_time'] = $createTime;
+		$pay['input_year'] = $startYear;
+		$pay['input_month'] = $startMonth;
+		$pay['should_date'] = $createTime;
+		$pay['last_date'] = $createTime;
+		$pay['favorable'] = $favorable;
+		$pay['favorable_des'] = $favorableDes;
+		$pay['price'] = $paytotal;
+		// 是否使用余额抵扣
+		/*
+		if (!empty($isDeduct)) {
+			$balance = $DAccount->select(['id' => $accountId], ['balance']);//余额
+			$contract['balance'] = $balance;
+					
+			if ($post['paytotal'] > $balance) {
+				$post['paytotal'] = $paytotal - $balance;
+				$balance = 0; 
+			} else {
+				$post['paytotal'] = 0;
+				$balance = $balance - $post['paytotal'];//如果余额大于应支付金额，应支付0，修改帐号的余额
+			}
+			$MAccount->where(array("id"=>$id))->save(array("balance"=>$change_balance));
+		}
+		*/
+		// 插入contract数据
+		$this->table->insert($contract);
+		// 插入pay数据
+		$res['id'] = $DPay->insert($pay);
+		$res['account_id'] = $account_id;
+		return $result;
 	}
 	/**
 	 * [插入一条新的合同]
@@ -214,7 +302,7 @@ class ContractModel extends Base {
 		$where['account_id'] = $account_id;
 		$where['contract_status'] = 1;//正常签约
 		$order = "id desc";
-		$result = $this->where($where)->order($order)->find();
+		$result = $this->table->where($where)->order($order)->find();
 		return $result;
 	}
 

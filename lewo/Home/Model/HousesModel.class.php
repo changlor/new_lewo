@@ -4,7 +4,7 @@ use Think\Model;
 /**
 * [房源数据层]
 */
-class HousesModel extends Model {
+class HousesModel extends BaseModel {
 	protected $table;
 	protected $tableName = 'houses';
 

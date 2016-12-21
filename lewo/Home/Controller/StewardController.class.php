@@ -737,6 +737,7 @@ class StewardController extends BaseController {
                     ])->save(['rent_date' => $rent_date]);
                     break;
             }
+
             // lewo_pay表修改内容
             $lewo_pay = [
                 'pay_type' => $pay_type,
@@ -801,7 +802,7 @@ class StewardController extends BaseController {
                 'actual_rent' => ['房租', $pay_list['rent'], 'need_modify'],
                 'fee' => ['服务费', $pay_list['fee']],
                 'wg_fee' => ['物业费', $pay_list['wg_fee']],
-                'price' => ['总金额', $pay_list['price']],
+                'actual_price' => ['总金额', $pay_list['price']],
             ];
 
             $pay_classify['日常'] = [

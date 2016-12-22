@@ -20,6 +20,7 @@ class PayModel extends BaseModel {
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->table = M($this->tableName);
 	}
 	

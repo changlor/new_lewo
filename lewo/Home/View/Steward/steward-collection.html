@@ -113,7 +113,10 @@ function toIndex(){
                                             <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
                                             <li class="innre-bill-text3">
                                                 <if condition="$value[2] eq 'need_modify'">
-                                                    <input class="money" name="{$key}" onchange="check($(this))" style="color: #888;width: 60px;border: 1px solid #888; height: 25px; padding-left: 2px;" value="{$value[1]}" />
+                                                    <input class="money" name="{$key}" onchange="changePrice($(this))" style="color: #888;width: 60px;border: 1px solid #888; height: 25px; padding-left: 2px;" value="{$value[1]}" />
+                                                    <input type="hidden" value="{$value[1]}">
+                                                <elseif condition="$value[2] eq 'update_price'" />
+                                                    <input name="{$key}" onchange="checkPrice($(this))" style="color: #888;width: 60px;border: 1px solid #888; height: 25px; padding-left: 2px;" value="{$value[1]}" />
                                                     <input type="hidden" value="{$value[1]}">
                                                 <else />
                                                     <input class="money" readonly name="{$key}" style="width: 200px; text-align: right" value="{$value[1]}" />
@@ -126,28 +129,6 @@ function toIndex(){
                                 </div>
                             </div>
                         </volist>
-                        <div class="row-fluid">
-                            <div class="col-xs-12 innre-bill-box">
-                                <div class="panel-heading innre-bill-image-i">
-                                    <ul>
-                                        <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
-                                        <li class="innre-bill-text3">
-                                            <style>
-                                                select {
-                                                    background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
-                                                }
-                                            </style>
-                                            <select name="pay_type">
-                                                <volist name="pay_type" id="value">
-                                                    <option value="{$value}">{$key}</option>
-                                                </volist>
-                                            </select>
-                                        </li>
-                                        <li class="innre-bill-text1" style="line-height: 36px;">支付类型</li><br>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row-fluid">
                             <div class="col-xs-12"><div style="height:90px;"></div></div>
                         </div>
@@ -171,8 +152,21 @@ function toIndex(){
    
 </script>  
 <script type="text/javascript">
-var check = function (input) {
+var checkPrice = function (input) {
     input = input[0];
+    var value = input['value'];
+    var check = input.nextSibling.nextSibling;
+    check.value = parseFloat(check.value);
+    var valueArr = value.match(/[0-9.]+/g);
+    value = parseFloat(valueArr[0]);
+    clearValue = value;
+    if (check.value < value) {
+        clearValue = check.value;
+    }
+    input.value = parseFloat(clearValue); 
+}
+var changePrice = function (input) {
+    /*input = input[0];
     var value = input['value'];
     var check = input.nextSibling.nextSibling;
     check.value = parseFloat(check.value);
@@ -185,15 +179,18 @@ var check = function (input) {
     if (check != null && clearValue > check.value) {
         clearValue = check.value;
     }
-    input.value = parseFloat(clearValue);
+    input.value = parseFloat(clearValue);*/
+    checkPrice(input);
     var totalMoney = 0;
     $('.money').each(function () {
-        totalMoney = totalMoney + parseFloat($(this)[0]['value']);
+        if ( $(this)[0]['name'] != 'actual_price' && $(this)[0]['name'] != 'should_price' ) {
+            totalMoney += parseFloat($(this)[0]['value']);
+        }
     });
+    
     if (typeof $('input[name=actual_price]')[0] != 'undefined') {
-        var price = $('input[name=actual_price]')[0];
-        var shouldPrice = $('input[name=should_price]')[0];
-        price.value = Math.round((totalMoney - parseFloat(shouldPrice.value) - parseFloat(shouldPrice.value)) * 100) / 100;
+        var price = $('input[name=actual_price]')[0];      
+        price.value = Math.round((totalMoney) * 100) / 100;
     }
 }
 var checkform = function(){

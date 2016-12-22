@@ -144,6 +144,7 @@
           <select name="pay_status" style="width:80px;">
             <option selected="selected" value="">请选择</option>
             <option <if condition="$pay_status heq '1'">selected</if> value="1">已支付</option>
+            <option <if condition="$pay_status heq '2'">selected</if> value="2">管家代收</option>
             <option <if condition="$pay_status heq '0'">selected</if> value="0">未支付</option>
            </select>
         </label>
@@ -359,12 +360,12 @@
               </td>
               <td>
                 <notempty name='vo.ht_deposit'>
-                  <a <if condition="$vo.bill_type eq 2"> class="tip-bottom" data-original-title="实收押金:{$vo.actual_deposit}" </if> >{$vo.ht_deposit}</a>
+                  <a <if condition="$vo.bill_type eq 2"> class="tip-bottom" data-original-title="实收押金:{$vo.ht_actual_deposit}" </if> >{$vo.ht_deposit}</a>
                 </notempty>
               </td>
               <td>
                 <notempty name='vo.rent'>
-                  <a <if condition="$vo.bill_type eq 2"> class="tip-bottom" data-original-title="实收房租:{$vo.actual_rent}" </if> >{$vo.rent}</a>
+                  <a <if condition="$vo.bill_type eq 2"> class="tip-bottom" data-original-title="实收房租:{$vo.ht_actual_rent}" </if> >{$vo.rent}</a>
                 </notempty>
               </td>
               <td>
@@ -407,6 +408,8 @@
               <td>
                 <if condition="$vo.pay_status eq 1">
                   <span class="label label-success">已付</span>
+                  <elseif condition="$vo.pay_status eq 2" />
+                  <span class="label label-warning">代收</span>
                   <else/>
                   <span class="label label-important">未付</span>
                 </if>

@@ -18,8 +18,13 @@ class RoomModel extends BaseModel {
 	{
 		$field = empty($field) ? '' : $field;
 		$where = empty($where) ? '' : $where;
-		$field = implode(',', $field);
+		$field = is_array($field) ? implode(',', $field) : $field;
 		return $this->table->field($field)->where($where);
+	}
+
+	public function selectField($where, $field)
+	{
+		return $this->select($where)->getField($field);
 	}
 
     public function insert($contract)

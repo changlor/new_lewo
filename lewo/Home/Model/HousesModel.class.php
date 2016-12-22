@@ -203,9 +203,9 @@ class HousesModel extends BaseModel {
 		$MRoom = M("room");
 		$MArea = M("area");
 		$where['steward_id'] = ['IN',[$_SESSION['steward_id'],'0']];
-		$houses = $this->field("id,area_id,steward_id,house_code,type,building,floor,door_no")->where($where)->order("area_id desc, building desc,floor desc,door_no desc")->select();
+		$houses = $this->table->field("id,area_id,steward_id,house_code,type,building,floor,door_no")->where($where)->order("area_id desc, building desc,floor desc,door_no desc")->select();
 
-		foreach($houses AS $key=>$val){
+		foreach($houses as $key => $val){
 			$count = $MRoom->where(array("house_code"=>$val['house_code'],"is_show"=>1))->count();
 			$yz_count = $MRoom->where(array("house_code"=>$val['house_code'],"is_show"=>1,"status"=>C('room_yz')))->count();
 			if ( $yz_count ) {

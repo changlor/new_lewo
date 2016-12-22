@@ -1,18 +1,11 @@
 <?php
-namespace Home\Controller;
-use Think\Controller;
-class BaseController extends Controller {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function isPostRequest()
-    {
-        return  strtoupper($_SERVER['REQUEST_METHOD']) == 'POST';
-    }
-
-    public function sms($id, $content)
+namespace Home\Model;
+use Think\Model;
+/**
+ * sms模型类
+ */
+class SmsModel extends Model {
+    public function sendSms($id, $content)
     {
         //获取订单信息，只针对租客
         $pay_info = M('pay')->where(['pro_id' => $id])->find();

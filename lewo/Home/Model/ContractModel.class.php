@@ -4,7 +4,229 @@ use Think\Model;
 /**
 * [合同数据层]
 */
-class ContractModel extends Model{
+class ContractModel extends BaseModel {
+	protected $table;
+	protected $tableName = 'contract';
+
+	public function __construct()
+    {
+        parent::__construct();
+    	$this->table = M($this->tableName);
+    }
+
+    public function insert($contract)
+    {
+    	return $this->table->add($contract);
+    }
+
+	public function addContract($input)
+	{
+		// 获取模型
+        $DAccount = D('account');
+        $DPay = D('pay');
+        $DRoom = D('room');
+        $DHouses = D('houses');
+        // 房屋id
+        $roomId = $input['roomId'];
+        // 租客id
+        $accountId = $input['accountId'];
+        // 租客姓名
+        $realName = $input['realName'];
+        // 租客电话
+        $mobile = $input['mobile'];
+        // 紧急联系人电话
+        $contact2 = $input['contact2'];
+        // 租客身份证号
+        $idNo = $input['idNo'];
+        // 租客邮箱
+        $email = $input['email'];
+        // 房租
+        $rent = $input['rent'];
+        // 租客人数
+        $personCount = $input['personCount'];
+        // 合租人电话，如果有
+        $hzMobile = $input['hzMobile'];
+        // 合租人身份证，如果有
+        $hzCardNo = $input['hzCardNo'];
+        // 物业费
+        $wgFee = $input['wgFee'];
+        // 服务费
+        $fee = $input['fee'];
+        // 付款方式
+        $rentType = $input['rentType'];
+        // 租期开始日
+        $startDate = $input['startDate'];
+        // 租期截止日
+        $endDate = $input['endDate'];
+        // 租期开始日大于租期截止日
+        if (strtotime($startDate) > strtotime($endDate)) {
+            $this->error('签约失败，租期开始日：'.$startDate." 大于 租期结束日:".$endDate,'',10);
+        }
+        $houseCode = $DRoom->select(['id' => $roomId], ['house_code']);
+        $houseEndDate = $DHouses->select(['house_code' => $houseCode], ['end_date']);
+        // 判断租期结束日是否大于房间托管结束日
+        if (strtotime($endDate) > strtotime($houseEndDate)) {
+            $this->error('签约失败，租期结束日：' . $endDate . ' 大于 房间托管结束日：' . $end_date);
+        }
+        // 房间电表
+        $roomD = $input['roomD'];
+        // 押金
+        $deposit = $input['deposit'];
+        // 优惠
+        $favorable = $input['favorable'];
+        // 优惠描述
+        $favorableDes = $input['favorableDes'];
+        // 是否有换房余额抵扣
+        $isDeduct = $input['is_deduct'];
+        // 合同总金额
+        $total = $input['total'];
+        // 实际支付金额
+        $paytotal = $input['paytotal'];
+        // 缴定抵扣
+        $bookDeposit = $input['bookDeposit'];
+        // 拍照
+        $photo = $input['photo'];
+        if (!empty($photo)) {
+            // 实例化上传类
+            $upload = new \Think\Upload();
+            // 设置附件上传大小
+            $upload->maxSize = 3145728 ;
+            // 设置附件上传类型
+            $upload->exts = ['jpg', 'gif', 'png', 'jpeg'];
+            // 设置附件上传根目录
+            $upload->rootPath = './Uploads/';
+            // 设置附件上传（子）目录
+            $upload->savePath = '';
+            $info = $upload->upload();
+            if (count($info) != 0) { 
+                foreach ($info as $key => $val) {
+                    if ($val['key'] == 'photo') {
+                        $photo = $val['savepath'] . $val['savename'];
+                    }
+                }
+            }
+        }
+
+        // 根据mobile获取account列表
+        $accountList = $DAccount->getAccountList(['mobile' => $mobile]);
+        // 如果获取不到
+        if (!is_array($accountList)) {
+        	$DAccount = D('account');
+        	// 插入帐号
+        	$account = [];
+			$account['realname'] = $realName;
+			$account['password'] = md5("123456");
+			// 默认密码
+			$account['mobile'] = $mobile;
+			$account['contact2'] = $contact2;
+			$account['card_no'] = $idNo;
+			$account['email'] = $email;
+			$account['register_time'] = date("Y-m-d H:i:s",time());
+			// 插入account并返回account_id
+			$accountId = $DAccount->insert($account);
+        } else {
+        	$account_id = $account_info['id'];
+			$account = [];
+			$account['realname'] 		= $realName;
+			$account['contact2'] 		= $contact2;
+			$account['card_no'] 		= $idNo;
+			$account['email'] 			= $email;
+			// 更新account数据
+			$DAccount->update($account, ['id' => $account_id]);
+        }
+        $res = [];
+        $res['success'] = true;
+        // 计算起始年月
+        $startYear = date('Y', strtotime($startDate));
+		$startMonth = date('m', strtotime($endDate));
+		// 获取账单号
+		$proId = getOrderNo();
+		// 获取操作时间
+		$createTime = date('Y-m-d H:i:s', time());
+		// 获取支付方式
+		$rentType = explode('_', $rentType);
+		// 押几
+		$depositCount = $rentType['0'];
+		// 付几
+		$payCount = $rentType['1'];
+		//房租到期日
+		$rentDate = date('Y-m-d', strtotime($cData['start_time'].' +'.$payCount.' month -1 day'));
+		// 合租信息
+		$hzInfo = [];
+		$hzInfo['hzRealname'] 	= $hzRealname;
+		$hzInfo['hzMobile'] 	= $hzMobile;
+		$hzInfo['hzCardNo'] 	= $hzCardNo;
+		$hzInfo = serialize($hzInfo);
+		// 合影
+		$photo = !empty($photo) ? $post['photo'] : '';
+		// 管家id
+		$stewardId = $_SESSION['steward_id'];
+		// contract数据
+		$contract = [];
+		$contract['start_time'] = $startDate;
+		$contract['end_time'] = $endDate;
+		$contract['pro_id'] = $proId;
+		$contract['account_id'] = $accountId;
+		$contract['room_id'] = $roomId;
+		$contract['create_time'] = $createTime;
+		$contract['deposit'] = $deposit;
+		$contract['wg_fee'] = $wgFee;
+		$contract['book_deposit'] = $bookDeposit;
+		$contract['period'] = $payCount;
+		$contract['steward_id'] = $stewardId;
+		$contract['rent_type'] = $rentType;
+		$contract['rent_date'] = $rentDate;
+		$contract['rent'] = $rent;
+		$contract['fee'] = $fee;
+		$contract['contact2'] = $contact2;
+		$contract['person_count'] = $personCount;
+		$contract['cotenant'] = $hzInfo;
+		$contract['roomD'] = $roomD;
+		$contract['total_fee'] = $total;
+		$contract['photo'] = $photo;
+		$contract['pay_total'] = $paytotal;
+		// pay数据
+		$pay = [];
+		$pay['pay_status'] = 0;
+		$pay['bill_type'] = 2;
+		$pay['is_send']	= 0;
+		$pay['pro_id'] = $pro_id;
+		$pay['account_id'] = $accountId;
+		$pay['room_id'] = $roomId;
+		$pay['create_time'] = $createTime;
+		$pay['input_year'] = $startYear;
+		$pay['input_month'] = $startMonth;
+		$pay['should_date'] = $createTime;
+		$pay['last_date'] = $createTime;
+		$pay['favorable'] = $favorable;
+		$pay['favorable_des'] = $favorableDes;
+		$pay['price'] = $paytotal;
+		// 是否使用余额抵扣
+		/*
+		if (!empty($isDeduct)) {
+			$balance = $DAccount->select(['id' => $accountId], ['balance']);//余额
+			$contract['balance'] = $balance;
+					
+			if ($post['paytotal'] > $balance) {
+				$post['paytotal'] = $paytotal - $balance;
+				$balance = 0; 
+			} else {
+				$post['paytotal'] = 0;
+				$balance = $balance - $post['paytotal'];//如果余额大于应支付金额，应支付0，修改帐号的余额
+			}
+			$MAccount->where(array("id"=>$id))->save(array("balance"=>$change_balance));
+		}
+		*/
+        // 
+        
+		
+        // 插入contract数据
+		$this->table->insert($contract);
+		// 插入pay数据
+		$res['id'] = $DPay->insert($pay);
+		$res['account_id'] = $account_id;
+		return $result;
+	}
 	/**
 	 * [插入一条新的合同]
 	 **/
@@ -29,7 +251,6 @@ class ContractModel extends Model{
 			$id = $account_info['id'];
 			$save = array();
 			$save['realname'] 		= $post['realName'];
-			$save['mobile'] 		= $post['mobile'];
 			$save['contact2'] 		= $post['contact2'];
 			$save['card_no'] 		= $post['idNo'];
 			$save['email'] 			= $post['email'];
@@ -118,7 +339,7 @@ class ContractModel extends Model{
 		$where['account_id'] = $account_id;
 		$where['contract_status'] = 1;//正常签约
 		$order = "id desc";
-		$result = $this->where($where)->order($order)->find();
+		$result = $this->table->where($where)->order($order)->find();
 		return $result;
 	}
 

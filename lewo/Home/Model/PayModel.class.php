@@ -4,7 +4,50 @@ use Think\Model;
 /**
 * [支付表]
 */
-class PayModel extends Model{
+class PayModel extends BaseModel {
+
+	protected $table;
+	protected $tableName = 'pay';
+	protected $field = [
+		'pro_id', 'account_id', 'room_id', 
+		'price',
+		'pay_money', 'pay_status',
+		'bill_type', 'bill_des',
+		'is_show', 'is_send',
+		'create_time', 'should_date', 'last_date',
+		'favorable', 'favorable_des',
+	];
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->table = M($this->tableName);
+	}
+	
+	public function select($where, $field)
+	{
+		$field = empty($field) ? '' : $field;
+		$where = empty($where) ? '' : $where;
+		$field = implode(',', $field);
+		return $this->table->field($field)->where($where);
+	}
+
+	public function insert($pay)
+	{
+		return $this->table->add($pay);
+	}
+	
+
+	public function getPayList($where, $field)
+	{
+		return $this->select($where, $field)->find();
+	}
+
+	public function getPayLists($where, $field)
+	{
+		return $this->select($where, $field)->select();
+	}
+
 	/**
 	* [生成一个账单]
 	* @param $account_id 租客账号id
@@ -65,7 +108,7 @@ class PayModel extends Model{
 		$where['p.is_send']     = 1;
 		if ( !is_null($param['pay_status']) ) $where['p.pay_status'] = $param['pay_status'];
 
-		$bill_list = $this
+		$bill_list = $this->table
 					->alias('p')
 					->field('a.realname,p.*,r.house_code')
 					->join('lewo_account a ON a.id=p.account_id','left')
@@ -73,7 +116,6 @@ class PayModel extends Model{
 					->where($where)
 					->order('p.pay_status asc,p.input_year desc,p.input_month desc')
 					->select();
-
 		$MHouses 	= M('houses');
 		$MArea 		= M('area');
 		foreach ($bill_list as $key => $val) {
@@ -137,7 +179,7 @@ class PayModel extends Model{
 			'lewo_account.realname',
 		];
 		$field = implode(',', $field);
-		$bills = $this->field($field)
+		$bills = $this->table->field($field)
 		->join('lewo_room ON lewo_room.id = lewo_pay.room_id', 'left')
 		->join('lewo_houses ON lewo_houses.id = lewo_room.house_id', 'left')
 		->join('lewo_account ON lewo_account.id = lewo_pay.account_id', 'left')
@@ -149,7 +191,7 @@ class PayModel extends Model{
 		->order('lewo_pay.pay_status asc, lewo_pay.last_date asc, lewo_pay.input_year desc, lewo_pay.input_month desc')
 		->select();
 
-		foreach($bills as $key => $value){
+		foreach ($bills as $key => $value) {
 			$bills[$key]['bill_type'] = C('bill_type')[$value['bill_type']];
 			$bills[$key]['rent_type'] = '压' . str_replace('_', '付', $value['rent_type']);
 			$bills[$key]['bill_des'] = empty($value['bill_des']) ? '无' : $value['bill_des'];

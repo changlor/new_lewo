@@ -810,7 +810,8 @@ class StewardController extends BaseController {
                 'actual_rent' => ['房租', $pay_list['rent'], 'need_modify'],
                 'fee' => ['服务费', $pay_list['fee']],
                 'wg_fee' => ['物业费', $pay_list['wg_fee']],
-                'actual_price' => ['总金额', $pay_list['price']],
+                'should_price' => ['总金额', $pay_list['price']],
+                'actual_price' => ['实收金额', $pay_list['price']],
             ];
 
             $pay_classify['日常'] = [
@@ -851,6 +852,7 @@ class StewardController extends BaseController {
             : $pay_list['pay_classify'] = $pay_classify['others'];
 
             $this->assign('account_info',$account_info);
+            $this->assign('bill_type', true);
             $this->assign('pay_list',$pay_list);
             $this->assign('pay_type', $pay_type);
             $this->assign('pro_id', $pro_id);
@@ -862,10 +864,10 @@ class StewardController extends BaseController {
      * [入住-签约]
      **/
     public function checkin(){
-        if ( !empty($_POST) ) {   
-            $DContract = D("contract");
-            $post = $_POST;         
-            $room_id = I("room_id");
+        if ($this->isPostRequest()) {
+            
+
+            /*
             $house_code = M("room")->where(array("id"=>$room_id))->getField("house_code");
             $end_date = M("houses")->where(array("house_code"=>$house_code))->getField("end_date");//托管结束日
             if ( strtotime($_POST['startDate']) > strtotime($_POST['endDate']) ) {
@@ -894,16 +896,40 @@ class StewardController extends BaseController {
                     }
                 }
             }
-            
+            */
+            $DContract = D('contract');
 
-            $result = $DContract->add($post);
-            if ( $result['result'] ) {
-                //显示合同详情信息
-                $this->success("合同生成成功!",U("Home/Steward/check_contract",array("id"=>$result['id'])));
-                /*$this->success("合同生成成功,请到个人页面进行支付",U("Home/Steward/houses"));*/
-            } else {
-                $this->error($result['error_msg']);
-            }
+            $res = $DContract->addContract([
+                'DContract' => D('contract'),
+                'roomId' => I('post.room_id'),
+                'accountId' => I('post.account_id'),
+                'realName' => I('post.realName'),
+                'mobile' => I('post.mobile'),
+                'contact2' => I('post.contact2'),
+                'idNo' => I('post.idNo'),
+                'email' => I('post.email'),
+                'rent' => I('post.rent'),
+                'personCount' => I('personCount'),
+                'hzMobile' => I('post.hzMobile'),
+                'hzCardNo' => I('post.hzCardNo'),
+                'wgFee' => I('post.wg_fee'),
+                'fee' => I('post.fee'),
+                'rentType' => I('post.rentType'),
+                'startDate' => I('post.startDate'),
+                'endDate' => I('post.endDate'),
+                'roomD' => I('post.roomD'),
+                'deposit' => I('post.deposit'),
+                'favorable' => I('post.favorable'),
+                'favorableDes' => I('post.favorable_des'),
+                'is_deduct' => I('post.is_deduct'),
+                'total' => I('post.total'),
+                'paytotal' => I('post.paytotal'),
+                'bookDeposit' => I('bookDeposit'),
+                'photo' => $_FILES['photo']['name']['0'],
+            ]);
+            $res['success']
+            ? $this->success('合同生成成功!', U('Home/Steward/check_contract', ['id' => $res['id']]))
+            : $this->error($res['error_msg']);
         } else {
             $id = I('id');//room_id
             $DRoom = D("houses");

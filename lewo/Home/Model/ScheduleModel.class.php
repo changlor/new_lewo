@@ -4,7 +4,7 @@ use Think\Model;
 /**
 * [待办数据层]
 */
-class ScheduleModel extends Model{
+class ScheduleModel extends Model {
 	/**
 	 * [管家待办表]
 	 **/

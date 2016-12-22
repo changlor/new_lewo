@@ -4,7 +4,31 @@ use Think\Model;
 /**
 * [房间数据层]
 */
-class RoomModel extends Model{
+class RoomModel extends BaseModel {
+	protected $table;
+	protected $tableName = 'room';
+
+	public function __construct()
+    {
+        parent::__construct();
+    	$this->table = M($this->tableName);
+    }
+
+    public function select($where, $field)
+	{
+		$field = empty($field) ? '' : $field;
+		$where = empty($where) ? '' : $where;
+		$field = implode(',', $field);
+		return $this->table->field($field)->where($where);
+	}
+
+    public function insert($contract)
+    {
+    	return $this->table->add($contract);
+    }
+
+
+
 	/**
 	* [入住成功后修改房间状态]
 	**/

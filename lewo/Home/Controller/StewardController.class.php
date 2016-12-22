@@ -649,7 +649,7 @@ class StewardController extends BaseController {
             $pay_money = I('actual_price');
             $pay_time = date('Y-m-d H:i:s');
             // 管家代收是已支付
-            $pay_status = 1;
+            $pay_status = 2; //管家代收
             // 合同账单
             $contract_bill = [
                 'actual_deposit' => I('actual_deposit'),
@@ -663,7 +663,7 @@ class StewardController extends BaseController {
             $room_id = $pay_info["room_id"];
             // 修改日志
             $modify_log  = $pay_info['modify_log'];
-            $modify['修改人'] = '管家(' . $_SESSION['steward_nickname'] . '|' . $_SESSION['steward_user'] . ')时间:' . date('Y-m-d H:i:s') . '代收';
+            $modify['修改人'] = '管家(' . $_SESSION['steward_nickname'] . '|' . $_SESSION['steward_user'] . ')时间:' . date('Y-m-d H:i:s');
             $modify['支付状态'] = '未支付-><b style="color: green;">已支付</b>';
             $modify['支付方式'] = C('pay_type')[$pay_type];
             $modify['支付金额'] = $pay_info['pay_money'] . '-><b style="color: green;">' . $pay_money . '</b>';
@@ -678,7 +678,7 @@ class StewardController extends BaseController {
                 $this->error('输入的金额大于应付金额');
             }
             // 未支付和未付完 则生成欠款
-            if ($pay_money < $pay_info['price'] && $pay_status == 1) {           
+            if ($pay_money < $pay_info['price']) {           
                 switch ($bill_type) {
                     case 2:
                     case 7:
@@ -744,7 +744,7 @@ class StewardController extends BaseController {
 
             // lewo_pay表修改内容
             $lewo_pay = [
-                'pay_type' => $pay_type,
+                'pay_type' => 11,
                 'pay_status' => $pay_status,
                 'pay_time' => $pay_time,
                 'pay_money' => $pay_money,
@@ -828,23 +828,16 @@ class StewardController extends BaseController {
                 'wgfee_unit' => ['物管费', $pay_list['wgfee_unit']],
                 'service_fee' => ['服务费', $pay_list['service_fee']],
                 'should_price' => ['总金额', $pay_list['price']],
-                'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
+                'actual_price' => ['实收金额', $pay_list['price'], 'update_price'],
             ];
             $pay_classify['others'] = [
-                'should_price' => ['应收金额', $pay_list['price']],
-                'actual_price' => ['实收金额', $pay_list['price'], 'need_modify'],
+                'should_price' => ['总金额', $pay_list['price']],
+                'actual_price' => ['实收金额', $pay_list['price'], 'update_price'],
             ];
 
             $account_info = [
                 'realname' => ['租客', $pay_list['realname']],
                 'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
-            ];
-
-            $pay_type = [
-                '支付宝(转账)' => 2,
-                '微信(转账)' => 4,
-                '现金' => 6,
-                '银行卡' => 7,
             ];
 
             isset($pay_classify[C('bill_type')[$pay_list['bill_type']]])
@@ -854,20 +847,16 @@ class StewardController extends BaseController {
             $this->assign('account_info',$account_info);
             $this->assign('bill_type', true);
             $this->assign('pay_list',$pay_list);
-            $this->assign('pay_type', $pay_type);
             $this->assign('pro_id', $pro_id);
             $this->display('steward-collection');
         }
     }
 
-    /**
-     * [入住-签约]
-     **/
     public function checkin(){
-        if ($this->isPostRequest()) {
-            
-
-            /*
+        if ( !empty($_POST) ) {   
+            $DContract = D("contract");
+            $post = $_POST;         
+            $room_id = I("room_id");
             $house_code = M("room")->where(array("id"=>$room_id))->getField("house_code");
             $end_date = M("houses")->where(array("house_code"=>$house_code))->getField("end_date");//托管结束日
             if ( strtotime($_POST['startDate']) > strtotime($_POST['endDate']) ) {
@@ -895,41 +884,16 @@ class StewardController extends BaseController {
                         }
                     }
                 }
-            }
-            */
-            $DContract = D('contract');
+            }    
 
-            $res = $DContract->addContract([
-                'DContract' => D('contract'),
-                'roomId' => I('post.room_id'),
-                'accountId' => I('post.account_id'),
-                'realName' => I('post.realName'),
-                'mobile' => I('post.mobile'),
-                'contact2' => I('post.contact2'),
-                'idNo' => I('post.idNo'),
-                'email' => I('post.email'),
-                'rent' => I('post.rent'),
-                'personCount' => I('personCount'),
-                'hzMobile' => I('post.hzMobile'),
-                'hzCardNo' => I('post.hzCardNo'),
-                'wgFee' => I('post.wg_fee'),
-                'fee' => I('post.fee'),
-                'rentType' => I('post.rentType'),
-                'startDate' => I('post.startDate'),
-                'endDate' => I('post.endDate'),
-                'roomD' => I('post.roomD'),
-                'deposit' => I('post.deposit'),
-                'favorable' => I('post.favorable'),
-                'favorableDes' => I('post.favorable_des'),
-                'is_deduct' => I('post.is_deduct'),
-                'total' => I('post.total'),
-                'paytotal' => I('post.paytotal'),
-                'bookDeposit' => I('bookDeposit'),
-                'photo' => $_FILES['photo']['name']['0'],
-            ]);
-            $res['success']
-            ? $this->success('合同生成成功!', U('Home/Steward/check_contract', ['id' => $res['id']]))
-            : $this->error($res['error_msg']);
+            $result = $DContract->add($post);
+            if ( $result['result'] ) {
+                //显示合同详情信息
+                $this->success("合同生成成功!",U("Home/Steward/check_contract",array("id"=>$result['id'])));
+                /*$this->success("合同生成成功,请到个人页面进行支付",U("Home/Steward/houses"));*/
+            } else {
+                $this->error($result['error_msg']);
+            }
         } else {
             $id = I('id');//room_id
             $DRoom = D("houses");
@@ -1035,7 +999,7 @@ class StewardController extends BaseController {
     /**
     * [退房管家抄水电气]
     **/
-    public function check_ammeter(){
+    /*public function check_ammeter(){
         if ( !empty($_POST) ) {
             $schedule_type = I("schedule_type");
             $schedule_id = I("schedule_id");
@@ -1082,7 +1046,7 @@ class StewardController extends BaseController {
             $data['roomD'] = I("roomD");
             $data['wx_fee'] = I("wx_fee");
             $data['wx_des'] = I("wx_des");
-            $data['last_schedule_id'] = $schedule_id;//上一个schedule_id
+
             //将租客申请的待办改成完成
             $MSchedule->where(array("id"=>$schedule_id))->save(array("is_finish"=>1));
             //插入一条新的待办
@@ -1112,7 +1076,7 @@ class StewardController extends BaseController {
             $this->assign("schedule_id",$schedule_id);
             $this->display("check-ammeter");
         }
-    }
+    }*/
 
     /**
     * [还原密码]
@@ -1176,7 +1140,6 @@ class StewardController extends BaseController {
         if ( !empty($_POST) ) {
             if ( I('is_success') != 1 ) $this->error('未验房');
             //判断是否已经提交退房请求
-
             $check_item_keys  = array_fill_keys(array_keys(C('check_item')),'0');
             $check_item_data  = serialize(array_replace($check_item_keys, I('check_item')));
 
@@ -1197,7 +1160,7 @@ class StewardController extends BaseController {
                 $last_ammeter_room_info = $DAmmeterRoom->getFirstInfoByRoomId($key);
                 if ( !is_null($last_ammeter_room_info) ) {
                     if ( $val['room_energy'] < $last_ammeter_room_info['room_energy'] ) {
-                        $this->error($val['room_code']."该房间电度数低于上个月!请重新录入");
+                        $this->error($val['room_code'].'该房间电度数低于上个月' . $last_ammeter_room_info['room_energy'] . '!请重新录入','',5);
                     }
                 }
             }
@@ -1226,8 +1189,9 @@ class StewardController extends BaseController {
 
             //将数据放入schedule表中，展示给后台看
             $result = $DSchedule->create_new_schedule($param);
-            if ( !$result ) $this->error('插入待办有误，请联系管理员!');
-exit;
+
+            if ( !$result[0] ) $this->error($result[1]);
+
             //执行退房修改操作
             //修改房间状态
             $room_result = $MRoom->where(array('id'=>$room_id))->save(array('account_id'=>0,'status'=>0));

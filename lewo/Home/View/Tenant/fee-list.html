@@ -79,7 +79,7 @@
                                 <div class="col-xs-12 innre-bill-ls-box">
                                     <div class="bill-ls-box-backcolor">
                                     	<div class="img-icon_ywcd-box">
-                                            <if condition="$vo.pay_status eq 1">
+                                            <if condition="$vo.pay_status neq 0">
                                             <img src="__PUBLIC__/images/icon_ywcd.jpg" class="icon_ywcd-float">
                                             </if>
                                         </div>
@@ -87,14 +87,16 @@
                                     	<p class="innre-bill-ls-bot">账单号:{$vo.pro_id}</p>
                                         <ul>
                                         
-                                        <if condition="$vo.pay_status eq 1">
+                                        <if condition="$vo.pay_status neq 0">
                                             <li class="innre-bill-ls-text1">支付金额：￥{$vo.pay_money}</li>
                                             <else/>
                                             <li class="innre-bill-ls-text1">应付金额：￥{$vo.price}</li>
                                         </if>
                                         <li class="innre-bill-ls-text2">账单信息：{$vo.input_year}年{$vo.input_month}月{$vo.bill_type_name}</li>
                                         <if condition="$vo['bill_des'] neq ''"><li class="innre-bill-ls-text2">账单描述：{$vo.bill_des}</li></if>
-                                        <li class="innre-bill-ls-text3"><if condition="$vo.pay_status eq 1">支付时间：{$vo.pay_time}</if></li>
+                                        <li class="innre-bill-ls-text3">
+                                            <if condition="$vo.pay_status neq 0">支付时间：{$vo.pay_time}</if>
+                                        </li>
                                         </ul>
                                         <switch name="vo.bill_type">
                                           <case value="2">
@@ -105,7 +107,7 @@
                                           </case>
                                         </switch>
                                         
-                                            <if condition="$vo.pay_status neq 1">
+                                            <if condition="$vo.pay_status eq 0">
                                                 <a href="{:U('Home/Alipay/pay',array('WIDout_trade_no'=>$vo['pro_id'],'WIDsubject'=>$vo['bill_info'],'WIDtotal_fee'=>$vo['price']))}"><div class="but-bot-ckxq2" onclick="">立即支付</div></a>
                                                 <else/>
                                                 <a><div class="but-bot-ckxq2">准时支付的宝宝真棒!(≧∀≦)ゞ</div></a>
@@ -116,32 +118,6 @@
                                 </div>
                             </div>
                         </volist>
-                        <!-- <volist name="contract_list" id="vo">
-                            <div class="row-fluid">
-                                <div class="col-xs-12 innre-bill-ls-box">
-                                    <div class="bill-ls-box-backcolor">
-                                        <div class="img-icon_ywcd-box">
-                                            <if condition="$vo.pay_status eq 1">
-                                            <img src="__PUBLIC__/images/icon_ywcd.jpg" class="icon_ywcd-float">
-                                            </if>
-                                        </div>
-                                            <a href="{:U('Home/Tenant/show_contract_bill',array('id'=>$vo['id']))}"><div class="but-bot-ckxq" onclick="">查看详情</div></a>
-                                            <if condition="$vo.pay_status neq 1">
-                                                <a href="{:U('Home/AlipayContract/pay',array('WIDout_trade_no'=>$vo['order_no'],'WIDsubject'=>$vo['bill_info'],'WIDtotal_fee'=>$vo['pay_total']))}"><div class="but-bot-ckxq2" onclick="">立即支付</div></a>
-                                            </if>
-                                        <p class="innre-bill-ls-bot">账单号:{$vo.order_no}</p>
-                                        <ul>
-                                        <li class="innre-bill-ls-text1">支付金额：￥{$vo.total_fee}</li>
-                                        <li class="innre-bill-ls-text2">支付类型：合同账单</li>
-                                        <li class="innre-bill-ls-text3">支付时间：{$vo.pay_date}</li>
-                                        </ul>
-                                        <p class="innre-bill-ls-box-bot"></p>误删，若要添加项目直接复制上面innre-bill-ls-text1~3条任意一条即可。
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </volist> -->
-                        <!--滑动过度区域-->
                         <div class="row-fluid">
                             <div class="col-xs-12"><div style="height:90px;"></div></div>
                         </div>

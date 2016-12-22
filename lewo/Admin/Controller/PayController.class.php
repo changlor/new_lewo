@@ -496,37 +496,37 @@ class PayController extends Controller {
         $modify_log .= '<br/>修改人:'.$_SESSION['admin_type_name'].$_SESSION['username'].' 时间:'.date('Y-m-d H:i:s').' <br/>';
 
         if ( $save['pay_status'] != $pay_info['pay_status'] ) {
-            $pay_status_arr = array(0=>'未支付',1=>'已支付');
-            $modify_log .= $pay_status_arr[$pay_info['pay_status']].'--> <b style="color:green">'.$pay_status_arr[$save['pay_status']].'</b>;<br/>';
+            $pay_status_arr = array(0=>'未支付',1=>'已支付',2=>'管家代收');
+            $modify_log .= '支付状态：'.$pay_status_arr[$pay_info['pay_status']].'--> <b style="color:green">'.$pay_status_arr[$save['pay_status']].'</b>;<br/>';
         }
 
         if ( $save['bill_des'] != $pay_info['bill_des'] ) {
-            $modify_log .= '账单描述:'.$pay_info['bill_des'].'--> <b style="color:green">'.$save['bill_des'].'</b>;<br/>';
+            $modify_log .= '账单描述：'.$pay_info['bill_des'].'--> <b style="color:green">'.$save['bill_des'].'</b>;<br/>';
         }
 
         if ( $save['pay_type'] != $pay_info['pay_type'] ) {
             $pay_type_arr = C('pay_type');
-            $modify_log .= '支付方式:'.$pay_type_arr[$pay_info['pay_type']].'--> <b style="color:green">'.$pay_type_arr[$save['pay_type']].'</b>;<br/>';
+            $modify_log .= '支付方式：'.$pay_type_arr[$pay_info['pay_type']].'--> <b style="color:green">'.$pay_type_arr[$save['pay_type']].'</b>;<br/>';
         }
 
         if ( $save['pay_money'] != $pay_info['pay_money'] ) {
-            $modify_log .= '支付金额:'.$pay_info['pay_money'].'--> <b style="color:green">'.$save['pay_money'].'</b>;<br/>';
+            $modify_log .= '支付金额：'.$pay_info['pay_money'].'--> <b style="color:green">'.$save['pay_money'].'</b>;<br/>';
         }
 
         if ( $save['pay_time'] != $pay_info['pay_time'] ) {
-            $modify_log .= '支付时间:'.$pay_info['pay_time'].'--> <b style="color:green">'.$save['pay_time'].'</b>;<br/>';
+            $modify_log .= '支付时间：'.$pay_info['pay_time'].'--> <b style="color:green">'.$save['pay_time'].'</b>;<br/>';
         }
 
         if ( $save['last_date'] != $pay_info['last_date'] ) {
-            $modify_log .= '最迟缴费时间:'.$pay_info['last_date'].'--> <b style="color:green">'.$save['last_date'].'</b>;<br/>';
+            $modify_log .= '最迟缴费时间：'.$pay_info['last_date'].'--> <b style="color:green">'.$save['last_date'].'</b>;<br/>';
         }
 
         if ( $save['should_date'] != $pay_info['should_date'] ) {
-            $modify_log .= '应缴费时间:'.$pay_info['should_date'].'--> <b style="color:green">'.$save['should_date'].'</b>;<br/>';
+            $modify_log .= '应缴费时间：'.$pay_info['should_date'].'--> <b style="color:green">'.$save['should_date'].'</b>;<br/>';
         }
 
         if ( !empty($extra_modify_log) ) {
-            $modify_log .= '备注:'.$extra_modify_log.'</b>;<br/>';
+            $modify_log .= '备注：'.$extra_modify_log.'</b>;<br/>';
         }
 
         return $modify_log;

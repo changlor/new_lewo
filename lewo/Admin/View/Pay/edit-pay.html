@@ -35,6 +35,7 @@
                   <select name="pay_status">
                     <option value="0" <if condition="$pay_info.pay_status neq 1"> selected="selected" </if>>未支付</option>
                     <option value="1" <if condition="$pay_info.pay_status eq 1"> selected="selected" </if>>已支付</option>
+                    <option value="2" <if condition="$pay_info.pay_status eq 2"> selected="selected" </if>>管家代收</option>
                   </select>
                 </div>
               </div>

@@ -148,7 +148,7 @@
                                 <tbody>
                                     <tr><td colspan="2" align="center">{$room_info.area_name}({$room_info.house_info.building}-{$room_info.house_info.floor}-{$room_info.house_info.door_no})</td></tr>
                                     <tr><td>房间编号</td><td><input type="text" value="{$room_info['house_code']}"></td></tr>
-                                    <tr><td>租客姓名</td><td><a href="123">asd</a>{$account_info['realname']}</td></tr>
+                                    <tr><td>租客姓名</td><td>{$account_info['realname']}</td></tr>
                                     <tr><td>联系电话</td><td>{$account_info['mobile']}</td></tr>
                                     <tr><td>房屋地址</td><td><input type="text" name="address" value="{$room_info.house_info.address}{$room_info.area_name}({$room_info.house_info.building}-{$room_info.house_info.floor}-{$room_info.house_info.door_no})"></td></tr>
                                     <tr><td>退租日期</td><td><input type="text" id="check-out-day" name="check_out_day" value=""></td></tr>
@@ -190,7 +190,7 @@
                                             <td>{$vo.room_code}</td>
                                              <td>
                                               <input placeholder="0" type="text" name="roomD[{$vo.id}][room_energy]">
-                                              <!-- <input type="hidden" name="roomD[{$vo.id}][room_code]" value="{$vo.room_code}"> -->
+                                              <input type="hidden" name="roomD[{$vo.id}][room_code]" value="{$vo.room_code}">
                                              </td>
                                          </tr>
                                     </volist>

@@ -2,9 +2,13 @@
 namespace Home\Controller;
 use Think\Controller;
 class StewardController extends BaseController {
+    // add by changle
+    protected $stewardId;
+
 	public function __construct(){
 		parent::__construct();
-		if ( empty($_SESSION['steward_id'])) {
+        $this->stewardId = $_SESSION['steward_id'];
+		if (is_numeric($this->stewardId) {
 			$this->login();
 			die();
 		}
@@ -637,6 +641,12 @@ class StewardController extends BaseController {
 
     // 管家代收
     public function steward_collection() {
+        $joinTable = parent::join($this->table, [
+            'room' => 'account_id',
+            'houses' => 'account_id',
+            'account' => 'account_id',
+        ]);
+        $this->stewardId;
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // 获取订单id
             $pro_id = I('pro_id');

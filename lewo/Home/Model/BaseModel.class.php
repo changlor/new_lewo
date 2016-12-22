@@ -11,7 +11,7 @@ class BaseModel extends Model {
     public function __construct()
     {
         parent::__construct();
-        $this->steward_id = $_SESSION['steward_id'];
+        // $this->steward_id = $_SESSION['steward_id'];
     }
 
     public function join($table, $tableName, $joinTable)

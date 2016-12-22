@@ -202,7 +202,7 @@ class HousesModel extends BaseModel {
 		$type = empty($type) ? 'all' : $type;
 		$MRoom = M("room");
 		$MArea = M("area");
-		$where['steward_id'] = ['IN',[$_SESSION['steward_id'],'0']];
+
 		$houses = $this->field("id,area_id,steward_id,house_code,type,building,floor,door_no")->where($where)->order("area_id desc, building desc,floor desc,door_no desc")->select();
 
 		foreach($houses AS $key=>$val){

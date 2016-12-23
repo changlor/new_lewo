@@ -113,10 +113,10 @@ function toIndex(){
                                             <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
                                             <li class="innre-bill-text3">
                                                 <if condition="$value[2] eq 'need_modify'">
-                                                    <input class="money" name="{$key}" onchange="changePrice($(this))" style="color: #888;width: 60px;border: 1px solid #888; height: 25px; padding-left: 2px;" value="{$value[1]}" />
+                                                    <input class="money" name="{$key}" onchange="changePrice($(this))" style="color: #888;width: 60px; height: 40px; line-height: 40px; border: 1px solid #888;  padding-left: 2px;" value="{$value[1]}" />
                                                     <input type="hidden" value="{$value[1]}">
                                                 <elseif condition="$value[2] eq 'update_price'" />
-                                                    <input name="{$key}" onchange="checkPrice($(this))" style="color: #888;width: 60px;border: 1px solid #888; height: 25px; padding-left: 2px;" value="{$value[1]}" />
+                                                    <input name="{$key}" onchange="checkPrice($(this))" style="color: #888;width: 60px; height:40px; line-height: 40px; border: 1px solid #888;  padding-left: 2px;" value="{$value[1]}" />
                                                     <input type="hidden" value="{$value[1]}">
                                                 <else />
                                                     <input class="money" readonly name="{$key}" style="width: 200px; text-align: right" value="{$value[1]}" />

@@ -22,6 +22,11 @@ class RoomModel extends BaseModel {
 		return $this->table->field($field)->where($where);
 	}
 
+	public function updateRoom($where, $updateInfo)
+    {
+        return $this->update($where)->save($updateInfo);
+    }
+
 	public function selectField($where, $field)
 	{
 		return $this->select($where)->getField($field);

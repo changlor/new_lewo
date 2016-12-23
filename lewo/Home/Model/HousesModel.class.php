@@ -36,44 +36,44 @@ class HousesModel extends BaseModel {
 	 * [获取房源列表]
 	 **/
 	public function getHousesList(){
-		return $this->select();
+		return $this->table->select();
 	}
 
 	/**
 	 * [获取房屋信息]
 	 **/
 	public function getHouse($house_code){
-		return $this->where(array('house_code'=>$house_code))->find();
+		return $this->table->where(array('house_code'=>$house_code))->find();
 	}
 	/**
 	 * [获取房屋信息]
 	 **/
 	public function getHouseById($house_id){
-		return $this->where(array('id'=>$house_id))->find();
+		return $this->table->where(array('id'=>$house_id))->find();
 	}
 	/**
 	 * [获取房屋信息物业费]
 	 **/
 	public function getWYfee($house_code){
-		return $this->where(array('house_code'=>$house_code))->getField("fee");
+		return $this->table->where(array('house_code'=>$house_code))->getField("fee");
 	}
 	/**
 	 * [获取房屋编码]
 	 **/
 	public function getHouseCodeById($hosue_id){
-		return $this->where(array('id'=>$hosue_id))->getField("house_code");
+		return $this->table->where(array('id'=>$hosue_id))->getField("house_code");
 	}
 	/**
 	* [获取房屋id]
 	**/
 	public function getHouseIdByCode($house_code){
-		return $this->where(array("house_code"=>$house_code))->getField("id");
+		return $this->table->where(array("house_code"=>$house_code))->getField("id");
 	}
 	/**
 	* [获取小区id根据房屋编码]
 	**/
 	public function getAreaIdByCode($house_code){
-		return $this->where(array("house_code"=>$house_code))->getField("area_id");
+		return $this->table->where(array("house_code"=>$house_code))->getField("area_id");
 	}
 
 	/**
@@ -207,7 +207,12 @@ class HousesModel extends BaseModel {
 		$type = empty($type) ? 'all' : $type;
 		$MRoom = M("room");
 		$MArea = M("area");
+<<<<<<< HEAD
 		$houses = $this->field("id,area_id,steward_id,house_code,type,building,floor,door_no")->where($where)->order("area_id desc, building desc,floor desc,door_no desc")->select();
+=======
+
+		$houses = $this->table->field("id,area_id,steward_id,house_code,type,building,floor,door_no")->where($where)->order("area_id desc, building desc,floor desc,door_no desc")->select();
+>>>>>>> masterTam/master
 
 		foreach($houses as $key => $val){
 			$count = $MRoom->where(array("house_code"=>$val['house_code'],"is_show"=>1))->count();
@@ -256,7 +261,7 @@ class HousesModel extends BaseModel {
 	* [获取房屋小区名 房屋的楼层号]
 	**/
 	public function getHouseAndArea($house_code){
-		return $this->join("lewo_area ON lewo_houses.area_id = lewo_area.id")->where(array("house_code"=>$house_code))->find();
+		return $this->table->join("lewo_area ON lewo_houses.area_id = lewo_area.id")->where(array("house_code"=>$house_code))->find();
 	}
 }
 

@@ -4,12 +4,20 @@ use Think\Model;
 /**
 * [待办数据层]
 */
-class ScheduleModel extends Model {
+class ScheduleModel extends BaseModel {
+	private $table;
+	protected $tableName = 'schedule';
+
+	public function __construct()
+    {
+        parent::__construct();
+    	$this->table = M($this->tableName);
+    }
 	/**
 	 * [管家待办表]
 	 **/
 	public function getScheduleBySteward($steward_id){
-		$sArr = $this
+		$sArr = $this->table
 			->field("lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_schedule.*,lewo_account.realname,lewo_account.mobile")
 			->join("lewo_room ON lewo_schedule.room_id = lewo_room.id")
 			->join("lewo_account ON lewo_schedule.account_id = lewo_account.id")
@@ -26,13 +34,13 @@ class ScheduleModel extends Model {
 	 * [获取该id的待办信息]
 	 **/
 	public function getScheduleByID($id){
-		return $this->field("lewo_schedule.*,lewo_account.mobile,lewo_account.realname,lewo_account.card_no,lewo_account.contact2,lewo_account.email")->join("lewo_account ON lewo_schedule.account_id = lewo_account.id")->where(array("lewo_schedule.id"=>$id))->find();
+		return $this->table->field("lewo_schedule.*,lewo_account.mobile,lewo_account.realname,lewo_account.card_no,lewo_account.contact2,lewo_account.email")->join("lewo_account ON lewo_schedule.account_id = lewo_account.id")->where(array("lewo_schedule.id"=>$id))->find();
 	}
 	/**
 	 * [设置待办完成]
 	 **/
 	public function setFinish($id){
-		return $this->where(array("id"=>$id))->save(array("is_finish"=>1));
+		return $this->table->where(array("id"=>$id))->save(array("is_finish"=>1));
 	}
 
 	/**
@@ -51,7 +59,7 @@ class ScheduleModel extends Model {
 		if ( count($data) > 0 ) {
 			$data['create_time'] = date("Y-m-d H:i:s",time());
             $data['create_date'] = date("Y-m-d",time());
-			return $this->add($data);
+			return $this->table->add($data);
 		} else {
 			return false;
 		}
@@ -70,7 +78,7 @@ class ScheduleModel extends Model {
 			return false;
 		}
 		$DAccount = D("account");
-		$schedule_info = $this->where(array("id"=>$schedule_id))->find();
+		$schedule_info = $this->table->where(array("id"=>$schedule_id))->find();
 		$data['account_id'] = $schedule_info['account_id'];
 		$data['room_id'] = $schedule_info['room_id'];
 		$data['mobile'] = $schedule_info['mobile'];
@@ -106,12 +114,23 @@ class ScheduleModel extends Model {
 	* @param pay_type 1=>'支付宝',2=>'微信',3=>'银行卡',4=>'现金'
 	**/
 	public function create_new_schedule($param){
-		$MSchedule = M('schedule');
-		$MSchedule->startTrans();
-		if ( is_null($param['schedule_type']) || is_null($param['account_id']) || is_null($param['room_id']) || is_null($param['status']) ) {
-			return false;
+		M()->startTrans();
+
+		if (is_null($param['schedule_type'])) {
+			return [false, '待办类型参数不存在'];
 		}
+		if (is_null($param['account_id'])) { 
+			return [false, '租客ID参数不存在'];
+		}
+		if (is_null($param['room_id'])) {
+			return [false, '房间ID参数不存在'];
+		}
+		if (is_null($param['status'])) {
+			return [false, '待办状态参数不存在'];
+		}
+
 		$data = array();
+		$data['pro_id'] 		= getOrderNo();
 		$data['account_id'] 	= $param['account_id'];
 		$data['room_id']    	= $param['room_id'];
 		$data['schedule_type']  = $param['schedule_type'];
@@ -176,14 +195,14 @@ class ScheduleModel extends Model {
 								? 0
 								: $param['check_out_type'];
 
-		$res = $MSchedule->add($data);
+		$res = $this->table->add($data);
 
 		if ( $res ) {
-			$MSchedule->commit();
-			return true;
+			M()->commit();
+			return [true, '待办生成成功!'];
 		} else {
-			$MSchedule->rollback();
-			return false;
+			M()->rollback();
+			return [false, '待办生成失败!'];
 		}
 	}
 

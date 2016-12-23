@@ -184,169 +184,11 @@
               </div>
             </div>
             </volist>
-            <!-- 退房流程显示开 -->
-            <notempty name="TFinfo">
-            <div class="col-xs-12">
-              <div class="border-bot-xt-wdfj"></div>
-            </div>
-            <div class="row-fluid">
-              <div class="col-xs-12">
-              <!-- 退租开 -->
-                <table class="table table-th-td">
-                  <tbody>
-                    <tr height="10"><td colspan="2"></td></tr>
-                    
-                    <!--退房流程开-->
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$status eq 1">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$TFstatus eq 1">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">申请退房</p>
-                        <p class="banner-wz-tz3">{$TFinfo['0']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$TFstatus eq 2">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$TFstatus eq 2">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">等待管家验房</p>
-                        <p class="banner-wz-tz3">{$TFinfo['1']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                      <img <if condition="$TFstatus eq 3">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$TFstatus eq 3">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">财务完成费用审核</p>
-                        <p class="banner-wz-tz3">{$TFinfo['2']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$TFstatus eq 4">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$TFstatus eq 4">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">财务发送账单确认</p>
-                        <p class="banner-wz-tz3">{$TFinfo['3']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$TFstatus eq 5">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$TFstatus eq 5">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">租客确认账单</p>
-                        <p class="banner-wz-tz3">{$TFinfo['4']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$TFstatus eq 6">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$TFstatus eq 6">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">等待财务确认打款账单</p>
-                        <p class="banner-wz-tz3">{$TFinfo['5']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <!--退房流程关-->
-                  </tbody>
-                </table>
-              <!-- 退租关 -->
-              </div>
-            </div>
-            <div class="row-fluid">
-              <div class="col-xs-12"><div style="height:45px;"></div></div>
-            </div>
-            </notempty>
-            <!-- 退房流程显示关 -->
-            <!-- 换房流程显示开 -->
-            <notempty name="HFinfo">
-            <div class="col-xs-12">
-              <div class="border-bot-xt-wdfj"></div>
-            </div>
-            <div class="row-fluid">
-              <div class="col-xs-12">
-              <!-- 换租开 -->
-                <table class="table table-th-td">
-                  <tbody>
-                    <tr height="10"><td colspan="2"></td></tr>
-                    
-                    <!--退房流程开-->
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$HFstatus eq 1">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$HFstatus eq 1">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">申请换房</p>
-                        <p class="banner-wz-tz3">{$HFinfo['0']['create_time']}</p>
-                        
-                      </td>
-                    </tr>
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$HFstatus eq 2">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$HFstatus eq 2">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">等待管家验房</p>
-                        <p class="banner-wz-tz3">{$HFinfo['1']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                      <img <if condition="$HFstatus eq 3">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$HFstatus eq 3">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">财务完成费用审核</p>
-                        <p class="banner-wz-tz3">{$HFinfo['2']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$HFstatus eq 4">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$HFstatus eq 4">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">财务发送账单确认</p>
-                        <p class="banner-wz-tz3">{$HFinfo['3']['create_time']}</p>
-                      </td>
-                    </tr>
-
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$HFstatus eq 5">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$HFstatus eq 5">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">租客确认账单</p>
-                        <p class="banner-wz-tz3">{$HFinfo['4']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <tr height="40">
-                      <td class="table-tr-y-line table-td-color1">
-                        <img <if condition="$HFstatus eq 6">src="__PUBLIC__/images/icon_wdfjo1.png"<else/>src="__PUBLIC__/images/icon_wdfjo2.png"</if> class="icon_wdfjo1-wz">
-                      </td>
-                      <td <if condition="$HFstatus eq 6">class="table-td-color1"<else/>class="table-td-color2"</if> align="left">
-                        <p class="banner-wz-tz3">等待财务完成打款(将剩余押金放到个人余额中)</p>
-                        <p class="banner-wz-tz3">{$HFinfo['5']['create_time']}</p>
-                      </td>
-                    </tr>
-                    <!--换房流程关-->
-                  </tbody>
-                </table>
-              <!-- 换房关 -->
-              </div>
-            </div>
-            <div class="row-fluid">
-              <div class="col-xs-12"><div style="height:45px;"></div></div>
-            </div>
-            </notempty>
-            <!-- 换房流程显示关 -->
           </div>
         </div>
     </div>
   </div>
-  <div class="container-fluid button">
+  <!-- <div class="container-fluid button">
     <div class="row-fluid button-ds">
         <div class="col-xs-4 padding-left-right-10">
         <div class="button-ckzi1">
@@ -363,7 +205,7 @@
         <input onclick="window.location='{:U('Home/Tenant/checkout',array('room_id'=>$room_info['id'],'schedule_type'=>C('schedule_type_zf')))}'" name="#" type="submit" value="转房" class="button-htzh-dx">
         </div>
     </div>
-  </div>
+  </div> -->
 </div>
 </body>
 </html>

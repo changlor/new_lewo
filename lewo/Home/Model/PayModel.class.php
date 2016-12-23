@@ -119,7 +119,7 @@ class PayModel extends BaseModel {
 					->join('lewo_account a ON a.id=p.account_id','left')
 					->join('lewo_room r ON r.id=p.room_id','left')
 					->where($where)
-					->order('p.pay_status asc,p.input_year desc,p.input_month desc')
+					->order(' p.create_time desc,p.input_year desc,p.input_month desc')
 					->select();
 		$MHouses 	= M('houses');
 		$MArea 		= M('area');
@@ -193,7 +193,7 @@ class PayModel extends BaseModel {
 		->join('lewo_contract ON lewo_contract.pro_id = lewo_pay.pro_id', 'left')
 		->where($filters)
 		->where($where)
-		->order('lewo_pay.pay_status asc, lewo_pay.last_date asc, lewo_pay.input_year desc, lewo_pay.input_month desc')
+		->order('lewo_pay.pay_status asc, lewo_pay.create_time desc, lewo_pay.last_date asc, lewo_pay.input_year desc, lewo_pay.input_month desc')
 		->select();
 
 		foreach ($bills as $key => $value) {

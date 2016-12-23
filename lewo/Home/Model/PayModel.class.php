@@ -15,6 +15,7 @@ class PayModel extends BaseModel {
 		'bill_type', 'bill_des',
 		'is_show', 'is_send',
 		'create_time', 'should_date', 'last_date',
+		'input_year', 'input_month',
 		'favorable', 'favorable_des',
 	];
 
@@ -36,6 +37,24 @@ class PayModel extends BaseModel {
 	{
 		return $this->select($where)->getField($field);
 	}
+
+	public function selectPay($where, $field)
+	{
+		return $this->select($where, $field)->find();
+	}
+
+	public function update($where)
+    {
+        $field = empty($field) ? '' : $field;
+        $where = empty($where) ? '' : $where;
+        $field = is_array($field) ? implode(',', $field) : $field;
+        return $this->table->where($where);
+    }
+
+    public function updatePay($where, $updateInfo)
+    {
+        return $this->update($where)->save($updateInfo);
+    }
 
 	public function insert($pay)
 	{

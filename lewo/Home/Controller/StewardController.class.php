@@ -641,153 +641,16 @@ class StewardController extends BaseController {
 
     // 管家代收
     public function steward_collection() {
-        // 获取订单id
-        echo $proId = I('pro_id');
-        $DSteward = D('steward');
-        $DSteward->stewardCollection(['proId' => $proId]);
-        //$joinTable = parent::join($this->table, [
-        //    'room' => 'account_id',
-        //    'houses' => 'account_id',
-        //    'account' => 'account_id',
-        //]);
-        //dump($DSteward);
-        exit;
-        //$this->stewardId;
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-<<<<<<< HEAD
+        if (parent::isPostRequest()) {
+            // 获取模型实例
             $DSteward = D('steward');
-            $DSteward->stewardCollection([
-                'payType' => I('post.pay_type'),
+            $res = $DSteward->stewardCollection([
+                'proId' => I('pro_id'),
+                'payType' => 11,
                 'payMoney' => I('post.actual_price'),
                 'actualDeposit' => I('post.actual_deposit'),
                 'actualRent' => I('post.actual_rent'),
             ]);
-=======
-            // 获取订单id
-            $pro_id = I('pro_id');
-            // 获取模型实例
-            $MContract  = M('contract'); $MPay = M('pay'); $DPay = D('pay'); M()->startTrans();
-            // 获取支付信息
-            $pay_info = $MPay->where(['pro_id' => $pro_id])->find();
-            // 所有类型账单通用数据
-            $pay_type = I('pay_type');
-            $pay_money = I('actual_price');
-            if ($pay_money == 0) {
-                $this->error('管家代收金额不能为0!','',0);
-            }
-            $pay_time = date('Y-m-d H:i:s');
-            // 管家代收是已支付
-            $pay_status = 2; //管家代收
-            // 合同账单
-            $contract_bill = [
-                'actual_deposit' => I('actual_deposit'),
-                'actual_rent' => I('actual_rent'),
-            ];
-            // 账单类型
-            $bill_type = $pay_info['bill_type'];
-            // 租客id
-            $account_id = $pay_info["account_id"];
-            // 房间id
-            $room_id = $pay_info["room_id"];
-            // 修改日志
-            $modify_log  = $pay_info['modify_log'];
-            $modify['修改人'] = '管家(' . $_SESSION['steward_nickname'] . '|' . $_SESSION['steward_user'] . ')时间:' . date('Y-m-d H:i:s');
-            $modify['支付状态'] = '未支付-><b style="color: green;">已支付</b>';
-            $modify['支付方式'] = C('pay_type')[$pay_type];
-            $modify['支付金额'] = $pay_info['pay_money'] . '-><b style="color: green;">' . $pay_money . '</b>';
-            $modify['支付时间'] = '<b style="color: green;">' . $pay_time . '</b>';
-            $modify['备注'] = '管家代收';
-            $modify_log = '';
-            foreach ($modify as $key => $value) {
-                $modify_log .= '<br>' . $key . ': ' . $value;
-            }
-            // 如果实际收取金额大于支付金额，则返回数据错误
-            if ($pay_money > $pay_info['price']) {
-                $this->error('输入的金额大于应付金额');
-            }
-            // 未支付和未付完 则生成欠款
-            if ($pay_money < $pay_info['price']) {           
-                switch ($bill_type) {
-                    case 2:
-                    case 7:
-                        $due_bill_type = 7;
-                        break;
-                    case 3:
-                    case 8:
-                        $due_bill_type = 8;
-                        break;
-                    default:
-                        $due_bill_type = 9;
-                        break;
-                }
-
-                $due_price = $pay_info['price'] - $pay_money;
-                $lewo_pay_due = [
-                    'account_id' => $account_id,
-                    'room_id' => $room_id,
-                    'bill_type' => $due_bill_type,
-                    'input_year' => $pay_info['input_year'],
-                    'input_month' => $pay_info['input_month'],
-                    'should_date' => $pay_info['should_date'],
-                    'last_date' => $pay_info['last_date'],
-                    'input_month' => $pay_info['input_month'],
-                    'input_year' => $pay_info['input_year'],
-                    'price' => $due_price,
-                    'is_send' => 1,
-                ];
-                $res = $DPay->create_bill($lewo_pay_due);
-                if (!$res) {
-                    $this->error('欠款账单生成失败!');
-                }
-            }
-            // 修改房屋合同信息
-            switch ($bill_type) {
-                case 2:
-                    // 合同
-                    $DRoom = D('room');
-                    // roomstatus
-                    // 0 未租, 1 缴纳定金, 2 已住
-                    $DRoom->setRoomStatus($room_id, 2);
-                    $DRoom->setRoomPerson($room_id, $account_id);
-                    //修改合同正常
-                    $lewo_contract = [
-                        'actual_rent' => $contract_bill['actual_rent'],
-                        'actual_deposit' => $contract_bill['actual_deposit'],
-                        'contract_status' => 1,
-                    ];
-                    M('contract')->where(['pro_id' => $pro_id])->save($lewo_contract);
-                    break;
-                case 3:
-                    // 日常
-                    // 修改合同信息
-                    $charge_info = M('charge_bill')->where(['pro_id' => $pro_id])->find();
-                    $rent_date = $charge_info['rent_date_to']; //房租到期日
-                    $MContract->where([
-                        'account_id' => $account_id, 
-                        'room_id' => $room_id, 
-                        'contract_status'=>1
-                    ])->save(['rent_date' => $rent_date]);
-                    break;
-            }
-
-            // lewo_pay表修改内容
-            $lewo_pay = [
-                'pay_type' => 11,
-                'pay_status' => $pay_status,
-                'pay_time' => $pay_time,
-                'pay_money' => $pay_money,
-                'modify_log' => $modify_log,
-            ];
-            
-            $res = M('pay')->where(['pro_id' => $pro_id])->save($lewo_pay);
-            if ($res == false){
-                M()->rollback();
-                $this->error('修改账单失败!', U('Steward/steward_collection', ['pro_id' => $pro_id]),3);
-            } else {
-                M()->commit();
-                $this->success('管家代收成功', U('Steward/allbills'),3);
-            }
->>>>>>> masterTam/master
         } else {
             $pro_id = I('pro_id');
             $field = [
@@ -834,8 +697,7 @@ class StewardController extends BaseController {
             ->where($filters)
             ->find();
 
-            dump($pay_list);
-            exit;
+
             $pay_classify['合同'] = [
                 'actual_deposit' => ['押金', $pay_list['deposit'], 'need_modify'],
                 'actual_rent' => ['房租', $pay_list['rent'], 'need_modify'],
@@ -878,11 +740,10 @@ class StewardController extends BaseController {
             $this->assign('account_info',$account_info);
             $this->assign('bill_type', true);
             $this->assign('pay_list',$pay_list);
-<<<<<<< HEAD
+            /*
             $this->assign('pay_type', $pay_type);
             $this->assign('account_id', $pay_list['account_id']);
-=======
->>>>>>> masterTam/master
+            */
             $this->assign('pro_id', $pro_id);
             $this->display('steward-collection');
         }

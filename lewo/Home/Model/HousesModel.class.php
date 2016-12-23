@@ -207,12 +207,14 @@ class HousesModel extends BaseModel {
 		$type = empty($type) ? 'all' : $type;
 		$MRoom = M("room");
 		$MArea = M("area");
+		/*
 <<<<<<< HEAD
 		$houses = $this->field("id,area_id,steward_id,house_code,type,building,floor,door_no")->where($where)->order("area_id desc, building desc,floor desc,door_no desc")->select();
 =======
+		*/
 
 		$houses = $this->table->field("id,area_id,steward_id,house_code,type,building,floor,door_no")->where($where)->order("area_id desc, building desc,floor desc,door_no desc")->select();
->>>>>>> masterTam/master
+//>>>>>>> masterTam/master
 
 		foreach($houses as $key => $val){
 			$count = $MRoom->where(array("house_code"=>$val['house_code'],"is_show"=>1))->count();

@@ -647,6 +647,9 @@ class StewardController extends BaseController {
             // 所有类型账单通用数据
             $pay_type = I('pay_type');
             $pay_money = I('actual_price');
+            if ($pay_money == 0) {
+                $this->error('管家代收金额不能为0!','',0);
+            }
             $pay_time = date('Y-m-d H:i:s');
             // 管家代收是已支付
             $pay_status = 2; //管家代收

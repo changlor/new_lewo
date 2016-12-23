@@ -407,36 +407,22 @@ class StewardController extends BaseController {
         //$_SESSION['stewrad_houses_back_url'] = U('Home/Steward/allhouses'); 
         $where = [];
         $search = trim(I("search"));
-        $chips = empty($search) ? '' : explode('-', $search);
-        if (isset($chips[0])) {
-            $where['building'] = $chips[0];
-        }
-        if (isset($chips[1])) {
-            $where['floor'] = $chips[1];
-        }
-        if (isset($chips[2])) {
-            $where['door_no'] = $chips[2];
-        }
-        /*
-        //$is_has_flag = strpos($search, '-');
+        $is_has_flag = strpos($search, '-');
         if ( $is_has_flag && !empty($search)) {
             $search_arr = explode('-',$search);
             if ( !is_null($search_arr['0']) ) {
-                $where['building'] = $search_arr['0'];
+                $where['lewo.houses.building'] = $search_arr['0'];
             }
             if ( !is_null($search_arr['1']) ) {
-                $where['floor'] = $search_arr['1'];
+                $where['lewo.houses.floor'] = $search_arr['1'];
             }
             if ( !is_null($search_arr['2']) ) {
-                $where['door_no'] = $search_arr['2'];
+                $where['lewo.houses.door_no'] = $search_arr['2'];
             }
         } else {
-            $where['_string'] = "house_code LIKE '%".$search."%' OR area_name LIKE '%".$search."%'";
+            $where['_string'] = "lewo_account.realname LIKE '%". $search ."%' OR lewo_houses.house_code LIKE '%".$search."%' OR lewo_area.area_name LIKE '%".$search."%' ";
         }
-        */
-        //$this->assign("search",$search);
-        //输出房屋类别
-        //$this->assign("type", $type);
+        
         $type = '';
         $DPay = D('pay');
         $bills = $DPay->getBills($where, $type);

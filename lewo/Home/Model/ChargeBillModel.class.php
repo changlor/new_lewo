@@ -4,7 +4,39 @@ use Think\Model;
 /**
 * [账单数据层]
 */
-class ChargeBillModel extends Model{
+class ChargeBillModel extends Model {
+
+    protected $table;
+    protected $tableName = 'charge_bill';
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->table = M($this->tableName);
+    }
+    
+    public function select($where, $field)
+    {
+        $field = empty($field) ? '' : $field;
+        $where = empty($where) ? '' : $where;
+        $field = is_array($field) ? implode(',', $field) : $field;
+        return $this->table->field($field)->where($where);
+    }
+
+    public function selectField($where, $field)
+    {
+        return $this->select($where)->getField($field);
+    }
+
+    public function selectChargeBill($where, $field)
+    {
+        return $this->select($where, $field)->find();
+    }
+
+    public function insert($pay)
+    {
+        return $this->table->add($pay);
+    }
 	/**
     * [获取该用户id的账单列表]
     **/

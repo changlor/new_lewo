@@ -772,7 +772,7 @@ class HousesController extends Controller {
             $val2['room_energy_add'] = $add_roomD;
             $val2['room_energy_fee'] = get_energy_fee($add_roomD,$energy_stair);
             $val2['public_energy_fee'] = $public_energy_fee;
-            $val2['total_fee'] = $val2['energy_fee']+$val2['water_fee']+$val2['gas_fee']+$val2['room_energy_fee']+$val2['rent_fee']+$val2['service_fee']+$val2['wgfee_unit']+$val2['rubbish_fee']+$val2['wx_fee'];
+            $val2['total_fee'] = $val2['energy_fee'] + $val2['water_fee'] + $val2['gas_fee'] + $val2['room_energy_fee'] + $val2['rent_fee'] + $val2['service_fee'] + $val2['wgfee_unit'] + $val2['rubbish_fee'] + $val2['wx_fee'] - $val2['favorable'];
             $val2['start_energy']   = $SDQdata['start_energy'];
             $val2['end_energy']     = $SDQdata['end_energy'];
             $val2['start_water']    = $SDQdata['start_water'];

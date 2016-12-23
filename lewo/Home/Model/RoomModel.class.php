@@ -22,6 +22,14 @@ class RoomModel extends BaseModel {
 		return $this->table->field($field)->where($where);
 	}
 
+	public function update($where)
+    {
+        $field = empty($field) ? '' : $field;
+        $where = empty($where) ? '' : $where;
+        $field = is_array($field) ? implode(',', $field) : $field;
+        return $this->table->where($where);
+    }
+
 	public function updateRoom($where, $updateInfo)
     {
         return $this->update($where)->save($updateInfo);

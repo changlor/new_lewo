@@ -640,7 +640,7 @@ class StewardController extends BaseController {
             if ($res['success']) {
                 $this->success($res['msg'], U('Steward/allbills'));
             } else{
-                $this->error($res['msg'], U('Steward/steward_collection', ['pro_id' => I('get.pro_id')]));
+                $this->error($res['msg']);
             }
         } else {
             $res = $DBill->getStewardCollectionBill([

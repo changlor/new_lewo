@@ -150,23 +150,23 @@ class BillModel extends BaseModel {
         $stewardId = $DHouses->selectField(['id' => $houseId], 'steward_id');
         // 如果获取到的stewardId不等于当前操作的管家id，则为非法操作
         if ($stewardId != $currentStewardId) {
-            return [false, '非法操作，权限错误！'];
+            return parent::response([false, '非法操作，权限错误！']);
         }
         // 获取isSend
         // --如果isSend == 0，说明该账单代收是未发送账单，为非法操作
         $isSend = D('Pay')->selectField(['pro_id' => $proId], 'is_send');
         if ($isSend == 0) {
-            return [false, '非法操作，权限错误！'];
+            return parent::response([false, '非法操作，权限错误！']);
         }
         // 获取payType
         $payType = $input['payType'];
         if (!is_numeric($payType)) {
-            return [false, '支付类型数据错误！'];
+            return parent::response([false, '支付类型数据错误！']);
         }
         // 获取payMoney
         $payMoney = $input['payMoney'];
         if (!is_numeric($payMoney) || $payMoney == 0) {
-            return [false, '总金额数据错误！']; 
+            return parent::response([false, '总金额数据错误！']); 
         }
         // 获取payTime
         $payTime = date('Y-m-d H:i:s');
@@ -182,10 +182,10 @@ class BillModel extends BaseModel {
         // 账单类型
         $billType = $payList['bill_type'];
         if (!is_numeric($actualDeposit) && $billType == 2) {
-            return [false, '押金数据类型错误'];
+            return parent::response([false, '押金数据类型错误']);
         }
         if (!is_numeric($actualRent) && $billType ==2) {
-            return [false, '租金数据类型错误'];
+            return parent::response([false, '租金数据类型错误']);
         }
         // 租客id
         $accountId = $payList['account_id'];
@@ -193,7 +193,7 @@ class BillModel extends BaseModel {
         $roomId = $payList['room_id'];
         // 如果实际收取金额大于支付金额，则返回数据错误
         if ($payMoney > $payList['price']) {
-            return [false, '输入的金额大于应付金额'];
+            return parent::response([false, '输入的金额大于应付金额']);
         }
         // 如果实际收取金额小于支付金额，则生成欠款
         if ($payMoney < $payList['price']) {           
@@ -233,7 +233,7 @@ class BillModel extends BaseModel {
             // 插入欠款账单
             $res = $DPay->insertPay($duePay);
             if (!$res) {
-                return [false, '欠款账单生成失败！'];
+                return parent::response([false, '欠款账单生成失败！']);
                 // $this->error('欠款账单生成失败!');
             }
         }

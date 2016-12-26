@@ -61,6 +61,10 @@ class PayModel extends BaseModel {
 		return $this->table->add($pay);
 	}
 	
+	public function insertPay($pay)
+	{
+		return $this->insert($pay);
+	}
 
 	public function getPayList($where, $field)
 	{

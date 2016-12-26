@@ -407,36 +407,22 @@ class StewardController extends BaseController {
         //$_SESSION['stewrad_houses_back_url'] = U('Home/Steward/allhouses'); 
         $where = [];
         $search = trim(I("search"));
-        $chips = empty($search) ? '' : explode('-', $search);
-        if (isset($chips[0])) {
-            $where['building'] = $chips[0];
-        }
-        if (isset($chips[1])) {
-            $where['floor'] = $chips[1];
-        }
-        if (isset($chips[2])) {
-            $where['door_no'] = $chips[2];
-        }
-        /*
-        //$is_has_flag = strpos($search, '-');
+        $is_has_flag = strpos($search, '-');
         if ( $is_has_flag && !empty($search)) {
             $search_arr = explode('-',$search);
             if ( !is_null($search_arr['0']) ) {
-                $where['building'] = $search_arr['0'];
+                $where['lewo.houses.building'] = $search_arr['0'];
             }
             if ( !is_null($search_arr['1']) ) {
-                $where['floor'] = $search_arr['1'];
+                $where['lewo.houses.floor'] = $search_arr['1'];
             }
             if ( !is_null($search_arr['2']) ) {
-                $where['door_no'] = $search_arr['2'];
+                $where['lewo.houses.door_no'] = $search_arr['2'];
             }
         } else {
-            $where['_string'] = "house_code LIKE '%".$search."%' OR area_name LIKE '%".$search."%'";
+            $where['_string'] = "lewo_account.realname LIKE '%". $search ."%' OR lewo_houses.house_code LIKE '%".$search."%' OR lewo_area.area_name LIKE '%".$search."%' ";
         }
-        */
-        //$this->assign("search",$search);
-        //输出房屋类别
-        //$this->assign("type", $type);
+        
         $type = '';
         $DPay = D('pay');
         $bills = $DPay->getBills($where, $type);
@@ -641,110 +627,33 @@ class StewardController extends BaseController {
 
     // 管家代收
     public function steward_collection() {
+        // 获取模型实例
+        $DBill = D('bill');
         if (parent::isPostRequest()) {
-            // 获取模型实例
-            $DSteward = D('steward');
-            $res = $DSteward->stewardCollection([
-                'proId' => I('pro_id'),
+            $res = $DBill->putStewardCollectionBill([
+                'proId' => I('get.pro_id'),
                 'payType' => 11,
                 'payMoney' => I('post.actual_price'),
                 'actualDeposit' => I('post.actual_deposit'),
                 'actualRent' => I('post.actual_rent'),
             ]);
+            if ($res['success']) {
+                $this->success($res['msg'], U('Steward/allbills'));
+            } else{
+                $this->error($res['msg']);
+            }
         } else {
-            $pro_id = I('pro_id');
-            $field = [
-                // account
-                'lewo_account.realname',
-                // area
-                'lewo_area.area_name', 'lewo_area.id',
-                // contract
-                'lewo_contract.pro_id',
-                'lewo_contract.deposit', 'lewo_contract.rent',
-                'lewo_contract.fee', 'lewo_contract.wg_fee',
-                // 
-                'lewo_charge_bill.pro_id',
-                'lewo_charge_bill.water_fee',
-                'lewo_charge_bill.room_energy_fee',
-                'lewo_charge_bill.wx_fee',
-                'lewo_charge_bill.rubbish_fee',
-                'lewo_charge_bill.energy_fee',
-                'lewo_charge_bill.gas_fee',
-                'lewo_charge_bill.rent_fee',
-                'lewo_charge_bill.wgfee_unit',
-                'lewo_charge_bill.service_fee',
-                // room
-                'lewo_room.room_code', 'lewo_room.house_code',
-                // houses
-                'lewo_houses.area_id',
-                'lewo_houses.building',
-                'lewo_houses.floor',
-                'lewo_houses.door_no',
-                //pay
-                'lewo_pay.price', 'lewo_pay.bill_type',
-            ];
-            //$field = implode(',', $field);
-            $filters = ['lewo_pay.pro_id' => $pro_id];
-            $MPay = M('pay');
-            $pay_list = $MPay
-            ->field($field)
-            ->join('lewo_contract ON lewo_pay.pro_id = lewo_contract.pro_id', 'left')
-            ->join('lewo_account ON lewo_account.id = lewo_pay.account_id', 'left')
-            ->join('lewo_room ON lewo_room.id = lewo_pay.room_id', 'left')
-            ->join('lewo_charge_bill ON lewo_charge_bill.pro_id = lewo_pay.pro_id', 'left')
-            ->join('lewo_houses ON lewo_houses.house_code = lewo_room.house_code', 'left')
-            ->join('lewo_area ON lewo_houses.area_id = lewo_area.id', 'left')
-            ->where($filters)
-            ->find();
-
-
-            $pay_classify['合同'] = [
-                'actual_deposit' => ['押金', $pay_list['deposit'], 'need_modify'],
-                'actual_rent' => ['房租', $pay_list['rent'], 'need_modify'],
-                'fee' => ['服务费', $pay_list['fee']],
-                'wg_fee' => ['物业费', $pay_list['wg_fee']],
-                'should_price' => ['总金额', $pay_list['price']],
-                'actual_price' => ['实收金额', $pay_list['price']],
-            ];
-
-            $pay_classify['日常'] = [
-                'rent_fee' => ['房租', $pay_list['rent_fee']],
-                'total_daily_room_fee' => [
-                    '水电气',
-                    $pay_list['room_energy_fee'] +
-                    $pay_list['water_fee'] +
-                    $pay_list['energy_fee'] +
-                    $pay_list['gas_fee'] +
-                    $pay_list['rubbish_fee'],
-                ],
-                'wx_fee' => ['维修费', $pay_list['wx_fee']],
-                'wgfee_unit' => ['物管费', $pay_list['wgfee_unit']],
-                'service_fee' => ['服务费', $pay_list['service_fee']],
-                'should_price' => ['总金额', $pay_list['price']],
-                'actual_price' => ['实收金额', $pay_list['price'], 'update_price'],
-            ];
-            $pay_classify['others'] = [
-                'should_price' => ['总金额', $pay_list['price']],
-                'actual_price' => ['实收金额', $pay_list['price'], 'update_price'],
-            ];
-
-            $account_info = [
-                'realname' => ['租客', $pay_list['realname']],
-                'area_name' => ['小区楼层', $pay_list['area_name'] . '(' . $pay_list['building'] . '-' . $pay_list['floor'] . '-' . $pay_list['door_no'] . ')'],
-            ];
-
-            isset($pay_classify[C('bill_type')[$pay_list['bill_type']]])
-            ? $pay_list['pay_classify'] = $pay_classify[C('bill_type')[$pay_list['bill_type']]]
-            : $pay_list['pay_classify'] = $pay_classify['others'];
-
-            $this->assign('account_info',$account_info);
+            $res = $DBill->getStewardCollectionBill([
+                'proId' => I('get.pro_id'),
+            ]);
+            if (!$res['success']) {
+                $this->error($res['msg'], U('Steward/allbills'));
+            }
+            $payList = $res['data'];
+            $this->assign('account_info', $payList['accountInfo']);
             $this->assign('bill_type', true);
-            $this->assign('pay_list',$pay_list);
-            /*
-            $this->assign('pay_type', $pay_type);
-            $this->assign('account_id', $pay_list['account_id']);
-            */
-            $this->assign('pro_id', $pro_id);
+            $this->assign('pay_list', $payList);
+            $this->assign('pro_id', I('get.pro_id'));
             $this->display('steward-collection');
         }
     }

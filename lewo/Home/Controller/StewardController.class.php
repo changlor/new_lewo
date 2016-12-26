@@ -943,9 +943,10 @@ class StewardController extends BaseController {
         }
         M()->startTrans();
         if ( empty($account_id) || empty($room_id) ) $this->error('数据丢失');
-        if ( !empty($_POST) ) {
-            if ( I('is_success') != 1 ) $this->error('未验房');
+        if (parent::isPostRequest()) {
             //判断是否已经提交退房请求
+            if ( I('is_success') != 1 ) $this->error('未验房');
+            
             $check_item_keys  = array_fill_keys(array_keys(C('check_item')),'0');
             $check_item_data  = serialize(array_replace($check_item_keys, I('check_item')));
 
@@ -996,15 +997,14 @@ class StewardController extends BaseController {
             //将数据放入schedule表中，展示给后台看
             $result = $DSchedule->create_new_schedule($param);
 
-            if ( !$result[0] ) $this->error($result[1]);
-
+            if ( !$result['success'] ) $this->error($result['msg']);
             //执行退房修改操作
             //修改房间状态
             $room_result = $MRoom->where(array('id'=>$room_id))->save(array('account_id'=>0,'status'=>0));
             if ( $room_result != 1 ) $flag = false;
             if ( $flag ) {
-                /*M()->commit();*/
-                $this->success('提交成功');
+                M()->commit();
+                $this->success('提交成功',U('Home/Steward/houses'));
             } else {
                 M()->rollback();
                 $this->error('提交失败');
@@ -1030,5 +1030,18 @@ class StewardController extends BaseController {
             $this->assign("room_info",$room_info);
             $this->display("check-ammeter");
         }
+    }
+
+    /**
+    * [管家查看待办]
+    **/
+    public function checkSchedule(){
+        $pro_id = I('get.pro_id');
+        // 实例化
+        $DSchedule = D('schedule');
+        $scheduleInfo = $DSchedule->getScheduleInfo($pro_id);
+dump($scheduleInfo);exit;
+        $this->assign('scheduleInfo',$scheduleInfo);
+        $this->display('checkSchedule');
     }
 }

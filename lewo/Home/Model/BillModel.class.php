@@ -287,6 +287,7 @@ class BillModel extends BaseModel {
         $payUpdateInfo['pay_status'] = $payStatus;
         $payUpdateInfo['pay_time'] = $payTime;
         $payUpdateInfo['pay_money'] = $payMoney;
+        $payUpdateInfo['steward_id'] = $currentStewardId;
         $payUpdateInfo['modify_log'] = $modifyLog;
         // 更新pay表
         $res = $DPay->updatePay(['pro_id' => $proId], $payUpdateInfo);

@@ -126,7 +126,10 @@
                 </div>
                 <div class="row-fluid">
                   <div class="col-xs-12">
-                    <div class="border-bot-box-h25"></div>
+                    <div class="border-bot-box-h25">
+                       <div style="background-color: #fff">备忘录<br /><input id="ToDoList__input" style="margin-top: 5px;font-size: 16px;height: 35px;border: 1px solid #888;" /><a id="ToDoList__add" style="background-color: green; position: absolute;width:40px;margin-top: 5px;text-align: center;height: 35px;line-height: 30px;  color: #fff;"   href="javascript:;">√</a></div>
+                       <ul style="overflow-y: scroll;height: 60px;background-color: #fff;" id="ToDoList__items"></ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -159,6 +162,54 @@
       </div>
     </div>
   </div>
+  <script>
+    var toDoInputEl = document.getElementById('ToDoList__input');
+    var toDoAddEl = document.getElementById('ToDoList__add');
+    var toDoItemsEl = document.getElementById('ToDoList__items');
+    
+    var toDoListItems = [];
+    var getToDoListItems = function () {
+      var toDoListItems = [];
+      try {
+        toDoListItems = JSON.parse(window.localStorage.getItem('todolist')) || [];
+      } catch (e) {
+        toDoListItems = [];
+      }
+      return toDoListItems;
+    }
+    var saveToDoListItems = function (toDoListItems) {
+      window.localStorage.setItem('todolist', JSON.stringify(toDoListItems));
+    }
+    var addList = function (toDoListItem, taskId) {
+      var before = toDoItemsEl.innerHTML;
+      var isDoneStyle = toDoListItem.isDone ? 'style="text-decoration:line-through;"' : '';
+      toDoItemsEl.innerHTML = '<li ' + isDoneStyle + 'data-id="' + taskId + '"' + '>' + toDoListItem.msg + '<a style="color:#68bb9b;" onclick="doneTask(this)" href="javascript:;">已完成</a>' + '</li>' + before;
+    }
+    var doneTask = function (list) {
+      var taskId = list.parentNode.getAttribute('data-id');
+      var toDoListItems = getToDoListItems();
+      if (toDoListItems[taskId]['isDone'] == true) {
+        return false;
+      }
+      list.parentNode.style = 'text-decoration:line-through;';
+      toDoListItems[taskId]['isDone'] = true;
+      saveToDoListItems(toDoListItems);
+    }
+    toDoAddEl.onclick = function () {
+      if (toDoInputEl.value) {
+        return false;
+      }
+      var toDoListItems = getToDoListItems();
+      var taskId = toDoListItems.push({ msg: toDoInputEl.value, isDone: false });
+      taskId--;
+      saveToDoListItems(toDoListItems);
+      addList({ msg: toDoInputEl.value, isDone: false }, taskId);
+    }
+    toDoListItems = getToDoListItems();
+    for (i = 0; i < toDoListItems.length; i++) {
+      addList(toDoListItems[i], i);
+    }
+  </script>
 </body>
 </html>
 <script>

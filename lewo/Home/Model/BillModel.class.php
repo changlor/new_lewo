@@ -106,7 +106,7 @@ class BillModel extends BaseModel {
                 $payList['gas_fee'] +
                 $payList['rubbish_fee'],
             ],
-            'wx_fee' => ['维修费', $payList['wx_fee']],
+            'wx_fee' => ['欠费', $payList['wx_fee']],
             'wgfee_unit' => ['物管费', $payList['wgfee_unit']],
             'service_fee' => ['服务费', $payList['service_fee']],
             'should_price' => ['总金额', $payList['price']],

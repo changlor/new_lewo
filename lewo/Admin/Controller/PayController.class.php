@@ -38,30 +38,30 @@ class PayController extends Controller {
         if ( $is_has_flag && !empty($search)) {
             $search_arr = explode('-',$search);
             if ( !is_null($search_arr['0']) ) {
-                $where['h.building'] = $search_arr['0'];
+                $where['houses.building'] = $search_arr['0'];
             }
             if ( !is_null($search_arr['1']) ) {
-                $where['h.floor'] = $search_arr['1'];
+                $where['houses.floor'] = $search_arr['1'];
             }
             if ( !is_null($search_arr['2']) ) {
-                $where['h.door_no'] = $search_arr['2'];
+                $where['houses.door_no'] = $search_arr['2'];
             }
         }
         $this->assign('search',$search);
 
         $room_code = I("room_code");
         if ( !empty($room_code) ) {
-            $where['r.room_code'] = array('LIKE','%'.$room_code.'%');
+            $where['room.room_code'] = array('LIKE','%'.$room_code.'%');
             $this->assign("room_code",$room_code);
         }
         $account_key = I("account_key");
         if ( !empty($account_key) ) {
-            $where['_string'] = "a.realname LIKE '%".$account_key."%' OR a.mobile LIKE '%".$account_key."%'";
+            $where['_string'] = "account.realname LIKE '%".$account_key."%' OR account.mobile LIKE '%".$account_key."%'";
             $this->assign("account_key",$account_key);
         }
         $area_id = I("area_id");
         if ( !empty($area_id) ) {
-            $where['h.area_id'] = $area_id;
+            $where['houses.area_id'] = $area_id;
             $this->assign("area_id",$area_id);
         }
         $city_id = I("city_id");
@@ -71,17 +71,17 @@ class PayController extends Controller {
         }
         $input_month = I("input_month");
         if ( !empty($input_month) ) {
-            $where['p.input_month'] = $input_month;
+            $where['pay.input_month'] = $input_month;
             $this->assign("input_month",$input_month);
         }
         $input_year = I("input_year");
         if ( !empty($input_year) ) {
-            $where['p.input_year'] = $input_year;
+            $where['pay.input_year'] = $input_year;
             $this->assign("input_year",$input_year);
         }
         $pay_type = I("pay_type");
         if ( !empty($pay_type)) {
-            $where['p.pay_type'] = $pay_type;
+            $where['pay.pay_type'] = $pay_type;
             $this->assign("pay_type",$pay_type);
         }
         $bill_type = I("bill_type");
@@ -95,18 +95,18 @@ class PayController extends Controller {
                 $bill_type_str .= $val.',';
             }
             $bill_type_str = substr($bill_type_str,0,-1);
-            $where['p.bill_type'] = array('IN',$bill_type_str);
+            $where['pay.bill_type'] = array('IN',$bill_type_str);
             $this->assign("bill_type",$bill_type);
         }
 
         $is_send = I("is_send");
         if ( !empty($is_send) || $is_send === '0') {
-            $where['cb.is_send'] = $is_send;
+            $where['pay.is_send'] = $is_send;
             $this->assign("is_send",$is_send);
         }
         $pay_status = I("pay_status");
         if ( !empty($pay_status) || $pay_status === '0') {
-            $where['p.pay_status'] = $pay_status;
+            $where['pay.pay_status'] = $pay_status;
             $this->assign("pay_status",$pay_status);
         }
         $search_time = I("search_time");
@@ -116,20 +116,20 @@ class PayController extends Controller {
             $end_time = date('Y-m-d',strtotime($end_time."+1 day"));
             switch ($search_time) {
                 case 'payDate':
-                    $where['p.pay_time'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['pay.pay_time'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'htStartDate':
-                    $where['c.start_time'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['contract.start_time'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'htEndDate':
-                    $where['c.end_time'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['contract.end_time'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'rentDate':
-                    $where['c.rent_date'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['contract.rent_date'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'zcht':
                     //这段时间内合同正常的列表
-                    $where['_string'] = '\''.$end_time.'\' <= c.end_time ' ;
+                    $where['_string'] = '\''.$end_time.'\' <= contract.end_time ' ;
                     break;
             }
 
@@ -144,25 +144,25 @@ class PayController extends Controller {
             $sort = I("sort")==1? "asc":"desc";
             switch ($sort_type) {
                 case 'payTime':
-                    $order = "p.pay_time ".$sort;
+                    $order = "pay.pay_time ".$sort;
                     break;
                 case 'payType':
-                    $order = "p.pay_type ".$sort;
+                    $order = "pay.pay_type ".$sort;
                     break;
                 case 'startDate':
-                    $order = "c.start_time ".$sort;
+                    $order = "contract.start_time ".$sort;
                     break;
                 case 'endDate':
-                    $order = "c.end_time ".$sort;
+                    $order = "contract.end_time ".$sort;
                     break;
                 case 'rentDate':
-                    $order = "c.rent_date ".$sort;
+                    $order = "contract.rent_date ".$sort;
                     break;
                 case 'tbq':
-                    $order = "p.last_date ".$sort;
+                    $order = "pay.last_date ".$sort;
                     break;
                 case 'inputMonth':
-                    $order = "p.input_year ".$sort.", p.input_month ".$sort;
+                    $order = "pay.input_year ".$sort.", pay.input_month ".$sort;
                     break;
                 
                 default:

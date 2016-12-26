@@ -70,6 +70,7 @@ class BillModel extends BaseModel {
             'lewo_charge_bill.water_fee',
             'lewo_charge_bill.room_energy_fee',
             'lewo_charge_bill.wx_fee',
+            'lewo_charge_bill.wx_des',
             'lewo_charge_bill.rubbish_fee',
             'lewo_charge_bill.energy_fee',
             'lewo_charge_bill.gas_fee',
@@ -107,6 +108,7 @@ class BillModel extends BaseModel {
                 $payList['rubbish_fee'],
             ],
             'wx_fee' => ['欠费', $payList['wx_fee']],
+            'wx_des' => ['欠费描述', $payList['wx_des'], 'readonly'],
             'wgfee_unit' => ['物管费', $payList['wgfee_unit']],
             'service_fee' => ['服务费', $payList['service_fee']],
             'should_price' => ['总金额', $payList['price']],
@@ -227,7 +229,7 @@ class BillModel extends BaseModel {
             $duePay['input_month'] = $payList['input_month'];
             $duePay['should_date'] = $payList['should_date'];
             $duePay['last_date'] = $payList['last_date'];
-            $duePay['price'] = $payList['price'];
+            $duePay['price'] = $duePrice;
             // 欠款账单默认为已发送，1为已发送
             $duePay['is_send'] = 1;
             // 插入欠款账单

@@ -14,6 +14,50 @@
         <a href="{:U('Admin/Houses/all_houses_table')}" class="label label-info"><i class="icon-calendar"></i>租客管理统计</a>
         <a href="#" class="label label-info"><i class="icon-calendar"></i>下载水电气汇总</a>
       </div>
+        <div class="widget-title">
+          <form method="post" active="">
+              <table>
+                <tr>
+                  <td>地区：</td>
+                  <td>
+                    <select name="cityId" style="width: 100px;">
+                      <option value="0">请选择</option>
+                      <volist name="city_list" id="vo">
+                        <option value="{$key}" <if condition="$cityId eq $key"> selected </if>>{$vo}</option>
+                      </volist>
+                    </select>
+                  </td>
+                  <td>小区：</td>
+                  <td>
+                    <select name="areaId" style="width: 100px;">
+                      <option value="0">请选择</option>
+                      <volist name="areaList" id="vo">
+                        <option value="{$vo.id}" <if condition="$areaId eq $vo['id']"> selected </if>>{$vo.area_name}</option>
+                      </volist>
+                    </select>
+                  </td>
+                  <td>管家：</td>
+                  <td>
+                    <select name="stewardId" style="width: 100px;">
+                      <option value="0">请选择</option>
+                      <volist name="stewardList" id="vo">
+                        <option value="{$vo.id}" <if condition="$stewardId eq $vo['id']"> selected </if>>{$vo.nickname}</option>
+                      </volist>
+                    </select>
+                  </td>
+                  <td>
+                    <button type="submit" class="btn btn-success">搜索</button>
+                  </td>
+                  <td>
+                    <label class="btn btn-info">
+                      账单数据:
+                      {$month}月:{$nowSendCount}/{$nowMustSendCount} | {$lastMonth}月:{$lastSendCount}/{$lastMustSendCount}
+                    </label>
+                  </td>
+                </tr>
+              </table>
+          </form>
+        </div>
       <div class="widget-content nopadding">
         <table class="table table-bordered data-table">
             <thead>
@@ -27,8 +71,9 @@
                 <th>管家</th>
                 <th>管家电话</th>
                 <th>租住</th>
-                <th>账单信息(已发:总数)</th>
-<!--                 <th>该月账单状态(已发/总数)</th> -->
+                <th>
+                  账单信息(已发:总数)
+                </th> 
                 <th>操作</th>
               </tr>
             </thead>

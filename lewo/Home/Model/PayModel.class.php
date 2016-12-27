@@ -216,7 +216,7 @@ class PayModel extends BaseModel {
 		->join('lewo_contract ON lewo_contract.pro_id = lewo_pay.pro_id', 'left')
 		->where($filters)
 		->where($where)
-		->order('lewo_pay.pay_status asc, lewo_pay.create_time desc, lewo_pay.last_date asc, lewo_pay.input_year desc, lewo_pay.input_month desc')
+		->order('lewo_pay.pay_status asc, lewo_pay.last_date asc, lewo_pay.input_year desc, lewo_pay.input_month desc')
 		->select();
 
 		foreach ($bills as $key => $value) {

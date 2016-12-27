@@ -119,17 +119,17 @@ class PayController extends Controller {
                     $where['pay.pay_time'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'htStartDate':
-                    $where['contract.start_time'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['lewo_contract.start_time'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'htEndDate':
-                    $where['contract.end_time'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['lewo_contract.end_time'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'rentDate':
-                    $where['contract.rent_date'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['lewo_contract.rent_date'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'zcht':
                     //这段时间内合同正常的列表
-                    $where['_string'] = '\''.$end_time.'\' <= contract.end_time ' ;
+                    $where['_string'] = '\''.$end_time.'\' <= lewo_contract.end_time ' ;
                     break;
             }
 
@@ -150,13 +150,13 @@ class PayController extends Controller {
                     $order = "pay.pay_type ".$sort;
                     break;
                 case 'startDate':
-                    $order = "contract.start_time ".$sort;
+                    $order = "lewo_contract.start_time ".$sort;
                     break;
                 case 'endDate':
-                    $order = "contract.end_time ".$sort;
+                    $order = "lewo_contract.end_time ".$sort;
                     break;
                 case 'rentDate':
-                    $order = "contract.rent_date ".$sort;
+                    $order = "lewo_contract.rent_date ".$sort;
                     break;
                 case 'tbq':
                     $order = "pay.last_date ".$sort;
@@ -192,7 +192,8 @@ class PayController extends Controller {
 
         $count      = $MPay
                     ->alias('pay')
-                    ->join('(select id AS ht_id,account_id,room_id,pay_date,create_time,actual_end_time,MAX(start_time) AS start_time,end_time,rent_date,period,deposit,rent AS ht_rent,fee AS ht_fee,wg_fee AS ht_wgfee,contract_status from lewo_contract GROUP BY account_id,room_id) AS contract ON pay.account_id=contract.account_id AND pay.room_id=contract.room_id ','left')
+                    ->join('(select MAX(id) AS ht_id,account_id,room_id from lewo_contract WHERE is_delete=0  GROUP BY account_id,room_id ) AS contract ON pay.account_id=contract.account_id AND pay.room_id=contract.room_id ','left')
+                    ->join('lewo_contract ON lewo_contract.id = contract.ht_id', 'left')
                     ->join('lewo_charge_bill charge_bill ON pay.pro_id=charge_bill.pro_id','left')
                     ->join('lewo_account account ON pay.account_id=account.id','left')
                     ->join('lewo_room room ON pay.room_id=room.id','left')
@@ -210,18 +211,18 @@ class PayController extends Controller {
         }  
 
         $show       = $Page->show();// 分页显示输出
-        // 这一堆 有待优化 在租客表中加上合同的pro_id
+
         $field = [
             // contract
-            'contract.ht_id', 'contract.account_id',
-            'contract.room_id', 'contract.pay_date',
-            'contract.create_time', 'contract.actual_end_time',
-            'contract.start_time', 'contract.end_time',
-            'contract.rent_date', 'contract.period',
-            'contract.deposit', 'contract.actual_deposit',
-            'contract.ht_rent', 'contract.actual_rent',
-            'contract.ht_fee', 'contract.ht_wgfee',
-            'contract.contract_status',
+            'lewo_contract.id', 'lewo_contract.account_id',
+            'lewo_contract.room_id', 
+            'lewo_contract.create_time', 'lewo_contract.actual_end_time',
+            'lewo_contract.start_time', 'lewo_contract.end_time',
+            'lewo_contract.rent_date', 'lewo_contract.period',
+            'lewo_contract.deposit', 'lewo_contract.actual_deposit',
+            'lewo_contract.rent'=>'ht_rent', 'lewo_contract.actual_rent',
+            'lewo_contract.fee'=>'ht_fee', 'lewo_contract.wg_fee'=>'ht_wgfee',
+            'lewo_contract.contract_status',
             // charge_bill
             'charge_bill.room_id', 'charge_bill.house_id',
             'charge_bill.house_code', 'charge_bill.account_id',
@@ -260,10 +261,12 @@ class PayController extends Controller {
             'admin_user.username', 'admin_user.nickname AS gj_nickname',
             'admin_user.realname AS gj_realname', 'admin_user.admin_type'
         ];
+
         $list       = $MPay
                     ->alias('pay')
                     ->field($field)
-                    ->join('(select id AS ht_id, count(1),account_id,room_id,pay_date,create_time,actual_end_time,MAX(start_time) AS start_time,end_time,rent_date,period,deposit,actual_deposit,rent AS ht_rent,actual_rent,fee AS ht_fee,wg_fee AS ht_wgfee,contract_status from lewo_contract GROUP BY account_id,room_id) AS contract ON pay.account_id=contract.account_id AND pay.room_id=contract.room_id ','left')
+                    ->join('(select MAX(id) AS ht_id,account_id,room_id from lewo_contract WHERE is_delete=0  GROUP BY account_id,room_id ) AS contract ON pay.account_id=contract.account_id AND pay.room_id=contract.room_id ','left')
+                    ->join('lewo_contract ON lewo_contract.id = contract.ht_id', 'left')
                     ->join('lewo_charge_bill charge_bill ON pay.pro_id=charge_bill.pro_id','left')
                     ->join('lewo_account account ON pay.account_id=account.id','left')
                     ->join('lewo_room room ON pay.room_id=room.id','left')

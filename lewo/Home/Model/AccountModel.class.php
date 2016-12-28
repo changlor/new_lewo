@@ -20,6 +20,19 @@ class AccountModel extends BaseModel {
 		return $this->table->add($account);
 	}
 
+	public function select($where, $field)
+	{
+		$field = empty($field) ? '' : $field;
+		$where = empty($where) ? '' : $where;
+		$field = is_array($field) ? implode(',', $field) : $field;
+		return $this->table->field($field)->where($where);
+	}
+
+	public function selectField($where, $field)
+	{
+		return $this->select($where)->getField($field);
+	}
+
 	public function update($account, $where)
 	{
 		return $this->table->where($where)->save($account);

@@ -153,7 +153,7 @@
           <select name="contract_status" style="width:80px;">
             <option selected="selected" value="">请选择</option>
             <volist name="contract_status_arr" id="vo">
-              <option <if condition="$contract_status eq $key">selected</if> value="{$key}">{$vo}</option>
+              <option <if condition="$contract_status heq $key">selected</if> value="{$key}">{$vo}</option>
             </volist>
            </select>
         </label>

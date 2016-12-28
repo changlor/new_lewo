@@ -350,7 +350,7 @@ class PayController extends Controller {
             //最迟缴费倒计时
             if ( $val['pay_status'] != 1 ) {
                 $last_date          =strtotime($val['last_date']);
-                $enddate            =time();
+                $enddate            =strtotime(date('Y-m-d',time()));
                 $count_down_days    =round(($last_date-$enddate)/86400);
                 $list[$key]['count_down_days'] = $count_down_days;
             }

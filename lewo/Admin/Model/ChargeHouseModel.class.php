@@ -89,7 +89,6 @@ class ChargeHouseModel extends Model{
 	**/
 	public function getCreatedBillCount($where = [],$where2 = []){
 		$where = array_merge($where,$where2);
-		dump($where);exit;
 		$field = [
 			// charge_house
 			'charge_house.house_id',

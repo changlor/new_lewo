@@ -8,6 +8,8 @@ class StewardController extends BaseController {
 	public function __construct() {
 		parent::__construct();
         $this->stewardId = $_SESSION['steward_id'];
+        // 导航栏
+        $_SESSION['navBootom'] = ACTION_NAME;
 		if (!is_numeric($this->stewardId)) {
 			$this->login();
 			die();

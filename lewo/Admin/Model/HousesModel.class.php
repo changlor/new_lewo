@@ -48,12 +48,8 @@ class HousesModel extends Model{
 
 		foreach($houses AS $key=>$val){
 			$houses[$key]['city_id'] = C('city_id')[$val['city_id']];
-
-			if ($val['yz_count']>0) {
-				$houses[$key]['is_checkin'] = true;
-			} else {
-				$houses[$key]['is_checkin'] = false;
-			}
+			$houses[$key]['yz_count'] = is_null($val['yz_count'])?0:$val['yz_count'];
+			$houses[$key]['count'] = is_null($val['count'])?0:$val['count'];
 		}
 
 		return $houses;

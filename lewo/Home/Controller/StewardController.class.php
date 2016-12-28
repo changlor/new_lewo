@@ -686,13 +686,12 @@ class StewardController extends BaseController {
                 'favorableDes' => I('post.favorable_des'),
                 'isDeduct' => I('post.is_deduct'),
                 'total' => I('post.total'),
-                'paytotal' => I('post.paytotal'),
                 'bookDeposit' => I('bookDeposit'),
                 'photo' => $_FILES['photo'],
             ]);
             if ($res['success']) {
                 //显示合同详情信息
-                $this->success('合同生成成功!', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
+                $this->success('合同修改成功!', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
             } else {
                 $this->error($res['msg']);
             }
@@ -967,54 +966,62 @@ class StewardController extends BaseController {
         $DAmmeter   = D("ammeter_house");
         $DAmmeterRoom = D("ammeter_room");
         $flag       = true;
-        switch ($type) {
-            case 2:
-                $schedule_type = 1;//退房
-                break;
-            case 3:
-                $schedule_type = 2;//换房
-                break;
-            case 4:
-                $schedule_type = 3;//转房
-                break;
-            case 5:
-                $schedule_type = 1;//退房
-                $param['check_out_type'] = 1;//违约退租
-                break;
-            default:
-                $this->error('type丢失');
-                break;
-        }
         M()->startTrans();
+        
         if ( empty($account_id) || empty($room_id) ) $this->error('数据丢失');
         if (parent::isPostRequest()) {
-            //判断是否已经提交退房请求
+            switch ($type) {
+                case 2:
+                    //退房
+                    $schedule_type = 1;
+                    break;
+                case 3:
+                    // 换房
+                    $schedule_type = 2;
+                    break;
+                case 4:
+                    // 转房
+                    $schedule_type = 3;
+                    break;
+                case 5:
+                    // 退房
+                    $schedule_type = 1;
+                    // 违约退租
+                    $param['check_out_type'] = 1;
+                    break;
+                default:
+                    $this->error('type丢失');
+                    break;
+            }
+            // 判断是否已经提交退房请求
             if ( I('is_success') != 1 ) $this->error('未验房');
             
+            // 检查的物品数据
             $check_item_keys  = array_fill_keys(array_keys(C('check_item')),'0');
             $check_item_data  = serialize(array_replace($check_item_keys, I('check_item')));
 
-            $house_id = $MRoom->alias('r')->join('lewo_houses h ON r.house_code=h.house_code')->where(array('r.id'=>$room_id))->getField('h.id');
-            //判断录入的水电气是否低于最新录入的水电气
-            $ammeter_house = $DAmmeter->getFirstInfoByHouseId($house_id); //获取一条最新的水电气信息
-            if ( I("post.zS") < $ammeter_house['total_water'] ) {
-                $this->error("录入的水度数:".I("post.zS")."少于最新水度数:".$ammeter_house['total_water']."，请检查!","",10);
-            }
-            if ( I("post.zD") < $ammeter_house['total_energy'] ) {
-                $this->error("录入的电度数:".I("post.zD")."少于最新电度数:".$ammeter_house['total_energy']."，请检查!","",10);
-            }
-            if ( I("post.zQ") < $ammeter_house['total_gas'] ) {
-                $this->error("录入的气度:".I("post.zQ")."少于最新气度数:".$ammeter_house['total_gas']."，请检查!","",10);
+            $house_id = $MRoom
+            ->alias('room')
+            ->join('lewo_houses houses ON room.house_code=houses.house_code')
+            ->where(array('room.id'=>$room_id))
+            ->getField('houses.id');
+            // 判断录入的水电气是否低于最新录入的水电气
+            $res = $DAmmeter->verifyAmmeter($house_id, [
+                'total_water' => I("post.zS"),
+                'total_energy' => I("post.zD"),
+                'total_gas' => I("post.zQ"),
+            ]);
+            if (!$res['success']) {
+                $this->error($res[1],'',10);
             }
             foreach ( I('roomD') AS $key=>$val ) {
                 //获取上个月 房间的电表
-                $last_ammeter_room_info = $DAmmeterRoom->getFirstInfoByRoomId($key);
-                if ( !is_null($last_ammeter_room_info) ) {
-                    if ( $val['room_energy'] < $last_ammeter_room_info['room_energy'] ) {
-                        $this->error($val['room_code'].'该房间电度数低于上个月' . $last_ammeter_room_info['room_energy'] . '!请重新录入','',5);
-                    }
+                $res2 = $DAmmeterRoom->verifyAmmeterRoom($key, ['room_energy'=>$val['room_energy']]);
+                if (!$res2['success']) {
+                    $this->error($res2[1],'',10);
                 }
             }
+
             $roomD = serialize(i_array_column(I('roomD'), 'room_energy'));
             $mobile = M('account')->where(['id'=>$account_id])->getField('mobile');
             $param = [
@@ -1024,6 +1031,7 @@ class StewardController extends BaseController {
                 'room_id'       => $room_id,
                 'schedule_type' => $schedule_type,
                 'check_item'    => $check_item_data,
+                'appoint_time'  => I('check_out_day'),
                 'pay_account'   => I('pay_account'),
                 'pay_type'      => I('pay_type'),
                 'msg'           => I('check_out_msg'),
@@ -1048,7 +1056,7 @@ class StewardController extends BaseController {
             if ( $room_result != 1 ) $flag = false;
             if ( $flag ) {
                 M()->commit();
-                $this->success('提交成功',U('Home/Steward/houses'));
+                $this->success('提交成功',U('Home/Steward/stewardtasks'));
             } else {
                 M()->rollback();
                 $this->error('提交失败');
@@ -1059,7 +1067,6 @@ class StewardController extends BaseController {
             $account_info = $DAccount->getAccountInfoById($account_id);
             $room_info = $DRoom->getRoom($room_id);
             $room_list = $MRoom->field('id,room_code')->where(array('house_id'=>$room_info['house_id'],'is_show'=>1))->select();
-
 
             $this->assign('room_list',$room_list);
             $this->assign('check_item',C('check_item'));
@@ -1083,8 +1090,21 @@ class StewardController extends BaseController {
         $pro_id = I('get.pro_id');
         // 实例化
         $DSchedule = D('schedule');
+        $DHouses = D('houses');
+        $DRoom = D('room');
+        $DAccount = D('account');
+
+        // 获取待办信息
         $scheduleInfo = $DSchedule->getScheduleInfo($pro_id);
-dump($scheduleInfo);exit;
+        // 获取房屋编码
+        $house_code = $DRoom->selectField(['id'=>$scheduleInfo['room_id']],'house_code');
+        // 获取小区名 楼层
+        $house_info = $DHouses->getHouseAndArea($house_code);
+        // 获取租客姓名
+        $account_info['realname'] = $DAccount->selectField(['id'=>$scheduleInfo['account_id']], 'realname');
+        $info = array_merge($scheduleInfo, $house_info, $account_info);
+        dump($info);exit;
+        $this->assign('pay_type_arr',C('pay_type'));
         $this->assign('scheduleInfo',$scheduleInfo);
         $this->display('checkSchedule');
     }

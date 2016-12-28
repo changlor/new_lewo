@@ -13,6 +13,15 @@ class ScheduleModel extends BaseModel {
         parent::__construct();
     	$this->table = M($this->tableName);
     }
+
+    public function select($where, $field)
+	{
+		$field = empty($field) ? '' : $field;
+		$where = empty($where) ? '' : $where;
+		$field = is_array($field) ? implode(',', $field) : $field;
+		return $this->table->field($field)->where($where);
+	}
+
 	/**
 	 * [管家待办表]
 	 **/
@@ -21,7 +30,7 @@ class ScheduleModel extends BaseModel {
 			->field("lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_schedule.*,lewo_account.realname,lewo_account.mobile")
 			->join("lewo_room ON lewo_schedule.room_id = lewo_room.id")
 			->join("lewo_account ON lewo_schedule.account_id = lewo_account.id")
-			->where(array('steward_id'=>$steward_id,'is_finish'=>0,'admin_type'=>C("admin_type_gj")))
+			->where(array('steward_id'=>$steward_id,'is_finish'=>0))
 			->select();
 		foreach( $sArr AS $key=>$val ){
 			//待办工作类型 1：退房 2：转房 3：换房 4：缴定 5:例行打款
@@ -114,19 +123,17 @@ class ScheduleModel extends BaseModel {
 	* @param pay_type 1=>'支付宝',2=>'微信',3=>'银行卡',4=>'现金'
 	**/
 	public function create_new_schedule($param){
-		M()->startTrans();
-
 		if (is_null($param['schedule_type'])) {
-			return [false, '待办类型参数不存在'];
+			return parent::response([false, '待办类型参数不存在']);
 		}
 		if (is_null($param['account_id'])) { 
-			return [false, '租客ID参数不存在'];
+			return parent::response([false, '租客ID参数不存在']);
 		}
 		if (is_null($param['room_id'])) {
-			return [false, '房间ID参数不存在'];
+			return parent::response([false, '房间ID参数不存在']);
 		}
 		if (is_null($param['status'])) {
-			return [false, '待办状态参数不存在'];
+			return parent::response([false, '待办状态参数不存在']);
 		}
 
 		$data = array();
@@ -198,11 +205,9 @@ class ScheduleModel extends BaseModel {
 		$res = $this->table->add($data);
 
 		if ( $res ) {
-			M()->commit();
-			return [true, '待办生成成功!'];
+			return parent::response([true, '待办生成成功!']);
 		} else {
-			M()->rollback();
-			return [false, '待办生成失败!'];
+			return parent::response([false, '待办生成失败!']);
 		}
 	}
 
@@ -246,6 +251,18 @@ class ScheduleModel extends BaseModel {
 			$where['admin_type'] = $admin_type;
 		}
 		return $this->where($where)->count();
+	}
+
+	/**
+	* [管家查看待办]
+	**/
+	public function getScheduleInfo($pro_id, $where){
+		$where['pro_id'] = $pro_id;
+		$scheduleInfo = $this->select($where)->order('status asc')->find();
+		$scheduleInfo['check_item'] = unserialize($scheduleInfo['check_item']);
+		$scheduleInfo['check_out_goods'] = unserialize($scheduleInfo['check_out_goods']);
+
+		return $scheduleInfo;
 	}
 }
 

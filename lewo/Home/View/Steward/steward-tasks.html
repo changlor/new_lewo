@@ -89,7 +89,7 @@
               <volist name="schedule_list" id="vo">
                 <switch name="vo['schedule_type']" >
                   <case value="1">
-                    <tr onclick="window.location='{:U(\'Home/Steward/check_ammeter\',array(\'schedule_id\'=>$vo[\'id\'],'schedule_type'=>C('schedule_type_tf')))}'">
+                    <tr onclick="window.location='{:U(\'Home/Steward/checkSchedule\',array(\'pro_id\'=>$vo[\'pro_id\']))}'">
                   </case>
                   <case value="2">
                     <tr onclick="window.location='{:U(\'Home/Steward/check_ammeter\',array(\'schedule_id\'=>$vo[\'id\'],'schedule_type'=>C('schedule_type_zf')))}'">

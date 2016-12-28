@@ -87,7 +87,7 @@ class ChargeHouseModel extends Model{
 	/**
 	* [根据年月获取账单已发送的房屋套数]
 	**/
-	public function getCreatedBillCount($where,$where2){
+	public function getCreatedBillCount($where = [],$where2 = []){
 		$where = array_merge($where,$where2);
 		$field = [
 			// charge_house

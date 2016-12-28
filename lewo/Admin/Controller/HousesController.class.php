@@ -12,7 +12,7 @@ class HousesController extends BaseController {
 
     public function index(){
         $_SESSION['P_REFERER'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']; 
-
+        $where = [];
         if (parent::isPostRequest()) {
             $cityId = I('post.cityId');
             if (!empty($cityId)) {

@@ -45,7 +45,6 @@ function getTotal(){
   total           = deposit+wg_fee+((rent+fee)*fu);
   paytotal        = deposit+wg_fee+((rent+fee)*fu)-bookDeposit-favorable;
   document.getElementById("total").setAttribute("value", total.toFixed(2));
-  document.getElementById("paytotal").setAttribute("value", paytotal.toFixed(2));
 }
 
 function changeRentType(){

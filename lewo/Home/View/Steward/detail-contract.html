@@ -370,11 +370,14 @@ function toIndex(){
     <div class="container-fluid button">
         <div class="row-fluid button-ds">
             <div style="display: flex;" class=" padding-left-right-10" >
-                <div style="width: 50%;" class="button-ckzi2">
+                <div style="width: 33%;" class="button-ckzi2">
                     <a href="{:U('Home/Steward/send_contract',array('pro_id'=>$contract_info['pro_id']))}" id="jf" class="button-htzh-dx col-xs-12" />立即发送</a>
                 </div>
-                <div style="width: 50%;" class="button-ckzi2">
+                <div style="width: 33%;" class="button-ckzi2">
                     <a href="{:U('Home/Steward/editContract',array('proId'=>$contract_info['pro_id']))}" id="jf" class="button-htzh-dx col-xs-12" />编辑</a>
+                </div>
+                <div style="width: 33%; background-color: rgba(238,110,115,1);border: 0px;color:#fff;" class="button-ckzi2">
+                    <a onclick="if (!confirm('确定要取消么？')) return false" href="{:U('Home/Steward/cancelContract',array('proId'=>$contract_info['pro_id']))}" id="jf" style="color:#fff;" class="button-htzh-dx col-xs-12" />取消合同</a>
                 </div>
             </div>
         </div>

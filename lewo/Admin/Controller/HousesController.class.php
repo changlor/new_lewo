@@ -34,12 +34,14 @@ class HousesController extends BaseController {
         $DHouses = D('Houses');
         $DArea = D('area');
         $DAdmin = D('admin_user');
+        $DChargeHouse = D('charge_house');
+        $MPay = M("pay");   
+        $MRoom = M('room');
         //当月
         $year = date("Y",time());
         $month = date("m",time());
         $this->assign("year",$year);
         $this->assign("month",$month);
-
         //上一个月
         $lastDate = date("Y-m",strtotime($year."-".$month."- 1 month"));
         $lastYear = date("Y",strtotime($lastDate));
@@ -49,14 +51,12 @@ class HousesController extends BaseController {
 
         // 房屋列表 
         $housesList = $DHouses->getHousesList($where);
+        // 房屋总数
+        $housesCount = $DHouses->getHousesCount($where);
         // 小区列表
         $areaList = $DArea->getareaList();
         // 管家列表
         $stewardList = $DAdmin->getStewardAccount();
-    
-        $MPay = M("pay");   
-
-        $MRoom = M('room');
         // 该月已发总数
         $nowSendCount = 0;
         // 该月应发总数
@@ -65,6 +65,18 @@ class HousesController extends BaseController {
         $lastSendCount = 0;
         // 上个月应发总数
         $lastMustSendCount = 0;
+        // 该月房屋已发总数
+        $nowHousesSendCount = $DChargeHouse->getCreatedBillCount($where,[
+            'input_year' => $year,
+            'input_month' => $month,
+            'is_create' => 1
+        ]);
+        // 上个月房屋已发总数
+        $lastHousesSendCount = $DChargeHouse->getCreatedBillCount($where,[
+            'input_year' => $lastYear,
+            'input_month' => $lastMonth,
+            'is_create' => 1
+        ]);
 
         foreach($housesList AS $key=>$val){
             //当月
@@ -73,20 +85,22 @@ class HousesController extends BaseController {
             $where['p.input_year'] = $year;
             $where['p.input_month'] = $month;
             $where['cb.type'] = 1;
+            // 获取该房屋应发账单的总数
             $housesList[$key]['now_total_count'] = $MPay
-                                                    ->alias('p')
-                                                    ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
-                                                    ->where($where)
-                                                    ->count();
-            
-
+            ->alias('p')
+            ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
+            ->where($where)
+            ->count();
+            // 获取该月房屋发账单的总数
             $where['cb.is_send'] = 1;
             $housesList[$key]['now_sended_count'] = $MPay
-                                                    ->alias('p')
-                                                    ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
-                                                    ->where($where)
-                                                    ->count();
+            ->alias('p')
+            ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
+            ->where($where)
+            ->count();
+            // 获取该月应发账单的总数
             $nowMustSendCount += $housesList[$key]['now_total_count'];
+            // 获取该月已经发账单的总数
             $nowSendCount += $housesList[$key]['now_sended_count'];
             //上月
             $where = array();
@@ -94,23 +108,28 @@ class HousesController extends BaseController {
             $where['p.input_year'] = $lastYear;
             $where['p.input_month'] = $lastMonth;
             $housesList[$key]['last_total_count'] = $MPay
-                                                    ->alias('p')
-                                                    ->field('cb.*,p.*')
-                                                    ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
-                                                    ->where($where)
-                                                    ->count();
+            ->alias('p')
+            ->field('cb.*,p.*')
+            ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
+            ->where($where)
+            ->count();
             $where['cb.is_send'] = 1;
             $housesList[$key]['last_sended_count'] = $MPay
-                                                    ->alias('p')
-                                                    ->field('cb.*,p.*')
-                                                    ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
-                                                    ->where($where)
-                                                    ->count();
+            ->alias('p')
+            ->field('cb.*,p.*')
+            ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
+            ->where($where)
+            ->count();
+            // 上个月已经应的总数
             $lastMustSendCount += $housesList[$key]['last_total_count'];
+            // 上个月已经发账单的总数
             $lastSendCount += $housesList[$key]['last_sended_count'];
 
         }
 
+        $this->assign('nowHousesSendCount',$nowHousesSendCount);
+        $this->assign('lastHousesSendCount',$lastHousesSendCount);
+        $this->assign('housesCount',$housesCount);
         $this->assign('stewardList',$stewardList);
         $this->assign('areaList',$areaList);
         $this->assign('city_list', C('city_id'));
@@ -928,75 +947,97 @@ class HousesController extends BaseController {
     public function create_bill(){
         $charge_id  = I("charge_id");
         $house_id   = I("house_id");
-        $year       = I("year"); //当年
-        $month      = I("month"); //当月
+        // 当年
+        $year       = I("year"); 
+        // 当月
+        $month      = I("month"); 
         $now_month  = $year."-".$month;
         $now_date   = date('Y-m-d');
-        //上一个月
+        // 上一个月
         $lastDate   = date("Y-m",strtotime($year."-".$month."- 1 month"));
         $lastYear   = date("Y",strtotime($lastDate));
         $lastMonth  = date("m",strtotime($lastDate));
-        //下一个月
+        // 下一个月
         $nextDate   = date("Y-m",strtotime($year."-".$month."+ 1 month"));
         $nextYear   = date("Y",strtotime($nextDate));
         $nextMonth  = date("m",strtotime($nextDate));
-        $error = false;
-        //点击生成先判断是否已经生成过了
-        $is_has_create = M("charge_house")->where(array("house_id"=>$house_id,"input_year"=>$year,"input_month"=>$month,"is_create"=>1))->find();
-        if ( !empty($is_has_create) ) {
-            die(json_encode(array("info"=>"已生成")));
-        }
+        // 实例化
         $DChargeHouse   = D("charge_house");
         $DChargeBill    = D("charge_bill");
         $DAmmeter       = D("ammeter_house");
         $DHouses        = D("houses");
         $DArea          = D("area");
-               
+        // 是否错误
+        $error = false;
+        M()->startTrans();
+        // 判断是否在charge_house里生成该月,没有则生成一条
+        $is_has_charge_house = $DChargeHouse->createOneCharge($house_id,$year,$month);
+
+        // 判断是否已经生成过了
+        $is_has_create = M("charge_house")->where(array("house_id"=>$house_id,"input_year"=>$year,"input_month"=>$month,"is_create"=>1))->find();
+        if ( !empty($is_has_create) ) {
+            die(json_encode(array("info"=>"已生成")));
+        }      
+        // 房屋编码
         $house_code     = $DHouses->getHouseCodeById($house_id);
-        $person_count   = $DHouses->getPersonCountByCode($house_code); //该房屋总人数
-        $room_count     = $DHouses->getRoomCountByCode($house_code); //该房屋的房间数量
-        $bed_count      = $DHouses->getBedCountByCode($house_code); //该房屋的床位数量
-        $sum_person_day = $DHouses->getPersonDayCount($house_code,$year,$month); //该房屋总人日 
-
+        // 该房屋总人数
+        $person_count   = $DHouses->getPersonCountByCode($house_code); 
+        // 该房屋的房间数量
+        $room_count     = $DHouses->getRoomCountByCode($house_code); 
+        // 该房屋的床位数量
+        $bed_count      = $DHouses->getBedCountByCode($house_code); 
+        // 该房屋总人日
+        $sum_person_day = $DHouses->getPersonDayCount($house_code,$year,$month);  
+        // 房屋信息
         $house_info     = $DHouses->getHouse($house_code); 
-
-        $area_info      = $DArea->getAreaById($house_info['area_id']); //水电气单价
-        $water_unit     = $area_info['water_unit']; //水费单价
-        $gas_unit       = $area_info['gas_unit']; //气费单价
-        $energy_stair_arr = explode(",",$area_info['energy_stair']); //阶梯电费单价
-        $rubbish_fee    = $area_info['rubbish_fee']; //燃气垃圾费
+        // 水电气单价
+        $area_info      = $DArea->getAreaById($house_info['area_id']);
+        // 水费单价 
+        $water_unit     = $area_info['water_unit']; 
+        // 气费单价
+        $gas_unit       = $area_info['gas_unit']; 
+        // 阶梯电费单价
+        $energy_stair_arr = explode(",",$area_info['energy_stair']); 
+        // 燃气垃圾费
+        $rubbish_fee    = $area_info['rubbish_fee']; 
 
         foreach ($energy_stair_arr AS $key=>$val) {
-            $energy_stair[] = explode("-",$val);//阶梯算法数组
+            // 阶梯算法数组
+            $energy_stair[] = explode("-",$val);
         }
-        
+        // 该月的水电气
         $ammeter = $DAmmeter->getAmmeterByIdAndDate($house_id,$year,$month);
+        // 上个月的水电气
         $last_ammeter = $DAmmeter->getAmmeterByIdAndDate($house_id,$lastYear,$lastMonth);
 
-        if ( $ammeter['status'] != 1 ) die(json_encode(array("info"=>"该月没录入水电气")));
+        if ( $ammeter['status'] != 1 ) {
+            die(json_encode(array("info"=>"该月没录入水电气")));
+        }
         if (count($last_ammeter)==0) {
-            //上个月的为空时获取房源初始化水电气
+            // 上个月的为空时获取房源初始化水电气
             $last_ammeter['total_water']    = $house_info['init_water'];
             $last_ammeter['total_energy']   = $house_info['init_energy'];
             $last_ammeter['total_gas']      = $house_info['init_gas'];
         }
-        //保存水电气数据到该房屋账单(charge_house)中
+        // 保存水电气数据到该房屋账单(charge_house)中
         $SDQdata['start_energy']    = $last_ammeter['total_energy'];
         $SDQdata['end_energy']      = $ammeter['total_energy'];
         $SDQdata['start_water']     = $last_ammeter['total_water'];
         $SDQdata['end_water']       = $ammeter['total_water'];
         $SDQdata['start_gas']       = $last_ammeter['total_gas'];
         $SDQdata['end_gas']         = $ammeter['total_gas'];
-        $SDQupdateResult = $DChargeHouse->updateSDQ($charge_id,$SDQdata);//修改水电气
+        // 修改水电气
+        $SDQupdateResult = $DChargeHouse->updateSDQ($charge_id,$SDQdata);
 
-        //房屋总电费
+        // 房屋总电费
         $add_energy = $ammeter['total_energy'] - $last_ammeter['total_energy'];
         $total_energy_fee = get_energy_fee($add_energy,$energy_stair);
 
         if ( $house_info['type'] == 1 ) {
-            //房间总电费
+            // 房间总电费
             $room_total_energy_fee  = $DHouses->get_room_total_energy_fee($house_code,$year,$month,$energy_stair);
-            $public_energy_fee      = $total_energy_fee - $room_total_energy_fee;//公共区域电费 = 总电费 - 房间总电费
+            // 公共区域电费 = 总电费 - 房间总电费
+            $public_energy_fee      = $total_energy_fee - $room_total_energy_fee;
         } else {
             $public_energy_fee      = $total_energy_fee; //公共区域电费
         }
@@ -1043,44 +1084,49 @@ class HousesController extends BaseController {
         foreach ( $contract_list AS $key=>$val ) {
             $contract_list[$key]['house_code'] = $house_code;
             $contract_list[$key]['house_id'] = $house_id;
-
-            $ht_start_date  = $val['start_time']; //合同开始日
+            // 合同开始日
+            $ht_start_date  = $val['start_time']; 
             $ht_start_day   = date("d",strtotime($ht_start_date));
-            $ht_end_date    = $val['end_time']; //合同结束日
-            $ht_end_year    = date("Y",strtotime($ht_end_date)); //合同结束月
-            $ht_end_month   = date("m",strtotime($ht_end_date)); //合同结束月
-            $ht_end_day     = date("d",strtotime($ht_end_date));//合同结束日的日
+            // 合同结束日
+            $ht_end_date    = $val['end_time']; 
+            // 合同结束月
+            $ht_end_year    = date("Y",strtotime($ht_end_date));
+            // 合同结束月
+            $ht_end_month   = date("m",strtotime($ht_end_date)); 
+            // 合同结束日的日
+            $ht_end_day     = date("d",strtotime($ht_end_date));
 
-            //先判断这房屋是按间的还是按床的 房屋类型 1：合租按间 按间的话才获取房间电表 2：合租按床 
+            // 先判断这房屋是按间的还是按床的 房屋类型 1：合租按间 按间的话才获取房间电表 2：合租按床 
             switch ($house_info['type']) {
                 case 1:
                     $ammeter_room       = $DAmmeterRoom->getAmmeterRoomByRoomId($val['room_id'],$year,$month);
                     $last_ammeter_room  = $DAmmeterRoom->getAmmeterRoomByRoomId($val['room_id'],$lastYear,$lastMonth);
                     
                     if ( count($last_ammeter_room)==0 ) {
-                        //上个月没有水电气信息则获取合同上的初始化电表
+                        // 上个月没有水电气信息则获取合同上的初始化电表
                         $roomD = $MContract->where(array("account_id"=>$val['account_id'],"room_id"=>$val['room_id']))->getField("roomD");
                         $last_ammeter_room['room_energy'] = !empty($roomD)?$roomD:0;
                     }
                     $add_roomD = $ammeter_room['room_energy'] - $last_ammeter_room['room_energy'];
                     $contract_list[$key]['room_energy_add'] = $add_roomD;
 
-                    //房间电费
+                    // 房间电费
                     $contract_list[$key]['room_energy_fee'] = get_energy_fee($add_roomD,$energy_stair);
-                    $contract_list[$key]['end_room_energy'] = $ammeter_room['room_energy'];//止度数
-                    $contract_list[$key]['start_room_energy'] = $last_ammeter_room['room_energy'];//起度数
-
-                    $contract_list[$key]['wg_fee'] = $house_info['fee'] / $room_count; //物业费/房间数
-                    $contract_list[$key]['rubbish_fee'] = $rubbish_fee / $person_count;
+                    // 止度数
+                    $contract_list[$key]['end_room_energy'] = $ammeter_room['room_energy'];
+                    // 起度数
+                    $contract_list[$key]['start_room_energy'] = $last_ammeter_room['room_energy'];
+                    // 物业费/房间数
+                    $contract_list[$key]['wg_fee'] = $house_info['fee'] / $room_count; 
                     break;
-                
                 case 2:
-                    $contract_list[$key]['wg_fee'] = $house_info['fee'] / $bed_count; //物业费/床位数
-                    $contract_list[$key]['rubbish_fee'] = $rubbish_fee / $person_count;
+                    // 物业费/床位数
+                    $contract_list[$key]['wg_fee'] = $house_info['fee'] / $bed_count; 
                     break;
             }
 
-            $person_day = get_person_day($year,$month,$val);//获取人日
+            // 获取人日
+            $person_day = get_person_day($year,$month,$val);
        
             // 房租到期日
             $rent_date = $val['rent_date'];
@@ -1089,17 +1135,17 @@ class HousesController extends BaseController {
             $contract_list[$key]['rent']    = $contract_list[$key]['rent'] * $period;
             $contract_list[$key]['fee']     = $contract_list[$key]['fee'] * $period;
 
-            //房租描述 该年该月.合同开始日~下月
+            // 房租描述 该年该月.合同开始日~下月
             $rent_date_year     = date("Y",strtotime($rent_date)); 
             $rent_date_month    = date("m",strtotime($rent_date)); 
             $rent_date_day      = date("d",strtotime($rent_date)); 
-            //上次的房租到期日+1天
+            // 上次的房租到期日+1天
             $rent_start_date    = date('Y-m-d',strtotime($rent_date.' +1 day'));
             $start_fee_des      = $rent_start_date;
-            //房租描述结束日是 下 $period 个月 的 -1 day
+            // 房租描述结束日是 下 $period 个月 的 -1 day
             $rent_end_date      = date('Y-m-d',strtotime($rent_start_date.' +'.$period.' month -1 day'));
 
-            //如何房租描述结束日 大于 合同结束，则房租描述结束日==合同结束日
+            // 如何房租描述结束日 大于 合同结束，则房租描述结束日==合同结束日
             if ( strtotime($rent_end_date) > strtotime($ht_end_date) ) {
                 $end_fee_des = $ht_end_date;
             } else {
@@ -1108,6 +1154,9 @@ class HousesController extends BaseController {
 
             $rent_fee_des       = $start_fee_des."到".$end_fee_des."房租";
 
+            // 将支付后修改的房租到期日改成房租结束日
+            $rent_date_old = $rent_date;
+            $rent_date_to = $end_fee_des;
             //最迟缴费日
             //应该是房租到期日 == 最迟缴费日
             $now_month_days     = date("t",strtotime($year."-".$month));
@@ -1140,11 +1189,13 @@ class HousesController extends BaseController {
 
             // 所得结论：到了房租到期日的月份就要缴费了
             //租客是季付的，应缴费水电日期是读取下个月十号之前
-            if ( $val['contract_status'] == 1 && $period > 1 ) {
+            if ( $period > 1 ) {
                 if ( $year != $rent_date_year && $month != $rent_date_month ) {
                     $rent_fee_des = "房租到期日在".$rent_date;
                     $contract_list[$key]['rent'] = 0;
                     $contract_list[$key]['fee'] = 0;
+                    // 如何季付的话，他只支付水电气，所以不用修改房租到期日
+                    $rent_date_to = $rent_date_old;
                 }
                 $should_pay_date = $late_pay_date = date("Y-m-d",strtotime($now_month . ' +1 month +9 day'));
             }
@@ -1154,6 +1205,8 @@ class HousesController extends BaseController {
                 $rent_fee_des = "合同结束";
                 $contract_list[$key]['rent'] = 0;
                 $contract_list[$key]['fee'] = 0;
+                // 合同结束不修改房租到期日
+                $rent_date_to = $rent_date_old;
             }
 
             //公共区域总电费 public_energy_fee         
@@ -1180,14 +1233,21 @@ class HousesController extends BaseController {
             $gas_fee = ($public_gas_fee / $sum_person_day)*$person_day;
             $contract_list[$key]['gas_fee'] = ceil($gas_fee*100)/100;
 
+            if (!empty($public_gas_fee) && $public_gas_fee != 0) {
+                // 燃气垃圾费，一般没有气费的同时也没有燃气垃圾费
+                $contract_list[$key]['rubbish_fee'] = ceil(($rubbish_fee / $person_count) * 100)/100;
+            } else {
+                $contract_list[$key]['rubbish_fee'] = 0;
+            }
+            
             $contract_list[$key]['start_energy']    = $SDQdata['start_energy']; //电始度数
             $contract_list[$key]['end_energy']      = $SDQdata['end_energy']; //电止度数
             $contract_list[$key]['start_water']     = $SDQdata['start_water']; //水始度数
             $contract_list[$key]['end_water']       = $SDQdata['end_water']; //水止度数
             $contract_list[$key]['start_gas']       = $SDQdata['start_gas']; //气始度数
             $contract_list[$key]['end_gas']         = $SDQdata['end_gas']; //气止度数
-            $contract_list[$key]['rent_date_old']   = $rent_date;//支付前房租到期日
-            $contract_list[$key]['rent_date_to']    = $end_fee_des;//支付后房租到期日
+            $contract_list[$key]['rent_date_old']   = $rent_date_old;//支付前房租到期日
+            $contract_list[$key]['rent_date_to']    = $rent_date_to;//支付后房租到期日
             $contract_list[$key]['late_pay_date']   = $late_pay_date;//最迟缴费时间
             $contract_list[$key]['should_pay_date'] = $should_pay_date;//应缴费时间
             $contract_list[$key]['start_fee_des']   = $start_fee_des;//房租描述开始
@@ -1200,20 +1260,23 @@ class HousesController extends BaseController {
             $contract_list[$key]['last_ammeter_room'] = $last_ammeter_room;//上个月水电气信息
             $contract_list[$key]['type'] = 1;//日常
             $contract_list[$key]['bill_type'] = 3;//账单类型 3：日常
-
             $contract_list[$key]['total_fee'] = $contract_list[$key]['rent']+$contract_list[$key]['room_energy_fee']+$contract_list[$key]['energy_fee']+$contract_list[$key]['water_fee']+$contract_list[$key]['gas_fee']+$contract_list[$key]['fee']+$contract_list[$key]['wg_fee']+$contract_list[$key]['rubbish_fee'];
             //插入charge_bill中
            
             $result = $DChargeBill->addBill($contract_list[$key],$year,$month);
+            
         }
-         
+
         $result = $DChargeHouse->setIsCreate($charge_id);
+file_put_contents("D://rel.txt", json_encode($charge_id), FILE_APPEND);
         if ( !$result ) {
             $error = true;
         }
         if ( $error ) {
+            M()->rollback();
             die(json_encode(array("result"=>false)));
         } else {
+            M()->commit();
             die(json_encode(array("result"=>true)));
         }
     }
@@ -1228,14 +1291,20 @@ class HousesController extends BaseController {
         $house_code = $DHouses->getHouseCodeById($house_id);
 
         $DChargeHouse = D("charge_house");
+        $DAmmeter = D('ammeter_house');
         $year = date("Y");
         $month = date("m");
         $lastDate = date("Y-m",strtotime($year."-".$month) - 1);
         $lastYear = date("Y",strtotime($lastDate));
         $lastMonth = date("m",strtotime($lastDate));
-
-        $DChargeHouse->createOneCharge($house_id,$year,$month);//判断当月是否存在账单
-        $DChargeHouse->createOneCharge($house_id,$lastYear,$lastMonth);//判断上个月是否存在账单
+        // 判断当月是否存在账单
+        $DChargeHouse->createOneCharge($house_id,$year,$month); 
+        // 判断当月是否存在账单
+        $DAmmeter->checkHouseAmmeterByDate($house_id,$year,$month);
+        // 判断上个月是否存在账单
+        $DChargeHouse->createOneCharge($house_id,$lastYear,$lastMonth);
+        // 判断上个月是否存在账单
+        $DAmmeter->checkHouseAmmeterByDate($house_id,$lastYear,$lastMonth);
         $charge_list = $DChargeHouse->getChargeList($house_id);
 
         $this->assign('charge_list',$charge_list);
@@ -1273,7 +1342,7 @@ class HousesController extends BaseController {
             $room_list = $DHouses->getRoomList($house_code);
             $year = I("year");
             $month = I("month");
-            $ammeter_house = $MAmmeterHouse->where(array("house_id"=>$house_id,"input_month"=>$month,"year"=>$year))->find();           
+            $ammeter_house = $MAmmeterHouse->where(array("house_id"=>$house_id,"input_month"=>$month,"year"=>$year))->find();         
             $ammeter_room = array();
             foreach ( $room_list AS $key=>$val ) {
                 $ammeter_room[$key] = $MAmmeterRoom->where(array("room_id"=>$val['id'],"input_month"=>$month,"input_year"=>$year))->find();
@@ -1284,6 +1353,7 @@ class HousesController extends BaseController {
             $this->assign("house_info",$house_info);
             $this->assign("ammeter_room",$ammeter_room);
             $this->assign("ammeter_house",$ammeter_house);
+
             $this->assign("house_code",$house_code);
             $this->assign("year",$year);
             $this->assign("month",$month);

@@ -152,6 +152,9 @@
                                                         <case value="2">
                                                             <label class="btn btn-success btn-mini">已租</label>
                                                         </case>
+                                                        <case value="3">
+                                                            <label onclick="location.href='<?=U('Home/Steward/check_contract',['roomId'=>$v['id'],'accountId'=>$v['account_id']]);?>'" class="btn btn-info btn-mini">已签约</label>
+                                                        </case>
                                                     </switch>  
                                                 </td>
                                             </tr>

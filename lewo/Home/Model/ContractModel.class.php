@@ -35,323 +35,77 @@ class ContractModel extends BaseModel {
         return $this->table->where($where);
     }
 
+    public function join($joinTable, $where, $field)
+    {
+        return parent::join($this->table, $joinTable)->field($field)->where($where);
+    }
+
+    public function insertContract($contract)
+    {
+        return $this->insert($contract);
+    }
+
     public function updateContract($where, $updateInfo)
     {
         return $this->update($where)->save($updateInfo);
     }
 
-	public function addContract($input)
-	{
-		// 获取模型
-        $DAccount = D('account');
-        $DPay = D('pay');
-        $DRoom = D('room');
-        $DHouses = D('houses');
-        // 房屋id
-        $roomId = $input['roomId'];
-        // 租客id
+    public function getContractBill($input)
+    {
+        // 获取proId
+        $proId = $input['proId'];
+        $filters = [];
+        if (is_numeric($proId)) {
+            $filters = ['lewo_pay.pro_id' => $proId]; 
+        }
+        // 获取accountId
         $accountId = $input['accountId'];
-        // 租客姓名
-        $realName = $input['realName'];
-        // 租客电话
-        $mobile = $input['mobile'];
-        // 紧急联系人电话
-        $contact2 = $input['contact2'];
-        // 租客身份证号
-        $idNo = $input['idNo'];
-        // 租客邮箱
-        $email = $input['email'];
-        // 房租
-        $rent = $input['rent'];
-        // 租客人数
-        $personCount = $input['personCount'];
-        // 合租人电话，如果有
-        $hzMobile = $input['hzMobile'];
-        // 合租人身份证，如果有
-        $hzCardNo = $input['hzCardNo'];
-        // 物业费
-        $wgFee = $input['wgFee'];
-        // 服务费
-        $fee = $input['fee'];
-        // 付款方式
-        $rentType = $input['rentType'];
-        // 租期开始日
-        $startDate = $input['startDate'];
-        // 租期截止日
-        $endDate = $input['endDate'];
-        // 租期开始日大于租期截止日
-        if (strtotime($startDate) > strtotime($endDate)) {
-            $this->error('签约失败，租期开始日：'.$startDate." 大于 租期结束日:".$endDate,'',10);
+        // 获取roomId
+        $roomId = $input['roomId'];
+        if (is_numeric($accountId) && is_numeric($roomId)) {
+            $filters = ['lewo_account.id' => $accountId, 'lewo_contract.room_id' => $roomId];
         }
-        $houseCode = $DRoom->select(['id' => $roomId], ['house_code']);
-        $houseEndDate = $DHouses->select(['house_code' => $houseCode], ['end_date']);
-        // 判断租期结束日是否大于房间托管结束日
-        if (strtotime($endDate) > strtotime($houseEndDate)) {
-            $this->error('签约失败，租期结束日：' . $endDate . ' 大于 房间托管结束日：' . $end_date);
-        }
-        // 房间电表
-        $roomD = $input['roomD'];
-        // 押金
-        $deposit = $input['deposit'];
-        // 优惠
-        $favorable = $input['favorable'];
-        // 优惠描述
-        $favorableDes = $input['favorableDes'];
-        // 是否有换房余额抵扣
-        $isDeduct = $input['is_deduct'];
-        // 合同总金额
-        $total = $input['total'];
-        // 实际支付金额
-        $paytotal = $input['paytotal'];
-        // 缴定抵扣
-        $bookDeposit = $input['bookDeposit'];
-        // 拍照
-        $photo = $input['photo'];
-        if (!empty($photo)) {
-            // 实例化上传类
-            $upload = new \Think\Upload();
-            // 设置附件上传大小
-            $upload->maxSize = 3145728 ;
-            // 设置附件上传类型
-            $upload->exts = ['jpg', 'gif', 'png', 'jpeg'];
-            // 设置附件上传根目录
-            $upload->rootPath = './Uploads/';
-            // 设置附件上传（子）目录
-            $upload->savePath = '';
-            $info = $upload->upload();
-            if (count($info) != 0) { 
-                foreach ($info as $key => $val) {
-                    if ($val['key'] == 'photo') {
-                        $photo = $val['savepath'] . $val['savename'];
-                    }
-                }
-            }
-        }
+        $joinTable = [
+            'contract(account)' => 'account_id(id)',
+            'contract(pay)' => 'pro_id(pro_id)',
+            'contract(room)' => 'account_id(account_id)',
+        ];
+        $field = [
+            // room
+            'lewo_room.room_code', 'lewo_room.id', 'lewo_room.rent', 'lewo_room.room_fee',
+            // account
+            'lewo_account.realname',
+            'lewo_account.mobile',
+            'lewo_account.card_no',
+            'lewo_account.contact2',
+            'lewo_account.email',
+            // contract
+            'lewo_contract.pro_id',
+            'lewo_contract.deposit',
+            'lewo_contract.rent',
+            'lewo_contract.fee',
+            'lewo_contract.wg_fee',
+            'lewo_contract.book_deposit',
+            'lewo_contract.balance',
+            'lewo_contract.period',
+            'lewo_contract.rent_type',
+            'lewo_contract.start_time',
+            'lewo_contract.end_time',
+            'lewo_contract.rent_date',
+            'lewo_contract.total_fee',
+            'lewo_contract.room_id',
+            'lewo_contract.cotenant',
+            'lewo_contract.roomD',
+            // pay
+            'lewo_pay.favorable',
+            'lewo_pay.favorable_des',
+            'lewo_pay.price',
+        ];
 
-        // 根据mobile获取account列表
-        $accountList = $DAccount->getAccountList(['mobile' => $mobile]);
-        // 如果获取不到
-        if (!is_array($accountList)) {
-        	$DAccount = D('account');
-        	// 插入帐号
-        	$account = [];
-			$account['realname'] = $realName;
-			$account['password'] = md5("123456");
-			// 默认密码
-			$account['mobile'] = $mobile;
-			$account['contact2'] = $contact2;
-			$account['card_no'] = $idNo;
-			$account['email'] = $email;
-			$account['register_time'] = date("Y-m-d H:i:s",time());
-			// 插入account并返回account_id
-			$accountId = $DAccount->insert($account);
-        } else {
-        	$account_id = $account_info['id'];
-			$account = [];
-			$account['realname'] 		= $realName;
-			$account['contact2'] 		= $contact2;
-			$account['card_no'] 		= $idNo;
-			$account['email'] 			= $email;
-			// 更新account数据
-			$DAccount->update($account, ['id' => $account_id]);
-        }
-        $res = [];
-        $res['success'] = true;
-        // 计算起始年月
-        $startYear = date('Y', strtotime($startDate));
-		$startMonth = date('m', strtotime($endDate));
-		// 获取账单号
-		$proId = getOrderNo();
-		// 获取操作时间
-		$createTime = date('Y-m-d H:i:s', time());
-		// 获取支付方式
-		$rentType = explode('_', $rentType);
-		// 押几
-		$depositCount = $rentType['0'];
-		// 付几
-		$payCount = $rentType['1'];
-		//房租到期日
-		$rentDate = date('Y-m-d', strtotime($cData['start_time'].' +'.$payCount.' month -1 day'));
-		// 合租信息
-		$hzInfo = [];
-		$hzInfo['hzRealname'] 	= $hzRealname;
-		$hzInfo['hzMobile'] 	= $hzMobile;
-		$hzInfo['hzCardNo'] 	= $hzCardNo;
-		$hzInfo = serialize($hzInfo);
-		// 合影
-		$photo = !empty($photo) ? $post['photo'] : '';
-		// 管家id
-		$stewardId = $_SESSION['steward_id'];
-		// contract数据
-		$contract = [];
-		$contract['start_time'] = $startDate;
-		$contract['end_time'] = $endDate;
-		$contract['pro_id'] = $proId;
-		$contract['account_id'] = $accountId;
-		$contract['room_id'] = $roomId;
-		$contract['create_time'] = $createTime;
-		$contract['deposit'] = $deposit;
-		$contract['wg_fee'] = $wgFee;
-		$contract['book_deposit'] = $bookDeposit;
-		$contract['period'] = $payCount;
-		$contract['steward_id'] = $stewardId;
-		$contract['rent_type'] = $rentType;
-		$contract['rent_date'] = $rentDate;
-		$contract['rent'] = $rent;
-		$contract['fee'] = $fee;
-		$contract['contact2'] = $contact2;
-		$contract['person_count'] = $personCount;
-		$contract['cotenant'] = $hzInfo;
-		$contract['roomD'] = $roomD;
-		$contract['total_fee'] = $total;
-		$contract['photo'] = $photo;
-		$contract['pay_total'] = $paytotal;
-		// pay数据
-		$pay = [];
-		$pay['pay_status'] = 0;
-		$pay['bill_type'] = 2;
-		$pay['is_send']	= 0;
-		$pay['pro_id'] = $pro_id;
-		$pay['account_id'] = $accountId;
-		$pay['room_id'] = $roomId;
-		$pay['create_time'] = $createTime;
-		$pay['input_year'] = $startYear;
-		$pay['input_month'] = $startMonth;
-		$pay['should_date'] = $createTime;
-		$pay['last_date'] = $createTime;
-		$pay['favorable'] = $favorable;
-		$pay['favorable_des'] = $favorableDes;
-		$pay['price'] = $paytotal;
-		// 是否使用余额抵扣
-		/*
-		if (!empty($isDeduct)) {
-			$balance = $DAccount->select(['id' => $accountId], ['balance']);//余额
-			$contract['balance'] = $balance;
-					
-			if ($post['paytotal'] > $balance) {
-				$post['paytotal'] = $paytotal - $balance;
-				$balance = 0; 
-			} else {
-				$post['paytotal'] = 0;
-				$balance = $balance - $post['paytotal'];//如果余额大于应支付金额，应支付0，修改帐号的余额
-			}
-			$MAccount->where(array("id"=>$id))->save(array("balance"=>$change_balance));
-		}
-		*/
-        // 
-        
-		
-        // 插入contract数据
-		$this->table->insert($contract);
-		// 插入pay数据
-		$res['id'] = $DPay->insert($pay);
-		$res['account_id'] = $account_id;
-		return $result;
-	}
-	/**
-	 * [插入一条新的合同]
-	 **/
-	public function add($post){
-		$MAccount = M("account");
-		$MContract = M("contract");
-		$MPay = M("pay");
-		$account_info = $MAccount->where(array("mobile"=>$post['mobile']))->find();
-
-		if ( is_null($account_info) ) {
-			//插入帐号
-			$data['realname'] 		= $post['realName'];
-			$data['password'] 		= md5("123456");//默认密码
-			$data['mobile'] 		= $post['mobile'];
-			$data['contact2'] 		= $post['contact2'];
-			$data['card_no'] 		= $post['idNo'];
-			$data['email'] 			= $post['email'];
-			$data['register_time'] 	= date("Y-m-d H:i:s",time());
-
-			$id = $MAccount->add($data);
-		} else {
-			$id = $account_info['id'];
-			$save = array();
-			$save['realname'] 		= $post['realName'];
-			$save['contact2'] 		= $post['contact2'];
-			$save['card_no'] 		= $post['idNo'];
-			$save['email'] 			= $post['email'];
-
-			$MAccount->where(array('id'=>$id))->save($save);
-		}
-		$result['result'] = true;
-		//判断account_id 是否已经存在了一个未支付的合同账单
-		/*$notpay = $MPay->where(array("account_id"=>$id,"pay_status"=>0,'bill_type'=>2))->select();
-		if ( count($notpay) > 0 ) {
-			$result['result'] 		= false;
-			$result['error_msg'] 	= "已存在未支付合同";
-			return $result;
-		}*/
-		$cData['start_time'] 	= $post['startDate'];
-		$cData['end_time'] 		= $post['endDate'];
-		$start_year 			= date("Y",strtotime($cData['start_time']));
-		$start_month 			= date("m",strtotime($cData['start_time']));
-		
-		$cData['pro_id'] 		= $pData['pro_id'] 		= getOrderNo();//账单号可以用作pro_id
-		$cData['account_id'] 	= $pData['account_id'] 	= $id;
-		$cData['room_id'] 		= $pData['room_id'] 	= $post['room_id'];
-		$pData['pay_status'] 	= 0;
-		$cData['create_time'] 	= $pData['create_time'] = date("Y-m-d H:i:s",time());
-		$pData['bill_type'] 	= 2;
-		$pData['input_year'] 	= $start_year;//批次是合同开始日的年月
-		$pData['input_month'] 	= $start_month;
-		$pData['should_date'] 	= date("Y-m-d",time());
-		$pData['last_date'] 	= date("Y-m-d",time());
-		$pData['is_send']		= 0;
-		$pData['favorable']     = $post['favorable'];//优惠
-		$pData['favorable_des'] = $post['favorable_des'];
-
-		$cData['deposit'] 		= $post['deposit'];
-		$cData['wg_fee']		= $post['wg_fee'];
-		$cData['book_deposit']	= $post['bookDeposit'];
-		$rentType 				= explode("_",$post['rentType']);
-		$depositCount 			= $rentType['0'];//押几
-		$payCount 				= $rentType['1'];//付几
-		$cData['period'] 		= $payCount;
-		$cData['steward_id'] 	= !empty($_SESSION['steward_id'])?$_SESSION['steward_id']:0;
-		$cData['rent_type'] 	= $post['rentType'];
-		//房租到期日
-		$cData['rent_date']     = date('Y-m-d',strtotime($cData['start_time'].' +'.$payCount.' month -1 day'));
-
-		/*$cData['rent_date'] 	= correct_date(date("Y",strtotime($start_year."-".$start_month."+".$cData['period']." month")),date("m",strtotime($start_year."-".$start_month."+".$cData['period']." month")),date("d",strtotime($cData['end_time'])));*/ //房租到期日
-		$cData['rent'] 			= $post['rent'];
-		$cData['fee'] 			= $post['fee'];
-		$cData['contact2'] 		= $post['contact2'];
-		$cData['person_count'] 	= $post['personCount'];
-		$hz_info['hzRealname'] 	= $post['hzRealname'];
-		$hz_info['hzMobile'] 	= $post['hzMobile'];
-		$hz_info['hzCardNo'] 	= $post['hzCardNo'];
-		$cData['cotenant'] 		= serialize($hz_info);
-		$cData['roomD'] 		= $post['roomD'];
-		$cData['total_fee'] 	= $post['total'];//总金额
-		$cData['photo'] 		= !is_null($post['photo'])?$post['photo']:"";//合影
-
-		//是否使用余额抵扣
-		if ( !empty($post['is_deduct']) ) {
-			$balance = $MAccount->where(array("id"=>$id))->getField("balance");//余额
-			$cData['balance'] = $balance;
-					
-			if ( $post['paytotal'] > $balance ) {
-				$post['paytotal'] = $post['paytotal'] - $balance;
-				$change_balance = 0; 
-			} else {
-				$post['paytotal'] = 0;
-				$change_balance = $balance - $post['paytotal'];//如果余额大于应支付金额，应支付0，修改帐号的余额
-			}
-			$MAccount->where(array("id"=>$id))->save(array("balance"=>$change_balance));
-		}
-
-		$cData['pay_total'] = $pData['price'] = $post['paytotal'];//应支付金额
-
-		$MContract->add($cData); //再插入contract表
-		$result['id'] = $MPay->add($pData);	//先插入pay表中
-		$result['account_id'] = $id;
-		return $result;
-	}
+        $contractBill = $this->join($joinTable, $filters, $field)->order('lewo_contract.create_time desc')->limit(1)->find();
+        $contractBill['cotenant'] = unserialize($contractBill['cotenant']);
+        return parent::response([true, '', $contractBill]);
+    }
 
 	/**
 	* [根据用户id获取最新合同]
@@ -394,6 +148,580 @@ class ContractModel extends BaseModel {
 
         return $pay_info;
 	}
-}
 
-?>
+    public function putContract($input)
+    {
+        //获取模型实例
+        $DRoom = D('room'); $DHouses = D('houses'); $DAccount = D('account'); $DPay = D('pay');
+        // 获取管家id
+        $stewardId = $_SESSION['steward_id'];
+        if (!is_numeric($stewardId)) {
+            return parent::response([false, '非法操作！']);
+        }
+        // 获取proId
+        $proId = $input['proId'];
+        // 获取房间roomId
+        $roomId = $input['roomId'];
+        if (!is_numeric($roomId)) {
+            return parent::response([false, '房间不存在！']);
+        }
+        // 判断房间是否已签约或者已入住
+        $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
+        // 只有当房屋状态等于3的时候，可以被修改
+        if ($roomStatus != 3) {
+            return [false, '房屋合同已经无法修改！'];
+        }
+        // 获取真实姓名realName
+        $realName = $input['realName'];
+        if (empty($realName)) {
+            return parent::response([false, '用户名不能为空！']);
+        }
+        // 获取手机mobile
+        $mobile = $input['mobile'];
+        $pattern = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/i';
+        if (!preg_match($pattern, $mobile)) {
+            return parent::response([false, '手机号格式不对！']);   
+        }
+        // 获取邮箱email
+        $email = $input['email'];
+        $pattern = '/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i';
+        if (!empty($email) && !preg_match($pattern, $email)) {
+            return parent::response([false, '邮箱格式不对！']);
+        }
+        // 获取紧急联系人电话contact2
+        $contact2 = empty($input['contact2']) ? 0 : $input['contact2'];
+        $pattern = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/i';
+        if (!empty($contact2) && !preg_match($pattern, $contact2)) {
+            return parent::response([false, '联系人电话格式不对！']);
+        }
+        // 获取身份证idNo
+        $idNo = $input['idNo'];
+        $pattern = '/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/i';
+        if (!preg_match($pattern, $idNo)) {
+            return parent::response([false, '身份证格式不对！']);
+        }
+        // 获取租金rent
+        $rent = $input['rent'];
+        if (!is_numeric($rent)) {
+            return parent::response([false, '租金出错！']);
+        }
+        // 获取personCount
+        $personCount = $input['personCount'];
+        if (!is_numeric($personCount) || $personCount < 1) {
+            return parent::response([false, '居住人数必须为数字且必须大于等于1']);
+        }
+        // 获取合租人姓名hzRealName
+        $hzRealName = $input['hzRealName'];
+        // 获取合租人手机hzMobile
+        $hzMobile = $input['hzMobile'];
+        // 获取合租人身份证$hzCardNo
+        $hzCardNo = $input['hzCardNo'];
+        // 组装合租信息
+        $hzInfo = [];
+        $hzInfo['hzRealname'] = $hzRealname;
+        $hzInfo['hzMobile'] = $hzMobile;
+        $hzInfo['hzCardNo'] = $hzCardNo;
+        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealName) == (bool)trim($hzCardNo))) {
+            return parent::response([false, '合租人信息有误！']);
+        }
+        // 验证合租人电话
+        $pattern = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/i';
+        if (!empty($hzMobile) && !preg_match($pattern, $hzMobile)) {
+            return parent::response([false, '合租人电话格式有误！']);   
+        }
+        // 验证合租人身份证
+        $pattern = '/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1|[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/i';
+        if (!empty($hzCardNo) && !preg_match($pattern, $hzCardNo)) {
+            return parent::response([false, '合租人身份证格式不对！']);
+        }
+        // 获取物管费wgFee
+        $wgFee = $input['wgFee'];
+        if (!is_numeric($wgFee)) {
+            return parent::response([false, '物管费类型出错！']);
+        }
+        // 获取服务费fee
+        $fee = $input['fee'];
+        if (!is_numeric($fee)) {
+            return parent::response([false, '服务费类型出错！']);
+        }
+        // 获取付款方式，压几付几，rentType
+        $rentType = $input['rentType'];
+        $pattern = '/^(\d)[_](\d)$/i';
+        if (!preg_match($pattern, $rentType, $match)) {
+            return parent::response([false, '付款方式不对！']);
+        }
+        // 押几
+        $depositCount = $match['1'];
+        // 付几
+        $payCount = $match['2'];
+        // 获取租期开始日startDate
+        $startDate = $input['startDate'];
+        $pattern = '/^\d{4}[-]\d{2}[-]\d{2}$/i';
+        if (!preg_match($pattern, $startDate)) {
+            return parent::response([false, '起始日期格式不对！']);
+        }
+        // 获取租期截止日endDate
+        $endDate = $input['endDate'];
+        $pattern = '/^\d{4}[-]\d{2}[-]\d{2}$/i';
+        if (!preg_match($pattern, $startDate)) {
+            return parent::response([false, '截止日期格式不对！']);
+        }
+        // 获取房间电表roomD
+        $roomD = $input['roomD'];
+        if (!is_numeric($roomD)) {
+            return parent::response([false, '房间电表类型不对！']);
+        }
+        // 获取押金depost
+        $deposit = $input['deposit'];
+        if (!is_numeric($deposit)) {
+            return parent::response([false, '押金类型不对！']);
+        }
+        // 获取优惠favorable
+        $favorable = $input['favorable'];
+        if (!is_numeric($favorable)) {
+            return parent::response([false, '优惠类型不对！']);
+        }
+        // 获取优惠描述
+        $favorableDes = $input['favorableDes'];
+        // 获取是否换房余额抵扣isDeduct
+        $isDeduct = $input['isDeduct'];
+        if ($isDeduct != 1 && $isDeduct != 0) {
+            return parent::response([false, '余额抵扣出错！']);
+        }
+        // 获取合同金额total
+        $total = $input['total'];
+        if (!$total == ($wgFee + $rent + $fee + $deposit)) {
+            return parent::response([false, '合同金额出错！']);
+        }
+        // 获取缴定抵扣bookDeposit
+        $bookDeposit = $input['bookDeposit'];
+        if (!is_numeric($bookDeposit)) {
+            return parent::response([false, '缴定抵扣出错！']);
+        }
+        // 获取租客管家合影
+        $photo = $input['photo'];
+        // 获取房屋状态houseCode
+        $houseCode = D('room')->selectField(['id' => $roomId], 'house_code');
+        // 获取房屋的托管结束日
+        $houseEndDate = D('houses')->selectField(['room_id' => $roomId], 'end_date');
+        // 将租期起始日和租期结束日，以及房屋托管结束日转换成时间戳，以方便比较
+        $startDateTimestamp = strtotime($startDate);
+        $endDateTimestamp = strtotime($endDate);
+        $houseEndDateTimestamp = strtotime($houseEndDate);
+        // 获取租期起始年份
+        $startYear = date('Y', $startDateTimestamp);
+        // 获取租期起始月份
+        $startMonth = date('m', $startDateTimestamp);
+        // 获取当前日期
+        // $createTime = date('Y-m-d H:i:s', time());
+        if ($startDateTimestamp > $endDateTimestamp) {
+            // 判断租期开始日是否大于房间托管结束日
+            $this->error('签约失败，租期开始日:' . $startDate . ' 大于 租期结束日:', '', 10);
+        }
+        if ($endDateTimestamp > $houseEndDateTimestamp) {
+            // 判断租期结束日是否大于房间托管结束日
+            $this->error('签约失败，租期结束日:' . $endDate . ' 大于 房间托管结束日:' . $houseEndDate);
+        }
+        // 设置并获取photo（如果存在）
+        $photoDir = ' ';
+        if (!empty($photo['name']['0'])) {
+            // 实例化上传类
+            $VUpload = new \Think\Upload();
+            // 设置附件上传大小
+            $VUpload->maxSize = 1024 * 1024 * 1;
+            // 设置附件上传类型
+            $VUpload->exts = ['jpg', 'gif', 'png', 'jpeg'];
+            // 设置附件上传根目录
+            $VUpload->rootPath = './Uploads/';
+            // 设置附件上传（子）目录
+            $VUpload->savePath = '';
+            // 上传之后回调结果
+            $res = $VUpload->upload();
+            // 如果上传成功保存上传信息，并保存照片信息
+            if ($res) {
+                foreach ($res as $file) {
+                    // 保存photo路径
+                    if ($file['key'] == 'photo') {
+                        $photoDir = $file['savepath'] . $file['savename'];
+                    }
+                }
+            }
+        }
+        // 判断房屋状态
+        $res = $DRoom->selectField(['id' => $roomId], 'status');
+        if (!($res == 3)) {
+            return parent::response([false, '房屋未处于签约状态！']);
+        }
+        // 根据mobile获取account列表
+        $accountId = $DAccount->selectField(['mobile' => $mobile], 'id');
+        // 如果获取不到
+        if (!is_numeric($accountId)) {
+            // 插入帐号
+            $account = [];
+            $account['realname'] = $realName;
+            // 默认密码
+            $account['password'] = md5("123456");
+            $account['mobile'] = $mobile;
+            // 紧急联系人
+            $account['contact2'] = $contact2;
+            // 身份证
+            $account['card_no'] = $idNo;
+            $account['email'] = $email;
+            $account['register_time'] = date("Y-m-d H:i:s",time());
+            // 插入account并返回account_id
+            $accountId = $DAccount->insertAccount($account);
+        } else {
+            // 更新租客信息
+            $account = [];
+            $account['realname'] = $realName;
+            // 紧急联系人
+            $account['contact2'] = $contact2;
+            // 身份证
+            $account['card_no'] = $idNo;
+            $account['email'] = $email;
+            // 更新account数据
+            $DAccount->updateAccount(['id' => $account_id], $account);
+        }
+        // 插入合同数据
+        $contract = [];
+        $contract['start_time'] = $startDate;
+        $contract['end_time'] = $endDate;
+        $contract['pro_id'] = $proId;
+        $contract['account_id'] = $accountId;
+        $contract['room_id'] = $roomId;
+        // $contract['create_time'] = $createTime;
+        $contract['deposit'] = $deposit;
+        $contract['wg_fee'] = $wgFee;
+        $contract['book_deposit'] = $bookDeposit;
+        $contract['period'] = $payCount;
+        $contract['steward_id'] = $stewardId;
+        $contract['rent_type']     = $rentType;
+        $contract['rent_date'] = date('Y-m-d', strtotime($startDate . ' + ' . $payCount . ' month -1 day'));
+        $contract['rent'] = $rent;
+        $contract['fee'] = $fee;
+        $contract['contact2'] = $contact2;
+        $contract['person_count'] = $personCount;
+        $contract['cotenant'] = serialize($hzInfo);
+        $contract['roomD'] = $roomD;
+        // 总金额
+        $contract['total_fee'] = $total;
+        // 合影
+        $contract['photo'] = $photoDir;
+        // 插入contract表
+        $affectedRows = $this->updateContract(['pro_id' => $proId], $contract);
+        if (!($affectedRows > 0)) {
+            return parent::response([false, '合同表修改失败！']);
+        }
+        // pay表数据
+        $pay = [];
+        $pay['pay_status'] = 0;
+        $pay['bill_type'] = 2;
+        $pay['is_send'] = 0;
+        $pay['pro_id'] = $proId;
+        $pay['account_id'] = $accountId;
+        $pay['room_id'] = $roomId;
+        // $pay['create_time'] = $createTime;
+        $pay['input_year'] = $startYear;
+        $pay['input_month'] = $startMonth;
+        // $pay['should_date'] = $createTime;
+        // $pay['last_date'] = $createTime;
+        $pay['favorable'] = $favorable;
+        $pay['favorable_des'] = $favorableDes;
+        $pay['price'] = $total;
+        $pay['modify_log'] = ' ';
+        // 插入pay表数据
+        $affectedRows = $DPay->updatePay(['pro_id' => $proId], $pay);
+        if (!($affectedRows > 0)) {
+            return parent::response([false, '支付表修改失败！']);
+        }
+        return parent::response([true, '', ['proId' => $proId]]);  
+    }
+
+    public function postContract($input)
+    {
+        //获取模型实例
+        $DRoom = D('room'); $DHouses = D('houses'); $DAccount = D('account'); $DPay = D('pay');
+        // 获取管家id
+        $stewardId = $_SESSION['steward_id'];
+        if (!is_numeric($stewardId)) {
+            return parent::response([false, '非法操作！']);
+        }
+        // 获取房间roomId
+        $roomId = $input['roomId'];
+        if (!is_numeric($roomId)) {
+            return parent::response([false, '房间不存在！']);
+        }
+        // 判断房间是否已签约或者已入住
+        $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
+        // 只有当房屋状态等于0的时候，可以被签约
+        if ($roomStatus != 0) {
+            return [false, '房屋已被出租！'];
+        }
+        // 获取真实姓名realName
+        $realName = $input['realName'];
+        if (empty($realName)) {
+            return parent::response([false, '用户名不能为空！']);
+        }
+        // 获取手机mobile
+        $mobile = $input['mobile'];
+        $pattern = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/i';
+        if (!preg_match($pattern, $mobile)) {
+            return parent::response([false, '手机号格式不对！']);   
+        }
+        // 获取邮箱email
+        $email = $input['email'];
+        $pattern = '/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i';
+        if (!empty($email) && !preg_match($pattern, $email)) {
+            return parent::response([false, '邮箱格式不对！']);
+        }
+        // 获取紧急联系人电话contact2
+        $contact2 = empty($input['contact2']) ? 0 : $input['contact2'];
+        $pattern = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/i';
+        if (!empty($contact2) && !preg_match($pattern, $contact2)) {
+            return parent::response([false, '联系人电话格式不对！']);
+        }
+        // 获取身份证idNo
+        $idNo = $input['idNo'];
+        $pattern = '/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/i';
+        if (!preg_match($pattern, $idNo)) {
+            return parent::response([false, '身份证格式不对！']);
+        }
+        // 获取租金rent
+        $rent = $input['rent'];
+        if (!is_numeric($rent)) {
+            return parent::response([false, '租金出错！']);
+        }
+        // 获取personCount
+        $personCount = $input['personCount'];
+        if (!is_numeric($personCount) || $personCount < 1) {
+            return parent::response([false, '居住人数必须为数字且必须大于等于1']);
+        }
+        // 获取合租人姓名hzRealName
+        $hzRealName = $input['hzRealName'];
+        // 获取合租人手机hzMobile
+        $hzMobile = $input['hzMobile'];
+        // 获取合租人身份证$hzCardNo
+        $hzCardNo = $input['hzCardNo'];
+        // 组装合租信息
+        $hzInfo = [];
+        $hzInfo['hzRealname'] = $hzRealname;
+        $hzInfo['hzMobile'] = $hzMobile;
+        $hzInfo['hzCardNo'] = $hzCardNo;
+        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealName) == (bool)trim($hzCardNo))) {
+            return parent::response([false, '合租人信息有误！']);
+        }
+        // 验证合租人电话
+        $pattern = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/i';
+        if (!empty($hzMobile) && !preg_match($pattern, $hzMobile)) {
+            return parent::response([false, '合租人电话格式有误！']);   
+        }
+        // 验证合租人身份证
+        $pattern = '/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1|[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/i';
+        if (!empty($hzCardNo) && !preg_match($pattern, $hzCardNo)) {
+            return parent::response([false, '合租人身份证格式不对！']);
+        }
+        // 获取物管费wgFee
+        $wgFee = $input['wgFee'];
+        if (!is_numeric($wgFee)) {
+            return parent::response([false, '物管费类型出错！']);
+        }
+        // 获取服务费fee
+        $fee = $input['fee'];
+        if (!is_numeric($fee)) {
+            return parent::response([false, '服务费类型出错！']);
+        }
+        // 获取付款方式，压几付几，rentType
+        $rentType = $input['rentType'];
+        $pattern = '/^(\d)[_](\d)$/i';
+        if (!preg_match($pattern, $rentType, $match)) {
+            return parent::response([false, '付款方式不对！']);
+        }
+        // 押几
+        $depositCount = $match['1'];
+        // 付几
+        $payCount = $match['2'];
+        // 获取租期开始日startDate
+        $startDate = $input['startDate'];
+        $pattern = '/^\d{4}[-]\d{2}[-]\d{2}$/i';
+        if (!preg_match($pattern, $startDate)) {
+            return parent::response([false, '起始日期格式不对！']);
+        }
+        // 获取租期截止日endDate
+        $endDate = $input['endDate'];
+        $pattern = '/^\d{4}[-]\d{2}[-]\d{2}$/i';
+        if (!preg_match($pattern, $startDate)) {
+            return parent::response([false, '截止日期格式不对！']);
+        }
+        // 获取房间电表roomD
+        $roomD = $input['roomD'];
+        if (!is_numeric($roomD)) {
+            return parent::response([false, '房间电表类型不对！']);
+        }
+        // 获取押金depost
+        $deposit = $input['deposit'];
+        if (!is_numeric($deposit)) {
+            return parent::response([false, '押金类型不对！']);
+        }
+        // 获取优惠favorable
+        $favorable = $input['favorable'];
+        if (!is_numeric($favorable)) {
+            return parent::response([false, '优惠类型不对！']);
+        }
+        // 获取优惠描述
+        $favorableDes = $input['favorableDes'];
+        // 获取是否换房余额抵扣isDeduct
+        $isDeduct = $input['isDeduct'];
+        if ($isDeduct != 1 && $isDeduct != 0) {
+            return parent::response([false, '余额抵扣出错！']);
+        }
+        // 获取合同金额total
+        $total = $input['total'];
+        if (!$total == ($wgFee + $rent + $fee + $deposit)) {
+            return parent::response([false, '合同金额出错！']);
+        }
+        // 获取缴定抵扣bookDeposit
+        $bookDeposit = $input['bookDeposit'];
+        if (!is_numeric($bookDeposit)) {
+            return parent::response([false, '缴定抵扣出错！']);
+        }
+        // 获取生成pro_id
+        $proId = getOrderNo();
+        // 获取租客管家合影
+        $photo = $input['photo'];
+        // 获取房屋状态houseCode
+        $houseCode = D('room')->selectField(['id' => $roomId], 'house_code');
+        // 获取房屋的托管结束日
+        $houseEndDate = D('houses')->selectField(['room_id' => $roomId], 'end_date');
+        // 将租期起始日和租期结束日，以及房屋托管结束日转换成时间戳，以方便比较
+        $startDateTimestamp = strtotime($startDate);
+        $endDateTimestamp = strtotime($endDate);
+        $houseEndDateTimestamp = strtotime($houseEndDate);
+        // 获取租期起始年份
+        $startYear = date('Y', $startDateTimestamp);
+        // 获取租期起始月份
+        $startMonth = date('m', $startDateTimestamp);
+        // 获取当前日期
+        $createTime = date('Y-m-d H:i:s', time());
+        if ($startDateTimestamp > $endDateTimestamp) {
+            // 判断租期开始日是否大于房间托管结束日
+            $this->error('签约失败，租期开始日:' . $startDate . ' 大于 租期结束日:', '', 10);
+        }
+        if ($endDateTimestamp > $houseEndDateTimestamp) {
+            // 判断租期结束日是否大于房间托管结束日
+            $this->error('签约失败，租期结束日:' . $endDate . ' 大于 房间托管结束日:' . $houseEndDate);
+        }
+        // 设置并获取photo（如果存在）
+        $photoDir = ' ';
+        if (!empty($photo['name']['0'])) {
+            // 实例化上传类
+            $VUpload = new \Think\Upload();
+            // 设置附件上传大小
+            $VUpload->maxSize = 1024 * 1024 * 1;
+            // 设置附件上传类型
+            $VUpload->exts = ['jpg', 'gif', 'png', 'jpeg'];
+            // 设置附件上传根目录
+            $VUpload->rootPath = './Uploads/';
+            // 设置附件上传（子）目录
+            $VUpload->savePath = '';
+            // 上传之后回调结果
+            $res = $VUpload->upload();
+            // 如果上传成功保存上传信息，并保存照片信息
+            if ($res) {
+                foreach ($res as $file) {
+                    // 保存photo路径
+                    if ($file['key'] == 'photo') {
+                        $photoDir = $file['savepath'] . $file['savename'];
+                    }
+                }
+            }
+        }
+        // 根据mobile获取account列表
+        $accountId = $DAccount->selectField(['mobile' => $mobile], 'id');
+        // 如果获取不到
+        if (!is_numeric($accountId)) {
+            // 插入帐号
+            $account = [];
+            $account['realname'] = $realName;
+            // 默认密码
+            $account['password'] = md5("123456");
+            $account['mobile'] = $mobile;
+            // 紧急联系人
+            $account['contact2'] = $contact2;
+            // 身份证
+            $account['card_no'] = $idNo;
+            $account['email'] = $email;
+            $account['register_time'] = date("Y-m-d H:i:s",time());
+            // 插入account并返回account_id
+            $accountId = $DAccount->insertAccount($account);
+        } else {
+            // 更新租客信息
+            $account = [];
+            $account['realname'] = $realName;
+            // 紧急联系人
+            $account['contact2'] = $contact2;
+            // 身份证
+            $account['card_no'] = $idNo;
+            $account['email'] = $email;
+            // 更新account数据
+            $DAccount->updateAccount(['id' => $account_id], $account);
+        }
+        // 插入合同数据
+        $contract = [];
+        $contract['start_time'] = $startDate;
+        $contract['end_time'] = $endDate;
+        $contract['pro_id'] = $proId;
+        $contract['account_id'] = $accountId;
+        $contract['room_id'] = $roomId;
+        $contract['create_time'] = $createTime;
+        $contract['deposit'] = $deposit;
+        $contract['wg_fee'] = $wgFee;
+        $contract['book_deposit'] = $bookDeposit;
+        $contract['period'] = $payCount;
+        $contract['steward_id'] = $stewardId;
+        $contract['rent_type']     = $rentType;
+        $contract['rent_date'] = date('Y-m-d', strtotime($startDate . ' + ' . $payCount . ' month -1 day'));
+        $contract['rent'] = $rent;
+        $contract['fee'] = $fee;
+        $contract['contact2'] = $contact2;
+        $contract['person_count'] = $personCount;
+        $contract['cotenant'] = serialize($hzInfo);
+        $contract['roomD'] = $roomD;
+        // 总金额
+        $contract['total_fee'] = $total;
+        // 合影
+        $contract['photo'] = $photoDir;
+        // 插入contract表
+        $contractId = $this->insertContract($contract);
+        if (!is_numeric($contractId)) {
+            return parent::response([false, '合同表生成失败！']);
+        }
+        // pay表数据
+        $pay = [];
+        $pay['pay_status'] = 0;
+        $pay['bill_type'] = 2;
+        $pay['is_send'] = 0;
+        $pay['pro_id'] = $proId;
+        $pay['account_id'] = $accountId;
+        $pay['room_id'] = $roomId;
+        $pay['create_time'] = $createTime;
+        $pay['input_year'] = $startYear;
+        $pay['input_month'] = $startMonth;
+        $pay['should_date'] = $createTime;
+        $pay['last_date'] = $createTime;
+        $pay['favorable'] = $favorable;
+        $pay['favorable_des'] = $favorableDes;
+        $pay['price'] = $total;
+        $pay['modify_log'] = ' ';
+        // 插入pay表数据
+        $payId = $DPay->insertPay($pay);
+        if (!is_numeric($payId)) {
+            return parent::response([false, '支付表生成失败！']);
+        }
+        // 修改房屋状态
+        $res = $DRoom->updateRoom(['id' => $roomId], ['status' => 3, 'account_id' => $accountId]);
+        if (!($res > 0)) {
+            return parent::response([false, '房屋状态修改失败！']);
+        }
+        return parent::response([true, '', ['proId' => $proId]]);  
+    }
+}

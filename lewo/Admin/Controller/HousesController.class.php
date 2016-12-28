@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
-class HousesController extends Controller {
+class HousesController extends BaseController {
     public function __construct(){
         parent::__construct();
         if ( empty($_SESSION['username']) && ACTION_NAME != 'register') {
@@ -13,14 +13,27 @@ class HousesController extends Controller {
     public function index(){
         $_SESSION['P_REFERER'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']; 
 
-        $DHouses = D('Houses');
-        $area_id = I('area_id');
-        if ( !empty($area_id) ) {
-            $where['h.area_id'] = I('area_id');
+        if (parent::isPostRequest()) {
+            $cityId = I('post.cityId');
+            if (!empty($cityId)) {
+                $where['area.city_id'] = I('post.cityId');
+                $this->assign('cityId',$cityId);
+            }
+            $areaId = I('post.areaId');
+            if (!empty($areaId)) {
+                $where['area.id'] = I('post.areaId');
+                $this->assign('areaId',$areaId);
+            }
+            $stewardId = I('post.stewardId');
+            if (!empty($stewardId)) {
+                $where['h.steward_id'] = I('post.stewardId');
+                $this->assign('stewardId',$stewardId);
+            }
         }
-        $housesList = $DHouses->getHousesList($where);
 
-        //获取近三月
+        $DHouses = D('Houses');
+        $DArea = D('area');
+        $DAdmin = D('admin_user');
         //当月
         $year = date("Y",time());
         $month = date("m",time());
@@ -33,17 +46,27 @@ class HousesController extends Controller {
         $lastMonth = date("m",strtotime($lastDate));
         $this->assign("lastYear",$lastYear);
         $this->assign("lastMonth",$lastMonth);
+
+        // 房屋列表 
+        $housesList = $DHouses->getHousesList($where);
+        // 小区列表
+        $areaList = $DArea->getareaList();
+        // 管家列表
+        $stewardList = $DAdmin->getStewardAccount();
     
-        //搜索该年该月已发送的账单
-        $MCharge_bill = M("charge_bill");
         $MPay = M("pay");   
 
         $MRoom = M('room');
+        // 该月已发总数
+        $nowSendCount = 0;
+        // 该月应发总数
+        $nowMustSendCount = 0;
+        // 上个月已发总数
+        $lastSendCount = 0;
+        // 上个月应发总数
+        $lastMustSendCount = 0;
+
         foreach($housesList AS $key=>$val){
-            $count = $MRoom->where(array("house_code"=>$val['house_code'],"is_show"=>1))->count();
-            $yz_count = $MRoom->where(array("house_code"=>$val['house_code'],"is_show"=>1,"status"=>C('room_yz')))->count();
-            $housesList[$key]['count'] = $count;
-            $housesList[$key]['yz_count'] = $yz_count;
             //当月
             $where = array();
             $where['cb.house_code'] = $val['house_code'];
@@ -52,18 +75,19 @@ class HousesController extends Controller {
             $where['cb.type'] = 1;
             $housesList[$key]['now_total_count'] = $MPay
                                                     ->alias('p')
-                                                    ->field('cb.*,p.*')
                                                     ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
                                                     ->where($where)
                                                     ->count();
+            
 
             $where['cb.is_send'] = 1;
             $housesList[$key]['now_sended_count'] = $MPay
                                                     ->alias('p')
-                                                    ->field('cb.*,p.*')
                                                     ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
                                                     ->where($where)
                                                     ->count();
+            $nowMustSendCount += $housesList[$key]['now_total_count'];
+            $nowSendCount += $housesList[$key]['now_sended_count'];
             //上月
             $where = array();
             $where['cb.house_code'] = $val['house_code'];
@@ -82,8 +106,18 @@ class HousesController extends Controller {
                                                     ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
                                                     ->where($where)
                                                     ->count();
+            $lastMustSendCount += $housesList[$key]['last_total_count'];
+            $lastSendCount += $housesList[$key]['last_sended_count'];
+
         }
 
+        $this->assign('stewardList',$stewardList);
+        $this->assign('areaList',$areaList);
+        $this->assign('city_list', C('city_id'));
+        $this->assign('nowSendCount',$nowSendCount);
+        $this->assign('nowMustSendCount',$nowMustSendCount);
+        $this->assign('lastSendCount',$lastSendCount);
+        $this->assign('lastMustSendCount',$lastMustSendCount);
         $this->assign("housesList",$housesList);
         $this->display("Common/header");
         $this->display("Common/nav");
@@ -772,7 +806,7 @@ class HousesController extends Controller {
             $val2['room_energy_add'] = $add_roomD;
             $val2['room_energy_fee'] = get_energy_fee($add_roomD,$energy_stair);
             $val2['public_energy_fee'] = $public_energy_fee;
-            $val2['total_fee'] = $val2['energy_fee']+$val2['water_fee']+$val2['gas_fee']+$val2['room_energy_fee']+$val2['rent_fee']+$val2['service_fee']+$val2['wgfee_unit']+$val2['rubbish_fee']+$val2['wx_fee'];
+            $val2['total_fee'] = $val2['energy_fee'] + $val2['water_fee'] + $val2['gas_fee'] + $val2['room_energy_fee'] + $val2['rent_fee'] + $val2['service_fee'] + $val2['wgfee_unit'] + $val2['rubbish_fee'] + $val2['wx_fee'] - $val2['favorable'];
             $val2['start_energy']   = $SDQdata['start_energy'];
             $val2['end_energy']     = $SDQdata['end_energy'];
             $val2['start_water']    = $SDQdata['start_water'];

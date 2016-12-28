@@ -38,30 +38,30 @@ class PayController extends Controller {
         if ( $is_has_flag && !empty($search)) {
             $search_arr = explode('-',$search);
             if ( !is_null($search_arr['0']) ) {
-                $where['h.building'] = $search_arr['0'];
+                $where['houses.building'] = $search_arr['0'];
             }
             if ( !is_null($search_arr['1']) ) {
-                $where['h.floor'] = $search_arr['1'];
+                $where['houses.floor'] = $search_arr['1'];
             }
             if ( !is_null($search_arr['2']) ) {
-                $where['h.door_no'] = $search_arr['2'];
+                $where['houses.door_no'] = $search_arr['2'];
             }
         }
         $this->assign('search',$search);
 
         $room_code = I("room_code");
         if ( !empty($room_code) ) {
-            $where['r.room_code'] = array('LIKE','%'.$room_code.'%');
+            $where['room.room_code'] = array('LIKE','%'.$room_code.'%');
             $this->assign("room_code",$room_code);
         }
         $account_key = I("account_key");
         if ( !empty($account_key) ) {
-            $where['_string'] = "a.realname LIKE '%".$account_key."%' OR a.mobile LIKE '%".$account_key."%'";
+            $where['_string'] = "account.realname LIKE '%".$account_key."%' OR account.mobile LIKE '%".$account_key."%'";
             $this->assign("account_key",$account_key);
         }
         $area_id = I("area_id");
         if ( !empty($area_id) ) {
-            $where['h.area_id'] = $area_id;
+            $where['houses.area_id'] = $area_id;
             $this->assign("area_id",$area_id);
         }
         $city_id = I("city_id");
@@ -71,18 +71,23 @@ class PayController extends Controller {
         }
         $input_month = I("input_month");
         if ( !empty($input_month) ) {
-            $where['p.input_month'] = $input_month;
+            $where['pay.input_month'] = $input_month;
             $this->assign("input_month",$input_month);
         }
         $input_year = I("input_year");
         if ( !empty($input_year) ) {
-            $where['p.input_year'] = $input_year;
+            $where['pay.input_year'] = $input_year;
             $this->assign("input_year",$input_year);
         }
         $pay_type = I("pay_type");
         if ( !empty($pay_type)) {
-            $where['p.pay_type'] = $pay_type;
+            $where['pay.pay_type'] = $pay_type;
             $this->assign("pay_type",$pay_type);
+        }
+        $contract_status = I("contract_status");
+        if ( !empty($contract_status)) {
+            $where['lewo_contract.contract_status'] = $contract_status;
+            $this->assign("contract_status",$contract_status);
         }
         $bill_type = I("bill_type");
         if (!is_array($bill_type) && !empty($bill_type[0]) ) {
@@ -95,18 +100,18 @@ class PayController extends Controller {
                 $bill_type_str .= $val.',';
             }
             $bill_type_str = substr($bill_type_str,0,-1);
-            $where['p.bill_type'] = array('IN',$bill_type_str);
+            $where['pay.bill_type'] = array('IN',$bill_type_str);
             $this->assign("bill_type",$bill_type);
         }
 
         $is_send = I("is_send");
         if ( !empty($is_send) || $is_send === '0') {
-            $where['cb.is_send'] = $is_send;
+            $where['pay.is_send'] = $is_send;
             $this->assign("is_send",$is_send);
         }
         $pay_status = I("pay_status");
         if ( !empty($pay_status) || $pay_status === '0') {
-            $where['p.pay_status'] = $pay_status;
+            $where['pay.pay_status'] = $pay_status;
             $this->assign("pay_status",$pay_status);
         }
         $search_time = I("search_time");
@@ -116,20 +121,20 @@ class PayController extends Controller {
             $end_time = date('Y-m-d',strtotime($end_time."+1 day"));
             switch ($search_time) {
                 case 'payDate':
-                    $where['p.pay_time'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['pay.pay_time'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'htStartDate':
-                    $where['c.start_time'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['lewo_contract.start_time'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'htEndDate':
-                    $where['c.end_time'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['lewo_contract.end_time'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'rentDate':
-                    $where['c.rent_date'] = array("BETWEEN",array($start_time,$end_time));
+                    $where['lewo_contract.rent_date'] = array("BETWEEN",array($start_time,$end_time));
                     break;
                 case 'zcht':
                     //这段时间内合同正常的列表
-                    $where['_string'] = '\''.$end_time.'\' <= c.end_time ' ;
+                    $where['_string'] = '\''.$end_time.'\' <= lewo_contract.end_time ' ;
                     break;
             }
 
@@ -138,31 +143,31 @@ class PayController extends Controller {
             $this->assign("end_time",I("end_time"));
         }
 
-        $order = "p.id desc,p.create_time desc";
+        $order = "pay.id desc,pay.create_time desc";
         $sort_type = I("sort_type");
         if ( !empty($sort_type) ) {
             $sort = I("sort")==1? "asc":"desc";
             switch ($sort_type) {
                 case 'payTime':
-                    $order = "p.pay_time ".$sort;
+                    $order = "pay.pay_time ".$sort;
                     break;
                 case 'payType':
-                    $order = "p.pay_type ".$sort;
+                    $order = "pay.pay_type ".$sort;
                     break;
                 case 'startDate':
-                    $order = "c.start_time ".$sort;
+                    $order = "lewo_contract.start_time ".$sort;
                     break;
                 case 'endDate':
-                    $order = "c.end_time ".$sort;
+                    $order = "lewo_contract.end_time ".$sort;
                     break;
                 case 'rentDate':
-                    $order = "c.rent_date ".$sort;
+                    $order = "lewo_contract.rent_date ".$sort;
                     break;
                 case 'tbq':
-                    $order = "p.last_date ".$sort;
+                    $order = "pay.last_date ".$sort;
                     break;
                 case 'inputMonth':
-                    $order = "p.input_year ".$sort.", p.input_month ".$sort;
+                    $order = "pay.input_year ".$sort.", pay.input_month ".$sort;
                     break;
                 
                 default:
@@ -185,21 +190,22 @@ class PayController extends Controller {
         $DContract  = D("contract");
         $is_show = I('is_show');
         if ( $is_show != '' ) {
-            $where['p.is_show'] = $is_show; //显示
+            $where['pay.is_show'] = $is_show; //显示
         } else {
-            $where['p.is_show'] = '1'; //显示
+            $where['pay.is_show'] = '1'; //显示
         }
 
         $count      = $MPay
-                    ->alias('p')
-                    ->join('(select id AS ht_id,account_id,room_id,pay_date,create_time,actual_end_time,MAX(start_time) AS start_time,end_time,rent_date,period,deposit,rent AS ht_rent,fee AS ht_fee,wg_fee AS ht_wgfee,contract_status from lewo_contract GROUP BY account_id,room_id) AS c ON p.account_id=c.account_id AND p.room_id=c.room_id ','left')
-                    ->join('lewo_charge_bill cb ON p.pro_id=cb.pro_id','left')
-                    ->join('lewo_account a ON p.account_id=a.id','left')
-                    ->join('lewo_room r ON p.room_id=r.id','left')
-                    ->join('lewo_houses h ON r.house_code=h.house_code','left')
-                    ->join('lewo_area area ON h.area_id=area.id','left')
+                    ->alias('pay')
+                    ->join('(select MAX(id) AS ht_id,account_id,room_id from lewo_contract WHERE is_delete=0  GROUP BY account_id,room_id ) AS contract ON pay.account_id=contract.account_id AND pay.room_id=contract.room_id ','left')
+                    ->join('lewo_contract ON lewo_contract.id = contract.ht_id', 'left')
+                    ->join('lewo_charge_bill charge_bill ON pay.pro_id=charge_bill.pro_id','left')
+                    ->join('lewo_account account ON pay.account_id=account.id','left')
+                    ->join('lewo_room room ON pay.room_id=room.id','left')
+                    ->join('lewo_houses houses ON room.house_code=houses.house_code','left')
+                    ->join('lewo_area area ON houses.area_id=area.id','left')
                     ->where($where)
-                    ->count();
+                    ->count(1);
 
         $Page       = new \Think\Page($count,$page_count);// 实例化分页类
 
@@ -210,24 +216,68 @@ class PayController extends Controller {
         }  
 
         $show       = $Page->show();// 分页显示输出
-        // 这一堆 有待优化 在租客表中加上合同的pro_id
-        $field .= 'c.ht_id,c.account_id,c.room_id,c.pay_date,c.create_time,c.actual_end_time,c.start_time,c.end_time,c.rent_date,c.period,c.deposit,c.actual_deposit,c.ht_rent,actual_rent,c.ht_fee,c.ht_wgfee,c.contract_status,';
-        $field .= 'cb.room_id,cb.house_id,cb.house_code,cb.account_id,cb.water_fee,cb.public_energy_fee,cb.energy_fee,cb.gas_fee,cb.rubbish_fee,cb.person_day,cb.total_person_day,cb.total_energy,cb.total_water,cb.total_gas,cb.wgfee_unit,cb.room_energy_fee,cb.rent_fee,cb.rent_des,cb.service_fee,cb.wx_fee,cb.wx_des,cb.type,cb.handling_fee,cb.total_person_energy,cb.rent_date_old,cb.rent_date_to,';
-        $field .= 'p.room_id,p.price,p.bill_type,p.pay_money,p.pay_status,p.pay_time,p.account_id,p.pro_id,p.pay_type,p.is_show,p.input_month,p.input_year,p.should_date,p.last_date,p.is_send,p.favorable,p.favorable_des,p.bill_des,';
-        $field .= 'a.mobile,a.realname,';
-        $field .= 'r.room_code,r.bed_code,h.id AS house_id,h.area_id,h.building,h.floor,h.door_no,h.steward_id,area.city_id,area.area_name,';
-        $field .= 'au.username,au.nickname AS gj_nickname,au.realname AS gj_realname,au.admin_type';
+
+        $field = [
+            // contract
+            'lewo_contract.id', 'lewo_contract.account_id',
+            'lewo_contract.room_id', 
+            'lewo_contract.create_time', 'lewo_contract.actual_end_time',
+            'lewo_contract.start_time', 'lewo_contract.end_time',
+            'lewo_contract.rent_date', 'lewo_contract.period',
+            'lewo_contract.deposit', 'lewo_contract.actual_deposit',
+            'lewo_contract.rent'=>'ht_rent', 'lewo_contract.actual_rent',
+            'lewo_contract.fee'=>'ht_fee', 'lewo_contract.wg_fee'=>'ht_wgfee',
+            'lewo_contract.contract_status',
+            // charge_bill
+            'charge_bill.room_id', 'charge_bill.house_id',
+            'charge_bill.house_code', 'charge_bill.account_id',
+            'charge_bill.water_fee', 'charge_bill.public_energy_fee',
+            'charge_bill.energy_fee', 'charge_bill.gas_fee',
+            'charge_bill.rubbish_fee', 'charge_bill.person_day',
+            'charge_bill.total_person_day', 'charge_bill.total_energy',
+            'charge_bill.total_water', 'charge_bill.total_gas',
+            'charge_bill.wgfee_unit', 'charge_bill.room_energy_fee',
+            'charge_bill.rent_fee', 'charge_bill.rent_des',
+            'charge_bill.service_fee', 'charge_bill.wx_fee',
+            'charge_bill.wx_des', 'charge_bill.type',
+            'charge_bill.handling_fee', 'charge_bill.total_person_energy',
+            'charge_bill.rent_date_old', 'charge_bill.rent_date_to',
+            // pay
+            'pay.room_id', 'pay.price',
+            'pay.bill_type', 'pay.pay_money',
+            'pay.pay_status', 'pay.pay_time',
+            'pay.account_id', 'pay.pro_id',
+            'pay.pay_type', 'pay.is_show',
+            'pay.input_month', 'pay.input_year',
+            'pay.should_date', 'pay.last_date',
+            'pay.is_send', 'pay.favorable',
+            'pay.favorable_des', 'pay.bill_des',
+            // account
+            'account.mobile', 'account.realname',
+            // room
+            'room.room_code', 'room.bed_code',
+            // houses
+            'houses.id AS house_id', 'houses.area_id',
+            'houses.building', 'houses.floor',
+            'houses.door_no', 'houses.steward_id',
+            // area
+            'area.city_id', 'area.area_name',
+            // admin_user
+            'admin_user.username', 'admin_user.nickname AS gj_nickname',
+            'admin_user.realname AS gj_realname', 'admin_user.admin_type'
+        ];
 
         $list       = $MPay
-                    ->alias('p')
+                    ->alias('pay')
                     ->field($field)
-                    ->join('(select id AS ht_id,account_id,room_id,pay_date,create_time,actual_end_time,MAX(start_time) AS start_time,end_time,rent_date,period,deposit,actual_deposit,rent AS ht_rent,actual_rent,fee AS ht_fee,wg_fee AS ht_wgfee,contract_status from lewo_contract GROUP BY account_id,room_id) AS c ON p.account_id=c.account_id AND p.room_id=c.room_id ','left')
-                    ->join('lewo_charge_bill cb ON p.pro_id=cb.pro_id','left')
-                    ->join('lewo_account a ON p.account_id=a.id','left')
-                    ->join('lewo_room r ON p.room_id=r.id','left')
-                    ->join('lewo_houses h ON r.house_code=h.house_code','left')
-                    ->join('lewo_area area ON h.area_id=area.id','left')
-                    ->join('lewo_admin_user au ON h.steward_id=au.id','left')
+                    ->join('(select MAX(id) AS ht_id,account_id,room_id from lewo_contract WHERE is_delete=0  GROUP BY account_id,room_id ) AS contract ON pay.account_id=contract.account_id AND pay.room_id=contract.room_id ','left')
+                    ->join('lewo_contract ON lewo_contract.id = contract.ht_id', 'left')
+                    ->join('lewo_charge_bill charge_bill ON pay.pro_id=charge_bill.pro_id','left')
+                    ->join('lewo_account account ON pay.account_id=account.id','left')
+                    ->join('lewo_room room ON pay.room_id=room.id','left')
+                    ->join('lewo_houses houses ON room.house_code=houses.house_code','left')
+                    ->join('lewo_area area ON houses.area_id=area.id','left')
+                    ->join('lewo_admin_user admin_user ON houses.steward_id=admin_user.id','left')
                     ->where($where)
                     ->order($order)
                     ->limit($Page->firstRow.','.$Page->listRows)
@@ -334,6 +384,7 @@ class PayController extends Controller {
 
         /*$contract_list = $DContract->getContractList();*/
         /*$this->assign("contract_list",$contract_list);*/
+        $this->assign('contract_status_arr',C('contract_status_arr'));
         $this->assign('contract_list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
         $this->assign('count',$count);

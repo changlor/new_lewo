@@ -69,6 +69,7 @@ class BillModel extends BaseModel {
             'lewo_charge_bill.water_fee',
             'lewo_charge_bill.room_energy_fee',
             'lewo_charge_bill.wx_fee',
+            'lewo_charge_bill.wx_des',
             'lewo_charge_bill.rubbish_fee',
             'lewo_charge_bill.energy_fee',
             'lewo_charge_bill.gas_fee',
@@ -105,7 +106,8 @@ class BillModel extends BaseModel {
                 $payList['gas_fee'] +
                 $payList['rubbish_fee'],
             ],
-            'wx_fee' => ['维修费', $payList['wx_fee']],
+            'wx_fee' => ['欠费', $payList['wx_fee']],
+            'wx_des' => ['欠费描述', $payList['wx_des'], 'readonly'],
             'wgfee_unit' => ['物管费', $payList['wgfee_unit']],
             'service_fee' => ['服务费', $payList['service_fee']],
             'should_price' => ['总金额', $payList['price']],
@@ -149,23 +151,23 @@ class BillModel extends BaseModel {
         $stewardId = $DHouses->selectField(['id' => $houseId], 'steward_id');
         // 如果获取到的stewardId不等于当前操作的管家id，则为非法操作
         if ($stewardId != $currentStewardId) {
-            return [false, '非法操作，权限错误！'];
+            return parent::response([false, '非法操作，权限错误！']);
         }
         // 获取isSend
         // --如果isSend == 0，说明该账单代收是未发送账单，为非法操作
         $isSend = D('Pay')->selectField(['pro_id' => $proId], 'is_send');
         if ($isSend == 0) {
-            return [false, '非法操作，权限错误！'];
+            return parent::response([false, '非法操作，权限错误！']);
         }
         // 获取payType
         $payType = $input['payType'];
         if (!is_numeric($payType)) {
-            return [false, '支付类型数据错误！'];
+            return parent::response([false, '支付类型数据错误！']);
         }
         // 获取payMoney
         $payMoney = $input['payMoney'];
         if (!is_numeric($payMoney) || $payMoney == 0) {
-            return [false, '总金额数据错误！']; 
+            return parent::response([false, '总金额数据错误！']); 
         }
         // 获取payTime
         $payTime = date('Y-m-d H:i:s');
@@ -181,10 +183,10 @@ class BillModel extends BaseModel {
         // 账单类型
         $billType = $payList['bill_type'];
         if (!is_numeric($actualDeposit) && $billType == 2) {
-            return [false, '押金数据类型错误'];
+            return parent::response([false, '押金数据类型错误']);
         }
         if (!is_numeric($actualRent) && $billType ==2) {
-            return [false, '租金数据类型错误'];
+            return parent::response([false, '租金数据类型错误']);
         }
         // 租客id
         $accountId = $payList['account_id'];
@@ -192,7 +194,7 @@ class BillModel extends BaseModel {
         $roomId = $payList['room_id'];
         // 如果实际收取金额大于支付金额，则返回数据错误
         if ($payMoney > $payList['price']) {
-            return [false, '输入的金额大于应付金额'];
+            return parent::response([false, '输入的金额大于应付金额']);
         }
         // 如果实际收取金额小于支付金额，则生成欠款
         if ($payMoney < $payList['price']) {           
@@ -226,13 +228,13 @@ class BillModel extends BaseModel {
             $duePay['input_month'] = $payList['input_month'];
             $duePay['should_date'] = $payList['should_date'];
             $duePay['last_date'] = $payList['last_date'];
-            $duePay['price'] = $payList['price'];
+            $duePay['price'] = $duePrice;
             // 欠款账单默认为已发送，1为已发送
             $duePay['is_send'] = 1;
             // 插入欠款账单
             $res = $DPay->insertPay($duePay);
             if (!$res) {
-                return [false, '欠款账单生成失败！'];
+                return parent::response([false, '欠款账单生成失败！']);
                 // $this->error('欠款账单生成失败!');
             }
         }
@@ -286,6 +288,7 @@ class BillModel extends BaseModel {
         $payUpdateInfo['pay_status'] = $payStatus;
         $payUpdateInfo['pay_time'] = $payTime;
         $payUpdateInfo['pay_money'] = $payMoney;
+        $payUpdateInfo['steward_id'] = $currentStewardId;
         $payUpdateInfo['modify_log'] = $modifyLog;
         // 更新pay表
         $res = $DPay->updatePay(['pro_id' => $proId], $payUpdateInfo);

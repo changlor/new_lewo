@@ -69,7 +69,7 @@ class ChargeBillModel extends Model{
 	public function showChargeBillList($house_code,$year,$month,$type){
 		$pay_list = M('charge_bill')
 					->alias('cb')
-					->field('cb.*,p.pay_status,p.pay_time,p.price,p.should_date,p.last_date,cb.id AS cb_id,p.id AS p_id,a.realname,r.room_sort,r.room_code,r.bed_code')
+					->field('cb.*,p.favorable,p.favorable_des,p.pay_status,p.pay_time,p.price,p.should_date,p.last_date,cb.id AS cb_id,p.id AS p_id,a.realname,r.room_sort,r.room_code,r.bed_code')
 					->join('lewo_pay p ON cb.pro_id = p.pro_id')
 					->join('lewo_account a ON p.account_id = a.id')
 					->join('lewo_room r ON p.room_id = r.id')
@@ -121,7 +121,8 @@ class ChargeBillModel extends Model{
 		$save['extra_public_energy_fee'] = $data['extra_public_energy_fee']; 
         $save['extra_public_water_fee']  = $data['$extra_public_water_fee'];      
         $save['extra_public_gas_fee']    = $data['$extra_public_gas_fee'];  
-
+        $psave['favorable'] = $data['favorable'];
+		$psave['favorable_des'] = $data['favorable_des'];
 		$psave['price'] = $save['total_fee'] = $data['total_fee'];
 		$psave['should_date'] = $data['should_date'];
 		$psave['last_date']   = $data['last_date'];

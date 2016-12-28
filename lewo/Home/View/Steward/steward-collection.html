@@ -5,7 +5,7 @@
 <meta http-equiv="expires" content="0">    
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<title>{$pay_list.0.realname}合同</title>
+<title>管家代收</title>
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width"><meta name="format-detection" content="email=no,address=no,telephone=no">
 <link href="__PUBLIC__/css/normalize.css" rel="stylesheet" type="text/css">
 <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
@@ -113,15 +113,20 @@ function toIndex(){
                                             <li class="innre-bill-logo"><img src="__PUBLIC__/images/icon-tenant-logo.png" class="icon-tenant-logo"></li>
                                             <li class="innre-bill-text3">
                                                 <if condition="$value[2] eq 'need_modify'">
-                                                    <input class="money" name="{$key}" onchange="changePrice($(this))" style="color: #888;width: 60px;border: 1px solid #888; height: 25px; padding-left: 2px;" value="{$value[1]}" />
+                                                    <input class="money" name="{$key}" onchange="changePrice($(this))" style="color: #888;width: 60px; height: 40px; line-height: 40px; border: 1px solid #888;  padding-left: 2px;" value="{$value[1]}" />
+                                                    ¥
                                                     <input type="hidden" value="{$value[1]}">
                                                 <elseif condition="$value[2] eq 'update_price'" />
-                                                    <input name="{$key}" onchange="checkPrice($(this))" style="color: #888;width: 60px;border: 1px solid #888; height: 25px; padding-left: 2px;" value="{$value[1]}" />
+                                                    <input name="{$key}" onchange="checkPrice($(this))" style="color: #888;width: 60px; height:40px; line-height: 40px; border: 1px solid #888;  padding-left: 2px;" value="{$value[1]}" />
+                                                    ¥
                                                     <input type="hidden" value="{$value[1]}">
-                                                <else />
+                                                <elseif condition="$value[2] eq 'readonly'" />
+                                                    <a>{$value[1]}</a>
+                                                <else/>
                                                     <input class="money" readonly name="{$key}" style="width: 200px; text-align: right" value="{$value[1]}" />
+                                                    ¥
                                                 </if>
-                                                ¥
+                                                
                                             </li>
                                             <li class="innre-bill-text1" style="line-height: 36px;">{$value.0}</li><br>
                                         </ul>
@@ -130,7 +135,7 @@ function toIndex(){
                             </div>
                         </volist>
                         <div class="row-fluid">
-                            <div class="col-xs-12"><div style="height:90px;"></div></div>
+                            <div class="col-xs-12"><div style="height:20px;"></div></div>
                         </div>
                     </div>
                     <p style="text-align: center;">

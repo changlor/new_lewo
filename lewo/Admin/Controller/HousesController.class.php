@@ -13,22 +13,21 @@ class HousesController extends BaseController {
     public function index(){
         $_SESSION['P_REFERER'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']; 
         $where = [];
-        if (parent::isPostRequest()) {
-            $cityId = I('post.cityId');
-            if (!empty($cityId)) {
-                $where['area.city_id'] = I('post.cityId');
-                $this->assign('cityId',$cityId);
-            }
-            $areaId = I('post.areaId');
-            if (!empty($areaId)) {
-                $where['area.id'] = I('post.areaId');
-                $this->assign('areaId',$areaId);
-            }
-            $stewardId = I('post.stewardId');
-            if (!empty($stewardId)) {
-                $where['h.steward_id'] = I('post.stewardId');
-                $this->assign('stewardId',$stewardId);
-            }
+
+        $cityId = I('post.cityId');
+        if (!empty($cityId)) {
+            $where['area.city_id'] = I('post.cityId');
+            $this->assign('cityId',$cityId);
+        }
+        $areaId = I('areaId');
+        if (!empty($areaId)) {
+            $where['area.id'] = I('areaId');
+            $this->assign('areaId',$areaId);
+        }
+        $stewardId = I('post.stewardId');
+        if (!empty($stewardId)) {
+            $where['h.steward_id'] = I('post.stewardId');
+            $this->assign('stewardId',$stewardId);
         }
 
         $DHouses = D('Houses');

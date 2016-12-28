@@ -84,6 +84,29 @@ class ChargeHouseModel extends Model{
 	public function setIsSend($house_id,$year,$month){
 		return $this->where(array("house_id"=>$house_id,"input_year"=>$year,"input_month"=>$month))->save(array("is_send"=>1));
 	}
+	/**
+	* [根据年月获取账单已发送的房屋套数]
+	**/
+	public function getCreatedBillCount($where,$where2){
+		$where = array_merge($where,$where2);
+		$field = [
+			// charge_house
+			'charge_house.house_id',
+			'charge_house.input_year', 'charge_house.input_month',
+			//houses
+			'houses.id AS house_id', 'houses.area_id',
+			'houses.house_code', 'houses.steward_id', 
+			//area
+			'area.area_name', 'area.city_id',
+		];
+		return $this
+		->alias('charge_house')
+		->field($field)
+		->join('lewo_houses houses ON houses.id=charge_house.house_id', 'left')
+		->join('lewo_area area ON area.id=houses.area_id', 'left')
+		->where($where)
+		->count();
+	}
 }
 
 ?>

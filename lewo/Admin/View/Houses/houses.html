@@ -50,7 +50,11 @@
                   </td>
                   <td>
                     <label class="btn btn-info">
-                      账单数据:
+                      房屋发送套数:
+                      {$month}月:{$nowHousesSendCount}/{$housesCount} |  {$lastMonth}月:{$lastHousesSendCount}/{$housesCount}
+                    </label>
+                    <label class="btn btn-info">
+                      租客数据:
                       {$month}月:{$nowSendCount}/{$nowMustSendCount} | {$lastMonth}月:{$lastSendCount}/{$lastMustSendCount}
                     </label>
                   </td>
@@ -94,16 +98,34 @@
                 <td>{$vo.steward_nickname}</td>
                 <td>{$vo.steward_mobile}</td>
                 <td>
-                  <if condition="$vo['is_checkin'] eq true">
-                    <span class="label label-success">有租
-                    <else/>
+                  <if condition="$vo['yz_count'] eq $vo['count']">
+                    <span class="label label-success">租满
+                    <elseif condition="$vo['yz_count'] gt 0" />
+                    <span class="label label-warning">有租
+                    <else />
                     <span class="label label-important">未租
                   </if>
                   {$vo.yz_count}/{$vo.count}</span>
                 </td>
                 <td>
-                  <a href="{:U('Admin/Houses/check_bill',array('house_id'=>$vo['house_id'],'year'=>$year,'month'=>$month))}" class="btn btn-success btn-mini check-bill" data-houseId="{$vo.id}" data-year="{$year}" data-month="{$month}">{$month}月:{$vo.now_sended_count}/{$vo.now_total_count}</a>
-                  <a href="{:U('Admin/Houses/check_bill',array('house_id'=>$vo['house_id'],'year'=>$lastYear,'month'=>$lastMonth))}" class="btn btn-success btn-mini check-bill" data-houseId="{$vo.id}" data-year="{$lastYear}" data-month="{$lastMonth}">{$lastMonth}月:{$vo.last_sended_count}/{$vo.last_total_count}</a>
+                  <a href="{:U('Admin/Houses/check_bill',array('house_id'=>$vo['house_id'],'year'=>$year,'month'=>$month))}" data-houseId="{$vo.id}" data-year="{$year}" data-month="{$month}" 
+                  <if condition="$vo['now_total_count'] eq 0"> 
+                    class="btn btn-danger btn-mini check-bill" 
+                  <elseif condition="$vo['now_sended_count'] eq $vo['now_total_count']"/> 
+                    class="btn btn-success btn-mini check-bill" 
+                  <else/> 
+                    class="btn btn-warning btn-mini check-bill" 
+                  </if>
+                  >{$month}月:{$vo.now_sended_count}/{$vo.now_total_count}</a>
+                  <a href="{:U('Admin/Houses/check_bill',array('house_id'=>$vo['house_id'],'year'=>$lastYear,'month'=>$lastMonth))}"  data-houseId="{$vo.id}" data-year="{$lastYear}" data-month="{$lastMonth}" 
+                  <if condition="$vo['last_total_count'] eq 0"> 
+                    class="btn btn-danger btn-mini check-bill" 
+                  <elseif condition="$vo['last_sended_count'] eq $vo['last_total_count']"/> 
+                    class="btn btn-success btn-mini check-bill"
+                  <else/> 
+                    class="btn btn-warning btn-mini check-bill" 
+                  </if> 
+                  >{$lastMonth}月:{$vo.last_sended_count}/{$vo.last_total_count}</a>
                 </td>
  <!--                <td>
    <if condition="$vo['sended_count'] eq $vo['total_count'] AND $vo['total_count'] neq 0">

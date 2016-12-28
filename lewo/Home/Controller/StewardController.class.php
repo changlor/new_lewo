@@ -686,13 +686,12 @@ class StewardController extends BaseController {
                 'favorableDes' => I('post.favorable_des'),
                 'isDeduct' => I('post.is_deduct'),
                 'total' => I('post.total'),
-                'paytotal' => I('post.paytotal'),
                 'bookDeposit' => I('bookDeposit'),
                 'photo' => $_FILES['photo'],
             ]);
             if ($res['success']) {
                 //显示合同详情信息
-                $this->success('合同生成成功!', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
+                $this->success('合同修改成功!', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
             } else {
                 $this->error($res['msg']);
             }

@@ -672,47 +672,93 @@ class StewardController extends BaseController {
         }
     }
 
-    public function checkin(){
-        if ( !empty($_POST) ) {   
-            $DContract = D("contract");
-            $post = $_POST;         
-            $room_id = I("room_id");
-            $house_code = M("room")->where(array("id"=>$room_id))->getField("house_code");
-            $end_date = M("houses")->where(array("house_code"=>$house_code))->getField("end_date");//托管结束日
-            if ( strtotime($_POST['startDate']) > strtotime($_POST['endDate']) ) {
-                //判断租期结束日是否大于房间托管结束日
-                $this->error("签约失败,租期开始日:".$_POST['startDate']." 大于 租期结束日:".$_POST['endDate'],'',10);
-            }
-            if ( strtotime($_POST['endDate']) > strtotime($end_date) ) {
-                //判断租期结束日是否大于房间托管结束日
-                $this->error("签约失败,租期结束日:".$_POST['endDate']." 大于 房间托管结束日:".$end_date);
-            }
-
-            if ( !empty($_FILES['photo']['name']['0']) ) {
-                $upload = new \Think\Upload();// 实例化上传类
-                $upload->maxSize   =     3145728 ;// 设置附件上传大小
-                $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-                $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
-                $upload->savePath  =     ''; // 设置附件上传（子）目录
-                
-                $info   =   $upload->upload();
-
-                if(count($info) != 0) { 
-                    foreach( $info AS $key=>$val ){
-                        if ( $val['key'] == 'photo' ) {
-                            $post['photo'] = $val['savepath'].$val['savename'];
-                        }
-                    }
-                }
-            }    
-
-            $result = $DContract->add($post);
-            if ( $result['result'] ) {
+    public function editContract(){
+        // 获取模型实例
+        $DContract = D('contract');
+        if (parent::isPostRequest()) {
+            $res = $DContract->putContract([
+                'proId' => I('get.proId'),
+                'roomId' => I('post.room_id'),
+                'realName'=> I('post.realName'),
+                'mobile' => I('post.mobile'),
+                'contract2' => I('post.contract2'),
+                'idNo' => I('post.idNo'),
+                'email' => I('post.email'),
+                'rent' => I('post.rent'),
+                'personCount' => I('post.personCount'),
+                'hzRealName' => I('post.hzRealName'),
+                'hzMobile' => I('post.hzMobile'),
+                'hzCardNo' => I('post.hzCardNo'),
+                'wgFee' => I('post.wg_fee'),
+                'fee' => I('post.fee'),
+                'rentType' => I('post.rentType'),
+                'startDate' => I('post.startDate'),
+                'endDate' => I('post.endDate'),
+                'roomD' => I('post.roomD'),
+                'deposit' => I('post.deposit'),
+                'favorable' => I('post.favorable'),
+                'favorableDes' => I('post.favorable_des'),
+                'isDeduct' => I('post.is_deduct'),
+                'total' => I('post.total'),
+                'paytotal' => I('post.paytotal'),
+                'bookDeposit' => I('bookDeposit'),
+                'photo' => $_FILES['photo'],
+            ]);
+            if ($res['success']) {
                 //显示合同详情信息
-                $this->success("合同生成成功!",U("Home/Steward/check_contract",array("id"=>$result['id'])));
-                /*$this->success("合同生成成功,请到个人页面进行支付",U("Home/Steward/houses"));*/
+                $this->success('合同生成成功!', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
             } else {
-                $this->error($result['error_msg']);
+                $this->error($res['msg']);
+            }
+        } else {
+            // 获取模型实例
+            $proId = I('get.proId');
+            $res = $DContract->getContractBill([
+                'proId' => I('get.proId'),
+            ]);
+            $contractInfo = $res['data'];
+            $this->assign('today', date('Y-m-d', time()));
+            $this->assign('contractInfo', $contractInfo);
+            $this->display('editContract');
+        }
+    }
+
+    public function checkin(){
+        if (parent::isPostRequest()) {
+            // 获取模型实例
+            $DContract = D('contract');
+            $res = $DContract->postContract([
+                'roomId' => I('post.room_id'),
+                'realName'=> I('post.realName'),
+                'mobile' => I('post.mobile'),
+                'contract2' => I('post.contract2'),
+                'idNo' => I('post.idNo'),
+                'email' => I('post.email'),
+                'rent' => I('post.rent'),
+                'personCount' => I('post.personCount'),
+                'hzRealName' => I('post.hzRealName'),
+                'hzMobile' => I('post.hzMobile'),
+                'hzCardNo' => I('post.hzCardNo'),
+                'wgFee' => I('post.wg_fee'),
+                'fee' => I('post.fee'),
+                'rentType' => I('post.rentType'),
+                'startDate' => I('post.startDate'),
+                'endDate' => I('post.endDate'),
+                'roomD' => I('post.roomD'),
+                'deposit' => I('post.deposit'),
+                'favorable' => I('post.favorable'),
+                'favorableDes' => I('post.favorable_des'),
+                'isDeduct' => I('post.is_deduct'),
+                'total' => I('post.total'),
+                'paytotal' => I('post.paytotal'),
+                'bookDeposit' => I('bookDeposit'),
+                'photo' => $_FILES['photo'],
+            ]);
+            if ($res['success']) {
+                //显示合同详情信息
+                $this->success('合同生成成功!', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
+            } else {
+                $this->error($res['msg']);
             }
         } else {
             $id = I('id');//room_id
@@ -727,21 +773,19 @@ class StewardController extends BaseController {
     * [查看合同账单]
     **/
     public function check_contract(){
-        $id = I("id");
-        $MPay = M("pay");
-        $contract_info=$MPay
-                    ->field('a.*,c.*,p.*')
-                    ->alias('p')
-                    ->join('lewo_contract c ON p.pro_id=c.pro_id')
-                    ->join('lewo_account a ON a.id=c.account_id')
-                    ->where(array('p.id'=>$id))
-                    ->find();
-        
-        $rent_type = explode("_",$contract_info['rent_type']);
+        $proId = I('get.proId');
+        $DContract = D('contract');
+        $res = $DContract->getContractBill([
+            'proId' => I('get.proId'),
+            'roomId' => I('get.roomId'),
+            'accountId' => I('get.accountId'),
+        ]);
+        $contractInfo = $res['data'];
+        $rentType = explode('_', $contractInfo['rent_type']);
 
-        $contract_info['rent_type'] = $rent_type;
-        $this->assign("contract_info",$contract_info);
-        $this->display("detail-contract");
+        $contractInfo['rent_type'] = $rentType;
+        $this->assign('contract_info', $contractInfo);
+        $this->display('detail-contract');
     }
 
     //管家查看的租客合同 自有管家才能进

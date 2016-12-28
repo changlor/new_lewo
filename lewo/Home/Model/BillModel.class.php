@@ -43,12 +43,11 @@ class BillModel extends BaseModel {
         $proId = $input['proId'];
 
         if (!is_numeric($proId)) {
-            return [false, '访问出错！'];
+            return parent::response([false, '访问出错！']);
         }
         // 有问题的版本(代替改)
         $joinTable = [
             // 'pay.pro_id' => 'contract.pro_id',
-
             'pay(contract)' => 'pro_id(pro_id)',
             'pay(account)' => 'account_id(id)',
             'pay(room)' => 'room_id(id)',

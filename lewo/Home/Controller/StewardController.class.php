@@ -658,7 +658,26 @@ class StewardController extends BaseController {
         }
     }
 
-    public function editContract(){
+    public function cancelContract()
+    {
+        // 获取模型实例
+        $DContract = D('contract');
+        $res = $DContract->putContract([
+            'isShow' => 0,
+            'proId' => I('get.proId'),
+            'roomStatus' => 0,
+            'roomAccountId' => 0,
+        ]);
+        if ($res['success']) {
+            //显示合同详情信息
+            $this->success('合同删除成功!', U('Home/Steward/houses'));
+        } else {
+            $this->error($res['msg']);
+        }
+    }
+
+    public function editContract()
+    {
         // 获取模型实例
         $DContract = D('contract');
         if (parent::isPostRequest()) {
@@ -708,7 +727,8 @@ class StewardController extends BaseController {
         }
     }
 
-    public function checkin(){
+    public function checkin()
+    {
         if (parent::isPostRequest()) {
             // 获取模型实例
             $DContract = D('contract');
@@ -757,7 +777,8 @@ class StewardController extends BaseController {
     /**
     * [查看合同账单]
     **/
-    public function check_contract(){
+    public function check_contract()
+    {
         $proId = I('get.proId');
         $DContract = D('contract');
         $res = $DContract->getContractBill([
@@ -774,7 +795,8 @@ class StewardController extends BaseController {
     }
 
     //管家查看的租客合同 自有管家才能进
-    public function tenant_contract(){
+    public function tenant_contract()
+    {
         $account_id = I('account_id');
         $room_id    = I('room_id');
         $pro_id = I('pro_id');
@@ -804,7 +826,8 @@ class StewardController extends BaseController {
      /**
     * [发送立刻缴费]
     **/
-    public function send_contract(){
+    public function send_contract()
+    {
         $pro_id = I("pro_id");
         $pay_info = M("pay")->where(array("pro_id"=>$pro_id))->find();
         $mobile = M("account")->where(array("id"=>$pay_info['account_id']))->getField("mobile");
@@ -828,7 +851,8 @@ class StewardController extends BaseController {
     /**
      * [管家待办]
      **/
-    public function stewardtasks(){
+    public function stewardtasks()
+    {
         $DSchedule = D("schedule");
         $schedule_list = $DSchedule->getScheduleBySteward($_SESSION['steward_id']);
         $this->assign('schedule_list',$schedule_list);

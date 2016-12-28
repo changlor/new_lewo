@@ -158,10 +158,15 @@ class ContractModel extends BaseModel {
         if (!is_numeric($stewardId)) {
             return parent::response([false, '非法操作！']);
         }
+        // 获取is_show，控制合同是否显示
+        $isShow = $input['isShow'];
         // 获取proId
         $proId = $input['proId'];
         // 获取房间roomId
-        $roomId = $input['roomId'];
+        // --如果proId存在，查找roomId
+        $roomId = empty($proId)
+        ? $input['roomId']
+        : $DPay->selectField(['pro_id' => $proId], 'room_id');
         if (!is_numeric($roomId)) {
             return parent::response([false, '房间不存在！']);
         }
@@ -173,13 +178,10 @@ class ContractModel extends BaseModel {
         }
         // 获取真实姓名realName
         $realName = $input['realName'];
-        if (empty($realName)) {
-            return parent::response([false, '用户名不能为空！']);
-        }
         // 获取手机mobile
         $mobile = $input['mobile'];
         $pattern = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/i';
-        if (!preg_match($pattern, $mobile)) {
+        if (!empty($mobile) && !preg_match($pattern, $mobile)) {
             return parent::response([false, '手机号格式不对！']);   
         }
         // 获取邮箱email
@@ -197,17 +199,17 @@ class ContractModel extends BaseModel {
         // 获取身份证idNo
         $idNo = $input['idNo'];
         $pattern = '/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/i';
-        if (!preg_match($pattern, $idNo)) {
+        if (!empty($idNo) && !preg_match($pattern, $idNo)) {
             return parent::response([false, '身份证格式不对！']);
         }
         // 获取租金rent
         $rent = $input['rent'];
-        if (!is_numeric($rent)) {
+        if (!empty($rent) && !is_numeric($rent)) {
             return parent::response([false, '租金出错！']);
         }
         // 获取personCount
         $personCount = $input['personCount'];
-        if (!is_numeric($personCount) || $personCount < 1) {
+        if (!empty($personCount) && (!is_numeric($personCount) || $personCount < 1)) {
             return parent::response([false, '居住人数必须为数字且必须大于等于1']);
         }
         // 获取合租人姓名hzRealName
@@ -236,66 +238,66 @@ class ContractModel extends BaseModel {
         }
         // 获取物管费wgFee
         $wgFee = $input['wgFee'];
-        if (!is_numeric($wgFee)) {
+        if (!empty($wgFee) && !is_numeric($wgFee)) {
             return parent::response([false, '物管费类型出错！']);
         }
         // 获取服务费fee
         $fee = $input['fee'];
-        if (!is_numeric($fee)) {
+        if (!empty($fee) && !is_numeric($fee)) {
             return parent::response([false, '服务费类型出错！']);
         }
         // 获取付款方式，压几付几，rentType
         $rentType = $input['rentType'];
         $pattern = '/^(\d)[_](\d)$/i';
-        if (!preg_match($pattern, $rentType, $match)) {
+        if (!empty($rentType) && !preg_match($pattern, $rentType, $match)) {
             return parent::response([false, '付款方式不对！']);
         }
         // 押几
-        $depositCount = $match['1'];
+        $depositCount = isset($match[1]) ? $match[1] : '';
         // 付几
-        $payCount = $match['2'];
+        $payCount = isset($match[2]) ? $match[2] : '';
         // 获取租期开始日startDate
         $startDate = $input['startDate'];
         $pattern = '/^\d{4}[-]\d{2}[-]\d{2}$/i';
-        if (!preg_match($pattern, $startDate)) {
+        if (!empty($startDate) && !preg_match($pattern, $startDate)) {
             return parent::response([false, '起始日期格式不对！']);
         }
         // 获取租期截止日endDate
         $endDate = $input['endDate'];
         $pattern = '/^\d{4}[-]\d{2}[-]\d{2}$/i';
-        if (!preg_match($pattern, $startDate)) {
+        if (!empty($endDate) && !preg_match($pattern, $startDate)) {
             return parent::response([false, '截止日期格式不对！']);
         }
         // 获取房间电表roomD
         $roomD = $input['roomD'];
-        if (!is_numeric($roomD)) {
+        if (!empty($roomD) && !is_numeric($roomD)) {
             return parent::response([false, '房间电表类型不对！']);
         }
         // 获取押金depost
         $deposit = $input['deposit'];
-        if (!is_numeric($deposit)) {
+        if (!empty($deposit) && !is_numeric($deposit)) {
             return parent::response([false, '押金类型不对！']);
         }
         // 获取优惠favorable
         $favorable = $input['favorable'];
-        if (!is_numeric($favorable)) {
+        if (!empty($favorable) && !is_numeric($favorable)) {
             return parent::response([false, '优惠类型不对！']);
         }
         // 获取优惠描述
         $favorableDes = $input['favorableDes'];
         // 获取是否换房余额抵扣isDeduct
         $isDeduct = $input['isDeduct'];
-        if ($isDeduct != 1 && $isDeduct != 0) {
+        if (!empty($isDeduct) && $isDeduct != 1 && $isDeduct != 0) {
             return parent::response([false, '余额抵扣出错！']);
         }
         // 获取合同金额total
         $total = $input['total'];
-        if (!$total == ($wgFee + $rent + $fee + $deposit)) {
+        if (!empty($total) && $total != ($wgFee + $rent + $fee + $deposit)) {
             return parent::response([false, '合同金额出错！']);
         }
         // 获取缴定抵扣bookDeposit
         $bookDeposit = $input['bookDeposit'];
-        if (!is_numeric($bookDeposit)) {
+        if (!empty($bookDeposit) && !is_numeric($bookDeposit)) {
             return parent::response([false, '缴定抵扣出错！']);
         }
         // 获取租客管家合影
@@ -314,11 +316,11 @@ class ContractModel extends BaseModel {
         $startMonth = date('m', $startDateTimestamp);
         // 获取当前日期
         // $createTime = date('Y-m-d H:i:s', time());
-        if ($startDateTimestamp > $endDateTimestamp) {
+        if (!empty($startDate) && !empty($endDate) && $startDateTimestamp > $endDateTimestamp) {
             // 判断租期开始日是否大于房间托管结束日
             $this->error('签约失败，租期开始日:' . $startDate . ' 大于 租期结束日:', '', 10);
         }
-        if ($endDateTimestamp > $houseEndDateTimestamp) {
+        if (!empty($endDate) && $endDateTimestamp > $houseEndDateTimestamp) {
             // 判断租期结束日是否大于房间托管结束日
             $this->error('签约失败，租期结束日:' . $endDate . ' 大于 房间托管结束日:' . $houseEndDate);
         }
@@ -352,10 +354,15 @@ class ContractModel extends BaseModel {
         if (!($res == 3)) {
             return parent::response([false, '房屋未处于签约状态！']);
         }
+        // 获取房屋状态
+        $roomStatus = $input['roomStatus'];
+        if (!empty($roomStatus) && !is_numeric($roomStatus)) {
+            return parent::response([false, '不存在该房屋状态']);
+        }
         // 根据mobile获取account列表
         $accountId = $DAccount->selectField(['mobile' => $mobile], 'id');
         // 如果获取不到
-        if (!is_numeric($accountId)) {
+        if (!empty($mobile) && !is_numeric($accountId)) {
             // 插入帐号
             $account = [];
             $account['realname'] = $realName;
@@ -370,7 +377,7 @@ class ContractModel extends BaseModel {
             $account['register_time'] = date("Y-m-d H:i:s",time());
             // 插入account并返回account_id
             $accountId = $DAccount->insertAccount($account);
-        } else {
+        } elseif (!empty($mobile)) {
             // 更新租客信息
             $account = [];
             $account['realname'] = $realName;
@@ -408,15 +415,10 @@ class ContractModel extends BaseModel {
         // 合影
         $contract['photo'] = $photoDir;
         // 插入contract表
-        $affectedRows = $this->updateContract(['pro_id' => $proId], $contract);
-        if (!($affectedRows > 0)) {
-            return parent::response([false, '合同表修改失败！']);
-        }
+        $contract = array_filter($contract);
+        $affectedRows1 = $this->updateContract(['pro_id' => $proId], $contract);
         // pay表数据
         $pay = [];
-        $pay['pay_status'] = 0;
-        $pay['bill_type'] = 2;
-        $pay['is_send'] = 0;
         $pay['pro_id'] = $proId;
         $pay['account_id'] = $accountId;
         $pay['room_id'] = $roomId;
@@ -430,9 +432,22 @@ class ContractModel extends BaseModel {
         $pay['price'] = $total;
         $pay['modify_log'] = ' ';
         // 插入pay表数据
-        $affectedRows = $DPay->updatePay(['pro_id' => $proId], $pay);
-        if (!($affectedRows > 0)) {
-            return parent::response([false, '支付表修改失败！']);
+        $pay = array_filter($pay);
+        $pay['is_show'] = $isShow;
+        if (!is_numeric($isShow)) {
+            unset($pay['is_show']);
+        }
+        $affectedRows2 = $DPay->updatePay(['pro_id' => $proId], $pay);
+        // 修改房屋状态
+        $room = [];
+        $room['status'] = $roomStatus;
+        $room['account_id'] = $input['roomAccountId'];
+        $room = array_filter($room, function ($value) {
+            return $value === 0;
+        });
+        $affectedRows3 = $DRoom->updateRoom(['id' => $roomId], $room);
+        if (!($affectedRows1 > 0) && !($affectedRows2 > 0) && !($affectedRows3 > 0)) {
+            return parent::response([false, '合同修改失败！']);
         }
         return parent::response([true, '', ['proId' => $proId]]);  
     }
@@ -712,6 +727,7 @@ class ContractModel extends BaseModel {
         $pay['favorable_des'] = $favorableDes;
         $pay['price'] = $total;
         $pay['modify_log'] = ' ';
+        $pay['is_show'] = $isShow;
         // 插入pay表数据
         $payId = $DPay->insertPay($pay);
         if (!is_numeric($payId)) {

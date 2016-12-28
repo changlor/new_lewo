@@ -369,9 +369,12 @@ function toIndex(){
     <if condition="$bill_info['pay_status'] neq 1">
     <div class="container-fluid button">
         <div class="row-fluid button-ds">
-            <div class=" padding-left-right-10" >
-                <div class="button-ckzi2">
+            <div style="display: flex;" class=" padding-left-right-10" >
+                <div style="width: 50%;" class="button-ckzi2">
                     <a href="{:U('Home/Steward/send_contract',array('pro_id'=>$contract_info['pro_id']))}" id="jf" class="button-htzh-dx col-xs-12" />立即发送</a>
+                </div>
+                <div style="width: 50%;" class="button-ckzi2">
+                    <a href="{:U('Home/Steward/editContract',array('proId'=>$contract_info['pro_id']))}" id="jf" class="button-htzh-dx col-xs-12" />编辑</a>
                 </div>
             </div>
         </div>

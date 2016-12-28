@@ -14,18 +14,22 @@ class AccountModel extends BaseModel {
 		parent::__construct();
 		$this->table = M($this->tableName);
 	}
-
-	public function insert($account)
-	{
-		return $this->table->add($account);
-	}
-
+	
 	public function select($where, $field)
+    {
+        $field = empty($field) ? '' : $field;
+        $where = empty($where) ? '' : $where;
+        $field = is_array($field) ? implode(',', $field) : $field;
+        return $this->table->field($field)->where($where);
+    }
+
+	public function insert($data)
 	{
-		$field = empty($field) ? '' : $field;
-		$where = empty($where) ? '' : $where;
-		$field = is_array($field) ? implode(',', $field) : $field;
-		return $this->table->field($field)->where($where);
+		return $this->table->add($data);
+	}
+	public function update($where, $data)
+	{
+		return $this->table->where($where)->save($data);
 	}
 
 	public function selectField($where, $field)
@@ -33,9 +37,19 @@ class AccountModel extends BaseModel {
 		return $this->select($where)->getField($field);
 	}
 
-	public function update($account, $where)
+	public function insertAccount($account)
 	{
-		return $this->table->where($where)->save($account);
+		return $this->insert($account);
+	}
+
+	public function selectAccount($where, $field)
+	{
+		return $this->select($where, $field)->find();
+	}
+
+	public function updateAccount($where, $accountUpateInfo)
+	{
+		return $this->update($where, $accountUpateInfo);
 	}
 
 	/**

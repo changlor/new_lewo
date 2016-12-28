@@ -107,7 +107,6 @@ class TenantController extends Controller {
             $save['rent_date']      = I("rent_date");
             $save['actual_end_time'] = I("actual_end_time");
             $save['deposit']        = I('deposit');
-            $save['period']         = I('period');
             $save['rent']           = I("rent");
             $save['fee']            = I("fee");
             $save['person_count']   = I("person_count");
@@ -209,10 +208,6 @@ class TenantController extends Controller {
         //合同状态
         if ( $save['contract_status'] != $contract_info['contract_status'] ) {
             $modify_log .= C('contract_status_arr')[$contract_info['contract_status']].'--> <b style="color:green">'.C('contract_status_arr')[$save['contract_status']].'</b>;<br/>';
-        }
-        //缴费周期
-        if ( $save['period'] != $contract_info['period'] ) {
-            $modify_log .= '缴费周期:'.$contract_info['period'].'--> <b style="color:green">'.$save['period'].'</b>;<br/>';
         }
         //开始日期
         if ( $save['contract_number'] != $contract_info['contract_number'] ) {

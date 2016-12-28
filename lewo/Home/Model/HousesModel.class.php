@@ -263,7 +263,15 @@ class HousesModel extends BaseModel {
 	* [获取房屋小区名 房屋的楼层号]
 	**/
 	public function getHouseAndArea($house_code){
-		return $this->table->join("lewo_area ON lewo_houses.area_id = lewo_area.id")->where(array("house_code"=>$house_code))->find();
+		return $this->table
+		->field([
+			'lewo_area.area_name', 
+			'lewo_houses.building', 'lewo_houses.floor',
+			'lewo_houses.door_no'
+		])
+		->join("lewo_area ON lewo_houses.area_id = lewo_area.id")
+		->where(array("house_code"=>$house_code))
+		->find();
 	}
 }
 

@@ -139,9 +139,36 @@ function changeRentType(){
             </div>
             <div class="main_ban">
               <ul class="ban_tietu">
+                <li class="ban_one zbj20 "><span class="text-letter-spacing-2ys">押金：</span></li>
+                <li class="ban_two">
+                  <input type="text" value="{$contractInfo['deposit']}" name="deposit" id="deposit" class="shuru" onblur="getTotal();">
+                </li>
+                <li class="xiantiao"></li>
+              </ul>
+            </div>
+            <div class="main_ban">
+              <ul class="ban_tietu">
                 <li class="ban_one zbj20 "><span class="text-letter-spacing-2ys">房租：</span></li>
                 <li class="ban_two">
                   <input type="text" value="{$contractInfo['rent']}" name="rent" id="rent" class="shuru" onchange="getTotal();">
+                </li>
+                <li class="xiantiao"></li>
+              </ul>
+            </div>
+            <div class="main_ban">
+              <ul class="ban_tietu">
+                <li class="ban_one zbj20 "><span class="text-letter-spacing-3ys">服务费：</span></li>
+                <li class="ban_two">
+                  <input type="text" value="{$contractInfo['room_fee']}" name="fee" id="fee" class="shuru"  onchange="getTotal();">
+                </li>
+                <li class="xiantiao"></li>
+              </ul>
+            </div>
+            <div class="main_ban">
+              <ul class="ban_tietu">
+                <li class="ban_one zbj20 "><span class="text-letter-spacing-3ys">物业费：</span></li>
+                <li class="ban_two">
+                  <input type="text" value="0" name="wg_fee" id="wg_fee" class="shuru"  onchange="getTotal();">
                 </li>
                 <li class="xiantiao"></li>
               </ul>
@@ -187,24 +214,6 @@ function changeRentType(){
                 <li class="xiantiao"></li>
               </ul>
             </div>
-            <div class="main_ban">
-              <ul class="ban_tietu">
-                <li class="ban_one zbj20 "><span class="text-letter-spacing-3ys">物业费：</span></li>
-                <li class="ban_two">
-                  <input type="text" value="0" name="wg_fee" id="wg_fee" class="shuru"  onchange="getTotal();">
-                </li>
-                <li class="xiantiao"></li>
-              </ul>
-            </div>
-            <div class="main_ban">
-              <ul class="ban_tietu">
-                <li class="ban_one zbj20 "><span class="text-letter-spacing-3ys">服务费：</span></li>
-                <li class="ban_two">
-                  <input type="text" value="{$contractInfo['room_fee']}" name="fee" id="fee" class="shuru"  onchange="getTotal();">
-                </li>
-                <li class="xiantiao"></li>
-              </ul>
-            </div>
             </div>
             <div class="main_ban">
               <ul class="ban_tietu">
@@ -242,33 +251,6 @@ function changeRentType(){
                 <li class="xiantiao"></li>
               </ul>
             </div>
-            <!-- <div class="main_ban">
-              <ul class="ban_tietu">
-                <li class="ban_one zbj20 "><span class="text-letter-spacing-2ys">总水：</span></li>
-                <li class="ban_two">
-                  <input type="text" value="" name="zS" id="zS" class="shuru">
-                </li>
-                <li class="xiantiao"></li>
-              </ul>
-            </div>
-            <div class="main_ban">
-              <ul class="ban_tietu">
-                <li class="ban_one zbj20 "><span class="text-letter-spacing-2ys">总电：</span></li>
-                <li class="ban_two">
-                  <input type="text" value="" name="zD" id="zD" class="shuru">
-                </li>
-                <li class="xiantiao"></li>
-              </ul>
-            </div>
-            <div class="main_ban">
-              <ul class="ban_tietu">
-                <li class="ban_one zbj20 "><span class="text-letter-spacing-2ys">总气：</span></li>
-                <li class="ban_two">
-                  <input type="text" value="" name="zQ" id="zQ" class="shuru">
-                </li>
-                <li class="xiantiao"></li>
-              </ul>
-            </div> -->
             <div class="main_ban">
               <ul class="ban_tietu">
                 <li class="ban_one zbj20 "><span class="text-letter-spacing-4ys">房间电表：</span></li>
@@ -283,15 +265,6 @@ function changeRentType(){
                 <li class="ban_one zbj20 "><span class="text-letter-spacing-4ys">租客合影：</span></li>
                 <li class="ban_two">
                   <input type="file" value="" name="photo[]" accept="image/jpg,image/jpeg,image/png,image/gif" multiple="true" class="shuru">
-                </li>
-                <li class="xiantiao"></li>
-              </ul>
-            </div>
-            <div class="main_ban">
-              <ul class="ban_tietu">
-                <li class="ban_one zbj20 "><span class="text-letter-spacing-2ys">押金：</span></li>
-                <li class="ban_two">
-                  <input type="text" value="{$contractInfo['deposit']}" name="deposit" id="deposit" class="shuru" onblur="getTotal();">
                 </li>
                 <li class="xiantiao"></li>
               </ul>
@@ -314,18 +287,12 @@ function changeRentType(){
                 <li class="xiantiao"></li>
               </ul>
             </div>
-            <div class="money1">
+            <!-- <div class="money1">
               <h2 class="money_box1">换房余额抵扣<input type="checkbox" name="is_deduct" value="1"> </h2>
-            </div>
+            </div> -->
             <div class="money1">
-
               <h2 class="money_box1">合同金额:￥<input readonly="readonly" id="total" name="total" value="" class="money_box1_shuru1"> </h2>
-            </div>
-             <div class="money1">
-              <h2 class="money_box1">首付:￥<input readonly="readonly" id="paytotal" name="paytotal" class="money_box1_shuru1" value=""> </h2>
-
-            </div>
-            
+            </div>        
               <div class="money1">
                 <h2 class="money_box1">缴定抵扣:￥<input id="bookDeposit" name="bookDeposit" <notempty name="contractInfo.money"> value="{$contractInfo['money']}" <else/> value="0" </notempty> class="money_box1_shuru1" readonly="readonly"> </h2>
               </div>

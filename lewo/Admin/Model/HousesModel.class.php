@@ -39,10 +39,10 @@ class HousesModel extends Model{
 		$houses = M('houses')
 				->alias('h')
 				->field($field)
-				->join('(SELECT house_id,COUNT(*) AS yz_count FROM lewo_room WHERE status='.C('room_yz').' AND is_show=1 GROUP BY house_id) AS room ON room.house_id=h.id')
-				->join('(SELECT house_id,COUNT(*) AS count FROM lewo_room WHERE is_show=1 GROUP BY house_id) AS room2 ON room2.house_id=h.id')
-				->join('lewo_area area ON area.id=h.area_id')
-				->join('lewo_admin_user user ON user.id=h.steward_id')
+				->join('(SELECT house_id,COUNT(*) AS yz_count FROM lewo_room WHERE status='.C('room_yz').' AND is_show=1 GROUP BY house_id) AS room ON room.house_id=h.id', 'left')
+				->join('(SELECT house_id,COUNT(*) AS count FROM lewo_room WHERE is_show=1 GROUP BY house_id) AS room2 ON room2.house_id=h.id', 'left')
+				->join('lewo_area area ON area.id=h.area_id', 'left')
+				->join('lewo_admin_user user ON user.id=h.steward_id', 'left')
 				->where($where)
 				->select();
 

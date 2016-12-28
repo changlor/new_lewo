@@ -9,7 +9,9 @@ class ChargeHouseModel extends Model{
 	* [检查当月账单是否存在]
 	**/
 	public function createOneCharge($house_id,$year,$month){
+		$this->startTrans();
 		$result = $this->where(array('house_id'=>$house_id,'input_year'=>$year,'input_month'=>$month))->find();
+
 		if ( empty($result) ) {
 			$data['house_id'] = $house_id;
 			$data['input_year'] = $year;
@@ -17,6 +19,7 @@ class ChargeHouseModel extends Model{
 			$data['is_send'] = 0;
 			$data['is_create'] = 0;
 			$this->add($data);
+			$this->commit();
 			return true;
 		} else {
 			return false;

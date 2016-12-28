@@ -84,6 +84,11 @@ class PayController extends Controller {
             $where['pay.pay_type'] = $pay_type;
             $this->assign("pay_type",$pay_type);
         }
+        $contract_status = I("contract_status");
+        if ( !empty($contract_status)) {
+            $where['lewo_contract.contract_status'] = $contract_status;
+            $this->assign("contract_status",$contract_status);
+        }
         $bill_type = I("bill_type");
         if (!is_array($bill_type) && !empty($bill_type[0]) ) {
             $bill_type = explode(',', $bill_type);
@@ -379,6 +384,7 @@ class PayController extends Controller {
 
         /*$contract_list = $DContract->getContractList();*/
         /*$this->assign("contract_list",$contract_list);*/
+        $this->assign('contract_status_arr',C('contract_status_arr'));
         $this->assign('contract_list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
         $this->assign('count',$count);

@@ -364,75 +364,79 @@ class ContractModel extends BaseModel {
         // 如果获取不到
         if (!empty($mobile) && !is_numeric($accountId)) {
             // 插入帐号
-            $account = [];
-            $account['realname'] = $realName;
-            // 默认密码
-            $account['password'] = md5("123456");
-            $account['mobile'] = $mobile;
-            // 紧急联系人
-            $account['contact2'] = $contact2;
-            // 身份证
-            $account['card_no'] = $idNo;
-            $account['email'] = $email;
-            $account['register_time'] = date("Y-m-d H:i:s",time());
+            $account = [
+                'realname' => $realName,
+                // 默认密码
+                'password' => md5('123456'),
+                'mobile' => $mobile,
+                // 紧急联系人
+                'contact2' => $contact2,
+                // 身份证
+                'card_no' => $card_no,
+                'email' => $email,
+                'register_time' => date('Y-m-d H:i:s', time())
+            ];
             // 插入account并返回account_id
             $accountId = $DAccount->insertAccount($account);
         } elseif (!empty($mobile)) {
             // 更新租客信息
-            $account = [];
-            $account['realname'] = $realName;
-            // 紧急联系人
-            $account['contact2'] = $contact2;
-            // 身份证
-            $account['card_no'] = $idNo;
-            $account['email'] = $email;
+            $account = [
+                'realname' => $realName,
+                // 紧急联系人
+                'contact2' => $contact2,
+                // 身份证
+                'card_no' => $idNo,
+                'email' => $email
+            ];
             // 更新account数据
             $DAccount->updateAccount(['id' => $account_id], $account);
         }
         // 插入合同数据
-        $contract = [];
-        $contract['start_time'] = $startDate;
-        $contract['end_time'] = $endDate;
-        $contract['pro_id'] = $proId;
-        $contract['account_id'] = $accountId;
-        $contract['room_id'] = $roomId;
-        // $contract['create_time'] = $createTime;
-        $contract['deposit'] = $deposit;
-        $contract['wg_fee'] = $wgFee;
-        $contract['book_deposit'] = $bookDeposit;
-        $contract['period'] = $payCount;
-        $contract['steward_id'] = $stewardId;
-        $contract['rent_type']     = $rentType;
-        $contract['rent_date'] = date('Y-m-d', strtotime($startDate . ' + ' . $payCount . ' month -1 day'));
-        $contract['rent'] = $rent;
-        $contract['fee'] = $fee;
-        $contract['contact2'] = $contact2;
-        $contract['person_count'] = $personCount;
-        $contract['cotenant'] = serialize($hzInfo);
-        $contract['roomD'] = $roomD;
-        // 总金额
-        $contract['total_fee'] = $total;
-        // 合影
-        $contract['photo'] = $photoDir;
-        // 插入contract表
-        $contract = array_filter($contract);
+        $contract = [
+            'start_time' => $startDate,
+            'end_time' => $endDate,
+            'pro_id' => $proId,
+            'account_id' => $accountId,
+            'room_id' => $roomId,
+            'deposit' => $deposit,
+            'wg_fee' => $wgFee,
+            'book_deposit' => $bookDeposit,
+            'period' => $payCount,
+            'steward_id' => $stewardId,
+            'rent_type' => $rentType,
+            'rent_date' => date('Y-m-d', strtotime($startDate . ' + ' . $payCount . ' month -1 day')),
+            'rent' => $rent,
+            'fee' => $fee,
+            'contact2' => $contact2,
+            'person_count' => $personCount,
+            'cotenant' => serialize($hzInfo),
+            'roomD' => $roomD,
+            // 总金额
+            'total_fee' => $total,
+            // 合影
+            'photo' => $photoDir
+        ];
+        // 去除空的数据并插入contract表
+        $contract = array_filter($contract, function ($value) {
+            return $value === 0 || !!$value;
+        });
         $affectedRows1 = $this->updateContract(['pro_id' => $proId], $contract);
         // pay表数据
-        $pay = [];
-        $pay['pro_id'] = $proId;
-        $pay['account_id'] = $accountId;
-        $pay['room_id'] = $roomId;
-        // $pay['create_time'] = $createTime;
-        $pay['input_year'] = $startYear;
-        $pay['input_month'] = $startMonth;
-        // $pay['should_date'] = $createTime;
-        // $pay['last_date'] = $createTime;
-        $pay['favorable'] = $favorable;
-        $pay['favorable_des'] = $favorableDes;
-        $pay['price'] = $total;
-        $pay['modify_log'] = ' ';
+        $pay = [
+            'pro_id' => $proId,
+            'account_id' => $accountId,
+            'room_id' => $roomId,
+            'input_year' => $startYear,
+            'input_month' => $startMonth,
+            'favorable' => $favorable,
+            'favorable_des' => $favorableDes,
+            'price' => $total,
+            'modify_log' => ' '
+        ];
         // 插入pay表数据
-        $pay = array_filter($pay);
+        $pay = array_filter($pay, function ($value) {
+            return $value === 0 || !!$value;
+        });
         $pay['is_show'] = $isShow;
         if (!is_numeric($isShow)) {
             unset($pay['is_show']);

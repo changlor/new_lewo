@@ -550,33 +550,39 @@ class HousesController extends BaseController {
         $this->assign('house_info',$house_info);
         $this->assign('area_info',$area_info);
         $DChargeBill = D("charge_bill");
-        //1.月底水电气2.退租水电气结算 3.换租水电气结算 4.转租水电气结算
+
+        // 1.月底水电气2.退租水电气结算 3.换租水电气结算 4.转租水电气结算
         $bill_list = $DChargeBill->showChargeBillList($house_code,$year,$month,1);//1.月底水电气        
 
-        //获取房间水电气的起止度
+        // 获取房间水电气的起止度
         $DChargeHouse = D("charge_house");
+        // 判断是否在charge_house里生成该月,没有则生成一条
+        $DChargeHouse->postOneCharge($house_id,$year,$month);
+        // 获取房屋当月的水电气信息
         $charge_house_info = $DChargeHouse->getChargeHouseInfo($house_id,$year,$month);
 
-        //输出总水电气的计算
-        //房屋总电费
+        // 输出总水电气的计算
+        // 房屋总电费
         $room_total_energy_fee = 0;
-        $is_has_pay = false;//是否有支付的账单
+        // 是否有支付的账单
+        $is_has_pay = false;
         foreach ( $bill_list AS $k=>$v ) {
             $room_total_energy_fee += $v['room_energy_fee'];
-            //查找是否有pay_status=1
-            if ( $v['pay_status'] == 1){
+            // 查找是否有pay_status=1
+            if ( $v['pay_status'] != 0){
                 $is_has_pay = true;
             }
         }
         $room_total_energy_fee = number_format($room_total_energy_fee,2);
         $this->assign('is_has_pay',$is_has_pay);
+        // 增加的电度数
         $add_energy         = $charge_house_info['end_energy'] - $charge_house_info['start_energy'];
         $total_energy_fee   = number_format(get_energy_fee($add_energy,$energy_stair),2);
         $public_energy_fee  = ( $total_energy_fee - $room_total_energy_fee ) + $charge_house_info['extra_public_energy_fee'];
-
+        // 增加的水度数
         $add_water          = $charge_house_info['end_water'] - $charge_house_info['start_water'];
         $public_water_fee   = ( $add_water * $area_info['water_unit'] ) + $charge_house_info['extra_public_water_fee'];
-        
+        // 增加的气度数
         $add_gas            = $charge_house_info['end_gas'] - $charge_house_info['start_gas'];
         $public_gas_fee     = ( $add_gas * $area_info['gas_unit'] ) + $charge_house_info['extra_public_gas_fee'];
         
@@ -968,9 +974,8 @@ class HousesController extends BaseController {
         $DArea          = D("area");
         // 是否错误
         $error = false;
+        // 开启事务
         M()->startTrans();
-        // 判断是否在charge_house里生成该月,没有则生成一条
-        $is_has_charge_house = $DChargeHouse->createOneCharge($house_id,$year,$month);
 
         // 判断是否已经生成过了
         $is_has_create = M("charge_house")->where(array("house_id"=>$house_id,"input_year"=>$year,"input_month"=>$month,"is_create"=>1))->find();
@@ -1187,9 +1192,14 @@ class HousesController extends BaseController {
             //  4)11月30号是房租到期日
 
             // 所得结论：到了房租到期日的月份就要缴费了
-            //租客是季付的，应缴费水电日期是读取下个月十号之前
+            // 租客是季付的，应缴费水电日期是读取下个月十号之前
+            // 缴费周期大于1
             if ( $period > 1 ) {
-                if ( $year != $rent_date_year && $month != $rent_date_month ) {
+                // 缴费周期大于1的，他应该在房租到期日的上一个月就要给房租和服务费
+                // 房租到期日的年月 上一个年月
+                $last_rent_start_year    = date('Y',strtotime($rent_date.' -1 month'));
+                $last_rent_start_month    = date('m',strtotime($rent_date.' -1 month'));
+                if ( $year != $last_rent_start_year && $month != $last_rent_start_month ) {
                     $rent_fee_des = "房租到期日在".$rent_date;
                     $contract_list[$key]['rent'] = 0;
                     $contract_list[$key]['fee'] = 0;
@@ -1259,7 +1269,7 @@ class HousesController extends BaseController {
             $contract_list[$key]['last_ammeter_room'] = $last_ammeter_room;//上个月水电气信息
             $contract_list[$key]['type'] = 1;//日常
             $contract_list[$key]['bill_type'] = 3;//账单类型 3：日常
-            $contract_list[$key]['total_fee'] = $contract_list[$key]['rent']+$contract_list[$key]['room_energy_fee']+$contract_list[$key]['energy_fee']+$contract_list[$key]['water_fee']+$contract_list[$key]['gas_fee']+$contract_list[$key]['fee']+$contract_list[$key]['wg_fee']+$contract_list[$key]['rubbish_fee'];
+            $contract_list[$key]['total_fee'] = $contract_list[$key]['rent'] + $contract_list[$key]['room_energy_fee'] + $contract_list[$key]['energy_fee'] + $contract_list[$key]['water_fee'] + $contract_list[$key]['gas_fee'] + $contract_list[$key]['fee'] + $contract_list[$key]['wg_fee'] + $contract_list[$key]['rubbish_fee'];
             //插入charge_bill中
            
             $result = $DChargeBill->addBill($contract_list[$key],$year,$month);
@@ -1297,11 +1307,11 @@ file_put_contents("D://rel.txt", json_encode($charge_id), FILE_APPEND);
         $lastYear = date("Y",strtotime($lastDate));
         $lastMonth = date("m",strtotime($lastDate));
         // 判断当月是否存在账单
-        $DChargeHouse->createOneCharge($house_id,$year,$month); 
+        $DChargeHouse->postOneCharge($house_id,$year,$month); 
         // 判断当月是否存在账单
         $DAmmeter->checkHouseAmmeterByDate($house_id,$year,$month);
         // 判断上个月是否存在账单
-        $DChargeHouse->createOneCharge($house_id,$lastYear,$lastMonth);
+        $DChargeHouse->postOneCharge($house_id,$lastYear,$lastMonth);
         // 判断上个月是否存在账单
         $DAmmeter->checkHouseAmmeterByDate($house_id,$lastYear,$lastMonth);
         $charge_list = $DChargeHouse->getChargeList($house_id);

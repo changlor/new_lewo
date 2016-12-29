@@ -8,7 +8,7 @@ class ChargeHouseModel extends Model{
 	/**
 	* [检查当月账单是否存在]
 	**/
-	public function createOneCharge($house_id,$year,$month){
+	public function postOneCharge($house_id,$year,$month){
 		$this->startTrans();
 		$result = $this->where(array('house_id'=>$house_id,'input_year'=>$year,'input_month'=>$month))->find();
 

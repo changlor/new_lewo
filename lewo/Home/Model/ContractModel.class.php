@@ -318,11 +318,11 @@ class ContractModel extends BaseModel {
         // $createTime = date('Y-m-d H:i:s', time());
         // 判断租期开始日是否大于租期结束日
         if (!empty($startDate) && !empty($endDate) && $startDateTimestamp > $endDateTimestamp) {
-            $this->error('签约失败，租期开始日:' . $startDate . ' 大于 租期结束日:', '', 10);
+            return parent::response([false, '签约失败，租期开始日:' . $startDate . ' 大于 租期结束日:' . $endDate]);
         }
         // 判断租期结束日是否大于房间托管结束日
         if (!empty($endDate) && $endDateTimestamp > $houseEndDateTimestamp) {
-            $this->error('签约失败，租期结束日:' . $endDate . ' 大于 房间托管结束日:' . $houseEndDate);
+            return parent::response([false, '签约失败，租期结束日:' . $endDate . ' 大于 房间托管结束日:' . $houseEndDate]);
         }
         // 设置并获取photo（如果存在）
         $photoDir = ' ';
@@ -443,7 +443,7 @@ class ContractModel extends BaseModel {
         $room['status'] = $roomStatus;
         $room['account_id'] = $input['roomAccountId'];
         $room = array_filter($room, function ($value) {
-            return $value === 0;
+            return $value === 0 || !!$value;
         });
         $affectedRows3 = $DRoom->updateRoom(['id' => $roomId], $room);
         if (!($affectedRows1 > 0) && !($affectedRows2 > 0) && !($affectedRows3 > 0)) {
@@ -619,11 +619,11 @@ class ContractModel extends BaseModel {
         $createTime = date('Y-m-d H:i:s', time());
         if ($startDateTimestamp > $endDateTimestamp) {
             // 判断租期开始日是否大于房间托管结束日
-            $this->error('签约失败，租期开始日:' . $startDate . ' 大于 租期结束日:', '', 10);
+            return parent::response([false, '签约失败，租期开始日:' . $startDate . ' 大于 租期结束日:' . $endDate]);
         }
         if ($endDateTimestamp > $houseEndDateTimestamp) {
             // 判断租期结束日是否大于房间托管结束日
-            $this->error('签约失败，租期结束日:' . $endDate . ' 大于 房间托管结束日:' . $houseEndDate);
+            return parent::response([false, '签约失败，租期结束日:' . $endDate . ' 大于 房间托管结束日:' . $houseEndDate]);
         }
         // 设置并获取photo（如果存在）
         $photoDir = ' ';

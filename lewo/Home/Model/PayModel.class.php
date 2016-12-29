@@ -60,6 +60,11 @@ class PayModel extends BaseModel {
 	{
 		return $this->table->add($pay);
 	}
+
+    public function join($joinTable, $where, $field)
+    {
+        return parent::join($this->table, $joinTable)->field($field)->where($where);
+    }
 	
 	public function insertPay($pay)
 	{
@@ -259,7 +264,7 @@ class PayModel extends BaseModel {
         $schedule['status'] = 1;
         $schedule['appoint_time'] = $appointTime;
         $schedule['msg'] = $msg;
-        $schedule['stedward_id'] = $stedwardId;
+        $schedule['steward_id'] = $stewardId;
         $schedule['admin_type'] = C('admin_type_gj');
         $DSchedule->insertSchedule($schedule);
         // 插入pay表
@@ -274,9 +279,12 @@ class PayModel extends BaseModel {
 		$pay['input_year'] = date('Y', time());
 		$pay['input_month'] = date('m', time());
 		$pay['should_date'] = date('Y-m-d H:i:s', time());
-		$pay['last_date']	= date('Y-m-d H:i:s', time());
+		$pay['last_date'] = date('Y-m-d H:i:s', time());
+        $pay['steward_id'] = $stewardId;
+        $pay['pay_money'] = $money;
+        $pay['pay_time'] = date('Y-m-d H:i:s', time());
 		// 支付状态，0为未支付
-		$pay['pay_status'] = 0;
+		$pay['pay_status'] = 2;
 		// 定金账单默认为已发送，无需发送提醒租客
 		$pay['is_send'] = 1;
 		$pay['modify_log'] = ' ';
@@ -293,54 +301,82 @@ class PayModel extends BaseModel {
 	 * author: changle
 	 * desc: get stedward bills depends on bills
 	 */
-	public function getBills($where, $type = ''){
-		$type = empty($type) ? 'all' : $type;
-		$steward_id = $_SESSION['steward_id'];
-		$MPay = M('pay');
-		$filters = [
-			'lewo_pay.is_show' => 1,
-			'lewo_pay.is_send' => 1,
-			'lewo_houses.steward_id' => $steward_id,
-		];
-		$field = [
-			//lewo_pay
-			'lewo_pay.room_id', 'lewo_pay.pro_id',
-			'lewo_pay.price', 'lewo_pay.pay_money', 'lewo_pay.pay_status', 'lewo_pay.bill_type', 'lewo_pay.bill_des', 'lewo_pay.account_id',
-			'lewo_pay.is_show', 'lewo_pay.is_send',
-			'lewo_pay.create_time', 'lewo_pay.should_date', 'lewo_pay.last_date',
-			'lewo_pay.favorable', 'lewo_pay.favorable_des',
-			//lewo_contract
-			'lewo_contract.deposit', 'lewo_contract.rent', 'lewo_contract.fee', 'lewo_contract.rent_type',
-			//lewo_charge_bill
-			'lewo_charge_bill.water_fee',
-			'lewo_charge_bill.room_energy_fee',
-			'lewo_charge_bill.wx_fee',
-			'lewo_charge_bill.rubbish_fee',
-			'lewo_charge_bill.energy_fee',
-			'lewo_charge_bill.gas_fee',
-			'lewo_charge_bill.rent_fee',
-			'lewo_charge_bill.wgfee_unit',
-			'lewo_charge_bill.service_fee',
-			//lewo_houses
-			'lewo_houses.building', 'lewo_houses.door_no', 'lewo_houses.floor',
-			//lewo_area
-			'lewo_area.area_name',
-			//lewo_account
-			'lewo_account.realname',
-		];
-		$field = implode(',', $field);
-		$bills = $this->table->field($field)
-		->join('lewo_room ON lewo_room.id = lewo_pay.room_id', 'left')
-		->join('lewo_houses ON lewo_houses.id = lewo_room.house_id', 'left')
-		->join('lewo_account ON lewo_account.id = lewo_pay.account_id', 'left')
-		->join('lewo_area ON lewo_area.id = lewo_houses.area_id', 'left')
-		->join('lewo_charge_bill ON lewo_charge_bill.pro_id = lewo_pay.pro_id', 'left')
-		->join('lewo_contract ON lewo_contract.pro_id = lewo_pay.pro_id', 'left')
-		->where($filters)
-		->where($where)
-		->order('lewo_pay.pay_status asc, lewo_pay.last_date asc, lewo_pay.input_year desc, lewo_pay.input_month desc')
-		->select();
-
+	public function getBills($input)
+    {
+        // 获取模型实例
+        $DContract = D('contract');
+        // 获取管家stewardId
+        $stewardId = $_SESSION['steward_id'];
+        if (!is_numeric($stewardId)) {
+            return parent::response([false, '权限出错！']);
+        }
+        // 获取搜索关键词
+        $keyWord = $input['keyWord'];
+        if (!empty($keyWord) && strpos($keyWord, '-') !== false) {
+            $keyWordChips = explode('-', $keyWord);
+            $building = isset($keyWordChips[0]) ? $keyWordChips[0] : '';
+            $floor = isset($keyWordChips[1]) ? $keyWordChips[1] : '';
+            $doorNo = isset($keyWordChips[2]) ? $keyWordChips[2] : '';
+        }
+        if (!empty($keyWord) && strpos($keyWord, '-') === false) {
+            // 模糊查询语句
+            $fuzzyEnquiry = "lewo_account.realname LIKE '%". $keyWord ."%' OR lewo_houses.house_code LIKE '%".$keyWord."%' OR lewo_area.area_name LIKE '%".$keyWord."%' ";
+        }
+        // 获取查找类型
+        $type = empty($input['type']) ? 'unpaid' : $input['type'];
+        // 选择pay表数据
+        // --关联相关表
+        $joinTable = [
+            'pay(room)' => 'room_id(id)',
+            'room(houses)' => 'house_id(id)',
+            'pay(account)' => 'account_id(id)',
+            'houses(area)' => 'area_id(id)',
+            'pay(charge_bill)' => 'pro_id(pro_id)',
+            'pay(contract)' => 'pro_id(pro_id)',
+        ];
+        // --过滤条件
+        $filters = [
+            'lewo_pay.is_show' => 1,
+            'lewo_pay.is_send' => 1,
+            'lewo_houses.steward_id' => $stewardId,
+            'lewo_houses.building' => $building,
+            'lewo_houses.floor' => $floor,
+            'lewo_houses.door_no' => $doorNo,
+            '_string' => $fuzzyEnquiry,
+        ];
+        $filters['lewo_pay.pay_status'] = $type == 'unpaid' ? ['neq', 1] : 1;
+        $filters = array_filter($filters, function ($value) {
+            return $value === 0 || !!$value;
+        });
+        // --选取字段
+        $field = [
+            //lewo_pay
+            'lewo_pay.room_id', 'lewo_pay.pro_id',
+            'lewo_pay.price', 'lewo_pay.pay_money', 'lewo_pay.pay_status', 'lewo_pay.bill_type', 'lewo_pay.bill_des', 'lewo_pay.account_id',
+            'lewo_pay.is_show', 'lewo_pay.is_send',
+            'lewo_pay.create_time', 'lewo_pay.should_date', 'lewo_pay.last_date',
+            'lewo_pay.favorable', 'lewo_pay.favorable_des',
+            //lewo_contract
+            'lewo_contract.deposit', 'lewo_contract.rent', 'lewo_contract.fee', 'lewo_contract.rent_type',
+            //lewo_charge_bill
+            'lewo_charge_bill.water_fee',
+            'lewo_charge_bill.room_energy_fee',
+            'lewo_charge_bill.wx_fee',
+            'lewo_charge_bill.rubbish_fee',
+            'lewo_charge_bill.energy_fee',
+            'lewo_charge_bill.gas_fee',
+            'lewo_charge_bill.rent_fee',
+            'lewo_charge_bill.wgfee_unit',
+            'lewo_charge_bill.service_fee',
+            //lewo_houses
+            'lewo_houses.building', 'lewo_houses.door_no', 'lewo_houses.floor',
+            //lewo_area
+            'lewo_area.area_name',
+            //lewo_account
+            'lewo_account.realname',
+        ];
+        $field = implode(',', $field);
+        $bills = $this->join($joinTable, $filters, $field)->order('lewo_pay.pay_status asc, lewo_pay.last_date asc, lewo_pay.input_year desc, lewo_pay.input_month desc')->select();
 		foreach ($bills as $key => $value) {
 			$bills[$key]['bill_type'] = C('bill_type')[$value['bill_type']];
 			$bills[$key]['rent_type'] = '压' . str_replace('_', '付', $value['rent_type']);
@@ -348,9 +384,6 @@ class PayModel extends BaseModel {
 			$bills[$key]['total_daily_room_fee'] = $value['room_energy_fee'] + $value['water_fee'] + $value['energy_fee'] + $value['gas_fee'] + $value['rubbish_fee'];
 			$bills[$key]['count_down_days'] = -floor((time() - strtotime($value['last_date'])) / 60 /60 /24);
 		}
-		
-		return $bills;
+		return parent::response(['true', '', $bills]);
 	}
 }
-
-?>

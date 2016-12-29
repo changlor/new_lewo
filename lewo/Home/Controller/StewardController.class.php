@@ -878,10 +878,14 @@ class StewardController extends BaseController {
     {
         // 获取模型实例
         $DPay = D('pay');
-        $DPay->deleteDepositBill([
+        $res = $DPay->deleteDepositBill([
             'scheduleId' => I('get.scheduleId'),
-            
         ]);
+        if ($res['success']) {
+            $this->success('操作成功！');
+        } else {
+            $this->success($res['msg']);
+        }
     }
     
 

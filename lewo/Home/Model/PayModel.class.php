@@ -170,7 +170,19 @@ class PayModel extends BaseModel {
 
     public function deleteDepositBill($input)
     {
-        
+        // 获取模型实例
+        $DSchedule = D('schedule'); $DRoom = D('room');
+        // 获取scheduleId
+        $scheduleId = I('get.scheduleId');
+        if (!$DSchedule->has(['id' => $scheduleId])) {
+            return parent::response([false, '不存在该待办任务！']);
+        }
+        $roomId = $DSchedule->selectField(['id' => $scheduleId], 'room_id');
+        // 删除该条记录
+        $DSchedule->deleteSchedule(['id' => $scheduleId]);
+        // 修改房屋状态
+        $DRoom->updateRoom(['id' => $roomId], ['status' => 0, 'account_id' => 0]);
+        return parent::response([true, '']);
     }
 
 	public function postDepositBill($input)

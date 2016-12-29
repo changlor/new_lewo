@@ -22,14 +22,37 @@ class ScheduleModel extends BaseModel {
 		return $this->table->field($field)->where($where);
 	}
 
+	public function has($where)
+	{
+		$keys = array_keys($where);
+		$field = $keys[0];
+		$row = $this->selectField($where, $field);
+		return $row === '0' || $row === 0 || !empty($row);
+	}
+
+	public function selectField($where, $field)
+	{
+		return $this->select($where)->getField($field);
+	}
+
 	public function insert($data)
 	{
 		return $this->table->add($data);
 	}
 
+	public function delete($where)
+	{
+		return $this->table->where($where)->delete();
+	}
+
 	public function insertSchedule($pay)
 	{
 		return $this->insert($pay);
+	}
+
+	public function deleteSchedule($where)
+	{
+		return $this->delete($where);
 	}
 
 	/**

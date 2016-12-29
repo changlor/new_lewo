@@ -174,7 +174,7 @@ class ContractModel extends BaseModel {
         $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
         // 只有当房屋状态等于3的时候，可以被修改
         if ($roomStatus != 3) {
-            return [false, '房屋合同已经无法修改！'];
+            return parent::response([false, '房屋合同已经无法修改！']);
         }
         // 获取真实姓名realName
         $realName = $input['realName'];
@@ -316,12 +316,12 @@ class ContractModel extends BaseModel {
         $startMonth = date('m', $startDateTimestamp);
         // 获取当前日期
         // $createTime = date('Y-m-d H:i:s', time());
+        // 判断租期开始日是否大于租期结束日
         if (!empty($startDate) && !empty($endDate) && $startDateTimestamp > $endDateTimestamp) {
-            // 判断租期开始日是否大于房间托管结束日
             $this->error('签约失败，租期开始日:' . $startDate . ' 大于 租期结束日:', '', 10);
         }
+        // 判断租期结束日是否大于房间托管结束日
         if (!empty($endDate) && $endDateTimestamp > $houseEndDateTimestamp) {
-            // 判断租期结束日是否大于房间托管结束日
             $this->error('签约失败，租期结束日:' . $endDate . ' 大于 房间托管结束日:' . $houseEndDate);
         }
         // 设置并获取photo（如果存在）

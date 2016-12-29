@@ -105,6 +105,7 @@ class PayModel extends BaseModel {
 		$pdata['last_date']		= !is_null($param['last_date'])? $param['last_date'] : date('Y-m-d H:i:s',time());
 		$pdata['pay_status'] 	= !is_null($param['pay_status'])? $param['pay_status'] : 0;
 		$pdata['is_send']		= 1;
+		$pdata['modify_log']    = ' ';
 		$result = $this->add($pdata);
 		
 		return $result;
@@ -165,6 +166,115 @@ class PayModel extends BaseModel {
 		}
 
 		return $bill_list;
+	}
+
+    public function deleteDepositBill($input)
+    {
+        
+    }
+
+	public function postDepositBill($input)
+	{
+		// 获取模型实例
+		$DAccount = D('account'); $DSchedule = D('schedule'); $DRoom = D('room');
+		// 获取管家stewardId
+        $stewardId = $_SESSION['steward_id'];
+        if (!is_numeric($stewardId)) {
+        	return parent::response([false, '权限出错！']);
+        }
+		// 获取缴定后约定来住的时间
+		$appointTime = $input['appointTime'];
+		if (strtotime($appointTime) < time()) {
+            return parent::response([false, '约定时间不能少于现在的时间']);
+        }
+        // 获取房间roomId
+        $roomId = $input['roomId'];
+        if (!is_numeric($roomId)) {
+        	return parent::response([false, '房间信息有误！']);
+        }
+        // 获取房间状态
+        $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
+        // 如果房屋状态为已签约，则说明已签约过了，不能再继续签约了
+        if ($roomStatus == 1) {
+        	return parent::response([false, '房屋已经是签约状态了！']);
+        }
+        // 获取缴定金额
+        $money = $input['money'];
+        if (!is_numeric($money)) {
+        	return parent::response([false, '缴定金额类型错误！']);
+        }
+        // 获取租客realName
+        $realName = trim($input['realName']);
+        if (empty($realName)) {
+        	return parent::response([false, '租客姓名不能为空！']);
+        }
+        // 生成proId
+        $proId = getOrderNo();
+        // 获取备注
+        $msg = trim($input['msg']);
+        // 获取租客电话
+        $mobile = $input['mobile'];
+        $pattern = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/i';
+        if (!preg_match($pattern, $mobile)) {
+        	return parent::response([false, '租客手机格式不对！']);
+        }
+        // 设置租客默认密码（如果租客未注册过系统）
+        $passward = md5(123456);
+        // 设置租客默认注册时间（如果租客未注册过系统）
+        $registerTime = date('Y-m-d H:i:s', time());
+        // 通过手机查询是否有注册过系统，成功则返回accountId
+        $accountId = $DAccount->selectField(['mobile' => $mobile], 'id');
+        // 不是数字说明未注册过系统
+        if (!is_numeric($accountId)) {
+        	// 插入account数据
+        	$account = [];
+        	$account['realname'] = $realName;
+        	$account['passward'] = $passward;
+        	$account['mobile'] = $mobile;
+        	$account['registerTime'] = $registerTime;
+        	// 插入并返回accountId
+        	$accountId = $DAccount->insertAccount($account);
+        }
+        // 缴定后插入代办数据
+        $schedule = [];
+        $schedule['room_id'] = $roomId;
+        $schedule['money'] = $money;
+        $schedule['mobile'] = $mobile;
+        $schedule['account_id'] = $accountId;
+        // 代办表类型
+        $schedule['schedule_type'] = 4;
+        // 流程状态
+        $schedule['status'] = 1;
+        $schedule['appoint_time'] = $appointTime;
+        $schedule['msg'] = $msg;
+        $schedule['stedward_id'] = $stedwardId;
+        $schedule['admin_type'] = C('admin_type_gj');
+        $DSchedule->insertSchedule($schedule);
+        // 插入pay表
+        $pay = [];
+        $pay['account_id'] = $accountId;
+        $pay['room_id'] = $roomId;
+        // 账单类型，1为定金
+        $pay['bill_type'] = 1;
+		$pay['price'] = $money;
+		$pay['pro_id'] = $proId;
+		$pay['create_time'] = date('Y-m-d H:i:s', time());
+		$pay['input_year'] = date('Y', time());
+		$pay['input_month'] = date('m', time());
+		$pay['should_date'] = date('Y-m-d H:i:s', time());
+		$pay['last_date']	= date('Y-m-d H:i:s', time());
+		// 支付状态，0为未支付
+		$pay['pay_status'] = 0;
+		// 定金账单默认为已发送，无需发送提醒租客
+		$pay['is_send'] = 1;
+		$pay['modify_log'] = ' ';
+		$this->insertPay($pay);
+		// 修改房屋状态为1，已缴定
+		$affectedRows = $DRoom->updateRoom(['id' => $roomId], ['account_id' => $accountId, 'status' => 1]);
+		if (!($affectedRows > 0)) {
+			return parent::response([false, '房屋状态修改出错！']);
+		}
+		return parent::response([true, '']);
 	}
 
 	/*

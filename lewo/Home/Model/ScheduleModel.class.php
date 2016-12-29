@@ -22,6 +22,16 @@ class ScheduleModel extends BaseModel {
 		return $this->table->field($field)->where($where);
 	}
 
+	public function insert($data)
+	{
+		return $this->table->add($data);
+	}
+
+	public function insertSchedule($pay)
+	{
+		return $this->insert($pay);
+	}
+
 	/**
 	 * [管家待办表]
 	 **/

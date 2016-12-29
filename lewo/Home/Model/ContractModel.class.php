@@ -158,10 +158,13 @@ class ContractModel extends BaseModel {
         if (!is_numeric($stewardId)) {
             return parent::response([false, '非法操作！']);
         }
-        // 获取is_show，控制合同是否显示
-        $isShow = $input['isShow'];
+        /*// 获取is_show，控制合同是否显示
+        $isShow = is_null($input['isShow'])? 1: $input['isShow'];*/
         // 获取proId
         $proId = $input['proId'];
+        if (is_null($proId)) {
+            return parent::response([false, '账单号不存在！']);
+        }
         // 获取房间roomId
         // --如果proId存在，查找roomId
         $roomId = empty($proId)
@@ -290,16 +293,17 @@ class ContractModel extends BaseModel {
         if (!empty($isDeduct) && $isDeduct != 1 && $isDeduct != 0) {
             return parent::response([false, '余额抵扣出错！']);
         }
-        // 获取合同金额total
-        $total = $input['total'];
-        if (!empty($total) && $total != ($wgFee + $rent + $fee + $deposit)) {
-            return parent::response([false, '合同金额出错！']);
-        }
         // 获取缴定抵扣bookDeposit
         $bookDeposit = $input['bookDeposit'];
         if (!empty($bookDeposit) && !is_numeric($bookDeposit)) {
             return parent::response([false, '缴定抵扣出错！']);
         }
+        // 获取合同金额total
+        $total = $input['total'];
+        if (!empty($total) && $total != ($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorableDes)) {
+            return parent::response([false, '合同金额出错！']);
+        }
+        
         // 获取租客管家合影
         $photo = $input['photo'];
         // 获取房屋状态houseCode
@@ -468,9 +472,9 @@ class ContractModel extends BaseModel {
         }
         // 判断房间是否已签约或者已入住
         $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
-        // 只有当房屋状态等于0的时候，可以被签约
-        if ($roomStatus != 0) {
-            return [false, '房屋已被出租！'];
+        // 只有当房屋状态不为2时可以签约
+        if ($roomStatus == 2) {
+            return parent::response([false, '房屋已被出租！']);
         }
         // 获取真实姓名realName
         $realName = $input['realName'];
@@ -727,7 +731,7 @@ class ContractModel extends BaseModel {
         $pay['favorable_des'] = $favorableDes;
         $pay['price'] = $total;
         $pay['modify_log'] = ' ';
-        $pay['is_show'] = $isShow;
+        $pay['is_show'] = 1;
         // 插入pay表数据
         $payId = $DPay->insertPay($pay);
         if (!is_numeric($payId)) {
@@ -738,6 +742,6 @@ class ContractModel extends BaseModel {
         if (!($res > 0)) {
             return parent::response([false, '房屋状态修改失败！']);
         }
-        return parent::response([true, '', ['proId' => $proId]]);  
+        return parent::response([true, '合同生成成功！', ['proId' => $proId]]);  
     }
 }

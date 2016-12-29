@@ -42,8 +42,8 @@ function getTotal(){
   rentType        = how.split("_");
   var fu          = parseInt(rentType[1]);
   var deposit     = parseInt(document.getElementById("deposit").value);
-  total           = deposit+wg_fee+((rent+fee)*fu);
-  paytotal        = deposit+wg_fee+((rent+fee)*fu)-bookDeposit-favorable;
+  total           = deposit+wg_fee+((rent+fee)*fu)-bookDeposit-favorable;
+  // paytotal        = deposit+wg_fee+((rent+fee)*fu)-bookDeposit-favorable;
   document.getElementById("total").setAttribute("value", total.toFixed(2));
 }
 

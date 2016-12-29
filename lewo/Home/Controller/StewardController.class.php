@@ -403,35 +403,21 @@ class StewardController extends BaseController {
     /*
      * author: changle
      */
-    public function allbills(){
-        //获取账单类别
-        //$type = I("select");
-        //$_SESSION['stewrad_houses_back_url'] = U('Home/Steward/allhouses'); 
-        $where = [];
-        $search = trim(I("search"));
-        $is_has_flag = strpos($search, '-');
-        if ( $is_has_flag && !empty($search)) {
-            $search_arr = explode('-',$search);
-            if ( !is_null($search_arr['0']) ) {
-                $where['lewo.houses.building'] = $search_arr['0'];
-            }
-            if ( !is_null($search_arr['1']) ) {
-                $where['lewo.houses.floor'] = $search_arr['1'];
-            }
-            if ( !is_null($search_arr['2']) ) {
-                $where['lewo.houses.door_no'] = $search_arr['2'];
-            }
-        } else {
-            $where['_string'] = "lewo_account.realname LIKE '%". $search ."%' OR lewo_houses.house_code LIKE '%".$search."%' OR lewo_area.area_name LIKE '%".$search."%' ";
-        }
-        
-        $type = '';
+    public function allbills()
+    {
+        // 获取模型实例
         $DPay = D('pay');
-        $bills = $DPay->getBills($where, $type);
-        //echo'<pre>';print_r($bills);
-        if (!empty($search)) {
-            $this->assign('search_history', $search);
+        // 获取搜索关键词
+        $keyWord = I('search');
+        $res = $DPay->getBills([
+            'keyWord' => I('get.search'),
+            'type' => I('get.type'),
+        ]);
+        $bills = $res['data'];
+        if (!empty(I('get.search'))) {
+            $this->assign('search_history', I('get.search'));
         }
+        $this->assign('type', I('get.type'));
         $this->assign('houses', $bills);
         $this->display('bills');
         $this->display("Steward/common/footer");
@@ -503,7 +489,7 @@ class StewardController extends BaseController {
         } else {
             $roomId = I('id');
             $DRomm = D('houses');
-            $this->assign('room_info', $DRomm->getRoom($id));
+            $this->assign('room_info', $DRomm->getRoom($roomId));
             $this->assign('pay_type_list', C('pay_type'));
             $this->display('order');
         }

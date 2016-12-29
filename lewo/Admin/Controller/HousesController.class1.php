@@ -880,7 +880,7 @@ class HousesController extends Controller {
         $DChargeHouse = D("charge_house");
         $year = date("Y");
         $month = date("m");
-        $DChargeHouse->createOneCharge($house_id,$year,$month);//ÅÐ¶Ïµ±ÔÂÊÇ·ñ´æÔÚÕËµ¥
+        $DChargeHouse->postOneCharge($house_id,$year,$month);//ÅÐ¶Ïµ±ÔÂÊÇ·ñ´æÔÚÕËµ¥
         $charge_list = $DChargeHouse->getChargeList($house_id);
 
       

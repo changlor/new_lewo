@@ -5,6 +5,9 @@ use Think\Model;
 * [房源数据层]
 */
 class HousesModel extends Model{
+	public function getHouseCount(){
+
+	}
 	/**
 	 * [获取房源列表]
 	 **/
@@ -39,25 +42,52 @@ class HousesModel extends Model{
 		$houses = M('houses')
 				->alias('h')
 				->field($field)
-				->join('(SELECT house_id,COUNT(*) AS yz_count FROM lewo_room WHERE status='.C('room_yz').' AND is_show=1 GROUP BY house_id) AS room ON room.house_id=h.id')
-				->join('(SELECT house_id,COUNT(*) AS count FROM lewo_room WHERE is_show=1 GROUP BY house_id) AS room2 ON room2.house_id=h.id')
-				->join('lewo_area area ON area.id=h.area_id')
-				->join('lewo_admin_user user ON user.id=h.steward_id')
+				->join('(SELECT house_id,COUNT(*) AS yz_count FROM lewo_room WHERE status='.C('room_yz').' AND is_show=1 GROUP BY house_id) AS room ON room.house_id=h.id', 'left')
+				->join('(SELECT house_id,COUNT(*) AS count FROM lewo_room WHERE is_show=1 GROUP BY house_id) AS room2 ON room2.house_id=h.id', 'left')
+				->join('lewo_area area ON area.id=h.area_id', 'left')
+				->join('lewo_admin_user user ON user.id=h.steward_id', 'left')
 				->where($where)
 				->select();
 
 		foreach($houses AS $key=>$val){
 			$houses[$key]['city_id'] = C('city_id')[$val['city_id']];
-
-			if ($val['yz_count']>0) {
-				$houses[$key]['is_checkin'] = true;
-			} else {
-				$houses[$key]['is_checkin'] = false;
-			}
+			$houses[$key]['yz_count'] = is_null($val['yz_count'])?0:$val['yz_count'];
+			$houses[$key]['count'] = is_null($val['count'])?0:$val['count'];
 		}
 
 		return $houses;
 	}
+
+	/**
+	 * [获取房源总数]
+	 **/
+	public function getHousesCount($where){
+		$field = [
+			//houses
+			'h.id AS house_id', 'h.area_id',
+			'h.house_code', 'h.type',
+			'h.steward_id', 'h.create_time',
+			'h.floor', 'h.door_no',
+			'h.building', 'h.region_id',
+			//area
+			'area.area_name', 'area.city_id',
+			//room
+			'room.yz_count', 'room2.count',
+			//admin_user
+			'user.nickname AS steward_nickname', 'user.mobile AS steward_mobile'
+		];
+		// 获取房屋列表
+		$houses = M('houses')
+				->alias('h')
+				->field($field)
+				->join('lewo_area area ON area.id=h.area_id', 'left')
+				->join('lewo_admin_user user ON user.id=h.steward_id', 'left')
+				->where($where)
+				->count();
+
+		return $houses;
+	}
+
 
 	/**
 	 * [获取房屋信息]

@@ -482,6 +482,33 @@ class StewardController extends BaseController {
         $this->assign('info',$info);
         $this->display('room-info');
     }
+    
+    public function payDeposit(){
+        // 获取模型实例
+        $DPay = D('pay');
+        if (parent::isPostRequest()) {
+            $res = $DPay->postDepositBill([
+                'appointTime' => I('post.appoint_time'),
+                'realName' => I('post.realname'),
+                'mobile' => I('post.mobile'),
+                'roomId' => I('post.id'),
+                'money' => I('post.money'),
+                'msg' => I('post.msg'),
+            ]);
+            if ($res['success']) {
+                $this->success('缴定成功！', U('Home/Steward/houses'));
+            } else {
+                $this->error($res['msg']);
+            }
+        } else {
+            $roomId = I('id');
+            $DRomm = D('houses');
+            $this->assign('room_info', $DRomm->getRoom($id));
+            $this->assign('pay_type_list', C('pay_type'));
+            $this->display('order');
+        }
+    }
+
     /**
      * [入住-缴定]
      **/
@@ -848,6 +875,20 @@ class StewardController extends BaseController {
             $this->success("发送失败");
         }
     }
+
+    public function cancelDepositBill()
+    {
+        // 获取模型实例
+        $DPay = D('pay');
+        $res = $DPay->deleteDepositBill([
+            'scheduleId' => I('get.scheduleId'),
+        ]);
+        if ($res['success']) {
+            $this->success('操作成功！');
+        } else {
+            $this->success($res['msg']);
+        }
+    }
     
 
     /**
@@ -862,7 +903,6 @@ class StewardController extends BaseController {
         $zf_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_zf"),0,C("admin_type_gj"));
         $hf_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_hf"),0,C("admin_type_gj"));
         $jd_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_jd"),0,C("admin_type_gj"));
-        
         $this->assign("tf_count",$tf_count);
         $this->assign("zf_count",$zf_count);
         $this->assign("hf_count",$hf_count);

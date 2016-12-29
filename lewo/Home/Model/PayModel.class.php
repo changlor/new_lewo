@@ -183,8 +183,8 @@ class PayModel extends BaseModel {
             return parent::response([false, '不存在该待办任务！']);
         }
         $roomId = $DSchedule->selectField(['id' => $scheduleId], 'room_id');
-        // 删除该条记录
-        $DSchedule->deleteSchedule(['id' => $scheduleId]);
+        // 修改此记录为已处理
+        $DSchedule->updateSchedule(['id' => $scheduleId], ['is_finish' => 1]);
         // 修改房屋状态
         $DRoom->updateRoom(['id' => $roomId], ['status' => 0, 'account_id' => 0]);
         return parent::response([true, '']);

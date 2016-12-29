@@ -55,6 +55,16 @@ class ScheduleModel extends BaseModel {
 		return $this->delete($where);
 	}
 
+	public function update($where, $data)
+	{
+		return $this->table->where($where)->save($data);
+	}
+
+	public function updateSchedule($where, $data)
+	{
+		return $this->update($where, $data);
+	}
+
 	/**
 	 * [管家待办表]
 	 **/

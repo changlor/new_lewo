@@ -27,6 +27,7 @@ class AccountModel extends BaseModel {
 	{
 		return $this->table->add($data);
 	}
+	
 	public function update($where, $data)
 	{
 		return $this->table->where($where)->save($data);

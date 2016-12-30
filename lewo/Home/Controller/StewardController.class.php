@@ -783,7 +783,7 @@ class StewardController extends BaseController {
                 M()->commit();
                 // 修改待办已完成
                 $DSchedule->updateSchedule(['id' => $scheduleId], ['is_finish' => 1]);
-                $this->success('合同生成成功!', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
+                $this->success('合同生成成功!请发送给租客', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
             } else {
                 M()->rollback();
                 $this->error($res['msg']);

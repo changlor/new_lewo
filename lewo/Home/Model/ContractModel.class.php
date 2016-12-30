@@ -52,16 +52,25 @@ class ContractModel extends BaseModel {
 
     public function getContractBill($input)
     {
+        // 获取模型实例
+        $DRoom = D('room'); $DSchedule = D('schedule');
         // 获取proId
         $proId = $input['proId'];
         $filters = [];
         if (is_numeric($proId)) {
-            $filters = ['lewo_pay.pro_id' => $proId]; 
+            $filters = ['lewo_pay.pro_id' => $proId];
         }
         // 获取accountId
         $accountId = $input['accountId'];
         // 获取roomId
         $roomId = $input['roomId'];
+        // 获取scheduleId
+        $scheduleId = $input['scheduleId'];
+        if (is_numeric($scheduleId)) {
+            $scheduleInfo = $DSchedule->selectSchedule(['id' => $scheduleId], ['room_id', 'account_id']);
+            $roomId = $scheduleInfo['room_id'];
+            $accountId = $scheduleInfo['account_id'];
+        }
         if (is_numeric($accountId) && is_numeric($roomId)) {
             $filters = ['lewo_account.id' => $accountId, 'lewo_contract.room_id' => $roomId];
         }
@@ -72,13 +81,14 @@ class ContractModel extends BaseModel {
         ];
         $field = [
             // room
-            'lewo_room.room_code', 'lewo_room.id', 'lewo_room.rent', 'lewo_room.room_fee',
+            'lewo_room.room_code', 'lewo_room.id' => 'room_id', 'lewo_room.rent', 'lewo_room.room_fee',
             // account
             'lewo_account.realname',
             'lewo_account.mobile',
             'lewo_account.card_no',
             'lewo_account.contact2',
             'lewo_account.email',
+            'lewo_account.id' => 'account_id',
             // contract
             'lewo_contract.pro_id',
             'lewo_contract.deposit',
@@ -300,7 +310,7 @@ class ContractModel extends BaseModel {
         }
         // 获取合同金额total
         $total = $input['total'];
-        if (!empty($total) && $total != ($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorableDes)) {
+        if (!empty($total) && $total != round($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorableDes, 2)) {
             return parent::response([false, '合同金额出错！']);
         }
         
@@ -476,8 +486,8 @@ class ContractModel extends BaseModel {
         }
         // 判断房间是否已签约或者已入住
         $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
-        // 只有当房屋状态不为2时可以签约
-        if ($roomStatus == 2) {
+        // 只有当房屋状态为0或1时可以签约
+        if ($roomStatus != 0 || $roomStatus != 1) {
             return parent::response([false, '房屋已被出租！']);
         }
         // 获取真实姓名realName

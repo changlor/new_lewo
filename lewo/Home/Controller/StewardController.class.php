@@ -561,61 +561,17 @@ class StewardController extends BaseController {
      * [入住-缴定后-待办-签约]
      **/
     public function order_checkin(){
-        /*if ( !empty($_POST) ) {
-            $DContract = D("contract");
-            $post = $_POST;
-            $schedule_id = I("schedule_id");//缴定待办id
-            $DContract = D("contract");
-            $room_id = I("room_id");
-            $house_code = M("room")->where(array("id"=>$room_id))->getField("house_code");
-            $end_date = M("houses")->where(array("house_code"=>$house_code))->getField("end_date");//托管结束日
-            if ( strtotime($_POST['startDate']) > strtotime($_POST['endDate']) ) {
-                //判断租期结束日是否大于房间托管结束日
-                $this->error("签约失败,租期开始日:".$_POST['startDate']." 大于 租期结束日:".$_POST['endDate'],'',10);
-            }
-            if ( strtotime($_POST['endDate']) > strtotime($end_date) ) {
-                //判断租期结束日是否大于房间托管结束日
-                $this->error("签约失败,租期结束日:".$_POST['endDate']." 大于 房间托管结束日:".$end_date);
-            }
-            
-            if ( !empty($_FILES['photo']['name']['0']) ) {
-                $upload = new \Think\Upload();// 实例化上传类
-                $upload->maxSize   =     3145728 ;// 设置附件上传大小
-                $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-                $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
-                $upload->savePath  =     ''; // 设置附件上传（子）目录
-                
-                $info   =   $upload->upload();
-
-                if(count($info) != 0) { 
-                    foreach( $info AS $key=>$val ){
-                        if ( $val['key'] == 'photo' ) {
-                            $post['photo'] = $val['savepath'].$val['savename'];
-                        }
-                    }
-                }
-            }
-
-            $result = $DContract->add($post);
-
-            if ( $result['result'] ) {
-                M("schedule")->where(array("id"=>$schedule_id))->save(array("is_finish"=>1));
-                $this->success("合同生成成功!",U("Home/Steward/check_contract",array("id"=>$result['id'])));
-            } else {
-                $this->error($result['error_msg'].",签约失败0。0",'',10);
-            }
-        } else {*/
-            $id = I('schedule_id');//schedule_id待办id
-            $DRoom = D("houses");
-            $DSchedule = D("schedule");
-            $schedule_info = $DSchedule->getScheduleByID($id);
-            $this->assign("schedule_id",$id);
-            $this->assign("account_id",$schedule_info['account_id']);
-            $this->assign('schedule_info',$schedule_info);
-            $this->assign('today',date("Y-m-d",time()));
-            $this->assign('room_info',$DRoom->getRoom($schedule_info['room_id']));
-            $this->display("check-in");
-        /*}*/
+        // 获取模型实例
+        $DContract = D('contract');
+        $res = $DContract->getContractBill([
+            'scheduleId' => I('schedule_id'),
+        ]);
+        $contractInfo = $res['data'];
+        $this->assign('scheduleId', I('schedule_id'));
+        $this->assign('accountId', $contractInfo['account_id']);
+        $this->assign('contractInfo', $contractInfo);
+        $this->assign('today', date('Y-m-d',time()));
+        $this->display('check-in');
     }
 
     //催款

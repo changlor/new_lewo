@@ -50,6 +50,11 @@ class ScheduleModel extends BaseModel {
 		return $this->insert($pay);
 	}
 
+	public function selectSchedule($where, $field)
+	{
+		return $this->select($where, $field)->find();
+	}
+
 	public function deleteSchedule($where)
 	{
 		return $this->delete($where);

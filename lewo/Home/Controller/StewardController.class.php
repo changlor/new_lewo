@@ -561,7 +561,7 @@ class StewardController extends BaseController {
      * [入住-缴定后-待办-签约]
      **/
     public function order_checkin(){
-        if ( !empty($_POST) ) {
+        /*if ( !empty($_POST) ) {
             $DContract = D("contract");
             $post = $_POST;
             $schedule_id = I("schedule_id");//缴定待办id
@@ -604,7 +604,7 @@ class StewardController extends BaseController {
             } else {
                 $this->error($result['error_msg'].",签约失败0。0",'',10);
             }
-        } else {
+        } else {*/
             $id = I('schedule_id');//schedule_id待办id
             $DRoom = D("houses");
             $DSchedule = D("schedule");
@@ -615,7 +615,7 @@ class StewardController extends BaseController {
             $this->assign('today',date("Y-m-d",time()));
             $this->assign('room_info',$DRoom->getRoom($schedule_info['room_id']));
             $this->display("check-in");
-        }
+        /*}*/
     }
 
     //催款
@@ -747,6 +747,10 @@ class StewardController extends BaseController {
         if (parent::isPostRequest()) {
             // 获取模型实例
             $DContract = D('contract');
+            $DSchedule = D('schedule');
+            M()->startTrans();
+            // 缴定待办id
+            $scheduleId = I("schedule_id");            
             $res = $DContract->postContract([
                 'roomId' => I('post.room_id'),
                 'realName'=> I('post.realName'),
@@ -776,8 +780,12 @@ class StewardController extends BaseController {
             ]);
             if ($res['success']) {
                 //显示合同详情信息
+                M()->commit();
+                // 修改待办已完成
+                $DSchedule->updateSchedule(['id' => $scheduleId], ['is_finish' => 1]);
                 $this->success('合同生成成功!', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
             } else {
+                M()->rollback();
                 $this->error($res['msg']);
             }
         } else {

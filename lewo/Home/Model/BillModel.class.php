@@ -243,9 +243,9 @@ class BillModel extends BaseModel {
             // 合同类型
             case 2:
                 // roomStatus，0 未租, 1 缴纳定金, 2 已住
-                $DRoom->updateRoom(['id' => $room_id], ['status' => 2]);
+                $DRoom->updateRoom(['id' => $roomId], ['status' => 2]);
                 // 修改
-                $DRoom->updateRoom(['id' => $room_id], ['account_id' => $accountId]);
+                $DRoom->updateRoom(['id' => $roomId], ['account_id' => $accountId]);
                 // 修改合同正常
                 $contractUpdateInfo = [];
                 $contractUpdateInfo['actual_rent'] = $actualRent;

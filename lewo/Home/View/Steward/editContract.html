@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>签约信息</title>
+<title>修改合同信息</title>
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
 <meta name="format-detection" content="email=no,address=no,telephone=no">
 <meta http-equiv="pragma" content="no-cache">
@@ -42,7 +42,7 @@ function getTotal(){
   rentType        = how.split("_");
   var fu          = parseInt(rentType[1]);
   var deposit     = parseInt(document.getElementById("deposit").value);
-  total           = deposit+wg_fee+((rent+fee)*fu);
+  total           = deposit+wg_fee+((rent+fee)*fu)-bookDeposit-favorable;
   paytotal        = deposit+wg_fee+((rent+fee)*fu)-bookDeposit-favorable;
   document.getElementById("total").setAttribute("value", total.toFixed(2));
 }
@@ -293,7 +293,7 @@ function changeRentType(){
               <h2 class="money_box1">合同金额:￥<input readonly="readonly" id="total" name="total" value="" class="money_box1_shuru1"> </h2>
             </div>        
               <div class="money1">
-                <h2 class="money_box1">缴定抵扣:￥<input id="bookDeposit" name="bookDeposit" <notempty name="contractInfo.money"> value="{$contractInfo['money']}" <else/> value="0" </notempty> class="money_box1_shuru1" readonly="readonly"> </h2>
+                <h2 class="money_box1">缴定抵扣:￥<input id="bookDeposit" name="bookDeposit" <notempty name="contractInfo.book_deposit"> value="{$contractInfo['book_deposit']}" <else/> value="0" </notempty> class="money_box1_shuru1" readonly="readonly"> </h2>
               </div>
 
           </div>
@@ -370,29 +370,6 @@ function changeRentType(){
                 return false; 
               }
             }
-            /*
-            if(document.getElementById("cardZPic").value == "" || document.getElementById("cardZPic").value==null){
-                alert("请上传身份证正面!");
-                return false;   
-            }
-            
-            if(document.getElementById("cardFPic").value == "" || document.getElementById("cardFPic").value==null){
-                alert("请上传身份证反面!");
-                return false;   
-            }
-            
-            if(document.getElementById("howpayxj").checked){
-                if(document.getElementById("pzimg").value == "" || document.getElementById("pzimg").value==null){
-                    alert("付款凭证必须上传");
-                    return false;
-                }
-            }
-            if(document.getElementById("ht1").value == "" || document.getElementById("ht1").value==null){
-                alert("纸质合同不能为空");
-                return false;   
-            }
-            
-            */
             if(!reg.test(document.getElementById("zS").value)){
                 alert("请重新输入总水(只能输入数字,请不要输入符号)");
                 return false;
@@ -411,6 +388,9 @@ function changeRentType(){
             if(!reg.test(document.getElementById("roomD").value)){
                 alert("请重新输入房屋电表(只能输入数字,请不要输入符号)");
                 return false;
+            }
+            if (!confirm('确认合同?')) {
+              return false;
             }
 }
 </script>

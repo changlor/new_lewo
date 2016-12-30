@@ -7,7 +7,7 @@ use Think\Model;
 class PayModel extends BaseModel {
 
 	protected $table;
-	protected $tableName = 'pay';
+protected $tableName = 'pay';
 	protected $field = [
 		'pro_id', 'account_id', 'room_id', 
 		'price',
@@ -273,6 +273,8 @@ class PayModel extends BaseModel {
         $pay['room_id'] = $roomId;
         // 账单类型，1为定金
         $pay['bill_type'] = 1;
+        // 支付类型 管家代收
+        $pay['pay_type'] = 11;
 		$pay['price'] = $money;
 		$pay['pro_id'] = $proId;
 		$pay['create_time'] = date('Y-m-d H:i:s', time());

@@ -7,7 +7,7 @@ use Think\Model;
 class PayModel extends BaseModel {
 
 	protected $table;
-protected $tableName = 'pay';
+    protected $tableName = 'pay';
 	protected $field = [
 		'pro_id', 'account_id', 'room_id', 
 		'price',
@@ -32,6 +32,14 @@ protected $tableName = 'pay';
 		$field = is_array($field) ? implode(',', $field) : $field;
 		return $this->table->field($field)->where($where);
 	}
+
+    public function has($where)
+    {
+        $keys = array_keys($where);
+        $field = $keys[0];
+        $row = $this->selectField($where, $field);
+        return $row === '0' || $row === 0 || !empty($row);
+    }
 
 	public function selectField($where, $field)
 	{

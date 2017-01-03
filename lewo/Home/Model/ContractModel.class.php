@@ -80,8 +80,6 @@ class ContractModel extends BaseModel {
             'contract(room)' => 'account_id(account_id)',
         ];
         $field = [
-            // room
-            'lewo_room.room_code', 'lewo_room.id' => 'room_id', 'lewo_room.rent', 'lewo_room.room_fee',
             // account
             'lewo_account.realname',
             'lewo_account.mobile',
@@ -114,7 +112,8 @@ class ContractModel extends BaseModel {
 
         $contractBill = $this->join($joinTable, $filters, $field)->order('lewo_contract.create_time desc')->limit(1)->find();
         $contractBill['cotenant'] = unserialize($contractBill['cotenant']);
-        return parent::response([true, '', $contractBill]);
+        $roomInfo = $DRoom->selectRoom(['id' => $roomId], ['room_code', 'id' => 'room_id', 'rent', 'room_fee']);
+        return parent::response([true, '', ['contractInfo' => $contractBill, 'roomInfo' => $roomInfo]]);
     }
 
 	/**
@@ -750,6 +749,11 @@ class ContractModel extends BaseModel {
         $payId = $DPay->insertPay($pay);
         if (!is_numeric($payId)) {
             return parent::response([false, '支付表生成失败！']);
+        }
+        // 修改待办已完成
+        // --如果存在sceduleId的话，说明该合同是在管家待办里被创建的
+        if (is_numeric($scheduleId)) {
+            $DSchedule->finishedSchedule(['id' => $scheduleId], ['is_finish' => 1]);
         }
         // 修改房屋状态
         $res = $DRoom->updateRoom(['id' => $roomId], ['status' => 3, 'account_id' => $accountId]);

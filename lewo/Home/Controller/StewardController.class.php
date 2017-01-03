@@ -488,8 +488,8 @@ class StewardController extends BaseController {
             }
         } else {
             $roomId = I('id');
-            $DRomm = D('houses');
-            $this->assign('room_info', $DRomm->getRoom($roomId));
+            $DRoom = D('houses');
+            $this->assign('room_info', $DRoom->getRoom($roomId));
             $this->assign('pay_type_list', C('pay_type'));
             $this->display('order');
         }
@@ -551,8 +551,8 @@ class StewardController extends BaseController {
             }
         } else {
             $id = I('id');
-            $DRomm = D("houses");
-            $this->assign('room_info',$DRomm->getRoom($id));
+            $DRoom = D("houses");
+            $this->assign('room_info',$DRoom->getRoom($id));
             $this->assign('pay_type_list',C('pay_type'));
             $this->display("order");
         }
@@ -566,10 +566,12 @@ class StewardController extends BaseController {
         $res = $DContract->getContractBill([
             'scheduleId' => I('schedule_id'),
         ]);
-        $contractInfo = $res['data'];
+        $contractInfo = $res['data']['contractInfo'];
+        $roomInfo = $res['data']['roomInfo'];
         $this->assign('scheduleId', I('schedule_id'));
         $this->assign('accountId', $contractInfo['account_id']);
         $this->assign('contractInfo', $contractInfo);
+        $this->assign('roomInfo', $roomInfo);
         $this->assign('today', date('Y-m-d',time()));
         $this->display('check-in');
     }
@@ -691,7 +693,7 @@ class StewardController extends BaseController {
             $res = $DContract->getContractBill([
                 'proId' => I('get.proId'),
             ]);
-            $contractInfo = $res['data'];
+            $contractInfo = $res['data']['contractInfo'];
             $this->assign('today', date('Y-m-d', time()));
             $this->assign('contractInfo', $contractInfo);
             $this->display('editContract');
@@ -737,19 +739,17 @@ class StewardController extends BaseController {
             if ($res['success']) {
                 //显示合同详情信息
                 M()->commit();
-                // 修改待办已完成
-                $DSchedule->updateSchedule(['id' => $scheduleId], ['is_finish' => 1]);
                 $this->success('合同生成成功!', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
             } else {
                 M()->rollback();
                 $this->error($res['msg']);
             }
         } else {
-            $id = I('id');//room_id
-            $DRoom = D("houses");
-            $this->assign('today',date("Y-m-d",time()));
-            $this->assign('room_info',$DRoom->getRoom($id));
-            $this->display("check-in");
+            $DRoom = D('room');
+            $roomInfo = $DRoom->selectRoom(['id' => I('id')], ['room_code', 'id' => 'room_id', 'rent', 'room_fee']);
+            $this->assign('today', date('Y-m-d', time()));
+            $this->assign('roomInfo', $roomInfo);
+            $this->display('check-in');
         }
     }
 

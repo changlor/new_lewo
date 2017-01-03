@@ -65,9 +65,28 @@ class ScheduleModel extends BaseModel {
 		return $this->table->where($where)->save($data);
 	}
 
-	public function updateSchedule($where, $data)
+	public function updateSchedule($where, $updateInfo)
 	{
-		return $this->update($where, $data);
+		return $this->update($where, $updateInfo);
+	}
+
+	public function finishedSchedule($input)
+	{
+		// 获取scheduleId
+		$scheduleId = $input['scheduleId'];
+		if (!$this->has(['id' => $scheduleId])) {
+			return parent::response([false, '不存在该待办事件！']);
+		}
+		// 将该scheduleId对应的待办事件状态修改为已完成
+		$scheduleUpdateInfo = [
+			'is_finish' => 1
+		];
+		// 
+		if ($this->has(['is_finish' => 1])) {
+			return parent::response([false, '该待办事件已完成！']);
+		}
+		$affectedRows = $this->update(['id' => $sccheduleId], $scheduleUpdateInfo);
+		return parent::response([true, '']);
 	}
 
 	/**

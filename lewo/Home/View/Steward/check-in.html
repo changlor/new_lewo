@@ -84,7 +84,7 @@ function changeRentType(){
                 <span class="title">签约信息</span>
               </h2>
               <h2>
-                <p class="title_jd">{$contractInfo['room_code']}<input type="hidden" name="room_id" value="{$contractInfo['id']}"><input type="hidden" name="account_id" value="{$account_id}">
+                <p class="title_jd">{$roomInfo['room_code']}<input type="hidden" name="room_id" value="{$roomInfo['room_id']}"><input type="hidden" name="account_id" value="{$account_id}">
                 <notempty name="scheduleId">
                   <input type="hidden" name="scheduleId" value="{$scheduleId}">
                 </notempty>
@@ -149,7 +149,7 @@ function changeRentType(){
               <ul class="ban_tietu">
                 <li class="ban_one zbj20 "><span class="text-letter-spacing-2ys">房租：</span></li>
                 <li class="ban_two">
-                  <input type="text" value="{$contractInfo['rent']}" name="rent" id="rent" class="shuru" onchange="getTotal();">
+                  <input type="text" value="{$roomInfo['rent']}" name="rent" id="rent" class="shuru" onchange="getTotal();">
                 </li>
                 <li class="xiantiao"></li>
               </ul>
@@ -158,7 +158,7 @@ function changeRentType(){
               <ul class="ban_tietu">
                 <li class="ban_one zbj20 "><span class="text-letter-spacing-3ys">服务费：</span></li>
                 <li class="ban_two">
-                  <input type="text" value="{$contractInfo['room_fee']}" name="fee" id="fee" class="shuru"  onchange="getTotal();">
+                  <input type="text" value="{$roomInfo['room_fee']}" name="fee" id="fee" class="shuru"  onchange="getTotal();">
                 </li>
                 <li class="xiantiao"></li>
               </ul>

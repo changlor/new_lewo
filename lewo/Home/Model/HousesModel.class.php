@@ -32,6 +32,15 @@ class HousesModel extends BaseModel {
     	return $this->table->add($contract);
     }
 
+    public function getHouses($input)
+    {
+    	// 获取搜索关键词
+    	$keyWord = $input['keyWord'];
+    	if (strpos($keyWord, '-')) {
+
+    	}
+    }
+
 	/**
 	 * [获取房源列表]
 	 **/

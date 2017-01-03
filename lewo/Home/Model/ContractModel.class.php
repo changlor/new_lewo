@@ -72,7 +72,7 @@ class ContractModel extends BaseModel {
             $accountId = $scheduleInfo['account_id'];
         }
         if (is_numeric($accountId) && is_numeric($roomId)) {
-            $filters = ['lewo_account.id' => $accountId, 'lewo_contract.room_id' => $roomId];
+            $filters = ['lewo_account.id' => $accountId, 'lewo_room.id' => $roomId];
         }
         $joinTable = [
             'contract(account)' => 'account_id(id)',

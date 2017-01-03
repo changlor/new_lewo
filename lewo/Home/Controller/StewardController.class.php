@@ -295,9 +295,15 @@ class StewardController extends BaseController {
     /**
      * [入住--房屋列表]
      **/
-    public function houses(){
+    public function houses()
+    {
+        $DHouses = D('houses');
+        dump(I('search'));exit;
+        $houses = $DHouses->getHouses([
+            'keyWord' => I('get.search'),
+        ]);
         $where = array();
-        $_SESSION['stewrad_houses_back_url'] = U('Home/Steward/houses'); 
+        $_SESSION['stewrad_houses_back_url'] = U('Home/Steward/houses');
         $where['steward_id'] = $_SESSION['steward_id'];
         $search = I("search");
         $is_has_flag = strpos($search, '-');
@@ -317,7 +323,7 @@ class StewardController extends BaseController {
         }
         $this->assign("search",$search);
         
-        $DHouses = D("houses");
+        $DHouses = D('houses');
         $this->assign("houses",$DHouses->getHouseAndRoom($where));
         $this->display('houses');
         $this->display("Steward/common/footer");

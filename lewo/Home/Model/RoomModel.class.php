@@ -18,7 +18,6 @@ class RoomModel extends BaseModel {
 	{
 		$field = empty($field) ? '' : $field;
 		$where = empty($where) ? '' : $where;
-		$field = is_array($field) ? implode(',', $field) : $field;
 		return $this->table->field($field)->where($where);
 	}
 
@@ -33,6 +32,11 @@ class RoomModel extends BaseModel {
 	public function updateRoom($where, $updateInfo)
     {
         return $this->update($where)->save($updateInfo);
+    }
+
+    public function selectRoom($where, $field)
+    {
+    	return $this->select($where, $field)->find();
     }
 
 	public function selectField($where, $field)

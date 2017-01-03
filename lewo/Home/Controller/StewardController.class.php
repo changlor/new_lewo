@@ -19,10 +19,10 @@ class StewardController extends BaseController {
         //待办数量
         $steward_id = $_SESSION['steward_id'];
         $DSchedule = D("schedule");
-        $TFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_tf"),0,C("admin_type_gj"));
-        $ZFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_zf"),0,C("admin_type_gj"));
-        $HFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_hf"),0,C("admin_type_gj"));
-        $JDcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_jd"),0,C("admin_type_gj"));
+        $TFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_tf"),0);
+        $ZFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_zf"),0);
+        $HFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_hf"),0);
+        $JDcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_jd"),0);
         $_SESSION['steward_schedule_count'] = $TFcount+$ZFcount+$HFcount+$JDcount;
 
         $today = date("Y-m-d",time());//今天2016-08-19
@@ -63,10 +63,10 @@ class StewardController extends BaseController {
         //待办数量
         $steward_id = I("steward_id");
         $DSchedule = D("schedule");
-        $TFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_tf"),0,C("admin_type_gj"));
-        $ZFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_zf"),0,C("admin_type_gj"));
-        $HFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_hf"),0,C("admin_type_gj"));
-        $JDcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_jd"),0,C("admin_type_gj"));
+        $TFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_tf"),0);
+        $ZFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_zf"),0);
+        $HFcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_hf"),0);
+        $JDcount = $DSchedule->getScheduleCount($steward_id,C("schedule_type_jd"),0);
         $_SESSION['schedule_count'] = $TFcount+$ZFcount+$HFcount+$JDcount;
         die(json_encode(array("stewrad_schedule_count"=>$_SESSION['stewrad_schedule_count'])));
     }
@@ -892,11 +892,11 @@ class StewardController extends BaseController {
     {
         $DSchedule = D("schedule");
         $schedule_list = $DSchedule->getScheduleBySteward($_SESSION['steward_id']);
+        $tf_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_tf"),0);
+        $zf_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_zf"),0);
+        $hf_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_hf"),0);
+        $jd_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_jd"),0);
         $this->assign('schedule_list',$schedule_list);
-        $tf_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_tf"),0,C("admin_type_gj"));
-        $zf_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_zf"),0,C("admin_type_gj"));
-        $hf_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_hf"),0,C("admin_type_gj"));
-        $jd_count = $DSchedule->getScheduleCount($_SESSION['steward_id'],C("schedule_type_jd"),0,C("admin_type_gj"));
         $this->assign("tf_count",$tf_count);
         $this->assign("zf_count",$zf_count);
         $this->assign("hf_count",$hf_count);
@@ -1021,19 +1021,25 @@ class StewardController extends BaseController {
         $room_id    = I('room_id');
         $type       = I('type');
         $MAccount   = M('account');
+        $DAccount   = D('account');
         $MRoom      = M('room');
+        $DRoom      = D('room');
         $DSchedule  = D('schedule');
         $DAmmeter   = D("ammeter_house");
         $DAmmeterRoom = D("ammeter_room");
+        $DEvents = D('events');
         $flag       = true;
         M()->startTrans();
         
-        if ( empty($account_id) || empty($room_id) ) $this->error('数据丢失');
+        if ( empty($account_id) || empty($room_id) ) {
+            $this->error('数据丢失');
+        }
         if (parent::isPostRequest()) {
             switch ($type) {
                 case 2:
                     //退房
                     $schedule_type = 1;
+                    $check_out_type = 0;
                     break;
                 case 3:
                     // 换房
@@ -1047,14 +1053,16 @@ class StewardController extends BaseController {
                     // 退房
                     $schedule_type = 1;
                     // 违约退租
-                    $param['check_out_type'] = 1;
+                    $check_out_type = 1;
                     break;
                 default:
                     $this->error('type丢失');
                     break;
             }
             // 判断是否已经提交退房请求
-            if ( I('is_success') != 1 ) $this->error('未验房');
+            if (I('is_success') != 1) {
+                $this->error('未验房');
+            }
             
             // 检查的物品数据
             $check_item_keys  = array_fill_keys(array_keys(C('check_item')),'0');
@@ -1067,23 +1075,24 @@ class StewardController extends BaseController {
             ->getField('houses.id');
             // 判断录入的水电气是否低于最新录入的水电气
             $res = $DAmmeter->verifyAmmeter($house_id, [
-                'total_water' => I("post.zS"),
-                'total_energy' => I("post.zD"),
-                'total_gas' => I("post.zQ"),
+                'total_water' => I("post.total_water"),
+                'total_energy' => I("post.total_energy"),
+                'total_gas' => I("post.total_gas"),
             ]);
             if (!$res['success']) {
-                $this->error($res[1],'',10);
+                $this->error($res['msg'],'',5);
             }
-            foreach ( I('roomD') AS $key=>$val ) {
+            foreach ( I('total_room_energy') AS $key=>$val ) {
                 //获取上个月 房间的电表
                 $res2 = $DAmmeterRoom->verifyAmmeterRoom($key, ['room_energy'=>$val['room_energy']]);
                 if (!$res2['success']) {
-                    $this->error($res2[1],'',10);
+                    $this->error($res2['msg'],'',5);
                 }
             }
-
-            $roomD = serialize(i_array_column(I('roomD'), 'room_energy'));
-            $mobile = M('account')->where(['id'=>$account_id])->getField('mobile');
+            // 序列化房间电表
+            $total_room_energy = serialize(i_array_column(I('total_room_energy'), 'room_energy'));
+            // 获取电话
+            $mobile = $DAccount->selectField(['id'=>$account_id], ['mobile']);
             $param = [
                 'steward_id'    => $_SESSION['steward_id'],
                 'account_id'    => $account_id,
@@ -1096,24 +1105,41 @@ class StewardController extends BaseController {
                 'pay_type'      => I('pay_type'),
                 'msg'           => I('check_out_msg'),
                 'admin_type'    => C('admin_type_cn'),//出纳
-                'zS'            => I('zS'),
-                'zD'            => I('zD'),
-                'zQ'            => I('zQ'),
-                'roomD'         => $roomD,
+                'total_water'   => I('total_water'),
+                'total_energy'  => I('total_energy'),
+                'total_gas'     => I('total_gas'),
+                'total_room_energy' => $total_room_energy,
                 'wx_fee'        => I('wx_fee'),
                 'wx_des'        => I('check_out_msg'),
-                'status'        => 2,
+                'status'        => 2,// 管家录入验房后
                 'check_out_goods' => serialize(I('goods')),
+                'check_out_type' => $check_out_type,
             ];
+            // 生成待办
+            $result = $DSchedule->postSchedule($param);
+            if (!$result['success']) {
+                $this->error($result['msg']);
+            }
 
-            //将数据放入schedule表中，展示给后台看
-            $result = $DSchedule->create_new_schedule($param);
+            // 生成事件
+            $res = $DEvents->postEvent([
+                    'event_id' => $result['data']['event_id'],
+                    'account_id'    => $account_id,
+                    'room_id'       => $room_id,
+                    'event_type' => $schedule_type,
+                    'event_status' => 2
+                ]);
+            if (!$res['success']) {
+                $this->error($res['msg']);
+            }
 
-            if ( !$result['success'] ) $this->error($result['msg']);
-            //执行退房修改操作
-            //修改房间状态
-            $room_result = $MRoom->where(array('id'=>$room_id))->save(array('account_id'=>0,'status'=>0));
-            if ( $room_result != 1 ) $flag = false;
+            // 执行退房修改操作
+            // 修改房间状态
+            $room_result = $DRoom->updateRoom(['id'=>$room_id],['account_id'=>0,'status'=>0]);
+
+            if ( $room_result != 1 ) {
+                $flag = false;
+            }
             if ( $flag ) {
                 M()->commit();
                 $this->success('提交成功',U('Home/Steward/stewardtasks'));
@@ -1122,11 +1148,9 @@ class StewardController extends BaseController {
                 $this->error('提交失败');
             }
         } else {
-            $DAccount = D("account");
-            $DRoom    = D("room");
             $account_info = $DAccount->getAccountInfoById($account_id);
             $room_info = $DRoom->getRoom($room_id);
-            $room_list = $MRoom->field('id,room_code')->where(array('house_id'=>$room_info['house_id'],'is_show'=>1))->select();
+            $room_list = $DRoom->select(['house_id'=>$room_info['house_id'], 'is_show'=>1], ['id', 'room_code'])->select();
 
             $this->assign('room_list',$room_list);
             $this->assign('check_item',C('check_item'));
@@ -1163,7 +1187,7 @@ class StewardController extends BaseController {
         // 获取租客姓名
         $account_info['realname'] = $DAccount->selectField(['id'=>$scheduleInfo['account_id']], 'realname');
         $info = array_merge($scheduleInfo, $house_info, $account_info);
-        dump($info);exit;
+
         $this->assign('pay_type_arr',C('pay_type'));
         $this->assign('scheduleInfo',$scheduleInfo);
         $this->display('checkSchedule');

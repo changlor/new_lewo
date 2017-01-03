@@ -69,13 +69,17 @@ class ScheduleModel extends BaseModel {
 	 * [管家待办表]
 	 **/
 	public function getScheduleBySteward($steward_id){
+		$DEvent = D('events');
 		$sArr = $this->table
-			->field("lewo_room.house_code,lewo_room.room_code,lewo_room.bed_code,lewo_schedule.*,lewo_account.realname,lewo_account.mobile")
-			->join("lewo_room ON lewo_schedule.room_id = lewo_room.id")
-			->join("lewo_account ON lewo_schedule.account_id = lewo_account.id")
-			->where(array('steward_id'=>$steward_id,'is_finish'=>0))
+			->field("lewo_room.house_code,lewo_room.room_sort,lewo_room.room_code,lewo_room.bed_code,lewo_schedule.*,lewo_account.realname,lewo_account.mobile")
+			->join("lewo_room ON lewo_schedule.room_id = lewo_room.id", 'left')
+			->join("lewo_account ON lewo_schedule.account_id = lewo_account.id", 'left')
+			->group('event_id')
+			->where(['steward_id'=>$steward_id])
 			->select();
+
 		foreach( $sArr AS $key=>$val ){
+			$sArr[$key]['eventLists'] = $DEvent->getEventList($val['event_id']);
 			//待办工作类型 1：退房 2：转房 3：换房 4：缴定 5:例行打款
 			$sArr[$key]['schedule_type_name'] = C('schedule_type_arr')[$val['schedule_type']];
 		}
@@ -165,7 +169,7 @@ class ScheduleModel extends BaseModel {
 	* @param status 待办状态 1）退房：1租客申请，2管家录入水电气，3财务发送账单，4租客确认账单，5财务点击完成。2）转房3）换房同上。4）缴定：1管家录入缴定，2管家已跟租客签约
 	* @param pay_type 1=>'支付宝',2=>'微信',3=>'银行卡',4=>'现金'
 	**/
-	public function create_new_schedule($param){
+	public function postSchedule($param){
 		if (is_null($param['schedule_type'])) {
 			return parent::response([false, '待办类型参数不存在']);
 		}
@@ -178,15 +182,18 @@ class ScheduleModel extends BaseModel {
 		if (is_null($param['status'])) {
 			return parent::response([false, '待办状态参数不存在']);
 		}
+		if (is_null($param['steward_id'])) {
+			return parent::response([false, '非法操作']);
+		}
 
 		$data = array();
-		$data['pro_id'] 		= getOrderNo();
+		$data['event_id'] 		= getOrderNo();
 		$data['account_id'] 	= $param['account_id'];
 		$data['room_id']    	= $param['room_id'];
 		$data['schedule_type']  = $param['schedule_type'];
 		$data['status']			= $param['status'];
 		$data['create_time']	= date('Y-m-d H:i:s', time());
-
+		$data['steward_id']     = $param['steward_id'];
 		$data['create_date']	= is_null($param['create_date'])
 								? date('Y-m-d', time()) 
 								: $param['create_date'];
@@ -210,25 +217,22 @@ class ScheduleModel extends BaseModel {
 								: $param['msg'];
 		$data['is_finish']      = is_null($param['is_finish'])
 								? 0
-								: $param['is_finish'];
-		$data['steward_id']     = is_null($param['steward_id'])
-								? 0
-								: $param['steward_id'];
+								: $param['is_finish'];;
 		$data['admin_type']     = is_null($param['admin_type'])
 								? 0
 								: $param['admin_type'];
-		$data['zS']				= is_null($param['zS'])
+		$data['total_water']	= is_null($param['total_water'])
 								? 0
-								: $param['zS'];
-		$data['zD']				= is_null($param['zD'])
+								: $param['total_water'];
+		$data['total_energy']	= is_null($param['total_energy'])
 								? 0
-								: $param['zD'];
-		$data['zQ']				= is_null($param['zQ'])
+								: $param['total_energy'];
+		$data['total_gas']		= is_null($param['total_gas'])
 								? 0
-								: $param['zQ'];
-		$data['roomD']			= is_null($param['roomD'])
+								: $param['total_gas'];
+		$data['total_room_energy']	= is_null($param['total_room_energy'])
 								? 0
-								: $param['roomD'];
+								: $param['total_room_energy'];
 		$data['wx_fee']         = is_null($param['wx_fee'])
 								? 0
 								: $param['wx_fee'];
@@ -248,7 +252,7 @@ class ScheduleModel extends BaseModel {
 		$res = $this->table->add($data);
 
 		if ( $res ) {
-			return parent::response([true, '待办生成成功!']);
+			return parent::response([true, '待办生成成功!', ['event_id'=>$data['event_id']]]);
 		} else {
 			return parent::response([false, '待办生成失败!']);
 		}
@@ -283,16 +287,14 @@ class ScheduleModel extends BaseModel {
 	* @param is_finish 是否完成
 	* @return count
 	**/
-	public function getScheduleCount($steward_id, $schedule_type,$is_finish = 0,$admin_type = null){
-		if (empty($schedule_type)) {
-			return false;
+	public function getScheduleCount($steward_id, $schedule_type,$is_finish = 0){
+		if (!is_numeric($schedule_type) || empty($schedule_type)) {
+			return parent::response([false, '待办类型不存在']);
 		}
 		$where['schedule_type'] = $schedule_type;
 		$where['is_finish'] = $is_finish;
 		$where['steward_id'] = $steward_id;
-		if ( !empty($admin_type) ) {
-			$where['admin_type'] = $admin_type;
-		}
+
 		return $this->table->where($where)->count();
 	}
 
@@ -301,10 +303,11 @@ class ScheduleModel extends BaseModel {
 	**/
 	public function getScheduleInfo($pro_id, $where){
 		$where['pro_id'] = $pro_id;
-		$scheduleInfo = $this->table->select($where)->order('status asc')->find();
+		$scheduleInfo = $this->select($where)->order('status asc')->find();
 		$scheduleInfo['check_item'] = unserialize($scheduleInfo['check_item']);
 		$scheduleInfo['check_out_goods'] = unserialize($scheduleInfo['check_out_goods']);
-
+		$scheduleInfo['admin_type_name'] = C('admin_type_arr')[$scheduleInfo['admin_type']];
+		
 		return $scheduleInfo;
 	}
 }

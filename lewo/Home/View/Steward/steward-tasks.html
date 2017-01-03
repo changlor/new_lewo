@@ -91,7 +91,7 @@
                 <tr>
                   <td>{$vo.schedule_type_name}</td>
                   <td>{$vo.house_code}</td>
-                  <td>{$vo.room_code}</td>
+                  <td>{$vo.room_sort}</td>
                   <notempty name="vo['bed_code']">
                     <td>{$vo.bed_code}</td>
                   <else/>
@@ -105,9 +105,17 @@
             </tbody>
             <tbody class="second-tbody" >
               <body>
+                <volist name="vo['eventLists']" id="v">
+                  <tr style="background-color: #eee;">
+                    <td colspan="5" align="center">●&nbsp;{$v.create_time}：{$v.event_des}</td>
+                  </tr>
+                </volist>
                 <tr>
                   <td colspan="5" align="center" class="info">
                     <switch name="vo['schedule_type']">
+                      <case value="1">
+                        <!-- <label onclick="window.location='{:U(\'Home/Steward/checkSchedule\',array(\'pro_id\'=>$vo[\'pro_id\']))}'" class="btn btn-success btn-mini">查看待办</label> -->
+                      </case>
                       <case value="4">
                         <label onclick="window.location='{:U(\'Home/Steward/order_checkin\',array(\'schedule_id\'=>$vo[\'id\']))}'" class="btn btn-success btn-mini">处理待办</label>
                         <label onclick="window.location='{:U(\'Home/Steward/cancelDepositBill\',array(\'scheduleId\'=>$vo[\'id\']))}'" class="btn btn-danger btn-mini">取消账单</label>

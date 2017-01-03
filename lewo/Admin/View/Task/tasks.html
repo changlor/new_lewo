@@ -35,6 +35,7 @@
               <th>房间</th>
               <th>床位</th>
               <th>租客</th>
+              <th>管家</th>
               <th>创建时间</th>
               <th>操作</th>
             </tr>
@@ -43,10 +44,11 @@
           <volist name="schedule_list" id="vo">
             <tr>
               <td>{$vo.schedule_type_name}</td>
-              <td>{$vo.room_info.house_code}</td>
-              <td>{$vo.room_info.room_code}</td>
-              <td>{$vo.room_info.bed_code}</td>
+              <td>{$vo.house_code}</td>
+              <td>{$vo.room_sort}</td>
+              <td>{$vo.bed_code}</td>
               <td>{$vo.realname}</td>
+              <td>{$vo.steward_nickname}</td>
               <td>{$vo.create_time}</td>
               <td>
                 <switch name="vo.schedule_type" >

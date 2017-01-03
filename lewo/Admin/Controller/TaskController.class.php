@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
-class TaskController extends Controller {
+class TaskController extends BaseController {
     public function __construct(){
         parent::__construct();
         if ( empty($_SESSION['username']) && ACTION_NAME != 'register') {
@@ -12,12 +12,14 @@ class TaskController extends Controller {
     
     public function index(){
         $DSchedule = D("schedule");
+        $DBackBill = D("back_bill");
         $schedule_list = $DSchedule->getScheduleList();
-        $TFcount = $DSchedule->getScheduleCount(C("schedule_type_tf"),0,C("admin_type_cw"));
-        $ZFcount = $DSchedule->getScheduleCount(C("schedule_type_zf"),0,C("admin_type_cw"));
-        $HFcount = $DSchedule->getScheduleCount(C("schedule_type_hf"),0,C("admin_type_cw"));
-        $LXDKcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>2,"back_type"=>1))->count();
-        $LXDKYEcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>2,"back_type"=>2))->count();
+        $TFcount = $DSchedule->getScheduleCount(C("schedule_type_tf"),0);
+        $ZFcount = $DSchedule->getScheduleCount(C("schedule_type_zf"),0);
+        $HFcount = $DSchedule->getScheduleCount(C("schedule_type_hf"),0);
+        $LXDKcount = $DBackBill->where(array("is_finish"=>0,"is_affirm"=>2,"back_type"=>1))->count();
+        $LXDKYEcount = $DBackBill->where(array("is_finish"=>0,"is_affirm"=>2,"back_type"=>2))->count();
+        $_SESSION['schedule_count'] = $TFcount + $ZFcount + $HFcount + $LXDKcount + $LXDKYEcount;
         $this->assign("TFcount",$TFcount);
         $this->assign("ZFcount",$ZFcount);
         $this->assign("HFcount",$HFcount);
@@ -29,6 +31,22 @@ class TaskController extends Controller {
     	$this->display("Common/nav");
     	$this->display("tasks");
     	$this->display("Common/footer");
+    }
+
+    /**
+    * [重新计算待办未完成数目]
+    **/
+    public function refesh_schedule_count(){
+        //待办数量
+        $DSchedule = D("schedule");
+        $schedule_list = $DSchedule->getScheduleList();
+        $TFcount = $DSchedule->getScheduleCount(C("schedule_type_tf"),0);
+        $ZFcount = $DSchedule->getScheduleCount(C("schedule_type_zf"),0);
+        $HFcount = $DSchedule->getScheduleCount(C("schedule_type_hf"),0);
+        $LXDKcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>2,"back_type"=>1))->count();
+        $LXDKYEcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>2,"back_type"=>2))->count();
+        $_SESSION['schedule_count'] = $TFcount+$ZFcount+$HFcount+$LXDKcount+$LXDKYEcount;
+        die(json_encode(array("schedule_count"=>$_SESSION['schedule_count'])));
     }
 
     /**
@@ -61,23 +79,25 @@ class TaskController extends Controller {
     * [处理退房账单]
     **/
     public function dispose_bill(){
-        if ( !empty($_POST) ) {
-            $schedule_id = I("schedule_id");
-            $schedule_info = M("schedule")->where(array('id'=>$schedule_id))->find();
+        $MRoom = M("room");
+        $MAccount = M("account");
+        $DRoom = D("room");
+        $DSchedule = D("schedule");
+        if (parent::isPostRequest()) {            
+            $schedule_id = I('post.schedule_id');
+            $schedule_info = $DSchedule->getScheduleInfo($schedule_id);
+
             $schedule_type = $schedule_info['schedule_type'];
 
-            $rent = M("room")->where(array('id'=>I("room_id")))->getField("rent");//房租
+            $rent = $MRoom->where(['id'=>I("room_id")])->getField("rent");//房租
 
             if ( C("schedule_type_zf") == $schedule_type || C("schedule_type_hf") == $schedule_type ) {
                 //如果是换房或者转房，要收取手续费
                 $data['handling_fee'] = C('handling_percent')*$rent;
             }
 
-            $DRoom = D("room");
-            $MAccount = M("account");
-
             //插入退房水电气账单
-            $data['order_no'] = getOrderNo();
+            $data['pro_id'] = getOrderNo();
             $data['room_id'] = I("room_id");
             $data['house_code'] = I("house_code");
             $data['account_id'] = I("account_id");
@@ -140,12 +160,13 @@ class TaskController extends Controller {
                 $this->error("生成退房水电气失败!",U("Admin/Task/index"));
             }
         } else {
-            $schedule_id = I("schedule_id");
-            $DSchedule = D("schedule");
+            // 待办id
+            $schedule_id = I('schedule_id');
+            // 获取待办数据
             $schedule_info =  $DSchedule->getScheduleInfo($schedule_id);
-            $schedule_type = $schedule_info['schedule_type'];
-            $this->assign("schedule_type_name",C("schedule_type_arr")[$schedule_type]);
-            $this->assign("schedule_info",$schedule_info);
+            
+            $schedule_type_name = C("schedule_type_arr")[$schedule_info['schedule_type']];
+            
             $room_id = $schedule_info['room_id'];
             $DRoom = D("room");
             
@@ -310,6 +331,8 @@ class TaskController extends Controller {
 
                 $contract_list[$key]['total_fee'] = $contract_list[$key]['room_energy_fee']+$contract_list[$key]['energy_fee']+$contract_list[$key]['water_fee']+$contract_list[$key]['gas_fee']+$contract_list[$key]['rubbish_fee']+$contract_list[$key]['wx_fee']+$contract_list[$key]['handling_fee'];
             }
+            $this->assign("schedule_type_name",$schedule_type_name);
+            $this->assign("schedule_info",$schedule_info);
             $this->assign("sum_person_day",$sum_person_day);
             $this->assign("person_day_area_date",date("Y-m-01",strtotime($schedule_info['appoint_time']))."~".date("Y-m-d",strtotime($schedule_info['appoint_time'])));
 

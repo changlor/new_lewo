@@ -4,20 +4,65 @@ use Think\Model;
 /**
 * [待办数据层]
 */
-class ScheduleModel extends Model{
+class ScheduleModel extends BaseModel{
+	private $table;
+	protected $tableName = 'schedule';
+
+	public function __construct()
+    {
+        parent::__construct();
+    	$this->table = M($this->tableName);
+    }
+
+    public function select($where, $field)
+	{
+		$field = empty($field) ? '' : $field;
+		$where = empty($where) ? '' : $where;
+		$field = is_array($field) ? implode(',', $field) : $field;
+		return $this->table->field($field)->where($where);
+	}
+
+	public function selectSchedule($where, $field){
+		return $this->select($where, $field)->select();
+	}
+
+	public function join($joinTable, $where, $field)
+    {
+        return parent::join($this->table, $joinTable)->field($field)->where($where);
+    }
 	/**
 	* [获取待办列表]
 	**/
 	public function getScheduleList(){
 		$DRoom = D("room");
 		$DAccount = D("account");
-		$list = $this->where(array("is_finish"=>0,"admin_type"=>C("admin_type_cw")))->select();
-		foreach( $list AS $key=>$val ){
-			$room_info = $DRoom->getRoomInfoById($val['room_id']);
-			$list[$key]['room_info'] = $room_info;
 
-			$realname = $DAccount->getFieldById($val['account_id'],"realname");
-			$list[$key]['realname'] = $realname;
+		$field = [
+			// schedule
+			'schedule.account_id', 'schedule.create_time', 
+			'schedule.schedule_type', 'schedule.status', 
+			'schedule.room_id', 'schedule.is_finish', 
+			'schedule.steward_id', 'schedule.admin_type', 
+			'schedule.is_delete', 'schedule.id',
+			// room
+			'room.house_code',
+			'room.room_sort', 'room.bed_code',
+			// account
+			'account.realname',
+			// admin_user
+			'admin_user.nickname' => 'steward_nickname'
+		];
+
+		$list = $this->table
+		->alias('schedule')
+		->field($field)
+		->join('lewo_room room ON room.id = schedule.room_id')
+		->join('lewo_account account ON account.id = schedule.account_id')
+		->join('lewo_admin_user admin_user ON admin_user.id = schedule.steward_id')
+		->where(['is_finish'=>0])
+		->select();
+
+		foreach( $list AS $key=>$val ){
 			//待办工作类型 1：退房 2：转房 3：换房 4：缴定 5:例行打款
 			switch ($val['schedule_type']) {
 				case 1:
@@ -41,7 +86,7 @@ class ScheduleModel extends Model{
 							$list[$key]['schedule_type_name'] = '退房完成';
 							break;
 						default:
-							$list[$key]['schedule_type_name'] = '退房';
+							$list[$key]['schedule_type_name'] = '未定义';
 							break;
 					}
 					break;
@@ -69,7 +114,9 @@ class ScheduleModel extends Model{
 	* [获取待办信息]
 	**/
 	public function getScheduleInfo($id){
-		return $this->where(array("id"=>$id))->find();
+		return $this->table
+		->where(['id'=>$id])
+		->find();
 	}
 
 	/**
@@ -81,7 +128,7 @@ class ScheduleModel extends Model{
 		if ( !empty($admin_type) ) {
 			$where['admin_type'] = $admin_type;
 		}
-		$list = $this->where($where)->select();
+		$list = $this->table->where($where)->select();
 		foreach( $list AS $key=>$val ){
 			$room_info = $DRoom->getRoomInfoById($val['room_id']);
 			$list[$key]['room_info'] = $room_info;
@@ -173,14 +220,14 @@ class ScheduleModel extends Model{
 		$data['is_finish'] 		= $is_finish;
 		$data['is_detele'] 		= $is_detele;
 		$data['last_schedule_id'] = $schedule_id;
-		return M("schedule")->add($data);
+		return $this->table->add($data);
 	}
 
 	/**
 	 * [设置待办完成]
 	 **/
 	public function setFinish($id){
-		return $this->where(array("id"=>$id))->save(array("is_finish"=>1));
+		return $this->table->where(array("id"=>$id))->save(array("is_finish"=>1));
 	}
 
 	/**
@@ -198,7 +245,7 @@ class ScheduleModel extends Model{
 		if ( !empty($admin_type) ) {
 			$where['admin_type'] = $admin_type;
 		}
-		return $this->where($where)->count();
+		return $this->table->where($where)->count();
 	}
 }
 

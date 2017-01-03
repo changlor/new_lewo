@@ -56,21 +56,6 @@ class IndexController extends Controller {
 
     }
 
-    /**
-    * [重新计算待办未完成数目]
-    **/
-    public function refesh_schedule_count(){
-        //待办数量
-        $DSchedule = D("schedule");
-        $schedule_list = $DSchedule->getScheduleList();
-        $TFcount = $DSchedule->getScheduleCount(C("schedule_type_tf"),0,C("admin_type_cw"));
-        $ZFcount = $DSchedule->getScheduleCount(C("schedule_type_zf"),0,C("admin_type_cw"));
-        $HFcount = $DSchedule->getScheduleCount(C("schedule_type_hf"),0,C("admin_type_cw"));
-        $LXDKcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>2,"back_type"=>1))->count();
-        $LXDKYEcount = D("back_bill")->where(array("is_finish"=>0,"is_affirm"=>2,"back_type"=>2))->count();
-        $_SESSION['schedule_count'] = $TFcount+$ZFcount+$HFcount+$LXDKcount+$LXDKYEcount;
-        die(json_encode(array("schedule_count"=>$_SESSION['schedule_count'])));
-    }
     /*
      * [登录]
      */

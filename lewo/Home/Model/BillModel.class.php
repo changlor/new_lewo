@@ -143,6 +143,9 @@ class BillModel extends BaseModel {
         $currentStewardId = $_SESSION['steward_id'];
         // 获取订单id
         $proId = $input['proId'];
+        if ($DPay->has(['pro_id' => $proId], ['pay_status' => 2])) {
+            return parent::response([false, '该账单已代收，请勿重复代收！']);
+        }
         // 获取roomId
         $roomId = $DPay->selectField(['pro_id' => $proId], 'room_id');
         // 获取houseId

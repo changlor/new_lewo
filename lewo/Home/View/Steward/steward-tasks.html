@@ -118,7 +118,7 @@
                       </case>
                       <case value="4">
                         <label onclick="window.location='{:U(\'Home/Steward/order_checkin\',array(\'schedule_id\'=>$vo[\'id\']))}'" class="btn btn-success btn-mini">处理待办</label>
-                        <label onclick="window.location='{:U(\'Home/Steward/cancelDepositBill\',array(\'scheduleId\'=>$vo[\'id\']))}'" class="btn btn-danger btn-mini">取消账单</label>
+                        <label onclick="if(!confirm('确定要取消吗？')){return false}window.location='{:U(\'Home/Steward/cancelDepositBill\',array(\'scheduleId\'=>$vo[\'id\']))}'" class="btn btn-danger btn-mini">取消账单</label>
                       </case>
                       <default />
                     </switch>

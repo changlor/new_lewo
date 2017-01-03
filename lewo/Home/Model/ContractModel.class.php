@@ -52,16 +52,25 @@ class ContractModel extends BaseModel {
 
     public function getContractBill($input)
     {
+        // 获取模型实例
+        $DRoom = D('room'); $DSchedule = D('schedule');
         // 获取proId
         $proId = $input['proId'];
         $filters = [];
         if (is_numeric($proId)) {
-            $filters = ['lewo_pay.pro_id' => $proId]; 
+            $filters = ['lewo_pay.pro_id' => $proId];
         }
         // 获取accountId
         $accountId = $input['accountId'];
         // 获取roomId
         $roomId = $input['roomId'];
+        // 获取scheduleId
+        $scheduleId = $input['scheduleId'];
+        if (is_numeric($scheduleId)) {
+            $scheduleInfo = $DSchedule->selectSchedule(['id' => $scheduleId], ['room_id', 'account_id']);
+            $roomId = $scheduleInfo['room_id'];
+            $accountId = $scheduleInfo['account_id'];
+        }
         if (is_numeric($accountId) && is_numeric($roomId)) {
             $filters = ['lewo_account.id' => $accountId, 'lewo_contract.room_id' => $roomId];
         }
@@ -71,14 +80,13 @@ class ContractModel extends BaseModel {
             'contract(room)' => 'account_id(account_id)',
         ];
         $field = [
-            // room
-            'lewo_room.room_code', 'lewo_room.id', 'lewo_room.rent', 'lewo_room.room_fee',
             // account
             'lewo_account.realname',
             'lewo_account.mobile',
             'lewo_account.card_no',
             'lewo_account.contact2',
             'lewo_account.email',
+            'lewo_account.id' => 'account_id',
             // contract
             'lewo_contract.pro_id',
             'lewo_contract.deposit',
@@ -104,7 +112,8 @@ class ContractModel extends BaseModel {
 
         $contractBill = $this->join($joinTable, $filters, $field)->order('lewo_contract.create_time desc')->limit(1)->find();
         $contractBill['cotenant'] = unserialize($contractBill['cotenant']);
-        return parent::response([true, '', $contractBill]);
+        $roomInfo = $DRoom->selectRoom(['id' => $roomId], ['room_code', 'id' => 'room_id', 'rent', 'room_fee']);
+        return parent::response([true, '', ['contractInfo' => $contractBill, 'roomInfo' => $roomInfo]]);
     }
 
 	/**
@@ -300,7 +309,7 @@ class ContractModel extends BaseModel {
         }
         // 获取合同金额total
         $total = $input['total'];
-        if (!empty($total) && $total != ($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorableDes)) {
+        if (!empty($total) && $total != round($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorableDes, 2)) {
             return parent::response([false, '合同金额出错！']);
         }
         
@@ -368,75 +377,79 @@ class ContractModel extends BaseModel {
         // 如果获取不到
         if (!empty($mobile) && !is_numeric($accountId)) {
             // 插入帐号
-            $account = [];
-            $account['realname'] = $realName;
-            // 默认密码
-            $account['password'] = md5("123456");
-            $account['mobile'] = $mobile;
-            // 紧急联系人
-            $account['contact2'] = $contact2;
-            // 身份证
-            $account['card_no'] = $idNo;
-            $account['email'] = $email;
-            $account['register_time'] = date("Y-m-d H:i:s",time());
+            $account = [
+                'realname' => $realName,
+                // 默认密码
+                'password' => md5('123456'),
+                'mobile' => $mobile,
+                // 紧急联系人
+                'contact2' => $contact2,
+                // 身份证
+                'card_no' => $card_no,
+                'email' => $email,
+                'register_time' => date('Y-m-d H:i:s', time())
+            ];
             // 插入account并返回account_id
             $accountId = $DAccount->insertAccount($account);
         } elseif (!empty($mobile)) {
             // 更新租客信息
-            $account = [];
-            $account['realname'] = $realName;
-            // 紧急联系人
-            $account['contact2'] = $contact2;
-            // 身份证
-            $account['card_no'] = $idNo;
-            $account['email'] = $email;
+            $account = [
+                'realname' => $realName,
+                // 紧急联系人
+                'contact2' => $contact2,
+                // 身份证
+                'card_no' => $idNo,
+                'email' => $email
+            ];
             // 更新account数据
             $DAccount->updateAccount(['id' => $account_id], $account);
         }
         // 插入合同数据
-        $contract = [];
-        $contract['start_time'] = $startDate;
-        $contract['end_time'] = $endDate;
-        $contract['pro_id'] = $proId;
-        $contract['account_id'] = $accountId;
-        $contract['room_id'] = $roomId;
-        // $contract['create_time'] = $createTime;
-        $contract['deposit'] = $deposit;
-        $contract['wg_fee'] = $wgFee;
-        $contract['book_deposit'] = $bookDeposit;
-        $contract['period'] = $payCount;
-        $contract['steward_id'] = $stewardId;
-        $contract['rent_type']     = $rentType;
-        $contract['rent_date'] = date('Y-m-d', strtotime($startDate . ' + ' . $payCount . ' month -1 day'));
-        $contract['rent'] = $rent;
-        $contract['fee'] = $fee;
-        $contract['contact2'] = $contact2;
-        $contract['person_count'] = $personCount;
-        $contract['cotenant'] = serialize($hzInfo);
-        $contract['roomD'] = $roomD;
-        // 总金额
-        $contract['total_fee'] = $total;
-        // 合影
-        $contract['photo'] = $photoDir;
-        // 插入contract表
-        $contract = array_filter($contract);
+        $contract = [
+            'start_time' => $startDate,
+            'end_time' => $endDate,
+            'pro_id' => $proId,
+            'account_id' => $accountId,
+            'room_id' => $roomId,
+            'deposit' => $deposit,
+            'wg_fee' => $wgFee,
+            'book_deposit' => $bookDeposit,
+            'period' => $payCount,
+            'steward_id' => $stewardId,
+            'rent_type' => $rentType,
+            'rent_date' => date('Y-m-d', strtotime($startDate . ' + ' . $payCount . ' month -1 day')),
+            'rent' => $rent,
+            'fee' => $fee,
+            'contact2' => $contact2,
+            'person_count' => $personCount,
+            'cotenant' => serialize($hzInfo),
+            'roomD' => $roomD,
+            // 总金额
+            'total_fee' => $total,
+            // 合影
+            'photo' => $photoDir
+        ];
+        // 去除空的数据并插入contract表
+        $contract = array_filter($contract, function ($value) {
+            return $value === 0 || !!$value;
+        });
         $affectedRows1 = $this->updateContract(['pro_id' => $proId], $contract);
         // pay表数据
-        $pay = [];
-        $pay['pro_id'] = $proId;
-        $pay['account_id'] = $accountId;
-        $pay['room_id'] = $roomId;
-        // $pay['create_time'] = $createTime;
-        $pay['input_year'] = $startYear;
-        $pay['input_month'] = $startMonth;
-        // $pay['should_date'] = $createTime;
-        // $pay['last_date'] = $createTime;
-        $pay['favorable'] = $favorable;
-        $pay['favorable_des'] = $favorableDes;
-        $pay['price'] = $total;
-        $pay['modify_log'] = ' ';
+        $pay = [
+            'pro_id' => $proId,
+            'account_id' => $accountId,
+            'room_id' => $roomId,
+            'input_year' => $startYear,
+            'input_month' => $startMonth,
+            'favorable' => $favorable,
+            'favorable_des' => $favorableDes,
+            'price' => $total,
+            'modify_log' => ' '
+        ];
         // 插入pay表数据
-        $pay = array_filter($pay);
+        $pay = array_filter($pay, function ($value) {
+            return $value === 0 || !!$value;
+        });
         $pay['is_show'] = $isShow;
         if (!is_numeric($isShow)) {
             unset($pay['is_show']);
@@ -472,8 +485,8 @@ class ContractModel extends BaseModel {
         }
         // 判断房间是否已签约或者已入住
         $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
-        // 只有当房屋状态不为2时可以签约
-        if ($roomStatus == 2) {
+        // 只有当房屋状态为0或1时可以签约
+        if ($roomStatus != 0 || $roomStatus != 1) {
             return parent::response([false, '房屋已被出租！']);
         }
         // 获取真实姓名realName
@@ -736,6 +749,11 @@ class ContractModel extends BaseModel {
         $payId = $DPay->insertPay($pay);
         if (!is_numeric($payId)) {
             return parent::response([false, '支付表生成失败！']);
+        }
+        // 修改待办已完成
+        // --如果存在sceduleId的话，说明该合同是在管家待办里被创建的
+        if (is_numeric($scheduleId)) {
+            $DSchedule->finishedSchedule(['id' => $scheduleId], ['is_finish' => 1]);
         }
         // 修改房屋状态
         $res = $DRoom->updateRoom(['id' => $roomId], ['status' => 3, 'account_id' => $accountId]);

@@ -284,21 +284,21 @@ class ScheduleModel extends BaseModel {
 	* @param room_id 房间id
 	**/
 	public function getTFinfo($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id,"is_delete"=>0,"schedule_type"=>C("schedule_type_tf")))->order("status asc")->select();
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id,"is_delete"=>0,"schedule_type"=>C("schedule_type_tf")))->order("status asc")->select();
 	}
 
 	/**
 	* [获取换房信息]
 	**/
 	public function getHFinfo($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id,"is_delete"=>0,"schedule_type"=>C("schedule_type_hf")))->order("status asc")->select();
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id,"is_delete"=>0,"schedule_type"=>C("schedule_type_hf")))->order("status asc")->select();
 	}
 
 	/**
 	* [获取转房信息]
 	**/
 	public function getZFinfo($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id,"is_delete"=>0,"schedule_type"=>C("schedule_type_zf")))->order("status asc")->select();
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id,"is_delete"=>0,"schedule_type"=>C("schedule_type_zf")))->order("status asc")->select();
 	}
 
 	/**
@@ -317,7 +317,7 @@ class ScheduleModel extends BaseModel {
 		if ( !empty($admin_type) ) {
 			$where['admin_type'] = $admin_type;
 		}
-		return $this->where($where)->count();
+		return $this->table->where($where)->count();
 	}
 
 	/**
@@ -325,7 +325,7 @@ class ScheduleModel extends BaseModel {
 	**/
 	public function getScheduleInfo($pro_id, $where){
 		$where['pro_id'] = $pro_id;
-		$scheduleInfo = $this->select($where)->order('status asc')->find();
+		$scheduleInfo = $this->table->select($where)->order('status asc')->find();
 		$scheduleInfo['check_item'] = unserialize($scheduleInfo['check_item']);
 		$scheduleInfo['check_out_goods'] = unserialize($scheduleInfo['check_out_goods']);
 

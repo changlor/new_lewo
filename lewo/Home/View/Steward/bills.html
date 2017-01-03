@@ -175,10 +175,10 @@
                                                 </td>
                                             </tr>
                                         <else />
-                                            <if condition="$vo.pay_status neq 2">
-                                                <tr class="info">
-                                                    <td align="center" colspan="5">订单描述: {$vo.bill_des}</td>
-                                                </tr>
+                                            <tr class="info">
+                                                <td align="center" colspan="5">订单描述: {$vo.bill_des}</td>
+                                            </tr>
+                                            <if condition="$vo.pay_status eq 0">
                                                 <tr class="info">
                                                     <td colspan="5" align="center">
                                                         <a href="{:U('Home/Steward/steward_collection', ['pro_id' => $vo['pro_id']])}" class="btn btn-success btn-mini">管家代收</a>

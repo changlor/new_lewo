@@ -298,10 +298,11 @@ class StewardController extends BaseController {
     public function houses()
     {
         $DHouses = D('houses');
-        dump(I('search'));exit;
         $houses = $DHouses->getHouses([
             'keyWord' => I('get.search'),
+            'type' => I('get.select')
         ]);
+        dump($houses);exit;
         $where = array();
         $_SESSION['stewrad_houses_back_url'] = U('Home/Steward/houses');
         $where['steward_id'] = $_SESSION['steward_id'];

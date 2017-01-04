@@ -34,11 +34,70 @@ class HousesModel extends BaseModel {
 
     public function getHouses($input)
     {
+    	// 获取当前操作管家id
+    	$stewardId = $_SESSION['steward_id'];
+    	if (!is_numeric($stewardId)) {
+    		return parent::response([false, '权限错误！']);
+    	}
+    	// 获取分类类别
+    	$type = $input['type'];
+    	// --如果分类为空，则默认获取当前管家管辖的房源
+    	if (empty($type)) {
+    		$type = 'steward';
+    	}
     	// 获取搜索关键词
     	$keyWord = $input['keyWord'];
-    	if (strpos($keyWord, '-')) {
-
+    	if (strpos($keyWord, '-') !== false) {
+    		$chips = explode('-', $keyWord);
+            if (isset($chips['0'])) {
+                $building = $chips['0'];
+            }
+            if (isset($chips['1'])) {
+                $floor = $chips['1'];
+            }
+            if (isset($chips['2'])) {
+                $doorNo = $chips['2'];
+            }
     	}
+    	if (strrpos($keyWord, '-') === false && !empty($keyWord)) {
+    		$fuzzyQuery = 'lewo_houses.house_code LIKE \'%' . $keyWord . '%\' OR lewo_houses.area_name LIKE \'%' . $keyWord . '%\'';
+    	}
+    	$filters = [
+    		'lewo_houses.building' => $building,
+    		'lewo_houses.floor' => $floor,
+    		'lewo_houses.door_no' => $doorNo,
+    		'lewo_houses._string' => $fuzzyQuery
+    	];
+    	switch (type) {
+    		case 'steward':
+    			$filters['lewo_houses.steward_id'] = $stewardId;
+    			break;
+    		case 'empty':
+				$filters['lewo_room.status'] = 0;
+				break;
+			case 'is_let_out':
+				$filters['lewo_room.status'] = ['not in', [0]];
+				break;
+    		default:
+    			break;
+    	}
+
+    	$filters = array_filter($filters, function ($value) {
+    		return is_numeric($value) || !!$value;
+    	});
+    	$joinTable = [
+            'houses(room)' => 'id(house_id)',
+        ];
+        $field = [
+            // houses
+            'lewo_houses.id' => 'houses_id',
+            'lewo_houses.area_id',
+            'lewo_houses.steward_id',
+            'lewo_houses.house_code',
+            'lewo_houses.type'
+            // area
+            'lewo_area.area_name', 'lewo_area.id',
+        ];
     }
 
 	/**

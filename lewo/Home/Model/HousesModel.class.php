@@ -22,6 +22,11 @@ class HousesModel extends BaseModel {
 		return $this->table->field($field)->where($where);
 	}
 
+	public function join($joinTable, $where, $field)
+    {
+        return parent::join($this->table, $joinTable)->field($field)->where($where);
+    }
+
 	public function selectField($where, $field)
 	{
 		return $this->select($where)->getField($field);
@@ -34,6 +39,8 @@ class HousesModel extends BaseModel {
 
     public function getHouses($input)
     {
+    	// 获取模型实例
+    	$DRoom = D('room');
     	// 获取当前操作管家id
     	$stewardId = $_SESSION['steward_id'];
     	if (!is_numeric($stewardId)) {
@@ -49,44 +56,43 @@ class HousesModel extends BaseModel {
     	$keyWord = $input['keyWord'];
     	if (strpos($keyWord, '-') !== false) {
     		$chips = explode('-', $keyWord);
+            // 房屋
             if (isset($chips['0'])) {
                 $building = $chips['0'];
             }
+            // 楼层
             if (isset($chips['1'])) {
                 $floor = $chips['1'];
             }
+            // 房号
             if (isset($chips['2'])) {
                 $doorNo = $chips['2'];
             }
     	}
+    	// 如果非空且不符合小区号，则开启模糊查询
     	if (strrpos($keyWord, '-') === false && !empty($keyWord)) {
     		$fuzzyQuery = 'lewo_houses.house_code LIKE \'%' . $keyWord . '%\' OR lewo_houses.area_name LIKE \'%' . $keyWord . '%\'';
     	}
+    	// 设置过滤条件
     	$filters = [
     		'lewo_houses.building' => $building,
     		'lewo_houses.floor' => $floor,
     		'lewo_houses.door_no' => $doorNo,
     		'lewo_houses._string' => $fuzzyQuery
     	];
-    	switch (type) {
+    	// 根据要搜索的房屋类别，增加过滤条件
+    	switch ($type) {
     		case 'steward':
     			$filters['lewo_houses.steward_id'] = $stewardId;
     			break;
-    		case 'empty':
-				$filters['lewo_room.status'] = 0;
-				break;
-			case 'is_let_out':
-				$filters['lewo_room.status'] = ['not in', [0]];
-				break;
-    		default:
-    			break;
     	}
-
+    	// 将未被赋值的过滤条件去除
     	$filters = array_filter($filters, function ($value) {
     		return is_numeric($value) || !!$value;
     	});
+    	// 连接查询
     	$joinTable = [
-            'houses(room)' => 'id(house_id)',
+            'houses(area)' => 'area_id(id)'
         ];
         $field = [
             // houses
@@ -94,10 +100,63 @@ class HousesModel extends BaseModel {
             'lewo_houses.area_id',
             'lewo_houses.steward_id',
             'lewo_houses.house_code',
-            'lewo_houses.type'
+            'lewo_houses.type',
+            'lewo_houses.building',
+            'lewo_houses.floor',
+            'lewo_houses.door_no',
             // area
             'lewo_area.area_name', 'lewo_area.id',
         ];
+        $houses = $this->join($joinTable, $filters, $field)->order('lewo_houses.area_id desc, lewo_houses.building desc, lewo_houses.floor desc, lewo_houses.door_no desc')->select();
+        foreach ($houses as $key => $value) {
+			if ($yzCount > 0) {
+				$houses[$key]['is_checkin'] = true;
+			} else {
+				$houses[$key]['is_checkin'] = false;
+			}
+			// 设置需要获取的房源的过滤规则
+			$filters = ['house_code' => $value['house_code'], 'is_show' => 1];
+			switch ($type) {
+				case 'empty':
+					$filters['lewo_room.status'] = 0;
+					break;
+				case 'is_let_out':
+					$filters['lewo_room.status'] = ['not in', [0]];
+					break;
+	    		default:
+    				break;
+			}
+			$field = [
+				// lewo_room
+				'lewo_room.id',
+				'lewo_room.account_id',
+				'lewo_room.room_code',
+				'lewo_room.room_nickname',
+				'lewo_room.room_sort',
+				'lewo_room.room_type',
+				'lewo_room.bed_code',
+				'lewo_room.rent',
+				'lewo_room.status',
+				'lewo_room.is_show',
+				'lewo_account.realname',
+				'lewo_account.sex'
+			];
+			// 连接查询
+    		$joinTable = [
+    	        'room(account)' => 'account_id(id)'
+	        ];
+	        $houses[$key]['room_list'] = $DRoom->join($joinTable, $filters, $field)->order('lewo_room.room_sort asc')->select();
+	        $houses[$key]['yz_count'] = 0;
+	        $houses[$key]['count'] = count($houses[$key]['room_list']);
+			$houses[$key]['is_checkin'] = false;
+	        foreach ($houses[$key]['room_list'] as $ke => $val) {
+	        	if ($val['status'] == 2) {
+					$houses[$key]['is_checkin'] = true;
+	        		$houses[$key]['yz_count']++;
+	        	}
+	        }
+        }
+        return $houses;
     }
 
 	/**
@@ -342,5 +401,3 @@ class HousesModel extends BaseModel {
 		->find();
 	}
 }
-
-?>

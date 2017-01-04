@@ -27,6 +27,11 @@ class ContractModel extends BaseModel {
         return $this->table->field($field)->where($where);
     }
 
+    public function selectField($where, $field)
+    {
+        return $this->select($where)->getField($field);
+    }
+
     public function update($where)
     {
         $field = empty($field) ? '' : $field;
@@ -53,17 +58,20 @@ class ContractModel extends BaseModel {
     public function getContractBill($input)
     {
         // 获取模型实例
-        $DRoom = D('room'); $DSchedule = D('schedule');
+        $DRoom = D('room'); $DSchedule = D('schedule'); $DAccount = D('account'); $DPay = D('pay');
+        // 获取accountId
+        $accountId = $input['accountId'];
+        // 获取roomId
+        $roomId = $input['roomId'];
         // 获取proId
         $proId = $input['proId'];
         $filters = [];
         if (is_numeric($proId)) {
             $filters = ['lewo_pay.pro_id' => $proId];
+            $payInfo = $DPay->selectPay(['pro_id' => $proId], ['account_id', 'room_id']);
+            $accountId = $payInfo['account_id'];
+            $roomId = $payInfo['room_id'];
         }
-        // 获取accountId
-        $accountId = $input['accountId'];
-        // 获取roomId
-        $roomId = $input['roomId'];
         // 获取scheduleId
         $scheduleId = $input['scheduleId'];
         if (is_numeric($scheduleId)) {
@@ -71,22 +79,10 @@ class ContractModel extends BaseModel {
             $roomId = $scheduleInfo['room_id'];
             $accountId = $scheduleInfo['account_id'];
         }
-        if (is_numeric($accountId) && is_numeric($roomId)) {
-            $filters = ['lewo_account.id' => $accountId, 'lewo_room.id' => $roomId];
-        }
         $joinTable = [
-            'contract(account)' => 'account_id(id)',
             'contract(pay)' => 'pro_id(pro_id)',
-            'contract(room)' => 'account_id(account_id)',
         ];
         $field = [
-            // account
-            'lewo_account.realname',
-            'lewo_account.mobile',
-            'lewo_account.card_no',
-            'lewo_account.contact2',
-            'lewo_account.email',
-            'lewo_account.id' => 'account_id',
             // contract
             'lewo_contract.pro_id',
             'lewo_contract.deposit',
@@ -109,11 +105,11 @@ class ContractModel extends BaseModel {
             'lewo_pay.favorable_des',
             'lewo_pay.price',
         ];
-
-        $contractBill = $this->join($joinTable, $filters, $field)->order('lewo_contract.create_time desc')->limit(1)->find();
+        $contractBill = $this->join($joinTable, $filters, $field)->order('lewo_contract.create_time desc')->find();
         $contractBill['cotenant'] = unserialize($contractBill['cotenant']);
+        $accountInfo = $DAccount->selectAccount(['id' => $accountId], ['realname', 'mobile', 'card_no', 'contact2', 'email', 'id' => 'account_id']);
         $roomInfo = $DRoom->selectRoom(['id' => $roomId], ['room_code', 'id' => 'room_id', 'rent', 'room_fee']);
-        return parent::response([true, '', ['contractInfo' => $contractBill, 'roomInfo' => $roomInfo]]);
+        return parent::response([true, '', ['contractInfo' => $contractBill, 'roomInfo' => $roomInfo, 'accountInfo' => $accountInfo]]);
     }
 
 	/**
@@ -225,7 +221,7 @@ class ContractModel extends BaseModel {
             return parent::response([false, '居住人数必须为数字且必须大于等于1']);
         }
         // 获取合租人姓名hzRealName
-        $hzRealName = $input['hzRealName'];
+        $hzRealname = $input['hzRealname'];
         // 获取合租人手机hzMobile
         $hzMobile = $input['hzMobile'];
         // 获取合租人身份证$hzCardNo
@@ -235,7 +231,7 @@ class ContractModel extends BaseModel {
         $hzInfo['hzRealname'] = $hzRealname;
         $hzInfo['hzMobile'] = $hzMobile;
         $hzInfo['hzCardNo'] = $hzCardNo;
-        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealName) == (bool)trim($hzCardNo))) {
+        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealname) == (bool)trim($hzCardNo))) {
             return parent::response([false, '合租人信息有误！']);
         }
         // 验证合租人电话
@@ -485,7 +481,7 @@ class ContractModel extends BaseModel {
         }
         // 判断房间是否已签约或者已入住
         $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
-        // 只有当房屋状态为0或1时可以签约
+        // 只有当房屋状态为0且1时可以签约
         if ($roomStatus != 0 && $roomStatus != 1) {
             return parent::response([false, '房屋已被出租！']);
         }
@@ -529,7 +525,7 @@ class ContractModel extends BaseModel {
             return parent::response([false, '居住人数必须为数字且必须大于等于1']);
         }
         // 获取合租人姓名hzRealName
-        $hzRealName = $input['hzRealName'];
+        $hzRealname = $input['hzRealname'];
         // 获取合租人手机hzMobile
         $hzMobile = $input['hzMobile'];
         // 获取合租人身份证$hzCardNo
@@ -539,7 +535,7 @@ class ContractModel extends BaseModel {
         $hzInfo['hzRealname'] = $hzRealname;
         $hzInfo['hzMobile'] = $hzMobile;
         $hzInfo['hzCardNo'] = $hzCardNo;
-        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealName) == (bool)trim($hzCardNo))) {
+        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealname) == (bool)trim($hzCardNo))) {
             return parent::response([false, '合租人信息有误！']);
         }
         // 验证合租人电话
@@ -608,7 +604,7 @@ class ContractModel extends BaseModel {
         }
         // 获取合同金额total
         $total = $input['total'];
-        if (!$total == ($wgFee + $rent + $fee + $deposit)) {
+        if (!empty($total) && $total != round($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorableDes, 2)) {
             return parent::response([false, '合同金额出错！']);
         }
         // 获取缴定抵扣bookDeposit

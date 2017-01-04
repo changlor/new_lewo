@@ -226,7 +226,7 @@ class PayModel extends BaseModel {
         // 获取缴定金额
         $money = $input['money'];
         if (!is_numeric($money)) {
-        	return parent::response([false, '缴定金额类型错误！']);
+        	return parent::response([false, '缴定金额必须为数字！']);
         }
         // 获取租客realName
         $realName = trim($input['realName']);
@@ -254,7 +254,7 @@ class PayModel extends BaseModel {
         	// 插入account数据
         	$account = [];
         	$account['realname'] = $realName;
-        	$account['passward'] = $passward;
+        	$account['password'] = $passward;
         	$account['mobile'] = $mobile;
         	$account['registerTime'] = $registerTime;
         	// 插入并返回accountId

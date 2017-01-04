@@ -22,7 +22,7 @@
     var myScroll;
 
     function loaded () {
-        myScroll = new IScroll('#wrapper', { mouseWheel: true, tap : true });
+        myScroll = new IScroll('#wrapper', { mouseWheel: true, click: true, tap : true });
     }
 
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
@@ -72,8 +72,10 @@
                 </div>
             </div>
             <div class="col-xs-2">
-                <if condition="!isset($type)">
-                    <a href="{:U('Home/Steward/allhouses')}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">所有房源</a>
+                <if condition="$type eq 'all'">
+                    <a href="{:U('Home/Steward/houses', ['select' => 'steward'])}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">管辖房源</a>
+                <elseif condition="$type eq 'steward'" />
+                    <a href="{:U('Home/Steward/houses', ['select' => 'all'])}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">所有房源</a>
                 <else />
                     <if condition="$type neq 'empty'">
                         <a href="{:U('Home/Steward/allhouses',array('select'=>'empty'))}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">空置房源</a>

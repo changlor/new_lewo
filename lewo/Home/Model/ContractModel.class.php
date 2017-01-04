@@ -225,7 +225,7 @@ class ContractModel extends BaseModel {
             return parent::response([false, '居住人数必须为数字且必须大于等于1']);
         }
         // 获取合租人姓名hzRealName
-        $hzRealName = $input['hzRealName'];
+        $hzRealname = $input['hzRealname'];
         // 获取合租人手机hzMobile
         $hzMobile = $input['hzMobile'];
         // 获取合租人身份证$hzCardNo
@@ -235,7 +235,7 @@ class ContractModel extends BaseModel {
         $hzInfo['hzRealname'] = $hzRealname;
         $hzInfo['hzMobile'] = $hzMobile;
         $hzInfo['hzCardNo'] = $hzCardNo;
-        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealName) == (bool)trim($hzCardNo))) {
+        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealname) == (bool)trim($hzCardNo))) {
             return parent::response([false, '合租人信息有误！']);
         }
         // 验证合租人电话
@@ -485,8 +485,9 @@ class ContractModel extends BaseModel {
         }
         // 判断房间是否已签约或者已入住
         $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
-        // 只有当房屋状态为0或1时可以签约
-        if ($roomStatus != 0 || $roomStatus != 1) {
+
+        // 只有当房屋状态为0且1时可以签约
+        if ($roomStatus != 0 && $roomStatus != 1) {
             return parent::response([false, '房屋已被出租！']);
         }
         // 获取真实姓名realName
@@ -529,7 +530,7 @@ class ContractModel extends BaseModel {
             return parent::response([false, '居住人数必须为数字且必须大于等于1']);
         }
         // 获取合租人姓名hzRealName
-        $hzRealName = $input['hzRealName'];
+        $hzRealname = $input['hzRealname'];
         // 获取合租人手机hzMobile
         $hzMobile = $input['hzMobile'];
         // 获取合租人身份证$hzCardNo
@@ -539,7 +540,7 @@ class ContractModel extends BaseModel {
         $hzInfo['hzRealname'] = $hzRealname;
         $hzInfo['hzMobile'] = $hzMobile;
         $hzInfo['hzCardNo'] = $hzCardNo;
-        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealName) == (bool)trim($hzCardNo))) {
+        if (!((bool)trim($hzRealname) == (bool)trim($hzMobile) && (bool)trim($hzRealname) == (bool)trim($hzCardNo))) {
             return parent::response([false, '合租人信息有误！']);
         }
         // 验证合租人电话
@@ -608,9 +609,10 @@ class ContractModel extends BaseModel {
         }
         // 获取合同金额total
         $total = $input['total'];
+        /*
         if (!$total == ($wgFee + $rent + $fee + $deposit)) {
             return parent::response([false, '合同金额出错！']);
-        }
+        }*/
         // 获取缴定抵扣bookDeposit
         $bookDeposit = $input['bookDeposit'];
         if (!is_numeric($bookDeposit)) {

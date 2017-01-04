@@ -718,7 +718,7 @@ class StewardController extends BaseController {
                 'email' => I('post.email'),
                 'rent' => I('post.rent'),
                 'personCount' => I('post.personCount'),
-                'hzRealName' => I('post.hzRealName'),
+                'hzRealname' => I('post.hzRealname'),
                 'hzMobile' => I('post.hzMobile'),
                 'hzCardNo' => I('post.hzCardNo'),
                 'wgFee' => I('post.wg_fee'),
@@ -767,10 +767,11 @@ class StewardController extends BaseController {
             'roomId' => I('get.roomId'),
             'accountId' => I('get.accountId'),
         ]);
-        $contractInfo = $res['data'];
+        $contractInfo = $res['data']['contractInfo'];
         $rentType = explode('_', $contractInfo['rent_type']);
 
         $contractInfo['rent_type'] = $rentType;
+
         $this->assign('contract_info', $contractInfo);
         $this->display('detail-contract');
     }

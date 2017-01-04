@@ -486,7 +486,7 @@ class ContractModel extends BaseModel {
         // 判断房间是否已签约或者已入住
         $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
         // 只有当房屋状态为0或1时可以签约
-        if ($roomStatus != 0 || $roomStatus != 1) {
+        if ($roomStatus != 0 && $roomStatus != 1) {
             return parent::response([false, '房屋已被出租！']);
         }
         // 获取真实姓名realName

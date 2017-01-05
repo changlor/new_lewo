@@ -45,15 +45,13 @@ class BillModel extends BaseModel {
         if (!is_numeric($proId)) {
             return parent::response([false, '访问出错！']);
         }
-        // 有问题的版本(代替改)
         $joinTable = [
-            // 'pay.pro_id' => 'contract.pro_id',
-            'pay(contract)' => 'pro_id(pro_id)',
-            'pay(account)' => 'account_id(id)',
-            'pay(room)' => 'room_id(id)',
-            'pay(charge_bill)' => 'pro_id(pro_id)',
-            'room(houses)' => 'house_code(house_code)',
-            'houses(area)' => 'area_id(id)',
+            'contract' => 'pay.pro_id = contract.pro_id',
+            'account' => 'pay.account_id = account.id',
+            'room' => 'pay.room_id = room.id',
+            'charge_bill' => 'pay.pro_id = charge_bill.pro_id',
+            'houses' => 'room.house_code = houses.house_code',
+            'area' => 'houses.area_id = area.id',
         ];
         $field = [
             // account

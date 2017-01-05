@@ -33,20 +33,14 @@ class BaseModel extends Model {
     {
         $newJoinTable = $table;
         foreach ($joinTable as $key => $value) {
-            preg_match('/\(([a-z_0-9]+)\)/i', $key, $match);
-            $tableName1 = preg_replace('/\([a-z_0-9]+\)/i', '', $key);
-            $tableName2 = $match[1];
-            preg_match('/\(([a-z_0-9]+)\)/i', $value, $match);
-            $condition1 = preg_replace('/\([a-z_0-9]+\)/i', '', $value);
-            $condition2 = $match[1];
+            $joinTableName = $this->prefix . $key;
+            $match = explode('=', $value);
 
-            $tableName1 = $this->prefix . $tableName1;
-            $tableName2 = $this->prefix . $tableName2;
-            $condition1 = $tableName1 . '.' . $condition1;
-            $condition2 = $tableName2 . '.' . $condition2;
+            $condition1 = $this->prefix . trim($match[0]);
+            $condition2 = $this->prefix . trim($match[1]);
 
             $newJoinTable = $newJoinTable->join(
-                $tableName2 . ' ON ' . $condition1 . ' = ' . $condition2, 'left'
+                $joinTableName . ' ON ' . $condition1 . ' = ' . $condition2, 'left'
             );
         }
         return $newJoinTable;

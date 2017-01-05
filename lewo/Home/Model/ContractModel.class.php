@@ -83,7 +83,7 @@ class ContractModel extends BaseModel {
             $filters = ['lewo_contract.room_id' => $roomId, 'lewo_contract.account_id' => $accountId];
         }
         $joinTable = [
-            'contract(pay)' => 'pro_id(pro_id)',
+            'pay' => 'contract.pro_id = pay.pro_id',
         ];
         $field = [
             // contract

@@ -73,9 +73,9 @@
             </div>
             <div class="col-xs-2">
                 <if condition="$type neq 'paid'">
-                    <a href="{:U('Home/Steward/allbills', ['type' => 'paid'])}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">已付账单</a>
+                    <a href="{:U('Home/Steward/viewBills', ['type' => 'paid'])}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">已付账单</a>
                 <else />
-                    <a href="{:U('Home/Steward/allbills', ['type' => 'unpaid'])}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">未付账单</a>
+                    <a href="{:U('Home/Steward/viewBills', ['type' => 'unpaid'])}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">未付账单</a>
                 </if>
             </div>
         </div>

@@ -190,6 +190,9 @@ class PayModel extends BaseModel {
         if (!$DSchedule->has(['id' => $scheduleId])) {
             return parent::response([false, '不存在该待办任务！']);
         }
+        if ($DSchedule->has(['id' => $scheduleId, 'is_finish' => 1])) {
+            return parent::response([false, '该待办已处理！']);
+        }
         $roomId = $DSchedule->selectField(['id' => $scheduleId], 'room_id');
         // 修改此记录为已处理
         $DSchedule->updateSchedule(['id' => $scheduleId], ['is_finish' => 1]);
@@ -226,7 +229,7 @@ class PayModel extends BaseModel {
         // 获取缴定金额
         $money = $input['money'];
         if (!is_numeric($money)) {
-        	return parent::response([false, '缴定金额类型错误！']);
+        	return parent::response([false, '缴定金额必须为数字！']);
         }
         // 获取租客realName
         $realName = trim($input['realName']);
@@ -254,11 +257,18 @@ class PayModel extends BaseModel {
         	// 插入account数据
         	$account = [];
         	$account['realname'] = $realName;
-        	$account['passward'] = $passward;
+        	$account['password'] = $passward;
         	$account['mobile'] = $mobile;
         	$account['registerTime'] = $registerTime;
         	// 插入并返回accountId
         	$accountId = $DAccount->insertAccount($account);
+        } else {
+            // 更新租客信息
+            $account = [
+                'realname' => $realName,
+            ];
+            // 更新account数据
+            $affectedRows0 = $DAccount->updateAccount(['id' => $accountId], $account);
         }
         // 缴定后插入代办数据
         $schedule = [];

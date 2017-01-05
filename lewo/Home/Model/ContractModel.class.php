@@ -27,6 +27,11 @@ class ContractModel extends BaseModel {
         return $this->table->field($field)->where($where);
     }
 
+    public function selectField($where, $field)
+    {
+        return $this->select($where)->getField($field);
+    }
+
     public function update($where)
     {
         $field = empty($field) ? '' : $field;
@@ -53,17 +58,20 @@ class ContractModel extends BaseModel {
     public function getContractBill($input)
     {
         // 获取模型实例
-        $DRoom = D('room'); $DSchedule = D('schedule');
+        $DRoom = D('room'); $DSchedule = D('schedule'); $DAccount = D('account'); $DPay = D('pay');
+        // 获取accountId
+        $accountId = $input['accountId'];
+        // 获取roomId
+        $roomId = $input['roomId'];
         // 获取proId
         $proId = $input['proId'];
         $filters = [];
         if (is_numeric($proId)) {
             $filters = ['lewo_pay.pro_id' => $proId];
+            $payInfo = $DPay->selectPay(['pro_id' => $proId], ['account_id', 'room_id']);
+            $accountId = $payInfo['account_id'];
+            $roomId = $payInfo['room_id'];
         }
-        // 获取accountId
-        $accountId = $input['accountId'];
-        // 获取roomId
-        $roomId = $input['roomId'];
         // 获取scheduleId
         $scheduleId = $input['scheduleId'];
         if (is_numeric($scheduleId)) {
@@ -71,22 +79,13 @@ class ContractModel extends BaseModel {
             $roomId = $scheduleInfo['room_id'];
             $accountId = $scheduleInfo['account_id'];
         }
-        if (is_numeric($accountId) && is_numeric($roomId)) {
-            $filters = ['lewo_account.id' => $accountId, 'lewo_contract.room_id' => $roomId];
+        if (is_numeric($roomId) && is_numeric($accountId)) {
+            $filters = ['lewo_contract.room_id' => $roomId, 'lewo_contract.account_id' => $accountId];
         }
         $joinTable = [
-            'contract(account)' => 'account_id(id)',
             'contract(pay)' => 'pro_id(pro_id)',
-            'contract(room)' => 'account_id(account_id)',
         ];
         $field = [
-            // account
-            'lewo_account.realname',
-            'lewo_account.mobile',
-            'lewo_account.card_no',
-            'lewo_account.contact2',
-            'lewo_account.email',
-            'lewo_account.id' => 'account_id',
             // contract
             'lewo_contract.pro_id',
             'lewo_contract.deposit',
@@ -109,11 +108,11 @@ class ContractModel extends BaseModel {
             'lewo_pay.favorable_des',
             'lewo_pay.price',
         ];
-
-        $contractBill = $this->join($joinTable, $filters, $field)->order('lewo_contract.create_time desc')->limit(1)->find();
+        $contractBill = $this->join($joinTable, $filters, $field)->order('lewo_contract.create_time desc')->find();
         $contractBill['cotenant'] = unserialize($contractBill['cotenant']);
+        $accountInfo = $DAccount->selectAccount(['id' => $accountId], ['realname', 'mobile', 'card_no', 'contact2', 'email', 'id' => 'account_id']);
         $roomInfo = $DRoom->selectRoom(['id' => $roomId], ['room_code', 'id' => 'room_id', 'rent', 'room_fee']);
-        return parent::response([true, '', ['contractInfo' => $contractBill, 'roomInfo' => $roomInfo]]);
+        return parent::response([true, '', ['contractInfo' => $contractBill, 'roomInfo' => $roomInfo, 'accountInfo' => $accountInfo]]);
     }
 
 	/**
@@ -402,7 +401,7 @@ class ContractModel extends BaseModel {
                 'email' => $email
             ];
             // 更新account数据
-            $DAccount->updateAccount(['id' => $account_id], $account);
+            $affectedRows0 = $DAccount->updateAccount(['id' => $accountId], $account);
         }
         // 插入合同数据
         $contract = [
@@ -463,8 +462,11 @@ class ContractModel extends BaseModel {
             return $value === 0 || !!$value;
         });
         $affectedRows3 = $DRoom->updateRoom(['id' => $roomId], $room);
-        if (!($affectedRows1 > 0) && !($affectedRows2 > 0) && !($affectedRows3 > 0)) {
-            return parent::response([false, '合同修改失败！']);
+        if (
+            (isset($affectedRows0) && !($affectedRows0 > 0)) &&
+            !($affectedRows1 > 0) && !($affectedRows2 > 0) && !($affectedRows3 > 0)
+            ) {
+            return parent::response([false, '未做任何修改！']);
         }
         return parent::response([true, '', ['proId' => $proId]]);  
     }
@@ -485,7 +487,6 @@ class ContractModel extends BaseModel {
         }
         // 判断房间是否已签约或者已入住
         $roomStatus = $DRoom->selectField(['id' => $roomId], 'status');
-
         // 只有当房屋状态为0且1时可以签约
         if ($roomStatus != 0 && $roomStatus != 1) {
             return parent::response([false, '房屋已被出租！']);
@@ -508,10 +509,10 @@ class ContractModel extends BaseModel {
             return parent::response([false, '邮箱格式不对！']);
         }
         // 获取紧急联系人电话contact2
-        $contact2 = empty($input['contact2']) ? 0 : $input['contact2'];
+        $contact2 = $input['contact2'];
         $pattern = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/i';
-        if (!empty($contact2) && !preg_match($pattern, $contact2)) {
-            return parent::response([false, '联系人电话格式不对！']);
+        if (!preg_match($pattern, $contact2)) {
+            return parent::response([false, '紧急联系人电话不能为空或格式不对！']);
         }
         // 获取身份证idNo
         $idNo = $input['idNo'];
@@ -609,10 +610,9 @@ class ContractModel extends BaseModel {
         }
         // 获取合同金额total
         $total = $input['total'];
-        /*
-        if (!$total == ($wgFee + $rent + $fee + $deposit)) {
+        if (!empty($total) && $total != round($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorableDes, 2)) {
             return parent::response([false, '合同金额出错！']);
-        }*/
+        }
         // 获取缴定抵扣bookDeposit
         $bookDeposit = $input['bookDeposit'];
         if (!is_numeric($bookDeposit)) {
@@ -697,7 +697,7 @@ class ContractModel extends BaseModel {
             $account['card_no'] = $idNo;
             $account['email'] = $email;
             // 更新account数据
-            $DAccount->updateAccount(['id' => $account_id], $account);
+            $DAccount->updateAccount(['id' => $accountId], $account);
         }
         // 插入合同数据
         $contract = [];

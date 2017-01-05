@@ -652,7 +652,7 @@ class StewardController extends BaseController {
                 'email' => I('post.email'),
                 'rent' => I('post.rent'),
                 'personCount' => I('post.personCount'),
-                'hzRealName' => I('post.hzRealName'),
+                'hzRealname' => I('post.hzRealname'),
                 'hzMobile' => I('post.hzMobile'),
                 'hzCardNo' => I('post.hzCardNo'),
                 'wgFee' => I('post.wg_fee'),

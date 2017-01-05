@@ -684,9 +684,11 @@ class StewardController extends BaseController {
             $contractInfo = $res['data']['contractInfo'];
             $roomInfo = $res['data']['roomInfo'];
             $accountInfo = $res['data']['accountInfo'];
-            dump($res);exit;
+
             $this->assign('today', date('Y-m-d', time()));
             $this->assign('contractInfo', $contractInfo);
+            $this->assign('accountInfo', $accountInfo);
+            $this->assign('roomInfo', $roomInfo);
             $this->display('editContract');
         }
     }
@@ -699,12 +701,12 @@ class StewardController extends BaseController {
             $DSchedule = D('schedule');
             M()->startTrans();
             // 缴定待办id
-            $scheduleId = I("schedule_id");            
+            $scheduleId = I('post.scheduleId');
             $res = $DContract->postContract([
                 'roomId' => I('post.room_id'),
                 'realName'=> I('post.realName'),
                 'mobile' => I('post.mobile'),
-                'contract2' => I('post.contract2'),
+                'contact2' => I('post.contact2'),
                 'idNo' => I('post.idNo'),
                 'email' => I('post.email'),
                 'rent' => I('post.rent'),
@@ -731,7 +733,9 @@ class StewardController extends BaseController {
                 //显示合同详情信息
                 M()->commit();
                 // 修改待办已完成
-                $DSchedule->updateSchedule(['id' => $scheduleId], ['is_finish' => 1]);
+                if (is_numeric($scheduleId)) {
+                    $DSchedule->updateSchedule(['id' => $scheduleId], ['is_finish' => 1]);
+                }
                 $this->success('合同生成成功!请发送给租客', U('Home/Steward/check_contract', ['proId' => $res['data']['proId']]));
             } else {
                 M()->rollback();
@@ -759,11 +763,11 @@ class StewardController extends BaseController {
             'accountId' => I('get.accountId'),
         ]);
         $contractInfo = $res['data']['contractInfo'];
+        $accountInfo = $res['data']['accountInfo'];
         $rentType = explode('_', $contractInfo['rent_type']);
-
         $contractInfo['rent_type'] = $rentType;
-
         $this->assign('contract_info', $contractInfo);
+        $this->assign('accountInfo', $accountInfo);
         $this->display('detail-contract');
     }
 
@@ -830,7 +834,7 @@ class StewardController extends BaseController {
         if ($res['success']) {
             $this->success('操作成功！');
         } else {
-            $this->success($res['msg']);
+            $this->error($res['msg']);
         }
     }
     

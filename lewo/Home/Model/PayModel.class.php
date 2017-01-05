@@ -190,6 +190,9 @@ class PayModel extends BaseModel {
         if (!$DSchedule->has(['id' => $scheduleId])) {
             return parent::response([false, '不存在该待办任务！']);
         }
+        if ($DSchedule->has(['id' => $scheduleId, 'is_finish' => 1])) {
+            return parent::response([false, '该待办已处理！']);
+        }
         $roomId = $DSchedule->selectField(['id' => $scheduleId], 'room_id');
         // 修改此记录为已处理
         $DSchedule->updateSchedule(['id' => $scheduleId], ['is_finish' => 1]);
@@ -259,6 +262,13 @@ class PayModel extends BaseModel {
         	$account['registerTime'] = $registerTime;
         	// 插入并返回accountId
         	$accountId = $DAccount->insertAccount($account);
+        } else {
+            // 更新租客信息
+            $account = [
+                'realname' => $realName,
+            ];
+            // 更新account数据
+            $affectedRows0 = $DAccount->updateAccount(['id' => $accountId], $account);
         }
         // 缴定后插入代办数据
         $schedule = [];

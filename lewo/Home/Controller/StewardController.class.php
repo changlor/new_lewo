@@ -399,8 +399,6 @@ class StewardController extends BaseController {
             'keyWord' => I('get.search'),
             'type' => I('get.type'),
         ]);
-        dump($res);
-        exit;
         $bills = $res['data'];
         if (!empty(I('get.search'))) {
             $this->assign('search_history', I('get.search'));

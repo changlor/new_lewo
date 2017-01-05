@@ -389,7 +389,7 @@ class StewardController extends BaseController {
     /*
      * author: changle
      */
-    public function allbills()
+    public function viewBills()
     {
         // 获取模型实例
         $DPay = D('pay');
@@ -582,8 +582,8 @@ class StewardController extends BaseController {
         $content = '乐窝小主' . $pay_info['realname'] . '，你有' . $pay_info['price'] . '元的' . C('bill_type')[$pay_info['bill_type']] . '账单' . '还没支付，请到个人页面进行支付 http://' . $_SERVER['HTTP_HOST'];
         $res = parent::sms($pro_id, $content);
         $res['sms_callback'][1] == 0
-        ? $this->success('发送成功',  U('Steward/allbills'))
-        : $this->error('发送失败',  U('Steward/allbills'));
+        ? $this->success('发送成功',  U('Steward/viewBills'))
+        : $this->error('发送失败',  U('Steward/viewBills'));
     }
 
     // 管家代收
@@ -599,7 +599,7 @@ class StewardController extends BaseController {
                 'actualRent' => I('post.actual_rent'),
             ]);
             if ($res['success']) {
-                $this->success($res['msg'], U('Steward/allbills'));
+                $this->success($res['msg'], U('Steward/viewBills'));
             } else{
                 $this->error($res['msg']);
             }
@@ -608,7 +608,7 @@ class StewardController extends BaseController {
                 'proId' => I('get.pro_id'),
             ]);
             if (!$res['success']) {
-                $this->error($res['msg'], U('Steward/allbills'));
+                $this->error($res['msg'], U('Steward/viewBills'));
             }
             $payList = $res['data'];
             $this->assign('account_info', $payList['accountInfo']);

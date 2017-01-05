@@ -143,7 +143,7 @@ class BillModel extends BaseModel {
         $currentStewardId = $_SESSION['steward_id'];
         // 获取订单id
         $proId = $input['proId'];
-        if ($DPay->has(['pro_id' => $proId], ['pay_status' => 2])) {
+        if ($DPay->has(['pro_id' => $proId, 'pay_status' => 2])) {
             return parent::response([false, '该账单已代收，请勿重复代收！']);
         }
         // 获取roomId
@@ -300,7 +300,7 @@ class BillModel extends BaseModel {
             // $this->error('修改账单失败!', U('Steward/steward_collection', ['pro_id' => $pro_id]),3);
         } else {
             return parent::response([true, '管家代收成功']);
-            // $this->success('管家代收成功', U('Steward/allbills'),3);
+            // $this->success('管家代收成功', U('Steward/viewBills'),3);
         }
     }
 }

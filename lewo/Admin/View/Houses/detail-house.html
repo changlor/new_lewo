@@ -54,11 +54,11 @@
                   <a href="{:U('Admin/Tenant/contract_info',array('account_id'=>$vo['account_id'],'room_id'=>$vo['id']))}" class="btn btn-info btn-mini" target="_blank">合同</a>
                 </if>
                 <a href="{:U('Admin/Houses/update_room',array('id'=>$vo['id'],'house_code'=>$house_code,'rent_out_type'=>$vo['rent_out_type']))}" class="btn btn-warning btn-mini">修改</a>
-                <if condition="$vo['status'] neq 0">
+                <!-- <if condition="$vo['status'] neq 0">
                   <a href="{:U('Admin/Houses/be_empty_room',array('id'=>$vo['id'],'account_id'=>$vo['account_id'],'status'=>$vo['status']))}" class="btn btn-danger btn-mini" onclick="if(!confirm('确认设置为空房?此操作会将房间设置为未租')) return false;">设置空房</a>
                 <else/>
                   <a href="{:U('Admin/Houses/restore_room',array('id'=>$vo['id']))}" class="btn btn-danger btn-mini">还原租客</a>
-                </if>
+                </if> -->
                 <a href="{:U('Admin/Houses/delete_room',array('id'=>$vo[id]))}" class="btn btn-danger btn-mini" onclick="if(!confirm('确认删除?')) return false;">删除</a>
               </td>
             </tr>

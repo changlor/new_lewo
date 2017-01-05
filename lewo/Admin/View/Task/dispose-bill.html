@@ -32,7 +32,7 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>房屋总电&nbsp;阶梯算法:<label class="label label-info">{$energy_stair}</label></th>
+            <th>{$schedule_info.room_id}房屋总电&nbsp;阶梯算法:<label class="label label-info">{$energy_stair}</label></th>
             <th>房屋总水&nbsp;单价:<label class="label label-info">{$water_unit}</label></th>
             <th>房屋总气&nbsp;单价:<label class="label label-info">{$gas_unit}</label></th>
           </tr>
@@ -41,33 +41,21 @@
           <tr>
             <td>
               <label class="label label-success">始:</label>
-              <input class="input4" type="text" name="start_energy" value="{$ammeter_house['total_energy']}"  disabled="disabled">
+              <input class="input4" type="text" type="number" step="0.01" name="start_energy" value="{$ammeter_house['total_energy']}"  readonly="readonly">
               <label class="label label-success">止:</label>
-              <input class="input4" type="text" name="end_energy" value="{$schedule_info['zd']}" disabled="disabled"> 
-
-              <input type="hidden" name="start_energy" value="{$ammeter_house['total_energy']}">
-              <input type="hidden" name="end_energy" value="{$schedule_info['zd']}">
-              <input type="hidden" name="total_energy" value="{$schedule_info['zd']}">
+              <input class="input4" type="text" type="number" step="0.01" name="end_energy" value="{$schedule_info['total_energy']}"> 
             </td>
             <td>
               <label class="label label-success">始:</label>
-              <input class="input4" type="text" name="start_energy" value="{$ammeter_house['total_water']}" disabled="disabled">
+              <input class="input4" type="text" type="number" step="0.01" name="start_water" value="{$ammeter_house['total_water']}"  readonly="readonly">
               <label class="label label-success">止:</label>
-              <input class="input4" type="text" name="end_energy" value="{$schedule_info['zs']}" disabled="disabled">
-              
-              <input type="hidden" name="start_water" value="{$ammeter_house['total_water']}" >
-              <input type="hidden" name="end_water" value="{$schedule_info['zs']}">
-              <input type="hidden" name="total_water" value="{$schedule_info['zs']}">
+              <input class="input4" type="text" type="number" step="0.01" name="end_water" value="{$schedule_info['total_water']}">
             </td>
             <td>
               <label class="label label-success">始:</label>
-              <input class="input4" type="text" name="start_energy" value="{$ammeter_house['total_gas']}" disabled="disabled">
+              <input class="input4" type="text" type="number" step="0.01" name="start_gas" value="{$ammeter_house['total_gas']}"  readonly="readonly">
               <label class="label label-success">止:</label>
-              <input class="input4" type="text" name="end_energy" value="{$schedule_info['zq']}" disabled="disabled">
-              
-              <input type="hidden" name="start_gas" value="{$ammeter_house['total_gas']}">
-              <input type="hidden" name="end_gas" value="{$schedule_info['zq']}">
-              <input type="hidden" name="total_gas" value="{$schedule_info['zq']}">
+              <input class="input4" type="text" type="number" step="0.01" name="end_gas" value="{$schedule_info['total_gas']}">       
             </td>
           </tr>
           <tr>
@@ -87,6 +75,22 @@
         </tbody>
       </table>
       <table class="table table-bordered table-striped">
+        <colgroup>
+          <col style="width:4%">
+          <col style="width:7%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+          <col style="width:4%">
+        </colgroup>
         <thead>
           <tr>
             <th>房间编号</th>
@@ -98,17 +102,15 @@
             <th>公摊电费</th>
             <th>水费</th>
             <th>气费</th>
+            <th>燃气垃圾费</th>
             <th>欠款</th>
             <th>欠款描述</th>
             <th>手续费</th>
-           <!--  <th>滞纳金</th> -->
             <th>总金额</th>
           </tr>
         </thead>
         <tbody>
           <volist name="contract_list" id="vo">
-            <if condition="$vo['account_id'] neq 0">
-              <if condition="$schedule_info['account_id'] eq $vo['account_id']">
               <tr>
                 <td>
                   {$vo.room_code}
@@ -116,60 +118,53 @@
                   <input type="hidden" name="house_code" value="{$vo.house_code}"/>
                   <input type="hidden" name="account_id" value="{$vo.account_id}"/>
                 </td>
-                <td>{$vo.end_room_energy}~{$vo.start_room_energy}
-                <input type="hidden" name="end_room_energy" value="{$vo.end_room_energy}">
-                <input type="hidden" name="start_room_energy" value="{$vo.start_room_energy}">
-                <input type="hidden" name="room_energy_add" value="{$vo.add_room_energy}">
-
-                  <if condition="$vo['start_room_energy'] lt $vo['end_room_energy']"><label class="label label-important">电表有误</label></if>
+                <td>
+                  <label for="start_room_energy{$vo.id}" class="label label-success">始:</label>
+                  <input id="start_room_energy{$vo.id}" class="input3" type="number" step="0.01" name="room_list[{$vo.room_id}][start_room_energy]" value="{$vo.start_room_energy}" readonly="readonly"><br/>
+                  <label for="end_room_energy{$vo.id}" class="label label-success">止:</label>
+                  <input id="end_room_energy{$vo.id}" class="input3" type="number" step="0.01" name="room_list[{$vo.room_id}][end_room_energy]" value="{$vo.end_room_energy}">
+                  <input type="hidden" name="room_list[{$vo.room_id}][room_id]" value="{$vo.room_id}">
                 </td>
                 <td>{$vo.bed_code}</td>
-                <td><a href="{:U('Admin/Tenant/contract_info',array('account_id'=>$vo['account_id']))}" target="_blank" class="btn btn-info btn-mini">{$vo.realname}</a></td>
-                <td><input class="span6" type="text" name="person_day" value="{$vo.person_day}"/></td>
-                <td><input class="span6" type="text" name="room_energy_fee" value="{$vo.room_energy_fee}"/></td>
-                <td><input class="span6" type="text" name="energy_fee" value="{$vo.energy_fee}"/></td>
-                <td><input class="span6" type="text" name="water_fee" value="{$vo.water_fee}"/></td>
-                <td><input class="span6" type="text" name="gas_fee" value="{$vo.gas_fee}"/></td>
-                <td><input class="span6" type="text" name="wx_fee" value="{$vo.wx_fee}"/></td>
-                <td><input class="span6" type="text" name="wx_des" value="{$vo.wx_des}"/></td>
-                <td><input class="span6" type="text" name="wx_des" value="{$vo.handling_fee}"/></td>
-                <!-- <td>￥0</td> -->
-                <td><input class="span6" type="text" name="total_fee" value="{$vo.total_fee}"/></td>
-              </tr>
-              <else/>
-              <tr>
-                <td>{$vo.room_code}</td>
-                <td></td>
-                <td>{$vo.bed_code}</td>
-                <td><a href="{:U('Admin/Tenant/contract_info',array('account_id'=>$vo['account_id']))}" target="_blank" class="btn btn-info btn-mini">{$vo.realname}</a></td>
+                <td><a href="{:U('Admin/Tenant/contract_info',array('account_id'=>$vo['account_id'],'room_id'=>$vo['room_id']))}" target="_blank" class="btn btn-info btn-mini">{$vo.realname}</a></td>
                 <td>{$vo.person_day}</td>
-                <td>{$vo.room_energy_fee}</td>
-                <td>{$vo.energy_fee}</td>
-                <td>{$vo.water_fee}</td>
-                <td>{$vo.gas_fee}</td>
-                <td>{$vo.wx_fee}</td>
-                <td>{$vo.msg}</td>
+                <td class="room_energy_fee">{$vo.room_energy_fee}</td>
+                <td class="energy_fee">{$vo.energy_fee}</td>
+                <td class="water_fee">{$vo.water_fee}</td>
+                <td class="gas_fee">{$vo.gas_fee}</td>
+                <td class="rubbish_fee">{$vo.rubbish_fee}</td>
+                <if condition="$schedule_info['room_id'] eq $vo['room_id']">
+                  <td><input class="span6" style="width:50px;" type="text" name="wx_fee" value="{$vo.wx_fee}"/></td>
+                  <td>
+                    <textarea name="wx_des">
+                      {$vo.wx_des}
+                    </textarea>
+                  </td>
+                  <else/>
+                  <td></td>
+                  <td></td>
+                </if>
+                <td>{$vo.handling_fee}</td>
                 <!-- <td>￥0</td> -->
-                <td></td>
-                <td></td>
-              </tr>
-              </if>
-            </if>
+                <td>{$vo.total_fee}</td>
           </volist>
             <tr>
               <td colspan="4"></td>
               <td>总人日:{$sum_person_day}</td>
+              <td id="total_room_energy_fee"></td>
+              <td id="total_energy_fee"></td>
+              <td id="total_water_fee"></td>
+              <td id="total_gas_fee"></td>
+              <td id="total_rubbish_fee"></td>
+              <td id="total_wx_fee"></td>
               <td colspan="8"></td>
             </tr>
           <tr>
             <td colspan="19" style="text-align: center">
-            <input type="hidden" name="schedule_id" value="{$schedule_info.id}">
-            <input type="hidden" name="sum_person_day" value="{$sum_person_day}">
-            <input type="submit" class="btn btn-success" value="生成退房水电气">
-
-            <!-- 确认未支付单 -->
-             <!--  <a href="" class="btn btn-success">完成</a> -->
-            <!-- 确认未支付单 -->
+              <input type="hidden" name="schedule_id" value="{$schedule_info.id}">
+              <input type="hidden" name="sum_person_day" value="{$sum_person_day}">
+              <input type="submit" class="btn btn-warning" name="is_update" value="修改">
+              <input onclick="return checkForm();" type="submit" class="btn btn-success" value="生成`{$schedule_info.realname}`退房水电气">
             </td>
           </tr>
         </tbody>
@@ -196,3 +191,59 @@
 <script src="__PUBLIC__/admin/js/matrix.tables.js"></script>
 </body>
 </html>
+<script type="text/javascript">
+(function(){
+  // 获取各数据的总金额
+  // 房间总电费
+  var total_room_energy_fee = 0;
+  $('.room_energy_fee').each(function(k,v){
+    total_room_energy_fee += parseFloat($(this).html());
+  });
+  $('#total_room_energy_fee').html(total_room_energy_fee.toFixed(2));
+  // 公共区域总电费
+  var total_energy_fee = 0;
+  $('.energy_fee').each(function(k,v){
+    total_energy_fee += parseFloat($(this).html());
+  });
+  $('#total_energy_fee').html(total_energy_fee.toFixed(2));
+  // 公共区域总水费
+  var total_water_fee = 0;
+  $('.water_fee').each(function(k,v){
+    total_water_fee += parseFloat($(this).html());
+  });
+  $('#total_water_fee').html(total_water_fee.toFixed(2));
+  // 公共区域总气费
+  var total_gas_fee = 0;
+  $('.gas_fee').each(function(k,v){
+    total_gas_fee += parseFloat($(this).html());
+  });
+  $('#total_gas_fee').html(total_gas_fee.toFixed(2));
+  // 燃气垃圾费
+  var total_rubbish_fee = 0;
+  $('.rubbish_fee').each(function(k,v){
+    total_rubbish_fee += parseFloat($(this).html());
+  });
+  $('#total_rubbish_fee').html(total_rubbish_fee.toFixed(2));
+  // 公共区域总维修费
+  var total_wx_fee = 0;
+  $('.wx_fee').each(function(k,v){
+    total_wx_fee += parseFloat($(this).val());
+  });
+  $('#total_wx_fee').html(total_wx_fee.toFixed(2));
+  
+}())
+
+function checkForm(){
+  var msg = '';
+  msg += '{$schedule_info.realname}：\n\n'
+  msg += '电度： 始：' + $('input[name=start_energy]:eq(0)').val() + ',止：' + $('input[name=end_energy]:eq(0)').val() + '\n\n';
+  msg += '水度： 始：' + $('input[name=start_water]:eq(0)').val() + ',止：' + $('input[name=end_water]:eq(0)').val() + '\n\n';
+  msg += '气度： 始：' + $('input[name=start_gas]:eq(0)').val() + ',止：' + $('input[name=end_gas]:eq(0)').val() + '\n\n';
+  msg += '是否确认生成{$schedule_info.realname}退租账单？';
+  if(!confirm(msg)){
+    return false;
+  }
+  alert(123);
+  return false;
+}
+</script>

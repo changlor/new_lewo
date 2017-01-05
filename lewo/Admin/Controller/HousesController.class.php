@@ -76,8 +76,11 @@ class HousesController extends BaseController {
             'input_month' => $lastMonth,
             'is_create' => 1
         ]);
+        $total_yz_count = 0;
 
         foreach($housesList AS $key=>$val){
+            // 已租人数
+            $total_yz_count += $val['yz_count'];
             //当月
             $where = array();
             $where['cb.house_code'] = $val['house_code'];
@@ -125,7 +128,8 @@ class HousesController extends BaseController {
             $lastSendCount += $housesList[$key]['last_sended_count'];
 
         }
-
+        
+        $this->assign('total_yz_count',$total_yz_count);
         $this->assign('nowHousesSendCount',$nowHousesSendCount);
         $this->assign('lastHousesSendCount',$lastHousesSendCount);
         $this->assign('housesCount',$housesCount);

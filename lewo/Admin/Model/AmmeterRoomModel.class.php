@@ -52,8 +52,8 @@ class AmmeterRoomModel extends Model{
 	/**
 	* [获取最新的一条]
 	**/
-	public function getFirstInfo($room_id,$house_id){
-		return $this->where(array("room_id"=>$room_id,"house_id"=>$house_id))->order("input_month desc,input_year desc")->find();
+	public function getFirstInfo($room_id){
+		return $this->where(array("room_id"=>$room_id))->order("input_month desc,input_year desc")->find();
 	}
 }
 

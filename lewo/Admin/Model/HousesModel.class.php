@@ -274,6 +274,25 @@ class HousesModel extends Model{
 	}
 
 	/**
+	* [获取退房时的总电费]
+	* @param total_room_energy 退租时录入的房间电表
+	**/
+	public function getCheckOutRoomTotalEnergyFee($total_room_energy_arr = [], $energy_stair){	
+		$DAmmeterRoom = D("ammeter_room");
+        $DContract = D("contract");
+        $MRoom = M("room");
+		$room_total_energy_fee = 0;
+		foreach( $total_room_energy_arr AS $room_id=>$total_room_energy ){
+			$ammeter_room = $DAmmeterRoom->getFirstInfo($room_id);
+            $add_roomD = $total_room_energy - $ammeter_room['room_energy'];
+            //房间电费
+            $room_energy_fee = get_energy_fee($add_roomD, $energy_stair);
+            $room_total_energy_fee += $room_energy_fee;
+		}
+		return $room_total_energy_fee;
+	}
+
+	/**
 	* [获取房间楼层]
 	**/
 	public function getBuilding($house_code){

@@ -95,7 +95,7 @@ function toIndex(){
 												{$bill_info.should_date}</p></div>
                                             <div class="col-xs-6 banner-title-5">
                                                 <if condition="$bill_info['pay_status'] eq 1">
-                                                    <p class="banner-title-5-1">已完成</p>
+                                                    <p class="banner-title-5-1">已支付￥{$bill_info.pay_money}</p>
                                                     <else/>
                                                     <p class="banner-title-5-1">未完成</p>
                                                 </if>

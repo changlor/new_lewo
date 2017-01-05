@@ -122,12 +122,17 @@
            }
         });
     });*/
+    //刷新页面刷新待办数目
+    $.ajax({
+       type: "POST",
+       url: refesh_schedule_count_url,
+       dataType: "json",
+       success: function(data){
+         $("#schedule_count").html(data.schedule_count);
+       }
+    });
     //点击刷新待办数目
     $("#refesh_schedule_count").click(function(){
-      $.ajax({
-           type: "POST",
-           url: refesh_schedule_count_url
-        });
       location.reload();
     });
 

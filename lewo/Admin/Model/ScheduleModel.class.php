@@ -30,6 +30,19 @@ class ScheduleModel extends BaseModel{
     {
         return parent::join($this->table, $joinTable)->field($field)->where($where);
     }
+
+    public function update($where)
+    {
+        $field = empty($field) ? '' : $field;
+        $where = empty($where) ? '' : $where;
+        $field = is_array($field) ? implode(',', $field) : $field;
+        return $this->table->where($where);
+    }
+
+    public function updateSchedule($where, $updateInfo)
+    {
+        return $this->update($where)->save($updateInfo);
+    }
 	/**
 	* [获取待办列表]
 	**/
@@ -111,11 +124,34 @@ class ScheduleModel extends BaseModel{
 	}
 
 	/**
+	* [修改退房待办]
+	**/
+	public function putSchedule($input){
+		if (!is_numeric($input['schedule_id']) || is_null($input['schedule_id']) ) {
+			return parent::response([false, '待办ID不存在']);
+		}
+		$schedule = [];
+		$schedule['total_energy'] = $input['total_energy'];
+		$schedule['total_water'] = $input['total_water'];
+		$schedule['total_gas'] = $input['total_gas'];
+		// 序列化房间电表
+        $total_room_energy = serialize(i_array_column($input['total_room_energy'], 'end_room_energy', 'room_id'));
+		$schedule['total_room_energy'] = $total_room_energy;
+		$schedule['wx_fee'] = $input['wx_fee'];
+		$schedule['wx_des'] = $input['wx_des'];
+		$res = $this->updateSchedule(['id'=>$input['schedule_id']], $schedule);
+		return parent::response([true, '修改成功']);
+	}
+
+	/**
 	* [获取待办信息]
 	**/
 	public function getScheduleInfo($id){
 		return $this->table
-		->where(['id'=>$id])
+		->alias('schedule')
+		->field('schedule.*, account.realname')
+		->join('lewo_account account ON account.id = schedule.account_id')
+		->where(['schedule.id'=>$id])
 		->find();
 	}
 

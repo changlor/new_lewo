@@ -126,7 +126,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" >
-                                    <textarea id="check_out_msg" style="width: 100%" placeholder="例:一切正常/**损坏"></textarea>
+                                    <textarea id="check_out_msg" style="width: 100%" placeholder="例:**损坏维修费50元"></textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -191,6 +191,7 @@
                                              <td>
                                               <input placeholder="0" type="text" name="total_room_energy[{$vo.id}][room_energy]">
                                               <input type="hidden" name="total_room_energy[{$vo.id}][room_code]" value="{$vo.room_code}">
+                                              <input type="hidden" name="total_room_energy[{$vo.id}][room_id]" value="{$vo.id}">
                                              </td>
                                          </tr>
                                     </volist>
@@ -201,7 +202,7 @@
                                         <textarea name="check_out_msg" id="input_check_out_msg" style="width: 100%" placeholder="例:一切正常/**损坏"></textarea>
                                         </td>
                                     </tr>
-                                    <tr><td>维修费</td><td><input type="text" name="wx_fee" value="" placeholder=""></td></tr>
+                                    <tr><td>维修费</td><td><input type="text" name="wx_fee" value="0" placeholder=""></td></tr>
                                     <tr>
                                         <td colspan="2" align="center">物品交接</td>
                                     </tr>

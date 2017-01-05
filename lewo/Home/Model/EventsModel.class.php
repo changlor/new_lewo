@@ -76,9 +76,6 @@ class EventsModel extends BaseModel {
     * [获取事件列表]
     **/
     public function getEventList($eventId){
-        if (empty($eventId)) {
-            return parent::response([false, '事件ID不存在']);
-        }
         return $this->selectEvents([
             'event_id'=>$eventId
         ], [

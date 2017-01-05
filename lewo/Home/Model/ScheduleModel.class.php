@@ -98,8 +98,7 @@ class ScheduleModel extends BaseModel {
 			->field("lewo_room.house_code,lewo_room.room_sort,lewo_room.room_code,lewo_room.bed_code,lewo_schedule.*,lewo_account.realname,lewo_account.mobile")
 			->join("lewo_room ON lewo_schedule.room_id = lewo_room.id", 'left')
 			->join("lewo_account ON lewo_schedule.account_id = lewo_account.id", 'left')
-			->group('event_id')
-			->where(['steward_id'=>$steward_id])
+			->where(['lewo_schedule.steward_id'=>$steward_id])
 			->select();
 
 		foreach( $sArr AS $key=>$val ){

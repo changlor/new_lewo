@@ -7,9 +7,9 @@
                 <span class="nav-bootom-zt" <if condition="$_SESSION['navBootom'] eq index"> style="color:#68bb9b;" </if>>首页</span>
               </div>
             </a>
-             <a href="{:U('Home/Steward/houses')}">
+             <a href="{:U('Home/Steward/houses', ['select' => 'steward'])}">
               <div class="col-xs-3"> <img src="__PUBLIC__/images/icon_zf.png" class="img-responsive img-icon3-dx"> <br>
-                <span class="nav-bootom-zt" <if condition="$_SESSION['navBootom'] eq houses"> style="color:#68bb9b;" </if>>房屋管理</span>
+                <span class="nav-bootom-zt" <if condition="$_SESSION['navBootom'] eq houses"> style="color:#68bb9b;" </if>>管辖房源</span>
               </div>
             </a>
             <a href="{:U('Home/Steward/allbills')}">

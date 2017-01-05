@@ -21,6 +21,11 @@ class RoomModel extends BaseModel {
 		return $this->table->field($field)->where($where);
 	}
 
+    public function count($where)
+    {
+        return $this->table->where($where)->count();
+    }
+
 	public function update($where)
     {
         $field = empty($field) ? '' : $field;
@@ -49,7 +54,10 @@ class RoomModel extends BaseModel {
     	return $this->table->add($contract);
     }
 
-
+    public function join($joinTable, $where, $field)
+    {
+        return parent::join($this->table, $joinTable)->field($field)->where($where);
+    }
 
 	/**
 	* [入住成功后修改房间状态]

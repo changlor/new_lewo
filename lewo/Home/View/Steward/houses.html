@@ -7,7 +7,7 @@
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<title>房屋管理</title>
+	<title>管辖房源</title>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width"><meta name="format-detection" content="email=no,address=no,telephone=no">
     <link href="__PUBLIC__/css/normalize.css" rel="stylesheet" type="text/css">
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
@@ -72,8 +72,10 @@
                 </div>
             </div>
             <div class="col-xs-2">
-                <if condition="!isset($type)">
-                    <a href="{:U('Home/Steward/allhouses')}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">所有房源</a>
+                <if condition="$type eq 'all'">
+                    <a href="{:U('Home/Steward/houses', ['select' => 'steward'])}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">管辖房源</a>
+                <elseif condition="$type eq 'steward'" />
+                    <a href="{:U('Home/Steward/houses', ['select' => 'all'])}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">所有房源</a>
                 <else />
                     <if condition="$type neq 'empty'">
                         <a href="{:U('Home/Steward/allhouses',array('select'=>'empty'))}" class="btn btn-success" style="margin-top:5px; margin-left: 4px;">空置房源</a>

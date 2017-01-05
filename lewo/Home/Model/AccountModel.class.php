@@ -19,7 +19,6 @@ class AccountModel extends BaseModel {
     {
         $field = empty($field) ? '' : $field;
         $where = empty($where) ? '' : $where;
-        $field = is_array($field) ? implode(',', $field) : $field;
         return $this->table->field($field)->where($where);
     }
 

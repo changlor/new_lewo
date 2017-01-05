@@ -92,7 +92,7 @@ class HousesModel extends BaseModel {
     	});
     	// 连接查询
     	$joinTable = [
-            'houses(area)' => 'area_id(id)'
+            'area' => 'houses.area_id = area.id',
         ];
         $field = [
             // houses
@@ -143,7 +143,7 @@ class HousesModel extends BaseModel {
 			];
 			// 连接查询
     		$joinTable = [
-    	        'room(account)' => 'account_id(id)'
+                'account' => 'room.account_id = account.id',
 	        ];
 	        $houses[$key]['room_list'] = $DRoom->join($joinTable, $filters, $field)->order('lewo_room.room_sort asc')->select();
 	        $houses[$key]['yz_count'] = 0;

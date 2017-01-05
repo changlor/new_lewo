@@ -347,12 +347,12 @@ class PayModel extends BaseModel {
         // 选择pay表数据
         // --关联相关表
         $joinTable = [
-            'pay(room)' => 'room_id(id)',
-            'room(houses)' => 'house_id(id)',
-            'pay(account)' => 'account_id(id)',
-            'houses(area)' => 'area_id(id)',
-            'pay(charge_bill)' => 'pro_id(pro_id)',
-            'pay(contract)' => 'pro_id(pro_id)',
+            'room' => 'pay.room_id = room.id',
+            'houses' => 'room.house_id = houses.id',
+            'account' => 'pay.account_id = account.id',
+            'area' => 'houses.area_id = area.id',
+            'charge_bill' => 'pay.pro_id = charge_bill.pro_id',
+            'contract' => 'pay.pro_id = contract.pro_id'
         ];
         // --过滤条件
         $filters = [

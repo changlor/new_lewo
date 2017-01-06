@@ -103,6 +103,7 @@ class ContractModel extends BaseModel {
             'lewo_contract.room_id',
             'lewo_contract.cotenant',
             'lewo_contract.roomD',
+            'lewo_contract.contract_number',
             // pay
             'lewo_pay.favorable',
             'lewo_pay.favorable_des',
@@ -480,6 +481,11 @@ class ContractModel extends BaseModel {
         if (!is_numeric($stewardId)) {
             return parent::response([false, '非法操作！']);
         }
+        // 获取合同编号
+        $contractNumber = $input['contractNumber'];
+        if (empty($contractNumber)) {
+            return parent::response([false, '合同编号不能为空！']);
+        }
         // 获取房间roomId
         $roomId = $input['roomId'];
         if (!is_numeric($roomId)) {
@@ -701,6 +707,7 @@ class ContractModel extends BaseModel {
         }
         // 插入合同数据
         $contract = [];
+        $contract['contract_number'] = $contractNumber;
         $contract['start_time'] = $startDate;
         $contract['end_time'] = $endDate;
         $contract['pro_id'] = $proId;

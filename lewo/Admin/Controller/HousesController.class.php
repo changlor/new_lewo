@@ -668,6 +668,30 @@ class HousesController extends BaseController {
         die(json_encode($success));
     }
 
+    public function updateBillField()
+    {
+        $proId = I('post.proId');
+        $type = I('post.type');
+        $fieldName = I('post.fieldKey');
+        $fieldValue = I('post.fieldValue');
+        $bill = [];
+        $bill[$fieldName] = $fieldValue;
+        switch ($type) {
+            case 'overdue':
+                $model = M('charge_bill');
+                break;
+            case 'time':
+                $model = M('pay');
+                break;
+            default:
+                break;
+        }
+        $r0 = $model->where(['pro_id' => $proId])->save($bill);
+        if ($r0 > 0) {
+            echo 'success';
+        }
+    }
+
     /**
     * [修改账单]
     **/

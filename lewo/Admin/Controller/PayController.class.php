@@ -240,7 +240,7 @@ class PayController extends Controller {
             'charge_bill.rent_fee', 'charge_bill.rent_des',
             'charge_bill.service_fee', 'charge_bill.wx_fee',
             'charge_bill.wx_des', 'charge_bill.type',
-            'charge_bill.handling_fee', 'charge_bill.total_person_energy',
+            'charge_bill.handling_fee',
             'charge_bill.rent_date_old', 'charge_bill.rent_date_to',
             // pay
             'pay.room_id', 'pay.price',

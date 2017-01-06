@@ -115,7 +115,6 @@
                 <td>
                   {$vo.room_code}
                   <input type="hidden" name="room_id" value="{$vo.room_id}"/>
-                  <input type="hidden" name="house_code" value="{$vo.house_code}"/>
                   <input type="hidden" name="account_id" value="{$vo.account_id}"/>
                 </td>
                 <td>
@@ -127,14 +126,28 @@
                 </td>
                 <td>{$vo.bed_code}</td>
                 <td><a href="{:U('Admin/Tenant/contract_info',array('account_id'=>$vo['account_id'],'room_id'=>$vo['room_id']))}" target="_blank" class="btn btn-info btn-mini">{$vo.realname}</a></td>
-                <td>{$vo.person_day}</td>
-                <td class="room_energy_fee">{$vo.room_energy_fee}</td>
-                <td class="energy_fee">{$vo.energy_fee}</td>
-                <td class="water_fee">{$vo.water_fee}</td>
-                <td class="gas_fee">{$vo.gas_fee}</td>
-                <td class="rubbish_fee">{$vo.rubbish_fee}</td>
-                <if condition="$schedule_info['room_id'] eq $vo['room_id']">
-                  <td><input class="span6" style="width:50px;" type="text" name="wx_fee" value="{$vo.wx_fee}"/></td>
+                <td>
+                  {$vo.person_day}
+                </td>
+                <td class="room_energy_fee">
+                  {$vo.room_energy_fee}
+                </td>
+                <td class="energy_fee">
+                  {$vo.energy_fee}
+                </td>
+                <td class="water_fee">
+                  {$vo.water_fee}
+                </td>
+                <td class="gas_fee">
+                  {$vo.gas_fee}
+                </td>
+                <td class="rubbish_fee">
+                  {$vo.rubbish_fee}
+                </td>
+                <if condition="$schedule_info['account_id'] eq $vo['account_id']">
+                  <td>
+                    <input class="span6" style="width:50px;" type="text" name="wx_fee" value="{$vo.wx_fee}"/>
+                  </td>
                   <td>
                     <textarea name="wx_des">
                       {$vo.wx_des}
@@ -144,9 +157,25 @@
                   <td></td>
                   <td></td>
                 </if>
-                <td>{$vo.handling_fee}</td>
+                <td>
+                  {$vo.handling_fee}
+                </td>
                 <!-- <td>￥0</td> -->
-                <td>{$vo.total_fee}</td>
+                <td>
+                  <if condition="$schedule_info['account_id'] eq $vo['account_id']">
+                    <input type="hidden" name="start_room_energy" value="{$vo.start_room_energy}">
+                    <input type="hidden" name="end_room_energy" value="{$vo.end_room_energy}">
+                    <input type="hidden" name="person_day" value="{$vo.person_day}">
+                    <input type="hidden" name="room_energy_fee" value="{$vo.room_energy_fee}">
+                    <input type="hidden" name="energy_fee" value="{$vo.energy_fee}">
+                    <input type="hidden" name="water_fee" value="{$vo.water_fee}">
+                    <input type="hidden" name="gas_fee" value="{$vo.gas_fee}">
+                    <input type="hidden" name="rubbish_fee" value="{$vo.rubbish_fee}">
+                    <input type="hidden" name="handling_fee" value="{$vo.handling_fee}">
+                    <input type="hidden" name="total_fee" value="{$vo.total_fee}">
+                  </if>
+                  {$vo.total_fee}
+                </td>
           </volist>
             <tr>
               <td colspan="4"></td>
@@ -161,6 +190,8 @@
             </tr>
           <tr>
             <td colspan="19" style="text-align: center">
+              <input type="hidden" name="house_code" value="{$house_code}"/>
+              <input type="hidden" name="house_id" value="{$house_id}"/>
               <input type="hidden" name="schedule_id" value="{$schedule_info.id}">
               <input type="hidden" name="sum_person_day" value="{$sum_person_day}">
               <input type="submit" class="btn btn-warning" name="is_update" value="修改">
@@ -235,15 +266,18 @@
 
 function checkForm(){
   var msg = '';
-  msg += '{$schedule_info.realname}：\n\n'
-  msg += '电度： 始：' + $('input[name=start_energy]:eq(0)').val() + ',止：' + $('input[name=end_energy]:eq(0)').val() + '\n\n';
-  msg += '水度： 始：' + $('input[name=start_water]:eq(0)').val() + ',止：' + $('input[name=end_water]:eq(0)').val() + '\n\n';
-  msg += '气度： 始：' + $('input[name=start_gas]:eq(0)').val() + ',止：' + $('input[name=end_gas]:eq(0)').val() + '\n\n';
+  msg += '{$schedule_info.realname}：\n\n';
+  msg += '个人房间电费：' + $('input[name=room_energy_fee]:eq(0)').val() + '\n\n';
+  msg += '公摊电费：' + $('input[name=energy_fee]:eq(0)').val() + '\n\n';
+  msg += '公摊水费：' + $('input[name=water_fee]:eq(0)').val() + '\n\n';
+  msg += '公摊气费：' + $('input[name=gas_fee]:eq(0)').val() + '\n\n';
+  msg += '燃气垃圾费：' + $('input[name=rubbish_fee]:eq(0)').val() + '\n\n';
+  msg += '维修费：' + $('input[name=wx_fee]:eq(0)').val() + '\n\n';
+  msg += '维修描述：' + $.trim($('textarea[name=wx_des]:eq(0)').val()) + '\n\n';
+  msg += '总金额：' + $('input[name=total_fee]:eq(0)').val() + '\n\n';
   msg += '是否确认生成{$schedule_info.realname}退租账单？';
   if(!confirm(msg)){
     return false;
   }
-  alert(123);
-  return false;
 }
 </script>

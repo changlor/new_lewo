@@ -176,7 +176,7 @@ class HousesModel extends Model{
 	* [查看该房屋有多少间房间]
 	**/
 	public function getRoomCountByCode($house_code){
-		$room_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>1))->count();
+		$room_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>1,'is_show'=>1))->count();
 
 		return $room_count;
 	}
@@ -184,7 +184,7 @@ class HousesModel extends Model{
 	* [查看该房屋有多少间床位]
 	**/
 	public function getBedCountByCode($house_code){
-		$bed_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>2))->count();
+		$bed_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>2,'is_show'=>1))->count();
 
 		return $bed_count;
 	}

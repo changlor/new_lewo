@@ -118,69 +118,45 @@ class TaskController extends BaseController {
                     $this->error($res['msg']);
                 }
             } else {
-dump('开发中');exit;
-                $schedule_type = $schedule_info['schedule_type'];
-                // 房租
-                $rent = $MRoom->where(['id'=>I("room_id")])->getField("rent");
-                if ( C("schedule_type_zf") == $schedule_type || C("schedule_type_hf") == $schedule_type ) {
-                    // 如果是换房或者转房，要收取手续费
-                    $data['handling_fee'] = C('handling_percent')*$rent;
-                }
                 // 插入退房水电气账单
-                $data['pro_id'] = getOrderNo();
-                $data['room_id'] = I("room_id");
-                $data['house_code'] = I("house_code");
-                $data['account_id'] = I("account_id");
-                $data['person_day'] = I("person_day");
-                $data['room_energy_fee'] = I("room_energy_fee");
-                $data['public_energy_fee'] = I("public_energy_fee");
-                $data['energy_fee'] = I("energy_fee");
-                $data['water_fee'] = I("water_fee");
-                $data['gas_fee'] = I("gas_fee");
-                $data['wx_fee'] = I("wx_fee");
-                $data['wx_des'] = trim(I("wx_des"));
-                $data['total_fee'] = I("total_fee");
-                $data['total_person_day'] = I("sum_person_day");
-                $data['create_time'] = date("Y-m-d H:i:s",time());
-                $data['pay_status'] = 0;
-                $data['total_energy'] = I("total_energy_fee");
-                $data['total_water'] = I("public_water_fee");
-                $data['total_gas'] = I("public_gas_fee");
-                $data['start_energy'] = I('start_energy'); //电始度数
-                $data['end_energy'] = I('end_energy'); //电止度数
-                $data['start_water'] = I('start_water'); //水始度数
-                $data['end_water'] = I('end_water'); //水止度数
-                $data['start_gas'] = I('start_gas'); //气始度数
-                $data['end_gas'] = I('end_gas'); //气止度数
-                $data['end_room_energy'] = I("end_room_energy");
-                $data['start_room_energy'] = I("start_room_energy");
-                $data['room_energy_add'] = I("room_energy_add");
-                $data['late_pay_date'] = date("Y-m-d H:i:s",time());
-                $data['should_pay_date'] = date("Y-m-d H:i:s",time());
-                $data['input_year'] = date("Y",time());
-                $data['input_month'] = date("m",time());
-                $data['realname'] = $MAccount->where(array("id"=>$data['account_id']))->getField("realname");
-                $data['total_person_energy'] = $data['room_energy_fee'] + $data['energy_fee'];
-                switch ($schedule_type) {
-                    case '1':
-                        $data['type'] = 2;//退租水电气结算
-                        break;
-                    case '2':
-                        $data['type'] = 3;//转租水电气结算
-                        break;
-                    case '3':
-                        $data['type'] = 4;//换租水电气结算
-                        break;
-                    default:
-                        $data['type'] = 1;//日常
-                        break;
-                }
+                $input = [
+                    'room_id' => I('post.room_id'),
+                    'house_id' => I('post.house_id'),
+                    'house_code' => I('post.house_code'),
+                    'account_id' => I('post.account_id'),
+                    'person_day' => I('post.person_day'),
+                    'room_energy_fee' => I('post.room_energy_fee'),
+                    'public_energy_fee' => I('post.public_energy_fee'),
+                    'public_water_fee' => I('post.public_water_fee'),
+                    'public_gas_fee' => I('post.public_gas_fee'),
+                    'energy_fee' => I('post.energy_fee'),
+                    'water_fee' => I('post.water_fee'),
+                    'gas_fee' => I('post.gas_fee'),
+                    'wx_fee' => I('post.wx_fee'),
+                    'wx_des' => trim(I('post.wx_des')),
+                    'total_fee' => I('post.total_fee'),
+                    'total_person_day' => I('post.sum_person_day'),
+                    'create_time' => date('Y-m-d H:i:s',time()),
+                    'total_energy' => I('post.total_energy_fee'),
+                    'total_water' => I('post.public_water_fee'),
+                    'total_gas' => I('post.public_gas_fee'),
+                    'start_energy' => I('post.start_energy'),
+                    'end_energy' => I('post.end_energy'),
+                    'start_water' => I('post.start_water'),
+                    'end_water' => I('post.end_water'),
+                    'start_gas' => I('post.start_gas'),
+                    'end_gas' => I('post.end_gas'),
+                    'end_room_energy' => I('post.end_room_energy'),
+                    'start_room_energy' => I('post.start_room_energy'),
+                    'room_energy_add' => I('post.room_energy_add'),
+                    'input_year' => date('Y',time()),
+                    'input_month' => date('m',time()),
+                    'type' => 2,
+                ];
                 
-                $result = M("charge_bill")->add($data);
+                $result = $DChargeBill->postChargeBill($input);
                 if ( $result ) {
-                    M("schedule")->where(array("id"=>$schedule_id))->save(array("is_finish"=>1));//生成水电气成功修改状态
                     //插入一条发送账单确认待办
-                    $DSchedule = D("schedule");
                     $result2 = $DSchedule->addNewSchdule($schedule_id,$schedule_type,3,C("admin_type_cw"));
                     if ( !$result2 ) {
                         $this->error("插入发送账单确认待办失败",U("Admin/Task/index"));
@@ -374,6 +350,7 @@ dump('开发中');exit;
             $this->assign("energy_stair",$area_info['energy_stair']);
             $this->assign("ammeter_house",$ammeter_house);
             $this->assign("sum_person_day",$sum_person_day);
+            $this->assign("house_id",$house_id);
             $this->assign("house_code",$house_code);
             $this->assign("schedule_type_name",$schedule_type_name);
             $this->assign("schedule_info",$schedule_info);

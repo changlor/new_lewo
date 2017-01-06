@@ -53,7 +53,7 @@ class ChargeHouseModel extends Model{
                             ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
                             ->where($where)
                             ->count();
-			$where['cb.is_send'] = 1;
+			$where['p.is_send'] = 1;
 			$sended_count = $MPay
                             ->alias('p')
                             ->field('cb.*,p.*')

@@ -94,7 +94,7 @@ class HousesController extends BaseController {
             ->where($where)
             ->count();
             // 获取该月房屋发账单的总数
-            $where['cb.is_send'] = 1;
+            $where['p.is_send'] = 1;
             $housesList[$key]['now_sended_count'] = $MPay
             ->alias('p')
             ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
@@ -115,7 +115,7 @@ class HousesController extends BaseController {
             ->join('lewo_charge_bill cb ON cb.pro_id=p.pro_id ')
             ->where($where)
             ->count();
-            $where['cb.is_send'] = 1;
+            $where['p.is_send'] = 1;
             $housesList[$key]['last_sended_count'] = $MPay
             ->alias('p')
             ->field('cb.*,p.*')
@@ -661,7 +661,6 @@ class HousesController extends BaseController {
             $result = $clapi->sendSMS($mobile, $msg,'true');
             $result = $clapi->execResult($result);
             if($result[1]==0){
-                $DChargeBill->where(array('pro_id'=>$val))->save(array("is_send"=>1));
                 $MPay->where(array('pro_id'=>$val))->save(array("is_send"=>1));
                 $success[$val] = $realname;
             }

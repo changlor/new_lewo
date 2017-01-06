@@ -703,6 +703,7 @@ class StewardController extends BaseController {
             // 缴定待办id
             $scheduleId = I('post.scheduleId');
             $res = $DContract->postContract([
+                'contractNumber' => I('post.contractNumber'),
                 'roomId' => I('post.room_id'),
                 'realName'=> I('post.realName'),
                 'mobile' => I('post.mobile'),

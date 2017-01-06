@@ -671,6 +671,42 @@ class HousesController extends BaseController {
         die(json_encode($success));
     }
 
+    public function updateBillField()
+    {
+        $proId = I('post.proId');
+        $type = I('post.type');
+        $fieldName = I('post.fieldKey');
+        $fieldValue = I('post.fieldValue');
+        $bill = [];
+        $bill[$fieldName] = $fieldValue;
+        switch ($type) {
+            case 'overdue':
+                $model = M('charge_bill');
+                break;
+            case 'time':
+                $model = M('pay');
+                break;
+            default:
+                break;
+        }
+        $r0 = $model->where(['pro_id' => $proId])->save($bill);
+        if ($r0 > 0) {
+            if ($type = 'overdue') {
+                $money = M('charge_bill')->where(['pro_id' => $proId])->field(['rent_fee', 'service_fee', 'wgfee_unit', 'room_energy_fee', 'energy_fee', 'water_fee', 'gas_fee', 'rubbish_fee', 'wx_fee'])->find();
+                $favorable = M('pay')->where(['pro_id' => $proId])->getField('favorable');
+                $price = 0;
+                foreach ($money as $key => $value) {
+                    $price = $price + $value;
+                }
+                $price = $price - $favorable;
+                M('pay')->where(['pro_id' => $proId])->save(['price' => $price]);
+                M('charge_bill')->where(['pro_id' => $proId])->save(['total_fee' => $price]);
+                dump($price);
+            }
+            echo 'success';
+        }
+    }
+
     /**
     * [修改账单]
     **/

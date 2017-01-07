@@ -1,5 +1,5 @@
 <?php
-namespace Home\Model;
+namespace Admin\Model;
 use Think\Model;
 /**
  * 事件表
@@ -9,6 +9,7 @@ class EventsModel extends BaseModel {
     protected $tableName = 'events';
     private static $eventDes = [
         '1_2' => '管家已验房。',
+        '1_3' => '租客退租账单已生成。',
     ];
     public function __construct()
     {

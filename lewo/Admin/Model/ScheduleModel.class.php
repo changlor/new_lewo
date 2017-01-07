@@ -22,6 +22,11 @@ class ScheduleModel extends BaseModel{
 		return $this->table->field($field)->where($where);
 	}
 
+	public function selectField($where, $field)
+	{
+		return $this->select($where)->getField($field);
+	}
+
 	public function selectSchedule($where, $field){
 		return $this->select($where, $field)->select();
 	}
@@ -31,18 +36,47 @@ class ScheduleModel extends BaseModel{
         return parent::join($this->table, $joinTable)->field($field)->where($where);
     }
 
-    public function update($where)
-    {
-        $field = empty($field) ? '' : $field;
-        $where = empty($where) ? '' : $where;
-        $field = is_array($field) ? implode(',', $field) : $field;
-        return $this->table->where($where);
-    }
+    public function has($where)
+	{
+		$keys = array_keys($where);
+		$field = $keys[0];
+		$row = $this->selectField($where, $field);
+		return $row === '0' || $row === 0 || !empty($row);
+	}
 
-    public function updateSchedule($where, $updateInfo)
-    {
-        return $this->update($where)->save($updateInfo);
-    }
+    public function update($where, $data)
+	{
+		return $this->table->where($where)->save($data);
+	}
+
+	public function updateSchedule($where, $updateInfo)
+	{
+		return $this->update($where, $updateInfo);
+	}
+
+    public function finishedSchedule($input)
+	{
+		// 获取scheduleId
+		$scheduleId = $input['scheduleId'];
+		if (!$this->has(['id' => $scheduleId])) {
+			return parent::response([false, '不存在该待办事件！']);
+		}
+		// 将该scheduleId对应的待办事件状态修改为已完成
+		$scheduleUpdateInfo = [
+			'is_finish' => 1
+		];
+		// 
+		if ($this->has(['is_finish' => 1])) {
+			return parent::response([false, '该待办事件已完成！']);
+		}
+		$affectedRows = $this->updateSchedule(['id' => $scheduleId], $scheduleUpdateInfo);
+		if (!$affectedRows) {
+			return parent::response([false, '待办状态修改失败']);
+		} else {
+			return parent::response([true, '']);
+		}
+	}
+
 	/**
 	* [获取待办列表]
 	**/
@@ -220,43 +254,99 @@ class ScheduleModel extends BaseModel{
 	}
 
 	/**
+	* [2016-12-8 10:46][author:feng]
+	* [方法二]
 	* [插入一条待办]
-	* @param scchedule_id 待办id 指的是上一步流程的id,获取同样的信息，以至于可以每一条待办都是独立的
-	* @param schedule_type 待办类型 1：退房 2：转房 3：换房 4：缴定 5：例行打款 参考config
-	* @param status 流程的状态 参考数据库文档
-	* @param admin_type 操作人的类型 1管家 2财务 3后勤	 参考config
-	* @return 插入的id 
+	* @param schedule_type 待办工作类型 1：退房 2：转房 3：换房 4：缴定 5:例行打款
+	* @param status 待办状态 1）退房：1租客申请，2管家录入水电气，3财务发送账单，4租客确认账单，5财务点击完成。2）转房3）换房同上。4）缴定：1管家录入缴定，2管家已跟租客签约
+	* @param pay_type 1=>'支付宝',2=>'微信',3=>'银行卡',4=>'现金'
 	**/
-	public function addNewSchdule($schedule_id,$schedule_type,$status,$admin_type, $is_finish = 0, $is_detele = 0){
-		if ( empty($schedule_id) || empty($schedule_type) || empty($status) || empty($admin_type) ) {
-			return false;
+	public function postSchedule($input){
+		if (is_null($input['schedule_type'])) {
+			return parent::response([false, '待办类型参数不存在']);
 		}
-		$DAccount = D("account");
-		$schedule_info = $this->where(array("id"=>$schedule_id))->find();
-		$data['account_id'] = $schedule_info['account_id'];
-		$data['room_id'] 	= $schedule_info['room_id'];
-		$data['mobile'] 	= $schedule_info['mobile'];
-		$data['pay_account'] 	= $schedule_info['pay_account'];
-		$data['appoint_time'] 	= $schedule_info['appoint_time'];
-		$data['check_out_type'] = $schedule_info['check_out_type'];
-		$data['steward_id'] 	= $schedule_info['steward_id'];
-		$data['zS'] = !empty($schedule_info['zs'])? $schedule_info['zs']:0;
-		$data['zD'] = !empty($schedule_info['zd'])? $schedule_info['zd']:0;
-		$data['zQ'] = !empty($schedule_info['zq'])? $schedule_info['zq']:0;
-		$data['roomD'] 	= !empty($schedule_info['roomd'])? $schedule_info['roomd']:0;
-		$data['wx_fee'] = $schedule_info['wx_fee'];
-		$data['msg'] 	= $schedule_info['msg'];
-		$data['pay_type'] 	= $schedule_info['pay_type'];
-		$data['wx_des'] 	= $schedule_info['wx_des'];
-		$data['schedule_type'] 	= $schedule_type;
-		$data['status'] 		= $status;
-		$data['create_time'] 	= date("Y-m-d H:i:s",time());
-		$data['create_date'] 	= $schedule_info['create_date'];
-		$data['admin_type'] 	= $admin_type;
-		$data['is_finish'] 		= $is_finish;
-		$data['is_detele'] 		= $is_detele;
-		$data['last_schedule_id'] = $schedule_id;
-		return $this->table->add($data);
+		if (is_null($input['account_id'])) { 
+			return parent::response([false, '租客ID参数不存在']);
+		}
+		if (is_null($input['room_id'])) {
+			return parent::response([false, '房间ID参数不存在']);
+		}
+		if (is_null($input['status'])) {
+			return parent::response([false, '待办状态参数不存在']);
+		}
+		// 后台账号ID
+		if (is_null($input['username_id'])) {
+			return parent::response([false, '非法操作']);
+		}
+
+		$data = array();
+		$data['event_id'] 		= !is_null($input['event_id']) ? $input['event_id'] : getOrderNo();
+		$data['account_id'] 	= $input['account_id'];
+		$data['room_id']    	= $input['room_id'];
+		$data['schedule_type']  = $input['schedule_type'];
+		$data['status']			= $input['status'];
+		$data['create_time']	= date('Y-m-d H:i:s', time());
+		$data['steward_id']     = $input['steward_id'];
+		$data['money']      	= is_null($input['money'])
+								? 0
+								: $input['money'];
+		$data['pay_account'] 	= is_null($input['pay_account'])
+								? 0
+								: $input['pay_account'] ;
+		$data['pay_type'] 		= is_null($input['pay_type'])
+								? 0
+								: $input['pay_type'];
+		$data['appoint_time'] 	= is_null($input['appoint_time'])
+								? 0
+								: $input['appoint_time'];
+		$data['msg'] 			= is_null($input['msg'])
+								? ''
+								: $input['msg'];
+		$data['is_finish']      = is_null($input['is_finish'])
+								? 0
+								: $input['is_finish'];;
+		$data['admin_type']     = is_null($input['admin_type'])
+								? 0
+								: $input['admin_type'];
+		$data['total_water']	= is_null($input['total_water']) || empty($input['total_water'])
+								? 0
+								: $input['total_water'];
+		$data['total_energy']	= is_null($input['total_energy']) || empty($input['total_energy'])
+								? 0
+								: $input['total_energy'];
+		$data['total_gas']		= is_null($input['total_gas']) || empty($input['total_gas'])
+								? 0
+								: $input['total_gas'];
+		$data['total_room_energy']	= is_null($input['total_room_energy'])
+								? 0
+								: $input['total_room_energy'];
+		$data['wx_fee']         = is_null($input['wx_fee']) || empty($input['wx_fee'])
+								? 0
+								: $input['wx_fee'];
+		$data['wx_des']			= is_null($input['wx_des'])
+								? ''
+								: $input['wx_des'];
+		$data['check_item']     = is_null($input['check_item'])
+								? 0
+								: $input['check_item'];
+		$data['check_out_goods']= is_null($input['check_out_goods'])
+								? 0
+								: $input['check_out_goods'];
+		$data['check_out_type'] = is_null($input['check_out_type'])
+								? 0
+								: $input['check_out_type'];
+
+		$data = array_filter($data, function($v){
+			return (!is_null($v) && $v != '') ? true : false;
+		});
+		
+		$res = $this->table->add($data);
+
+		if ( $res ) {
+			return parent::response([true, '待办生成成功!', ['event_id'=>$data['event_id']]]);
+		} else {
+			return parent::response([false, '待办生成失败!']);
+		}
 	}
 
 	/**

@@ -309,7 +309,7 @@ class ContractModel extends BaseModel {
         }
         // 获取合同金额total
         $total = $input['total'];
-        if (!empty($total) && $total != round($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorableDes, 2)) {
+        if (!empty($total) && $total != round($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorable, 2)) {
             return parent::response([false, '合同金额出错！']);
         }
         
@@ -616,7 +616,7 @@ class ContractModel extends BaseModel {
         }
         // 获取合同金额total
         $total = $input['total'];
-        if (!empty($total) && $total != round($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorableDes, 2)) {
+        if (!empty($total) && $total != round($wgFee + $rent + $fee + $deposit - $bookDeposit - $favorable, 2)) {
             return parent::response([false, '合同金额出错！']);
         }
         // 获取缴定抵扣bookDeposit

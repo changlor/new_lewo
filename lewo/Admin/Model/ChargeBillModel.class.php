@@ -18,10 +18,15 @@ class ChargeBillModel extends BaseModel{
 	{
 		$field = empty($field) ? '' : $field;
 		$where = empty($where) ? '' : $where;
-		$field = is_array($field) ? implode(',', $field) : $field;
 		return $this->table->field($field)->where($where);
 	}
 
+	public function findChargeBill($where, $field){
+		return $this->select($where, $field)->find();
+	}
+	/**
+	* [new][插入数据]
+	**/
 	public function postChargeBill($input){
 		if (is_null($input['bill_type']) || empty($input['bill_type']) || !is_numeric($input['bill_type'])) {
 			return parent::response([false, '账单类型不存在']);
@@ -67,20 +72,41 @@ class ChargeBillModel extends BaseModel{
 		$chargeBill['handling_fee'] = $input['handling_fee'];
 		$chargeBill['rent_date_old'] = $input['rent_date_old'];
 		$chargeBill['rent_date_to'] = $input['rent_date_to'];
-		$chargeBill['kk'] = '';
 		$chargeBill = array_filter($chargeBill, function($v) {
-			return !is_null($v) ? true : false;
+			return !is_null($v) && $v != '' ? true : false;
 		});
+		
 		$pay = [];
 		$pay['pro_id'] = $proId;
+		$pay['bill_des'] = $input['bill_des'];
+		$pay['steward_id'] = $input['steward_id'];
 		$pay['room_id'] = $input['room_id'];
+		$pay['account_id'] = $input['account_id'];
+		$pay['favorable'] = $input['favorable'];
+		$pay['favorable_des'] = $input['favorable_des'];
 		$pay['price'] = $input['total_fee'];
 		$pay['bill_type'] = $input['bill_type'];
-		dump($pay);exit;
+		$pay['create_time'] = date('Y-m-d H:i:s', time());
+		$pay['input_year'] = $input['input_year'];
+		$pay['input_month'] = $input['input_month'];
+		// 最迟缴费日默认当天
+		$pay['last_date'] = is_null($input['last_date'])? date('Y-m-d', time()) : $input['last_date'];
+		$pay['should_date'] = is_null($input['should_date'])? date('Y-m-d', time()) : $input['should_date'];
+		$pay['is_send'] = $input['is_send'];
+		$pay = array_filter($pay, function($val) {
+			return !is_null($val) && $val != '' ? true : false;
+		});
+		$res = $this->table->add($chargeBill);
+		$res1 = M('pay')->add($pay);
+		if (!$res || !$res1) {
+			return parent::response([false, '生成账单失败']);
+		} else {
+			return parent::response([true, '生成账单生成', ['pro_id'=>$proId]]);
+		}
 	}
 
 	/**
-	* [插入账单表]
+	* [old][插入数据]
 	**/
 	public function addBill($arr,$year,$month){
 		$data['pro_id'] 			= $pdata['pro_id'] = getOrderNo();
@@ -273,55 +299,22 @@ class ChargeBillModel extends BaseModel{
 	}
 
 	/**
-	* [获取该租客未支付列表]
-	**/
-	public function getNotPayList($account_id){
-		$list = $this->table->where(array("account_id"=>$account_id,"pay_status"=>0))->select();
-		$DRoom = D("room");
-		$DAccount = D("account");
-		$DArea = D("area");
-		$DContract = D("contract");
-		foreach ($list AS $key=>$val) {
-			$list[$key]['room_code'] = $DRoom->getRoomCodeById($val['room_id']);
-			$list[$key]['bed_code'] = $DRoom->getBedCodeById($val['room_id']);
-			$list[$key]['realname'] = $DAccount->getFieldById($val['account_id'],"realname");
-			$list[$key]['mobile'] = $DAccount->getFieldById($val['account_id'],"mobile");
-			$list[$key]['SDQtotal'] = $val['water_fee'] + $val['gas_fee'] + $val['energy_fee'] + $val['room_energy_fee'];
-			$list[$key]['area_name'] = $DArea->getAreaInfoByCode($val['house_code']);
-			$list[$key]['ht_start_date'] = $DContract->getContractStartDate($val['account_id'],$val['room_id']);
-			$list[$key]['ht_end_date'] = $DContract->getContractEndDate($val['account_id'],$val['room_id']);
-			$list[$key]['period'] = $DContract->getPeriod($val['account_id'],$val['room_id']);
-			$list[$key]['deposit'] = $DContract->getDeposit($val['account_id'],$val['room_id']);
-			$pay_type = C("pay_type");
-			$list[$key]['pay_type_name'] = $pay_type[$val['pay_type']];
-			//最迟缴费倒计时
-			$startdate=strtotime($val['should_pay_date']);
-			$enddate=strtotime(date("Y-m-d",time()));
-			$count_down_days=round(($startdate-$enddate)/86400);
-			$list[$key]['count_down_days'] = $count_down_days;
-			switch ($val['type']) {
-				case 1:
-					$list[$key]['type_name'] = "日常";
-					break;
-				case 2:
-					$list[$key]['type_name'] = "退房";
-					break;
-				case 3:
-					$list[$key]['type_name'] = "转房";
-					break;
-				case 4:
-					$list[$key]['type_name'] = "换房";
-					break;
-			}
-		}
-		return $list;
-	}
-
-	/**
     * [修改支付][1支付宝][2微信][3余额抵押]
     **/
     public function setPayStatus($charge_id,$pay_type){
     	return $this->table->where(array("id"=>$charge_id))->save(array("pay_type"=>$pay_type,"pay_status"=>1));
+    }
+
+    /**
+    * author:feng
+    * [获取日常账单详情]
+    **/
+    public function getChargeBill($pro_id){
+    	if (is_null($pro_id) || empty($pro_id)) {
+			return parent::response([false, '账单ID不存在']);
+		}
+    	$where['pro_id'] = $pro_id;
+    	return $this->findChargeBill($where, $field = '*');
     }
 	
 }

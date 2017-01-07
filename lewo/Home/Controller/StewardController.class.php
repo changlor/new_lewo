@@ -257,7 +257,7 @@ class StewardController extends BaseController {
                 $last_ammeter_room_info = $DAmmeterROOM->where(array("room_id"=>$val['room_id'],"house_id"=>$house_id,"input_year"=>$lastYear,"input_month"=>$lastMonth))->find();
                 if ( !is_null($last_ammeter_room_info) && $is_clear != 1) {
                     if ( $val['room_energy'] < $last_ammeter_room_info['room_energy'] ) {
-                        $this->error($val['room_code']."该房间电度数低于上个月!请重新录入");
+                        $this->error($val['room_code']."该房间电度数低于上个月".$last_ammeter_room_info['room_energy']."!请重新录入");
                     }
                 }
                 $DAmmeterROOM->updateAmmeterRoomById($key,$val['room_energy']);
@@ -1046,12 +1046,9 @@ class StewardController extends BaseController {
             }
             // 序列化房间电表
             $total_room_energy = serialize(i_array_column(I('total_room_energy'), 'room_energy', 'room_id'));
-            // 获取电话
-            $mobile = $DAccount->selectField(['id'=>$account_id], ['mobile']);
             $param = [
                 'steward_id'    => $_SESSION['steward_id'],
                 'account_id'    => $account_id,
-                'mobile'        => $mobile,
                 'room_id'       => $room_id,
                 'schedule_type' => $schedule_type,
                 'check_item'    => $check_item_data,
@@ -1088,11 +1085,6 @@ class StewardController extends BaseController {
             if (!$res['success']) {
                 $this->error($res['msg']);
             }
-
-            // 执行退房修改操作
-            // 修改房间状态
-            // $room_result = $DRoom->updateRoom(['id'=>$room_id],['account_id'=>0,'status'=>0]);
-            
             if ( $flag ) {
                 M()->commit();
                 $this->success('提交成功',U('Home/Steward/stewardtasks'));

@@ -4,18 +4,39 @@ use Think\Model;
 /**
 * [合同数据层]
 */
-class ContractModel extends Model{
+class ContractModel extends BaseModel{
+	private $table;
+    protected $tableName = 'contract';
+
+	public function __construct()
+    {
+        parent::__construct();
+        $this->table = M($this->tableName);
+    }
+
+    public function select($where, $field)
+	{
+		$field = empty($field) ? '' : $field;
+		$where = empty($where) ? '' : $where;
+		return $this->table->field($field)->where($where);
+	}
+
+    public function selectField($where, $field)
+	{
+		return $this->select($where)->getField($field);
+	}
+
 	/**
 	* [根据用户id和房间id获取合同]
 	**/
 	public function getContract($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id))->find();
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id))->find();
 	}
 	/**
 	* [获取合同中的支付信息]
 	**/
 	public function getPayInfo($pro_id){
-		$pay_info = M('contract')
+		$pay_info = $this->table
 					->alias('c')
 					->field('c.*,p.*')
 					->join('lewo_pay p ON c.pro_id=p.pro_id')
@@ -27,7 +48,7 @@ class ContractModel extends Model{
 	 * [合同表][是否该月入住]
 	 **/
 	public function isDateCheckInByDate($account_id,$room_id,$year,$month){
-        $ht_info = $this->where(array("account_id"=>$account_id,"room_id"=>$room_id,"contract_status"=>1))->find();
+        $ht_info = $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id,"contract_status"=>1))->find();
         $ht_year = date("Y",strtotime($ht_info['start_time']));
         $ht_month = date("m",strtotime($ht_info['start_time']));
 
@@ -70,43 +91,43 @@ class ContractModel extends Model{
 	* [获取合同人数]
 	**/
 	public function getPersonCount($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("person_count");
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("person_count");
 	}
 	/**
 	* [获取合同租期开始时间]
 	**/
 	public function getContractStartDate($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("start_time");
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("start_time");
 	}
 	/**
 	* [获取合同租期结束时间]
 	**/
 	public function getContractEndDate($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("end_time");
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("end_time");
 	}
 	/**
 	* [获取合同房租到期日时间]
 	**/
 	public function getContractRentDate($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("rent_date");
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("rent_date");
 	}
 	/**
 	* [获取缴费周期]
 	**/
 	public function getPeriod($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("period");
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("period");
 	}
 	/**
 	* [获取押金]
 	**/
 	public function getDeposit($account_id,$room_id){
-		return $this->where(array("account_id"=>$account_id,"room_id"=>$room_id))->getField("deposit");
+		return $this->table->where(array("account_id"=>$account_id,"room_id"=>$room_id))->order('id desc')->getField("deposit");
 	}
 	/**
 	* [获取合同列表]
 	**/
 	public function getContractList(){
-		$list = $this->order("id desc")->where(array("is_delete"=>0))->select();
+		$list = $this->table->order("id desc")->where(array("is_delete"=>0))->select();
 		$DAccount = D("account");
 		$DRoom = D("room");
 		foreach ( $list AS $key=>$val ) {
@@ -140,7 +161,7 @@ class ContractModel extends Model{
 
 		foreach ( $room_id_arr AS $val ) {
 			//在合同表中获取了该房间id全部合同，
-			$list = $this
+			$list = $this->table
 					->alias('c')
 					->field("a.realname,c.rent_date,c.period,c.contract_status,c.person_count,c.room_id,c.account_id,c.contract_status,c.actual_end_time,c.start_time,c.end_time,c.rent,c.fee,c.roomD,c.is_delete,r.room_code,r.house_code,r.room_fee,p.pay_status,p.id AS p_id,c.id AS c_id")
 					->join("lewo_room r ON c.room_id = r.id",'left')

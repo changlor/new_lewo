@@ -59,7 +59,7 @@
                         <a class="btn btn-info btn-mini" href="{:U('Admin/Task/dispose_bill',array('schedule_id'=>$vo['id']))}">办理</a>
                       </case>
                       <case value="3">
-                        <a class="btn btn-info btn-mini" href="{:U('Admin/Task/checkout_pay',array('schedule_id'=>$vo['id']))}">发送账单</a>
+                        <a class="btn btn-info btn-mini" href="{:U('Admin/Task/checkoutPay',array('schedule_id'=>$vo['id']))}">发送账单</a>
                       </case>
                       <case value="4">
                         <a class="btn btn-danger btn-mini">未确认</a>
@@ -88,7 +88,7 @@
                     </switch>
                   </case>
                 </switch>
-                <a class="btn btn-info btn-mini" href="{:U('Admin/Task/update_schedule',array('schedule_id'=>$vo['id']))}">修改</a>
+                <!-- <a class="btn btn-info btn-mini" href="{:U('Admin/Task/update_schedule',array('schedule_id'=>$vo['id']))}">修改</a> -->
                 <a class="btn btn-danger btn-mini" href="#">删除</a>
               </td>
             </tr>

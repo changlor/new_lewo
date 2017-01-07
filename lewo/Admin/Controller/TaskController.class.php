@@ -80,19 +80,20 @@ class TaskController extends BaseController {
     **/
     public function dispose_bill(){
         // 实例化
-        $MAccount   = M("account");
-        $MContract  = M("contract");
-        $MRoom      = M("room");
-        $MAccount   = M("account");
-        $DRoom      = D("room");
-        $DContract  = D("contract");
-        $DChargeBill= D("charge_bill");
-        $DSchedule  = D("schedule");
-        $DHouses    = D("houses");
-        $DArea      = D("area");
-        $DAmmeter   = D("ammeter_house");
-        $DAmmeterRoom = D("ammeter_room");
-
+        $MAccount   = M('account');
+        $MContract  = M('contract');
+        $MRoom      = M('room');
+        $MAccount   = M('account');
+        $DRoom      = D('room');
+        $DContract  = D('contract');
+        $DChargeBill= D('charge_bill');
+        $DEvents    = D('events');
+        $DSchedule  = D('schedule');
+        $DHouses    = D('houses');
+        $DArea      = D('area');
+        $DAmmeter   = D('ammeter_house');
+        $DAmmeterRoom = D('ammeter_room');
+        M()->startTrans();
         if (parent::isPostRequest()) {  
             // 待办ID
             $schedule_id = I('post.schedule_id');
@@ -152,18 +153,56 @@ class TaskController extends BaseController {
                     'input_year' => date('Y',time()),
                     'input_month' => date('m',time()),
                     'type' => 2,
+                    // 日常账单
+                    'bill_type' => 3,
+                    'is_send' => 1,
                 ];
                 
                 $result = $DChargeBill->postChargeBill($input);
-                if ( $result ) {
-                    //插入一条发送账单确认待办
-                    $result2 = $DSchedule->addNewSchdule($schedule_id,$schedule_type,3,C("admin_type_cw"));
-                    if ( !$result2 ) {
-                        $this->error("插入发送账单确认待办失败",U("Admin/Task/index"));
+                // 生成水电气成功
+                if ( $result['success'] ) {
+                    // 修改待办为以完成
+                    $updateScheduleResult = $DSchedule->finishedSchedule([
+                        'scheduleId'=>$schedule_info['id']
+                    ]);
+                    // 生成一条event事件
+                    $eventInput = [
+                        'event_id' => $schedule_info['event_id'],
+                        'account_id' => $schedule_info['account_id'],
+                        'room_id' => $schedule_info['room_id'],
+                        // 退房
+                        'event_type' => 1,
+                        // 财务生成了水电气
+                        'event_status' => 3,
+                    ];
+                    $eventResult = $DEvents->postEvent($eventInput);
+                    // 插入一条发送账单确认待办
+                    $scheduleInput = [
+                        'event_id' => $schedule_info['event_id'],
+                        'account_id' => $schedule_info['account_id'],
+                        'room_id' => $schedule_info['room_id'],
+                        // 退房
+                        'schedule_type' => 1,
+                        // 财务生成了水电气
+                        'status' => 3,
+                        'username_id' => $_SESSION['username_id'],
+                        'admin_type' => C('admin_type_cn'),
+                        'pay_account' => $schedule_info['pay_account'], 
+                        'pay_type' => $schedule_info['pay_type'], 
+                        'appoint_time' => $schedule_info['appoint_time'], 
+                        'steward_id' => $schedule_info['steward_id'], 
+                    ];
+                    $scheduleResult2 = $DSchedule->postSchedule($scheduleInput);
+
+                    if ($eventResult && $scheduleResult2 && $updateScheduleResult) {
+                        M()->commit();
+                        $this->success("操作成功!",U("Admin/Task/index"));
+                    } else {
+                        M()->rollback();
+                        $this->error($eventResult['msg'] . ',' .$scheduleResult2['msg'],U("Admin/Task/index"));
                     }
-                    $this->success("生成退房水电气成功!",U("Admin/Task/index"));
                 } else {
-                    $this->error("生成退房水电气失败!",U("Admin/Task/index"));
+                    $this->error($result['msg'],U("Admin/Task/index"));
                 }
             }
         } else {
@@ -392,21 +431,35 @@ class TaskController extends BaseController {
     /**
     * [退房确认][列出未支付的账单并从押金中抵扣]
     **/
-    public function checkout_pay(){
+    public function checkoutPay(){
         $schedule_id = I("schedule_id");
         $DSchedule = D("schedule");
-        $schedule_info = $DSchedule->getScheduleInfo($schedule_id);
-        $DChargeBill = D("charge_bill");
-        $notpaylist = $DChargeBill->getNotPayList($schedule_info['account_id']);
+        $DPay = D('pay');
         $DContract = D("contract");
-        $contract = $DContract->getContract($schedule_info['account_id'],$schedule_info['room_id']);
-
-        $sum_total_fee = 0;
-        foreach ($notpaylist AS $key=>$val) {
-            $sum_total_fee += $val['total_fee'];
+        $DChargeBill = D("charge_bill");
+        $schedule_info = $DSchedule->getScheduleInfo($schedule_id);
+        // 获取未支付的账单
+        $input = [
+            'account_id' => $schedule_info['account_id'],
+            'room_id' => $schedule_info['room_id'],
+            'pay_status' => 0,
+        ];
+        $notPaylist = $DPay->getNotPayList($input);
+        // 欠费总金额
+        $sumTotalFee = 0;
+        foreach ($notPaylist as $key=>$val) {
+            $billDetail = $DPay->getBillDetail($val);
+            if (is_null($billDetail['success'])) {
+                // 合并详情
+                $notPaylist[$key] = array_merge($val, $billDetail);
+                $sumTotalFee += $val['price'];
+            }
         }
-        $residue_deposit = $contract['deposit'] - $sum_total_fee;//剩余押金
-
+        // 获取押金
+        $deposit = $DContract->getDeposit($schedule_info['account_id'],$schedule_info['room_id']);
+        // 剩余押金
+        $residueDeposit = $deposit - $sumTotalFee;
+        // 生成一个欠款
         if ( $residue_deposit < 0 ) {
             //当剩余押金小于0则需要支付
             $this->assign("is_error",1);
@@ -414,10 +467,10 @@ class TaskController extends BaseController {
         }
         $this->assign("contract",$contract);
         $this->assign("schedule_id",$schedule_id);
-        $this->assign("residue_deposit",$residue_deposit);
-        $this->assign("deposit",$contract['deposit']);
-        $this->assign("sum_total_fee",$sum_total_fee);
-        $this->assign("notpaylist",$notpaylist);
+        $this->assign("residue_deposit",$residueDeposit);
+        $this->assign("deposit",$deposit);
+        $this->assign("sum_total_fee",$sumTotalFee);
+        $this->assign("notpaylist",$notPaylist);
         $this->display("checkout-pay");
     }
 

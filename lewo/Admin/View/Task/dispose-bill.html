@@ -149,9 +149,7 @@
                     <input class="span6" style="width:50px;" type="text" name="wx_fee" value="{$vo.wx_fee}"/>
                   </td>
                   <td>
-                    <textarea name="wx_des">
-                      {$vo.wx_des}
-                    </textarea>
+                    <textarea name="wx_des">{$vo.wx_des}</textarea>
                   </td>
                   <else/>
                   <td></td>
@@ -267,14 +265,14 @@
 function checkForm(){
   var msg = '';
   msg += '{$schedule_info.realname}：\n\n';
-  msg += '个人房间电费：' + $('input[name=room_energy_fee]:eq(0)').val() + '\n\n';
-  msg += '公摊电费：' + $('input[name=energy_fee]:eq(0)').val() + '\n\n';
-  msg += '公摊水费：' + $('input[name=water_fee]:eq(0)').val() + '\n\n';
-  msg += '公摊气费：' + $('input[name=gas_fee]:eq(0)').val() + '\n\n';
-  msg += '燃气垃圾费：' + $('input[name=rubbish_fee]:eq(0)').val() + '\n\n';
-  msg += '维修费：' + $('input[name=wx_fee]:eq(0)').val() + '\n\n';
+  msg += '个人房间电费：￥' + $('input[name=room_energy_fee]:eq(0)').val() + '\n\n';
+  msg += '公摊电费：￥' + $('input[name=energy_fee]:eq(0)').val() + '\n\n';
+  msg += '公摊水费：￥' + $('input[name=water_fee]:eq(0)').val() + '\n\n';
+  msg += '公摊气费：￥' + $('input[name=gas_fee]:eq(0)').val() + '\n\n';
+  msg += '燃气垃圾费：￥' + $('input[name=rubbish_fee]:eq(0)').val() + '\n\n';
+  msg += '维修费：￥' + $('input[name=wx_fee]:eq(0)').val() + '\n\n';
   msg += '维修描述：' + $.trim($('textarea[name=wx_des]:eq(0)').val()) + '\n\n';
-  msg += '总金额：' + $('input[name=total_fee]:eq(0)').val() + '\n\n';
+  msg += '总金额：￥' + $('input[name=total_fee]:eq(0)').val() + '\n\n';
   msg += '是否确认生成{$schedule_info.realname}退租账单？';
   if(!confirm(msg)){
     return false;

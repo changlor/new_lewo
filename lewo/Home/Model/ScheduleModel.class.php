@@ -85,8 +85,12 @@ class ScheduleModel extends BaseModel {
 		if ($this->has(['is_finish' => 1])) {
 			return parent::response([false, '该待办事件已完成！']);
 		}
-		$affectedRows = $this->update(['id' => $sccheduleId], $scheduleUpdateInfo);
-		return parent::response([true, '']);
+		$affectedRows = $this->updateSchedule(['id' => $scheduleId], $scheduleUpdateInfo);
+		if (!$affectedRows) {
+			return parent::response([false, '待办状态修改失败']);
+		} else {
+			return parent::response([true, '']);
+		}
 	}
 
 	/**
@@ -95,7 +99,17 @@ class ScheduleModel extends BaseModel {
 	public function getScheduleBySteward($steward_id){
 		$DEvent = D('events');
 		$sArr = $this->table
-			->field("lewo_room.house_code,lewo_room.room_sort,lewo_room.room_code,lewo_room.bed_code,lewo_schedule.*,MAX(lewo_schedule.status),lewo_account.realname,lewo_account.mobile")
+			->field([
+				'ANY_VALUE(lewo_room.house_code) AS house_code', 
+				'ANY_VALUE(lewo_room.room_sort) AS room_sort',
+				'ANY_VALUE(lewo_room.room_code) AS room_code', 
+				'ANY_VALUE(lewo_room.bed_code) AS bed_code',
+				'ANY_VALUE(lewo_schedule.status) AS status', 
+				'ANY_VALUE(lewo_schedule.schedule_type) AS schedule_type',
+				'ANY_VALUE(lewo_schedule.event_id) AS event_id',
+				'ANY_VALUE(lewo_account.realname) AS realname', 
+				'ANY_VALUE(lewo_account.mobile) AS mobile'
+			])
 			->join("lewo_room ON lewo_schedule.room_id = lewo_room.id", 'left')
 			->join("lewo_account ON lewo_schedule.account_id = lewo_account.id", 'left')
 			->group('lewo_schedule.event_id')
@@ -139,7 +153,6 @@ class ScheduleModel extends BaseModel {
 	public function addOneSchedule($data = array()){
 		if ( count($data) > 0 ) {
 			$data['create_time'] = date("Y-m-d H:i:s",time());
-            $data['create_date'] = date("Y-m-d",time());
 			return $this->table->add($data);
 		} else {
 			return false;
@@ -178,7 +191,6 @@ class ScheduleModel extends BaseModel {
 		$data['schedule_type'] = $schedule_type;
 		$data['status'] = $status;
 		$data['create_time'] = date("Y-m-d H:i:s",time());
-		$data['create_date'] = $schedule_info['create_date'];
 		$data['admin_type'] = $admin_type;
 		$data['is_finish'] = $is_finish;
 		$data['is_detele'] = $is_detele;
@@ -194,86 +206,83 @@ class ScheduleModel extends BaseModel {
 	* @param status 待办状态 1）退房：1租客申请，2管家录入水电气，3财务发送账单，4租客确认账单，5财务点击完成。2）转房3）换房同上。4）缴定：1管家录入缴定，2管家已跟租客签约
 	* @param pay_type 1=>'支付宝',2=>'微信',3=>'银行卡',4=>'现金'
 	**/
-	public function postSchedule($param){
-		if (is_null($param['schedule_type'])) {
+	public function postSchedule($input){
+		if (is_null($input['schedule_type'])) {
 			return parent::response([false, '待办类型参数不存在']);
 		}
-		if (is_null($param['account_id'])) { 
+		if (is_null($input['account_id'])) { 
 			return parent::response([false, '租客ID参数不存在']);
 		}
-		if (is_null($param['room_id'])) {
+		if (is_null($input['room_id'])) {
 			return parent::response([false, '房间ID参数不存在']);
 		}
-		if (is_null($param['status'])) {
+		if (is_null($input['status'])) {
 			return parent::response([false, '待办状态参数不存在']);
 		}
-		if (is_null($param['steward_id'])) {
+		if (is_null($input['steward_id'])) {
 			return parent::response([false, '非法操作']);
 		}
 
 		$data = array();
-		$data['event_id'] 		= getOrderNo();
-		$data['account_id'] 	= $param['account_id'];
-		$data['room_id']    	= $param['room_id'];
-		$data['schedule_type']  = $param['schedule_type'];
-		$data['status']			= $param['status'];
+		$data['event_id'] 		= !is_null($input['event_id']) ? $input['event_id'] : getOrderNo();
+		$data['account_id'] 	= $input['account_id'];
+		$data['room_id']    	= $input['room_id'];
+		$data['schedule_type']  = $input['schedule_type'];
+		$data['status']			= $input['status'];
 		$data['create_time']	= date('Y-m-d H:i:s', time());
-		$data['steward_id']     = $param['steward_id'];
-		$data['create_date']	= is_null($param['create_date'])
-								? date('Y-m-d', time()) 
-								: $param['create_date'];
-		$data['mobile'] 		= is_null($param['mobile'])
-								? 0 
-								: $param['mobile'];
-		$data['money']      	= is_null($param['money'])
+		$data['steward_id']     = $input['steward_id'];
+		$data['money']      	= is_null($input['money'])
 								? 0
-								: $param['money'];
-		$data['pay_account'] 	= is_null($param['pay_account'])
+								: $input['money'];
+		$data['pay_account'] 	= is_null($input['pay_account'])
 								? 0
-								: $param['pay_account'] ;
-		$data['pay_type'] 		= is_null($param['pay_type'])
+								: $input['pay_account'] ;
+		$data['pay_type'] 		= is_null($input['pay_type'])
 								? 0
-								: $param['pay_type'];
-		$data['appoint_time'] 	= is_null($param['appoint_time'])
+								: $input['pay_type'];
+		$data['appoint_time'] 	= is_null($input['appoint_time'])
 								? 0
-								: $param['appoint_time'];
-		$data['msg'] 			= is_null($param['msg'])
+								: $input['appoint_time'];
+		$data['msg'] 			= is_null($input['msg'])
 								? ''
-								: $param['msg'];
-		$data['is_finish']      = is_null($param['is_finish'])
+								: $input['msg'];
+		$data['is_finish']      = is_null($input['is_finish'])
 								? 0
-								: $param['is_finish'];;
-		$data['admin_type']     = is_null($param['admin_type'])
+								: $input['is_finish'];;
+		$data['admin_type']     = is_null($input['admin_type'])
 								? 0
-								: $param['admin_type'];
-		$data['total_water']	= is_null($param['total_water']) || empty($param['total_water'])
+								: $input['admin_type'];
+		$data['total_water']	= is_null($input['total_water']) || empty($input['total_water'])
 								? 0
-								: $param['total_water'];
-		$data['total_energy']	= is_null($param['total_energy']) || empty($param['total_energy'])
+								: $input['total_water'];
+		$data['total_energy']	= is_null($input['total_energy']) || empty($input['total_energy'])
 								? 0
-								: $param['total_energy'];
-		$data['total_gas']		= is_null($param['total_gas']) || empty($param['total_gas'])
+								: $input['total_energy'];
+		$data['total_gas']		= is_null($input['total_gas']) || empty($input['total_gas'])
 								? 0
-								: $param['total_gas'];
-		$data['total_room_energy']	= is_null($param['total_room_energy'])
+								: $input['total_gas'];
+		$data['total_room_energy']	= is_null($input['total_room_energy'])
 								? 0
-								: $param['total_room_energy'];
-		$data['wx_fee']         = is_null($param['wx_fee']) || empty($param['wx_fee'])
+								: $input['total_room_energy'];
+		$data['wx_fee']         = is_null($input['wx_fee']) || empty($input['wx_fee'])
 								? 0
-								: $param['wx_fee'];
-		$data['wx_des']			= is_null($param['wx_des'])
+								: $input['wx_fee'];
+		$data['wx_des']			= is_null($input['wx_des'])
 								? ''
-								: $param['wx_des'];
-		$data['check_item']     = is_null($param['check_item'])
+								: $input['wx_des'];
+		$data['check_item']     = is_null($input['check_item'])
 								? 0
-								: $param['check_item'];
-		$data['check_out_goods']= is_null($param['check_out_goods'])
+								: $input['check_item'];
+		$data['check_out_goods']= is_null($input['check_out_goods'])
 								? 0
-								: $param['check_out_goods'];
-		$data['check_out_type'] = is_null($param['check_out_type'])
+								: $input['check_out_goods'];
+		$data['check_out_type'] = is_null($input['check_out_type'])
 								? 0
-								: $param['check_out_type'];
+								: $input['check_out_type'];
 
+		$data = array_filter($data, function($v){
+			return (!is_null($v) && $v != '') ? true : false;
+		});
 		$res = $this->table->add($data);
 
 		if ( $res ) {

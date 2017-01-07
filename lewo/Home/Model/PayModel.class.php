@@ -29,7 +29,6 @@ class PayModel extends BaseModel {
 	{
 		$field = empty($field) ? '' : $field;
 		$where = empty($where) ? '' : $where;
-		$field = is_array($field) ? implode(',', $field) : $field;
 		return $this->table->field($field)->where($where);
 	}
 
@@ -276,6 +275,8 @@ class PayModel extends BaseModel {
         $schedule['money'] = $money;
         $schedule['mobile'] = $mobile;
         $schedule['account_id'] = $accountId;
+        $schedule['create_time'] = date('Y-m-d H:i:s', time());
+        $schedule['create_date'] = date('Y-m-d', time());
         // 代办表类型
         $schedule['schedule_type'] = 4;
         // 流程状态
@@ -284,6 +285,7 @@ class PayModel extends BaseModel {
         $schedule['msg'] = $msg;
         $schedule['steward_id'] = $stewardId;
         $schedule['admin_type'] = C('admin_type_gj');
+        $schedule['event_id'] = $proId;
         $DSchedule->insertSchedule($schedule);
         // 插入pay表
         $pay = [];

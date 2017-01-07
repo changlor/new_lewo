@@ -171,5 +171,33 @@ function resetMenu() {
    document.gomenu.selector.selectedIndex = 2;
 }
 </script>
+<script>
+  var relet = function () {
+    var endTime = $('input[name=end_time]')[0]['value'];
+    var startTime = $('input[name=start_time]')[0]['value'];
+    $('input[name=start_time]')[0]['value'] = endTime;
+    var status = $('.relet')[0]['style']['display'];
+    $('.relet')[0]['style']['display'] = status == 'none' ? 'inline' : 'none';
+  }
+  var reletContract = function () {
+    var startTime = $('input[name=start_time]')[0]['value'];
+    var endTime = $('input[name=end_time1]')[0]['value'];
+    var proId = $('input[name=pro_id]')[0]['value'];
+    var modifyLog = $('.modify-log').html();
+    $.ajax({
+        type: 'POST',
+        url: '{:U('Admin/Tenant/reletContract')}',
+        data: {
+          startTime: startTime,
+          endTime: endTime,
+          proId: proId,
+          modifyLog: modifyLog
+        },
+        success: function (msg) {
+          location.reload();
+        }  
+      });
+  }
+</script>
 </body>
 </html>

@@ -86,6 +86,22 @@ class TenantController extends Controller {
         }
     }
 
+    public function reletContract()
+    {
+        $startTime = I('post.startTime');
+        $endTime = I('post.endTime');
+        $modifyLog = I('post.modifyLog');
+        $modifyLog = $modifyLog . '<br>租客续租<br>合同开始 -> ' . $startTime . '<br>合同结束 -> ' . $endTime;
+        $proId = I('post.proId');
+        M('contract')->where(['pro_id' => $proId])->save([
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+        ]);
+        M('pay')->where(['pro_id' => $proId])->save([
+            'modify_log' => $modifyLog
+        ]);
+    }
+
     /**
     * [合同]
     **/

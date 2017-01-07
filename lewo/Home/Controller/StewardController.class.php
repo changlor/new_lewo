@@ -652,7 +652,7 @@ class StewardController extends BaseController {
                 'email' => I('post.email'),
                 'rent' => I('post.rent'),
                 'personCount' => I('post.personCount'),
-                'hzRealName' => I('post.hzRealName'),
+                'hzRealname' => I('post.hzRealname'),
                 'hzMobile' => I('post.hzMobile'),
                 'hzCardNo' => I('post.hzCardNo'),
                 'wgFee' => I('post.wg_fee'),
@@ -1041,11 +1041,11 @@ class StewardController extends BaseController {
                 //获取上个月 房间的电表
                 $res2 = $DAmmeterRoom->verifyAmmeterRoom($key, ['room_energy'=>$val['room_energy']]);
                 if (!$res2['success']) {
-                    $this->error($res2['msg'],'',5);
+                    $this->error($val['room_code'].$res2['msg'],'',5);
                 }
             }
             // 序列化房间电表
-            $total_room_energy = serialize(i_array_column(I('total_room_energy'), 'room_energy'));
+            $total_room_energy = serialize(i_array_column(I('total_room_energy'), 'room_energy', 'room_id'));
             // 获取电话
             $mobile = $DAccount->selectField(['id'=>$account_id], ['mobile']);
             $param = [
@@ -1070,6 +1070,7 @@ class StewardController extends BaseController {
                 'check_out_goods' => serialize(I('goods')),
                 'check_out_type' => $check_out_type,
             ];
+            
             // 生成待办
             $result = $DSchedule->postSchedule($param);
             if (!$result['success']) {
@@ -1090,11 +1091,8 @@ class StewardController extends BaseController {
 
             // 执行退房修改操作
             // 修改房间状态
-            $room_result = $DRoom->updateRoom(['id'=>$room_id],['account_id'=>0,'status'=>0]);
-
-            if ( $room_result != 1 ) {
-                $flag = false;
-            }
+            // $room_result = $DRoom->updateRoom(['id'=>$room_id],['account_id'=>0,'status'=>0]);
+            
             if ( $flag ) {
                 M()->commit();
                 $this->success('提交成功',U('Home/Steward/stewardtasks'));
@@ -1105,7 +1103,8 @@ class StewardController extends BaseController {
         } else {
             $account_info = $DAccount->getAccountInfoById($account_id);
             $room_info = $DRoom->getRoom($room_id);
-            $room_list = $DRoom->select(['house_id'=>$room_info['house_id'], 'is_show'=>1], ['id', 'room_code'])->select();
+            // 获取已租的房间
+            $room_list = $DRoom->select(['house_id'=>$room_info['house_id'], 'is_show'=>1, 'status'=>2], ['id', 'room_code'])->select();
 
             $this->assign('room_list',$room_list);
             $this->assign('check_item',C('check_item'));

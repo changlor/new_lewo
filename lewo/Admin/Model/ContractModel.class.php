@@ -142,9 +142,10 @@ class ContractModel extends Model{
 			//在合同表中获取了该房间id全部合同，
 			$list = $this
 					->alias('c')
-					->field("c.rent_date,c.period,c.contract_status,c.person_count,c.room_id,c.account_id,c.contract_status,c.actual_end_time,c.start_time,c.end_time,c.rent,c.fee,c.roomD,c.is_delete,r.room_code,r.house_code,r.room_fee,p.pay_status,p.id AS p_id,c.id AS c_id")
+					->field("a.realname,c.rent_date,c.period,c.contract_status,c.person_count,c.room_id,c.account_id,c.contract_status,c.actual_end_time,c.start_time,c.end_time,c.rent,c.fee,c.roomD,c.is_delete,r.room_code,r.house_code,r.room_fee,p.pay_status,p.id AS p_id,c.id AS c_id")
 					->join("lewo_room r ON c.room_id = r.id",'left')
 					->join("lewo_pay p ON p.pro_id = c.pro_id",'left')
+					->join('lewo_account a ON a.id = c.account_id','left')
 					->where(array("p.room_id"=>$val['id'],"p.bill_type"=>2,"p.pay_status"=>1,"c.is_delete"=>0,"c.contract_status"=>$contract_status))
 					->select();
 

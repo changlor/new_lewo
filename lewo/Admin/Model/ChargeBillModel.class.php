@@ -4,7 +4,81 @@ use Think\Model;
 /**
 * [房间水电气账单数据层]
 */
-class ChargeBillModel extends Model{
+class ChargeBillModel extends BaseModel{
+	private $table;
+	protected $tableName = 'charge_bill';
+
+	public function __construct()
+    {
+        parent::__construct();
+    	$this->table = M($this->tableName);
+    }
+
+    public function select($where, $field)
+	{
+		$field = empty($field) ? '' : $field;
+		$where = empty($where) ? '' : $where;
+		$field = is_array($field) ? implode(',', $field) : $field;
+		return $this->table->field($field)->where($where);
+	}
+
+	public function postChargeBill($input){
+		if (is_null($input['bill_type']) || empty($input['bill_type']) || !is_numeric($input['bill_type'])) {
+			return parent::response([false, '账单类型不存在']);
+		}
+		$proId = getOrderNo();
+		$chargeBill = [];
+		$chargeBill['pro_id'] = $proId;
+		$chargeBill['room_id'] = $input['room_id'];
+		$chargeBill['house_id'] = $input['house_id'];
+		$chargeBill['house_code'] = $input['house_code'];
+		$chargeBill['account_id'] = $input['account_id'];
+		$chargeBill['water_fee'] = $input['water_fee'];
+		$chargeBill['public_energy_fee'] = $input['public_energy_fee'];
+		$chargeBill['energy_fee'] = $input['energy_fee'];
+		$chargeBill['gas_fee'] = $input['gas_fee'];
+		$chargeBill['rubbish_fee'] = $input['rubbish_fee'];
+		$chargeBill['input_month'] = $input['input_month'];
+		$chargeBill['input_year'] = $input['input_year'];
+		$chargeBill['person_day'] = $input['person_day'];
+		$chargeBill['total_person_day'] = $input['total_person_day'];
+		$chargeBill['create_time'] = $input['create_time'];
+		$chargeBill['total_energy'] = $input['total_energy'];
+		$chargeBill['total_water'] = $input['total_water'];
+		$chargeBill['total_gas'] = $input['total_gas'];
+		$chargeBill['wgfee_unit'] = $input['wgfee_unit'];
+		$chargeBill['start_energy'] = $input['start_energy'];
+		$chargeBill['end_energy'] = $input['end_energy'];
+		$chargeBill['start_water'] = $input['start_water'];
+		$chargeBill['end_water'] = $input['end_water'];
+		$chargeBill['start_gas'] = $input['start_gas'];
+		$chargeBill['end_gas'] = $input['end_gas'];
+		$chargeBill['start_room_energy'] = $input['start_room_energy'];
+		$chargeBill['end_room_energy'] = $input['end_room_energy'];
+		$chargeBill['room_energy_fee'] = $input['room_energy_fee'];
+		$chargeBill['total_fee'] = $input['total_fee'];
+		$chargeBill['rent_fee'] = $input['rent_fee'];
+		$chargeBill['rent_des'] = $input['rent_des'];
+		$chargeBill['service_fee'] = $input['service_fee'];
+		$chargeBill['room_energy_add'] = $input['room_energy_add'];
+		$chargeBill['wx_fee'] = $input['wx_fee'];
+		$chargeBill['wx_des'] = $input['wx_des'];
+		$chargeBill['type'] = $input['type'];
+		$chargeBill['handling_fee'] = $input['handling_fee'];
+		$chargeBill['rent_date_old'] = $input['rent_date_old'];
+		$chargeBill['rent_date_to'] = $input['rent_date_to'];
+		$chargeBill['kk'] = '';
+		$chargeBill = array_filter($chargeBill, function($v) {
+			return !is_null($v) ? true : false;
+		});
+		$pay = [];
+		$pay['pro_id'] = $proId;
+		$pay['room_id'] = $input['room_id'];
+		$pay['price'] = $input['total_fee'];
+		$pay['bill_type'] = $input['bill_type'];
+		dump($pay);exit;
+	}
+
 	/**
 	* [插入账单表]
 	**/
@@ -56,9 +130,8 @@ class ChargeBillModel extends Model{
 		$data['rent_date_old'] 		= $arr['rent_date_old'];
 		$data['rent_date_to'] 		= $arr['rent_date_to'];
 		$data['type'] 				= $arr['type']; //日常
-		/*$result = $this->where(array("room_id"=>$data['room_id'],"input_year"=>$year,"input_month"=>$month))->find();因为会出现一间房间多个合同情况，例如一个合同正常，一个合同退房*/
 
-		$this->add($data);
+		$this->table->add($data);
 		$result = M('pay')->add($pdata);
 		return $result;
 	}
@@ -67,9 +140,9 @@ class ChargeBillModel extends Model{
 	* [查看账单列表]
 	**/
 	public function showChargeBillList($house_code,$year,$month,$type){
-		$pay_list = M('charge_bill')
+		$pay_list = $this->table
 					->alias('cb')
-					->field('cb.*,p.favorable,p.favorable_des,p.pay_status,p.pay_time,p.price,p.should_date,p.last_date,cb.id AS cb_id,p.id AS p_id,a.realname,r.room_sort,r.room_code,r.bed_code')
+					->field('cb.*,p.is_send,p.favorable,p.favorable_des,p.pay_status,p.pay_time,p.price,p.should_date,p.last_date,cb.id AS cb_id,p.id AS p_id,a.realname,r.room_sort,r.room_code,r.bed_code')
 					->join('lewo_pay p ON cb.pro_id = p.pro_id')
 					->join('lewo_account a ON p.account_id = a.id')
 					->join('lewo_room r ON p.room_id = r.id')
@@ -84,14 +157,13 @@ class ChargeBillModel extends Model{
 	* [查看非正常账单列表]
 	**/
 	public function showAbnormalChargeBillList($house_code,$year,$month){
-		return $this->where(array("house_code"=>$house_code,"input_year"=>$year,"input_month"=>$month,"type"=>array("NOT IN","1")))->select();
+		return $this->table->where(array("house_code"=>$house_code,"input_year"=>$year,"input_month"=>$month,"type"=>array("NOT IN","1")))->select();
 	}
 
 	/**
 	* [修改账单]
 	**/
 	public function updateChargeBill($pro_id,$data){
-		$MChargeBill = M('charge_bill');
 		$MPay = M('pay');
 		$save['end_energy'] = $data['end_energy'];
 		$save['start_energy'] = $data['start_energy'];
@@ -126,26 +198,26 @@ class ChargeBillModel extends Model{
 		$psave['price'] = $save['total_fee'] = $data['total_fee'];
 		$psave['should_date'] = $data['should_date'];
 		$psave['last_date']   = $data['last_date'];
-		$MChargeBill->where(array("pro_id"=>$pro_id))->save($save);
+		$this->table->where(array("pro_id"=>$pro_id))->save($save);
 		$MPay->where(array("pro_id"=>$pro_id))->save($psave);
 	}
 	/**
 	* [修改该房屋编码的全部总人日字段]
 	**/
 	public function updateTotalPersonDay($house_code,$day){
-		return $this->where(array("house_code"=>$house_code,"input_year"=>$year,"input_month"=>$month))->save(array("total_person_day"=>$day));
+		return $this->table->where(array("house_code"=>$house_code,"input_year"=>$year,"input_month"=>$month))->save(array("total_person_day"=>$day));
 	}
 	/**
 	* [获取总人日]
 	**/
 	public function getPersonDayCount($house_code,$year,$month){
-		return $this->where(array("house_code"=>$house_code,"input_year"=>$year,"input_month"=>$month))->sum("person_day");
+		return $this->table->where(array("house_code"=>$house_code,"input_year"=>$year,"input_month"=>$month))->sum("person_day");
 	}
 	/**
 	* [日常账单]
 	**/
 	public function showDailyBillList(){
-		$list = $this->where(array("is_delete"=>0))->order("id desc")->select();
+		$list = $this->table->where(array("is_delete"=>0))->order("id desc")->select();
 		$DRoom = D("room");
 		$DAccount = D("account");
 		$DArea = D("area");
@@ -204,7 +276,7 @@ class ChargeBillModel extends Model{
 	* [获取该租客未支付列表]
 	**/
 	public function getNotPayList($account_id){
-		$list = $this->where(array("account_id"=>$account_id,"pay_status"=>0))->select();
+		$list = $this->table->where(array("account_id"=>$account_id,"pay_status"=>0))->select();
 		$DRoom = D("room");
 		$DAccount = D("account");
 		$DArea = D("area");
@@ -249,7 +321,7 @@ class ChargeBillModel extends Model{
     * [修改支付][1支付宝][2微信][3余额抵押]
     **/
     public function setPayStatus($charge_id,$pay_type){
-    	return $this->where(array("id"=>$charge_id))->save(array("pay_type"=>$pay_type,"pay_status"=>1));
+    	return $this->table->where(array("id"=>$charge_id))->save(array("pay_type"=>$pay_type,"pay_status"=>1));
     }
 	
 }

@@ -79,232 +79,229 @@ class TaskController extends BaseController {
     * [处理退房账单]
     **/
     public function dispose_bill(){
-        $MRoom = M("room");
-        $MAccount = M("account");
-        $DRoom = D("room");
-        $DSchedule = D("schedule");
-        if (parent::isPostRequest()) {            
+        // 实例化
+        $MAccount   = M("account");
+        $MContract  = M("contract");
+        $MRoom      = M("room");
+        $MAccount   = M("account");
+        $DRoom      = D("room");
+        $DContract  = D("contract");
+        $DChargeBill= D("charge_bill");
+        $DSchedule  = D("schedule");
+        $DHouses    = D("houses");
+        $DArea      = D("area");
+        $DAmmeter   = D("ammeter_house");
+        $DAmmeterRoom = D("ammeter_room");
+
+        if (parent::isPostRequest()) {  
+            // 待办ID
             $schedule_id = I('post.schedule_id');
+            // 待办数据
             $schedule_info = $DSchedule->getScheduleInfo($schedule_id);
-
-            $schedule_type = $schedule_info['schedule_type'];
-
-            $rent = $MRoom->where(['id'=>I("room_id")])->getField("rent");//房租
-
-            if ( C("schedule_type_zf") == $schedule_type || C("schedule_type_hf") == $schedule_type ) {
-                //如果是换房或者转房，要收取手续费
-                $data['handling_fee'] = C('handling_percent')*$rent;
-            }
-
-            //插入退房水电气账单
-            $data['pro_id'] = getOrderNo();
-            $data['room_id'] = I("room_id");
-            $data['house_code'] = I("house_code");
-            $data['account_id'] = I("account_id");
-            $data['person_day'] = I("person_day");
-            $data['room_energy_fee'] = I("room_energy_fee");
-            $data['public_energy_fee'] = I("public_energy_fee");
-            $data['energy_fee'] = I("energy_fee");
-            $data['water_fee'] = I("water_fee");
-            $data['gas_fee'] = I("gas_fee");
-            $data['wx_fee'] = I("wx_fee");
-            $data['wx_des'] = I("wx_des");
-            $data['total_fee'] = I("total_fee");
-            $data['total_person_day'] = I("sum_person_day");
-            $data['create_time'] = date("Y-m-d H:i:s",time());
-            $data['pay_status'] = 0;
-            $data['total_energy'] = I("total_energy_fee");
-            $data['total_water'] = I("public_water_fee");
-            $data['total_gas'] = I("public_gas_fee");
-            $data['start_energy'] = I('start_energy'); //电始度数
-            $data['end_energy'] = I('end_energy'); //电止度数
-            $data['start_water'] = I('start_water'); //水始度数
-            $data['end_water'] = I('end_water'); //水止度数
-            $data['start_gas'] = I('start_gas'); //气始度数
-            $data['end_gas'] = I('end_gas'); //气止度数
-            $data['end_room_energy'] = I("end_room_energy");
-            $data['start_room_energy'] = I("start_room_energy");
-            $data['room_energy_add'] = I("room_energy_add");
-            $data['late_pay_date'] = date("Y-m-d H:i:s",time());
-            $data['should_pay_date'] = date("Y-m-d H:i:s",time());
-            $data['input_year'] = date("Y",time());
-            $data['input_month'] = date("m",time());
-            $data['realname'] = $MAccount->where(array("id"=>$data['account_id']))->getField("realname");
-            $data['total_person_energy'] = $data['room_energy_fee'] + $data['energy_fee'];
-            switch ($schedule_type) {
-                case '1':
-                    $data['type'] = 2;//退租水电气结算
-                    break;
-                case '2':
-                    $data['type'] = 3;//转租水电气结算
-                    break;
-                case '3':
-                    $data['type'] = 4;//换租水电气结算
-                    break;
-                default:
-                    $data['type'] = 1;//日常
-                    break;
-            }
-            
-            $result = M("charge_bill")->add($data);
-            if ( $result ) {
-                M("schedule")->where(array("id"=>$schedule_id))->save(array("is_finish"=>1));//生成水电气成功修改状态
-                //插入一条发送账单确认待办
-                $DSchedule = D("schedule");
-                $result2 = $DSchedule->addNewSchdule($schedule_id,$schedule_type,3,C("admin_type_cw"));
-                if ( !$result2 ) {
-                    $this->error("插入发送账单确认待办失败",U("Admin/Task/index"));
+            // 判断是否修改 
+            $is_update = (bool)trim(I('is_update'));
+            if ($is_update) {
+                // 修改待办
+                $input = [
+                    'schedule_id' => $schedule_id,
+                    'total_energy' => I('post.end_energy'),
+                    'total_water' => I('post.end_water'),
+                    'total_gas' => I('post.end_gas'),
+                    'total_room_energy' => I('post.room_list'),
+                    'wx_fee' => I('post.wx_fee'),
+                    'wx_des' => trim(I('post.wx_des')),
+                ];
+                $res = $DSchedule->putSchedule($input);
+                if ($res) {
+                    $this->success($res['msg']);
+                } else {
+                    $this->error($res['msg']);
                 }
-                $this->success("生成退房水电气成功!",U("Admin/Task/index"));
             } else {
-                $this->error("生成退房水电气失败!",U("Admin/Task/index"));
+                // 插入退房水电气账单
+                $input = [
+                    'room_id' => I('post.room_id'),
+                    'house_id' => I('post.house_id'),
+                    'house_code' => I('post.house_code'),
+                    'account_id' => I('post.account_id'),
+                    'person_day' => I('post.person_day'),
+                    'room_energy_fee' => I('post.room_energy_fee'),
+                    'public_energy_fee' => I('post.public_energy_fee'),
+                    'public_water_fee' => I('post.public_water_fee'),
+                    'public_gas_fee' => I('post.public_gas_fee'),
+                    'energy_fee' => I('post.energy_fee'),
+                    'water_fee' => I('post.water_fee'),
+                    'gas_fee' => I('post.gas_fee'),
+                    'wx_fee' => I('post.wx_fee'),
+                    'wx_des' => trim(I('post.wx_des')),
+                    'total_fee' => I('post.total_fee'),
+                    'total_person_day' => I('post.sum_person_day'),
+                    'create_time' => date('Y-m-d H:i:s',time()),
+                    'total_energy' => I('post.total_energy_fee'),
+                    'total_water' => I('post.public_water_fee'),
+                    'total_gas' => I('post.public_gas_fee'),
+                    'start_energy' => I('post.start_energy'),
+                    'end_energy' => I('post.end_energy'),
+                    'start_water' => I('post.start_water'),
+                    'end_water' => I('post.end_water'),
+                    'start_gas' => I('post.start_gas'),
+                    'end_gas' => I('post.end_gas'),
+                    'end_room_energy' => I('post.end_room_energy'),
+                    'start_room_energy' => I('post.start_room_energy'),
+                    'room_energy_add' => I('post.room_energy_add'),
+                    'input_year' => date('Y',time()),
+                    'input_month' => date('m',time()),
+                    'type' => 2,
+                ];
+                
+                $result = $DChargeBill->postChargeBill($input);
+                if ( $result ) {
+                    //插入一条发送账单确认待办
+                    $result2 = $DSchedule->addNewSchdule($schedule_id,$schedule_type,3,C("admin_type_cw"));
+                    if ( !$result2 ) {
+                        $this->error("插入发送账单确认待办失败",U("Admin/Task/index"));
+                    }
+                    $this->success("生成退房水电气成功!",U("Admin/Task/index"));
+                } else {
+                    $this->error("生成退房水电气失败!",U("Admin/Task/index"));
+                }
             }
         } else {
             // 待办id
             $schedule_id = I('schedule_id');
             // 获取待办数据
             $schedule_info =  $DSchedule->getScheduleInfo($schedule_id);
-            
+            // 获取待办名字
             $schedule_type_name = C("schedule_type_arr")[$schedule_info['schedule_type']];
-            
-            $room_id = $schedule_info['room_id'];
-            $DRoom = D("room");
-            
-            $appoint_time = $schedule_info['appoint_time'];//约定时间，人日算到这里
-            $year = date("Y",strtotime($appoint_time));//约定时间 年
-            $month = date("m",strtotime($appoint_time));//约定时间 月
-            $day = date("d",strtotime($appoint_time));//约定时间 日
-
+            // 房间id
+            $room_id = $schedule_info['room_id']; 
+            // 退房时录入的房间电表
+            $schedule_info['total_room_energy'] = unserialize($schedule_info['total_room_energy']);
+            // 验房检查物品
+            $schedule_info['check_item'] = unserialize($schedule_info['check_item']);
+            // 退房退的物品
+            $schedule_info['check_out_goods'] = unserialize($schedule_info['check_out_goods']);   
+            // 约定时间，人日算到这里
+            $appoint_time = $schedule_info['appoint_time'];
+            // 约定时间 年
+            $year = date("Y",strtotime($appoint_time));
+            // 约定时间 月
+            $month = date("m",strtotime($appoint_time));
+            // 约定时间 日
+            $day = date("d",strtotime($appoint_time));
+            // 获取house_code
             $house_code = $DRoom->getHouseCodeById($room_id);
-            $this->assign("house_code",$house_code);
-
-            $DHouses = D("houses");
+            // 获取house_id       
             $house_id = $DHouses->getHouseIdByCode($house_code);
-            $person_count = $DHouses->getPersonCountByCode($house_code); //该房屋总人数
-            $room_count = $DHouses->getRoomCountByCode($house_code); //该房屋的房间数量
-            $sum_person_day = $DHouses->TFgetPersonDayCount($house_code,$appoint_time); //该房屋总人日
-
-            $this->assign("sum_person_day",$sum_person_day);
-
+            // 该房屋总人数
+            $person_count = $DHouses->getPersonCountByCode($house_code); 
+            // 该房屋的房间数量
+            $room_count = $DHouses->getRoomCountByCode($house_code); 
+            // 该房屋总人日
+            $sum_person_day = $DHouses->TFgetPersonDayCount($house_code,$appoint_time); 
+            // 获取房间列表
             $room_list = $DHouses->getRoomList($house_code);
-            $house_info = $DHouses->getHouse($house_code);
-
-            $DArea = D("area");
-            $area_info = $DArea->getAreaById($house_info['area_id']); //水气单价
-            $water_unit = $area_info['water_unit']; //水费单价
-            $gas_unit = $area_info['gas_unit']; //气费单价
-            $energy_stair_arr = explode(",",$area_info['energy_stair']); //阶梯电费单价
-            $rubbish_fee = $area_info['rubbish_fee']; //燃气垃圾费
+            // 获取房屋信息
+            $house_info = $DHouses->getHouse($house_code);  
+            // 获取小区信息
+            $area_info = $DArea->getAreaById($house_info['area_id']);
+            // 水费单价
+            $water_unit = $area_info['water_unit']; 
+            // 气费单价
+            $gas_unit = $area_info['gas_unit']; 
+            // 阶梯电费单价
+            $energy_stair_arr = explode(",",$area_info['energy_stair']); 
+            // 燃气垃圾费
+            $rubbish_fee = $area_info['rubbish_fee']; 
+            // 阶梯算法数组
             foreach ($energy_stair_arr AS $key=>$val) {
-                $energy_stair[] = explode("-",$val);//阶梯算法数组
+                $energy_stair[] = explode("-",$val);
             }
-
-            $DAmmeter = D("ammeter_house");
-            $ammeter_house = $DAmmeter->getFirstInfoByHouseId($house_id); //获取一条最新的水电气信息
-
-            $this->assign("ammeter_house",$ammeter_house);
-            //计算退房那天抄的水电气和最新的水电气
-
-            $add_energy = $schedule_info['zd'] - $ammeter_house['total_energy']; //电费增加度数
-            
+            // 获取一条最新的水电气信息
+            $ammeter_house = $DAmmeter->getFirstInfoByHouseId($house_id); 
+            // 电费增加度数
+            $add_energy = $schedule_info['total_energy'] - $ammeter_house['total_energy']; 
+            // 计算电费
             $total_energy_fee = get_energy_fee($add_energy,$energy_stair);
-
+            // 计算公共区域电费
             if ( $house_info['type'] == 1 ) {
-                //房间总电费
-                $room_total_energy_fee = $DHouses->get_room_total_energy_fee($house_code,$year,$month,$energy_stair);
-                $public_energy_fee = $total_energy_fee - $room_total_energy_fee;//公共区域电费 = 总电费 - 房间总电费
+                // 房间总电费
+                $room_total_energy_fee = $DHouses->getCheckOutRoomTotalEnergyFee($schedule_info['total_room_energy'], $energy_stair);
+                // 公共区域电费 = 总电费 - 房间总电费
+                $public_energy_fee = $total_energy_fee - $room_total_energy_fee;
             } else {
-                $room_total_energy_fee = 0;
-                $public_energy_fee = $total_energy_fee; //公共区域电费
+                //公共区域电费 = 总电费
+                $public_energy_fee = $total_energy_fee;
             }
-            $this->assign("total_energy_fee",$total_energy_fee);
-            $this->assign("room_total_energy_fee",$room_total_energy_fee);
-            $this->assign("public_energy_fee",$public_energy_fee);
-
-            $add_water = $schedule_info['zs'] - $ammeter_house['total_water']; //水费增加度数
-            $public_water_fee = $add_water * $water_unit; //公共水费
-            
-            $add_gas = $schedule_info['zq'] - $ammeter_house['total_gas']; //水费增加度数
-            $public_gas_fee = $add_gas * $gas_unit;//公共气费
-            $this->assign("public_water_fee",$public_water_fee);
-            $this->assign("public_energy_fee",$public_energy_fee);
-            $this->assign("public_gas_fee",$public_gas_fee);
-            $this->assign("add_water",$add_water);
-            $this->assign("add_energy",$add_energy);
-            $this->assign("add_gas",$add_gas);
-            $this->assign("water_unit",$water_unit);
-            
-            $this->assign("gas_unit",$gas_unit);
-            $this->assign("energy_stair",$area_info['energy_stair']);
-
-            $DAmmeterRoom = D("ammeter_room");
-            $MAccount = M("account");
-            $MContract = M("contract");
-            $DContract = D("contract");
-            $DChargeBill = D("charge_bill");
-            
+            // 公共区域电费
+            $public_energy_fee = $public_energy_fee < 0 ? 0: $public_energy_fee;
+            // 水费增加度数
+            $add_water = $schedule_info['total_water'] - $ammeter_house['total_water'];
+            // 公共水费
+            $public_water_fee = $add_water * $water_unit; 
+            // 水费增加度数
+            $add_gas = $schedule_info['total_gas'] - $ammeter_house['total_gas']; 
+            // 公共气费
+            $public_gas_fee = $add_gas * $gas_unit;
+            // 获取该月有关联的合同
             $contract_list = $DContract->getContractListByDateForDailyBill($house_code,$year,$month);
-
+            // 开始计算每个人的费用
             foreach ( $contract_list AS $key=>$val ) {
-                $contract_list[$key]['realname'] = $MAccount->where(array("id"=>$val['account_id']))->getField("realname");
-                $ht_start_date = $val['start_time']; //合同开始日
-                $ht_end_date = $val['end_time']; //合同结束日
-                $ht_actual_end_time = $val['actual_end_time'];//实际退房日
-                //人日 需要计算租客申请的日数
-                $ht_person = $val['person_count'];//合同人数
-                //当前执行退房的id
-                $room_id = $val['room_id'];
-                if ( $schedule_info['room_id'] == $room_id ) {
-                    //先判断这房屋是按间的还是按床的 房屋类型 1：合租按间 按间的话才获取房间电表 2：合租按床 
-                    switch ($house_info['type']) {
-                        case 1:
-                            $ammeter_room = $DAmmeterRoom->getFirstInfo($room_id,$house_id); //最新的房间抄表信息
-                            $add_room_energy = $schedule_info['roomd'] - $ammeter_room['room_energy'];
-                            $room_energy_fee = get_energy_fee($add_room_energy,$energy_stair);
-
-/*                            $contract_list[$key]['wg_fee'] = $house_info['fee'] / $room_count; //物业费/房间数*/
-                            $contract_list[$key]['rubbish_fee'] = $rubbish_fee / $room_count;
-                            break;
+                // 合同开始日
+                $ht_start_date = $val['start_time'];
+                // 合同结束日
+                $ht_end_date = $val['end_time']; 
+                // 实际退房日
+                $ht_actual_end_time = $val['actual_end_time'];
+                // 合同人数
+                $ht_person = $val['person_count'];
+                // 当前房间退租时的电表总数
+                $currentRoomEnergy = $schedule_info['total_room_energy'][$val['room_id']];
+                // 房屋类型 1：合租按间 按间的话才获取房间电表 2：合租按床 
+                switch ($house_info['type']) {
+                    case 1:
+                        // 最新的房间抄表信息
+                        $ammeter_room = $DAmmeterRoom->getFirstInfo($val['room_id']); 
+                        $add_room_energy = $currentRoomEnergy - $ammeter_room['room_energy'];
+                        $room_energy_fee = get_energy_fee($add_room_energy, $energy_stair);
+                        break;
+                    case 2:
                         
-                        case 2:
-                            /*$contract_list[$key]['wg_fee'] = $house_info['fee'] / $bed_count; //物业费/床位数*/
-                            $contract_list[$key]['rubbish_fee'] = $rubbish_fee / $bed_count;
-                            break;
-                    }      
+                        break;
+                }      
 
-                    $contract_list[$key]['add_room_energy'] = !empty($add_room_energy)?$add_room_energy:0;
-                    $contract_list[$key]['start_room_energy'] = !empty($schedule_info['roomd'])?$schedule_info['roomd']:0;
-                    $contract_list[$key]['end_room_energy'] = !empty($ammeter_room['room_energy'])?$ammeter_room['room_energy']:0;
-                    $contract_list[$key]['room_energy_fee'] = ceil($room_energy_fee*100)/100;
-                    $contract_list[$key]['wx_fee'] = $schedule_info['wx_fee'];//维修费
-                    $contract_list[$key]['wx_des'] = $schedule_info['wx_des']; //退房信息
-                } else {
-                    $contract_list[$key]['room_energy_fee'] = 0;
-                }
+                $contract_list[$key]['add_room_energy'] = !empty($add_room_energy) ? $add_room_energy : 0;
+                $contract_list[$key]['start_room_energy'] = !empty($ammeter_room['room_energy']) ? $ammeter_room['room_energy'] : 0;
+                $contract_list[$key]['end_room_energy'] = $currentRoomEnergy;
+                $contract_list[$key]['room_energy_fee'] = ceil($room_energy_fee*100)/100;
+                // 维修费
+                $contract_list[$key]['wx_fee'] = $schedule_info['wx_fee'];
+                // 退房信息
+                $contract_list[$key]['wx_des'] = $schedule_info['wx_des']; 
 
-                //人日计算 start
+                // 人日计算 start
                 $person_day = 0;
-
+                // 判断合同开始和退房的年月是否一样
                 $is_start_date = $DContract->bothTimeIsEqual($ht_start_date,$appoint_time);
-                //判断租客是否当月退房
+                // 判断租客是否当月退房
                 $is_end_date = $DContract->bothTimeIsEqual($ht_actual_end_time,$appoint_time);
 
                 if ( $is_start_date ) {
                     if ( $is_end_date ) {
-                        //合同开始和实际退房的月份一样，获取两者之间的日数
+                        // 合同开始和实际退房的月份一样，获取两者之间的日数
                         $lastday = date('Y-m-d', strtotime($ht_actual_end_time)); //退房时间
                         $person_day = round((strtotime($lastday)-strtotime($ht_start_date))/86400)+1;
                         $person_day*=$ht_person;
                     } else {
-                        //是这个月入住则，人日获取的是，租期开始到月末的日数
+                        // 是这个月入住则，人日获取的是，租期开始到月末的日数
                         $lastday = date('Y-m-d', strtotime($appoint_time)); //约定时间
                         $person_day = round((strtotime($lastday)-strtotime($ht_start_date))/86400)+1;
                         $person_day*=$ht_person;
                     }
                 } else {
                     if ( $is_end_date ) {
-                        //这个月就是退房的月数 那么这个月的人日就是到这一天
-                        //判断实际退房和退房约定时间的大小，取小的那个
+                        // 这个月就是退房的月数 那么这个月的人日就是到这一天
+                        // 判断实际退房和退房约定时间的大小，取小的那个
                         if ( strtotime($appoint_time) <= strtotime($ht_actual_end_time) ) {
                             $person_day = date("d",strtotime($appoint_time));
                         } else {
@@ -316,24 +313,47 @@ class TaskController extends BaseController {
                         $person_day = date("d",strtotime($appoint_time));
                     }
                 }
-                //人日计算 end
-                $contract_list[$key]['person_day'] = $person_day*$ht_person;
+                // 最终人日 = 人日 * 合同入住的人数
+                $contract_list[$key]['person_day'] = $person_day = $person_day * $ht_person;
 
-                //手续费
+                // 手续费
                 if ( C("schedule_type_zf") == $schedule_type || C("schedule_type_hf") == $schedule_type ) {
                     //如果是换房或者转房，要收取手续费
                     $contract_list[$key]['handling_fee'] = C('handling_percent')*$val['rent'];
                 }
-
+                // 计算公共区域的水电气
                 $contract_list[$key]['water_fee'] = ceil(($public_water_fee / $sum_person_day * $person_day)*100)/100;
                 $contract_list[$key]['energy_fee'] = ceil(($public_energy_fee / $sum_person_day * $person_day)*100)/100;
                 $contract_list[$key]['gas_fee'] = ceil(($public_gas_fee / $sum_person_day * $person_day)*100)/100;
+                
+                if (!empty($public_gas_fee) && $public_gas_fee != 0) {
+                    // 燃气垃圾费，一般没有气费的同时也没有燃气垃圾费
+                    $contract_list[$key]['rubbish_fee'] = ceil(($rubbish_fee / $person_count) * 100)/100;
+                } else {
+                    $contract_list[$key]['rubbish_fee'] = 0;
+                }
 
                 $contract_list[$key]['total_fee'] = $contract_list[$key]['room_energy_fee']+$contract_list[$key]['energy_fee']+$contract_list[$key]['water_fee']+$contract_list[$key]['gas_fee']+$contract_list[$key]['rubbish_fee']+$contract_list[$key]['wx_fee']+$contract_list[$key]['handling_fee'];
             }
+
+            $this->assign("total_energy_fee",$total_energy_fee);
+            $this->assign("room_total_energy_fee",$room_total_energy_fee);
+            $this->assign("public_energy_fee",$public_energy_fee);
+            $this->assign("public_water_fee",$public_water_fee);
+            $this->assign("public_energy_fee",$public_energy_fee);
+            $this->assign("public_gas_fee",$public_gas_fee);
+            $this->assign("add_water",$add_water);
+            $this->assign("add_energy",$add_energy);
+            $this->assign("add_gas",$add_gas);
+            $this->assign("water_unit",$water_unit);
+            $this->assign("gas_unit",$gas_unit);
+            $this->assign("energy_stair",$area_info['energy_stair']);
+            $this->assign("ammeter_house",$ammeter_house);
+            $this->assign("sum_person_day",$sum_person_day);
+            $this->assign("house_id",$house_id);
+            $this->assign("house_code",$house_code);
             $this->assign("schedule_type_name",$schedule_type_name);
             $this->assign("schedule_info",$schedule_info);
-            $this->assign("sum_person_day",$sum_person_day);
             $this->assign("person_day_area_date",date("Y-m-01",strtotime($schedule_info['appoint_time']))."~".date("Y-m-d",strtotime($schedule_info['appoint_time'])));
 
             $this->assign("contract_list",$contract_list);
@@ -342,7 +362,7 @@ class TaskController extends BaseController {
     }
 
     /**
-    * [修改待办信息]
+    * [old][修改待办信息]
     **/
     public function update_schedule(){
         if ( !empty($_POST) ) {

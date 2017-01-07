@@ -131,7 +131,7 @@ class ChargeBillModel extends Model {
 
         $where['p.account_id'] = $account_id;
         $where['p.is_show'] = 1;
-        $where['cb.is_send'] = 1;
+        $where['p.is_send'] = 1;
     	$list =  M('pay')
                 ->alias('p')
                 ->field('cb.*,p.*,a.realname')

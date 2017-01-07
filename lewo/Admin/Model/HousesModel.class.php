@@ -176,7 +176,7 @@ class HousesModel extends Model{
 	* [查看该房屋有多少间房间]
 	**/
 	public function getRoomCountByCode($house_code){
-		$room_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>1))->count();
+		$room_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>1,'is_show'=>1))->count();
 
 		return $room_count;
 	}
@@ -184,7 +184,7 @@ class HousesModel extends Model{
 	* [查看该房屋有多少间床位]
 	**/
 	public function getBedCountByCode($house_code){
-		$bed_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>2))->count();
+		$bed_count = M("room")->where(array("house_code"=>$house_code,"room_type"=>2,'is_show'=>1))->count();
 
 		return $bed_count;
 	}
@@ -269,6 +269,25 @@ class HousesModel extends Model{
             $room_energy_fee = get_energy_fee($add_roomD,$energy_stair);
             $room_total_energy_fee += $room_energy_fee;
 
+		}
+		return $room_total_energy_fee;
+	}
+
+	/**
+	* [获取退房时的总电费]
+	* @param total_room_energy 退租时录入的房间电表
+	**/
+	public function getCheckOutRoomTotalEnergyFee($total_room_energy_arr = [], $energy_stair){	
+		$DAmmeterRoom = D("ammeter_room");
+        $DContract = D("contract");
+        $MRoom = M("room");
+		$room_total_energy_fee = 0;
+		foreach( $total_room_energy_arr AS $room_id=>$total_room_energy ){
+			$ammeter_room = $DAmmeterRoom->getFirstInfo($room_id);
+            $add_roomD = $total_room_energy - $ammeter_room['room_energy'];
+            //房间电费
+            $room_energy_fee = get_energy_fee($add_roomD, $energy_stair);
+            $room_total_energy_fee += $room_energy_fee;
 		}
 		return $room_total_energy_fee;
 	}

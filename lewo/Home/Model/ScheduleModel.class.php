@@ -95,14 +95,16 @@ class ScheduleModel extends BaseModel {
 	public function getScheduleBySteward($steward_id){
 		$DEvent = D('events');
 		$sArr = $this->table
-			->field("lewo_room.house_code,lewo_room.room_sort,lewo_room.room_code,lewo_room.bed_code,lewo_schedule.*,lewo_account.realname,lewo_account.mobile")
+			->field("lewo_room.house_code,lewo_room.room_sort,lewo_room.room_code,lewo_room.bed_code,lewo_schedule.*,MAX(lewo_schedule.status),lewo_account.realname,lewo_account.mobile")
 			->join("lewo_room ON lewo_schedule.room_id = lewo_room.id", 'left')
 			->join("lewo_account ON lewo_schedule.account_id = lewo_account.id", 'left')
+			->group('lewo_schedule.event_id')
 			->where(['lewo_schedule.steward_id'=>$steward_id])
 			->select();
 
 		foreach( $sArr AS $key=>$val ){
-			$sArr[$key]['eventLists'] = $DEvent->getEventList($val['event_id']);
+			$eventLists = $DEvent->getEventList($val['event_id']);
+			$sArr[$key]['eventLists'] = $eventLists;
 			//待办工作类型 1：退房 2：转房 3：换房 4：缴定 5:例行打款
 			$sArr[$key]['schedule_type_name'] = C('schedule_type_arr')[$val['schedule_type']];
 		}
@@ -244,19 +246,19 @@ class ScheduleModel extends BaseModel {
 		$data['admin_type']     = is_null($param['admin_type'])
 								? 0
 								: $param['admin_type'];
-		$data['total_water']	= is_null($param['total_water'])
+		$data['total_water']	= is_null($param['total_water']) || empty($param['total_water'])
 								? 0
 								: $param['total_water'];
-		$data['total_energy']	= is_null($param['total_energy'])
+		$data['total_energy']	= is_null($param['total_energy']) || empty($param['total_energy'])
 								? 0
 								: $param['total_energy'];
-		$data['total_gas']		= is_null($param['total_gas'])
+		$data['total_gas']		= is_null($param['total_gas']) || empty($param['total_gas'])
 								? 0
 								: $param['total_gas'];
 		$data['total_room_energy']	= is_null($param['total_room_energy'])
 								? 0
 								: $param['total_room_energy'];
-		$data['wx_fee']         = is_null($param['wx_fee'])
+		$data['wx_fee']         = is_null($param['wx_fee']) || empty($param['wx_fee'])
 								? 0
 								: $param['wx_fee'];
 		$data['wx_des']			= is_null($param['wx_des'])
